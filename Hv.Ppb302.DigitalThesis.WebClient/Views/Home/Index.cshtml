@@ -1,0 +1,133 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="mosaic-container" id="backgroundImg">
+    <div class="mosaic-float">
+        <div class="mosaic mosaic1 space" id="mosaic1">
+            <a href="#">
+                <img class="mosaicImg" src="~/images/mosaics/mosaic1.png"/>
+                <div>Title</div>
+            </a>
+        </div>
+        <div class="mosaic mosaic2 sound" id="mosaic2">
+            <a href="#">
+                <img class="mosaicImg" src="~/images/mosaics/mosaic2.png" />
+                <div>Title</div>
+            </a>
+        </div>
+        <div class="mosaic mosaic3 space" id="mosaic3">
+            <a href="#">
+                <img class="mosaicImg" src="~/images/mosaics/mosaic3.png" />
+                <div>Title</div>
+            </a>
+        </div>
+        <div class="mosaic mosaic4 time" id="mosaic4">
+            <a href="#">
+                <img class="mosaicImg" src="~/images/mosaics/mosaic4.png" />
+                <div>Title</div>
+            </a>
+        </div>
+        <div class="mosaic mosaic5 time" id="mosaic5">
+            <a href="#">
+                <img class="mosaicImg" src="~/images/mosaics/mosaic5.png" />
+                <div>Title</div>
+            </a>
+        </div>
+        <div class="mosaic mosaic6 assemblage" id="mosaic6">
+            <a href="#">
+                <img class="mosaicImg" src="~/images/mosaics/mosaic6.png" />
+                <div>Title</div>
+            </a>
+        </div>
+        <div class="mosaic mosaic7 sound" id="mosaic7">
+            <a href="#">
+                <img class="mosaicImg" src="~/images/mosaics/mosaic7.png" />
+                <div>Title</div>
+            </a>
+        </div>
+        <div class="mosaic mosaic8 assemblage" id="mosaic8">
+            <a href="#">
+                <img class="mosaicImg" src="~/images/mosaics/mosaic8.png" />
+                <div>Title</div>
+            </a>
+        </div>
+        <div class="mosaic mosaic9 time" id="mosaic9">
+            <a href="#">
+                <img class="mosaicImg" src="~/images/mosaics/mosaic9.png" />
+                <div>Title</div>
+            </a>
+        </div>
+        <div class="mosaic mosaic10 space" id="mosaic10">
+            <a href="#">
+                <img class="mosaicImg" src="~/images/mosaics/mosaic10.png" />
+                <div>Title</div>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div id="mySidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+    <h3 class="sidebarLine">Caleidoscoping</h3>
+    <button class="calOption" data-filter="space" onclick="caleidoscoping(event)">SPACE</button>
+    <button class="calOption" data-filter="time" onclick="caleidoscoping(event)">TIME</button>
+    <button class="calOption" data-filter="assemblage" onclick="caleidoscoping(event)">ASSEMBLAGE</button>
+    <button class="calOption" data-filter="sound" onclick="caleidoscoping(event)">SOUND</button>
+    <button class="calClear" data-filter="clear" onclick="caleidoscoping(event)">Clear</button>
+    <h3 class="sidebarLine">Tags</h3>
+    <ul class="tagList">
+        <li>
+            <div class="item">
+                <div class="checkbox-rect2">
+                    <input type="checkbox" id="checkbox-rect1" name="check">
+                    <label for="checkbox-rect1">Tag</label>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="item">
+                <div class="checkbox-rect2">
+                    <input type="checkbox" id="checkbox-rect2" name="check">
+                    <label for="checkbox-rect2">Tag</label>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="item">
+                <div class="checkbox-rect2">
+                    <input type="checkbox" id="checkbox-rect3" name="check">
+                    <label for="checkbox-rect3">Tag</label>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="item">
+                <div class="checkbox-rect2">
+                    <input type="checkbox" id="checkbox-rect4" name="check">
+                    <label for="checkbox-rect4">Tag</label>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="item">
+                <div class="checkbox-rect2">
+                    <input type="checkbox" id="checkbox-rect5" name="check">
+                    <label for="checkbox-rect5">Tag</label>
+                </div>
+            </div>
+        </li>
+        <li>
+            <div class="item">
+                <div class="checkbox-rect2">
+                    <input type="checkbox" id="checkbox-rect6" name="check">
+                    <label for="checkbox-rect6">Tag</label>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>
+
+<div id="main">
+    <button class="openbtn" onclick="openNav()"><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48" opacity="0.7"><path d="M400 976 0 576l400-400 56 57-343 343 343 343-56 57Z" /></svg></button>
+</div>

@@ -1,0 +1,450 @@
+﻿@{
+    ViewData["Title"] = "Mosaics";
+}
+
+    <div id="sidhuvud">
+    </div>
+
+    <div class="mosaic-klick" id="backgroundImg">
+         
+@if (!string.IsNullOrEmpty(ViewBag.MosaicId as string))
+
+{
+var mosaicId = ViewBag.MosaicId.ToString();
+        <div id="kolumn1" style="@(mosaicId == "mosaic1" ? "display:block;" : "display:none;")">
+            <p>Mosaic: 1</p>
+            <p>Title</p>
+            <p>Space</p>
+             <p>Author: Mona Tynkkinen</p>
+            <p>Tags: #ABC #DEF</p>
+            <div class="music-controls">
+                <i class="fas fa-play" id="play-button"></i>
+                <i class="fas fa-volume-up"></i>
+                <audio id="audio-player" src="https://files.musopen.org/recordings/6699358c-9a7b-4dc3-a3b9-331a532d1004.mp3?filename=The+Magic+Flute,+K.+620+-+Overture.mp3&amp;preview"></audio>
+            </div>
+        </div>
+            <div id="kolumn2" style="@(mosaicId == "mosaic1" ? "display:block;" : "display:none;")">
+                <div class="text" id="text1">
+
+                <h1>Heading 1</h1>
+            
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+                    <h2>Heading 2</h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+                    <h3>Heading 3</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+            
+                </div>
+            </div>
+
+        <div id="kolumn1" style="@(mosaicId == "mosaic2" ? "display:block;" : "display:none;")">
+            <p>Mosaic: 2</p>
+            <p>Title</p>
+            <p>Sound</p>
+                <p>Author: Mona Tynkkinen</p>
+            <p>Tags: #ABC #DEF</p>
+            <div class="music-controls">
+                <i class="fas fa-play"></i> <!-- Musikavspelningslogga -->
+                <i class="fas fa-volume-up"></i> <!-- Volymhöjningslogga -->
+            </div>
+        </div>
+        <div id="kolumn2" style="@(mosaicId == "mosaic2" ? "display:block;" : "display:none;")">
+            <div class="text" id="text2">
+
+                <h1>Heading 1</h1>
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+                <h2>Heading 2</h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+                <h3>Heading 3</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+
+            </div>
+
+        </div>
+       <div id="kolumn1" style="@(mosaicId == "mosaic3" ? "display:block;" : "display:none;")">
+            <p>Mosaic: 3</p>
+                <p>Title</p>
+            <p>Space</p>
+                <p>Author: Mona Tynkkinen</p>
+            <p>Tags: #ABC #DEF</p>
+            <div class="music-controls">
+                <i class="fas fa-play"></i> <!-- Musikavspelningslogga -->
+                <i class="fas fa-volume-up"></i> <!-- Volymhöjningslogga -->
+            </div>
+        </div>
+        <div id="kolumn2" style="@(mosaicId == "mosaic3" ? "display:block;" : "display:none;")">
+            <div class="text" id="text3">
+
+                <h1>Heading 1</h1>
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+                <h2>Heading 2</h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+                <h3>Heading 3</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+
+            </div>
+
+        </div>
+        <div id="kolumn1" style="@(mosaicId == "mosaic4" ? "display:block;" : "display:none;")">
+            <p>Mosaic: 4</p>
+                <p>Title</p>
+            <p>Time</p>
+                <p>Author: Mona Tynkkinen</p>
+            <p>Tags: #ABC #DEF</p>
+            <div class="music-controls">
+                <i class="fas fa-play"></i> <!-- Musikavspelningslogga -->
+                <i class="fas fa-volume-up"></i> <!-- Volymhöjningslogga -->
+            </div>
+        </div>
+        <div id="kolumn2" style="@(mosaicId == "mosaic4" ? "display:block;" : "display:none;")">
+            <div class="text" id="text1">
+
+                <h1>Heading 1</h1>
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+                <h2>Heading 2</h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+                <h3>Heading 3</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+
+            </div>
+
+        </div>
+       
+        <div id="kolumn1" style="@(mosaicId == "mosaic5" ? "display:block;" : "display:none;")">
+            <p>Mosaic: 5</p>
+                <p>Title</p>
+            <p>Time</p>
+                <p>Author: Mona Tynkkinen</p>
+            <p>Tags: #ABC #DEF</p>
+            <div class="music-controls">
+                <i class="fas fa-play"></i> <!-- Musikavspelningslogga -->
+                <i class="fas fa-volume-up"></i> <!-- Volymhöjningslogga -->
+            </div>
+        </div>
+        <div id="kolumn2" style="@(mosaicId == "mosaic5" ? "display:block;" : "display:none;")">
+            <div class="text" id="text5">
+
+                <h1>Heading 1</h1>
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+                <h2>Heading 2</h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+                <h3>Heading 3</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+
+            </div>
+
+        </div>
+            
+            <div id="kolumn1" style="@(mosaicId == "mosaic6" ? "display:block;" : "display:none;")">
+                <p>Mosaic: 6</p>
+                    <p>Title</p>
+                <p>Assemblage</p>
+                <p>Author: Mona Tynkkinen</p>
+                <p>Tags: #ABC #DEF</p>
+                <div class="music-controls">
+                    <i class="fas fa-play"></i> <!-- Musikavspelningslogga -->
+                    <i class="fas fa-volume-up"></i> <!-- Volymhöjningslogga -->
+                </div>
+            </div>
+            <div id="kolumn2" style="@(mosaicId == "mosaic6" ? "display:block;" : "display:none;")">
+                <div class="text" id="text6">
+
+                    <h1>Heading 1</h1>
+
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                        Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                        Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                    </p>
+                    <h2>Heading 2</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                        Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                        Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                    </p>
+                    <h3>Heading 3</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                        Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                        Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                    </p>
+
+                </div>
+
+            </div>
+        
+        <div id="kolumn1" style="@(mosaicId == "mosaic7" ? "display:block;" : "display:none;")">
+            <p>Mosaic: 7</p>
+                <p>Title</p>
+            <p>Sound</p>
+                <p>Author: Mona Tynkkinen</p>
+            <p>Tags: #ABC #DEF</p>
+            <div class="music-controls">
+                <i class="fas fa-play"></i> <!-- Musikavspelningslogga -->
+                <i class="fas fa-volume-up"></i> <!-- Volymhöjningslogga -->
+            </div>
+        </div>
+        <div id="kolumn2" style="@(mosaicId == "mosaic7" ? "display:block;" : "display:none;")">
+            <div class="text" id="text7">
+
+                <h1>Heading 1</h1>
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+                <h2>Heading 2</h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+                <h3>Heading 3</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+
+            </div>
+
+        </div>
+            
+            <div id="kolumn1" style="@(mosaicId == "mosaic8" ? "display:block;" : "display:none;")">
+                <p>Mosaic: 8</p>
+                    <p>Title</p>
+                <p>Assemblage</p>
+                <p>Author: Mona Tynkkinen</p>
+                <p>Tags: #ABC #DEF</p>
+                <div class="music-controls">
+                    <i class="fas fa-play"></i> <!-- Musikavspelningslogga -->
+                    <i class="fas fa-volume-up"></i> <!-- Volymhöjningslogga -->
+                </div>
+            </div>
+            <div id="kolumn2" style="@(mosaicId == "mosaic8" ? "display:block;" : "display:none;")">
+                <div class="text" id="text8">
+
+                    <h1>Heading 1</h1>
+
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                        Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                        Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                    </p>
+                    <h2>Heading 2</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                        Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                        Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                    </p>
+                    <h3>Heading 3</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                        Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                        Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                    </p>
+
+                </div>
+
+            </div>
+            <div id="kolumn1" style="@(mosaicId == "mosaic9" ? "display:block;" : "display:none;")">
+                <p>Mosaic: 9</p>
+                    <p>Title</p>
+                <p>Time</p>
+                <p>Author: Mona Tynkkinen</p>
+                <p>Tags: #ABC #DEF</p>
+                <div class="music-controls">
+                    <i class="fas fa-play"></i> <!-- Musikavspelningslogga -->
+                    <i class="fas fa-volume-up"></i> <!-- Volymhöjningslogga -->
+                </div>
+            </div>
+            <div id="kolumn2" style="@(mosaicId == "mosaic9" ? "display:block;" : "display:none;")">
+                <div class="text" id="text9">
+
+                    <h1>Heading 1</h1>
+
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                        Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                        Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                    </p>
+                    <h2>Heading 2</h2>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                        Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                        Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                    </p>
+                    <h3>Heading 3</h3>
+                    <p>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                        Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                        Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                    </p>
+
+                </div>
+
+            </div>
+        <div id="kolumn1" style="@(mosaicId == "mosaic10" ? "display:block;" : "display:none;")">
+            <p>Mosaic: 10</p>
+                <p>Title</p>
+            <p>Space</p>
+            <p>Author: Mona Tynkkinen</p>
+            <p>Tags: #ABC #DEF</p>
+            <div class="music-controls">
+                <i class="fas fa-play"></i> <!-- Musikavspelningslogga -->
+                <i class="fas fa-volume-up"></i> <!-- Volymhöjningslogga -->
+            </div>
+        </div>
+        <div id="kolumn2" style="@(mosaicId == "mosaic10" ? "display:block;" : "display:none;")">
+            <div class="text" id="text10">
+
+                <h1>Heading 1</h1>
+
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+                <h2>Heading 2</h2>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+                <h3>Heading 3</h3>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec consequat turpis, id ullamcorper magna. Phasellus ac mi tortor. Integer sed cursus ligula. Curabitur a varius nisi, in consectetur magna. Duis luctus massa in ex ultrices, sed ultricies ipsum rhoncus. Quisque finibus dolor vel elit feugiat fringilla. Nunc cursus feugiat arcu, sed fermentum erat aliquam in. Fusce malesuada est et ultricies auctor. Curabitur dapibus tincidunt diam, vel dictum dui posuere ac. Sed vestibulum ante non ligula eleifend ullamcorper. Vivamus posuere fringilla fermentum. Ut cursus ante auctor nibh finibus consectetur. Quisque varius tortor vitae purus ullamcorper aliquam.
+
+                    Sed maximus gravida aliquam. Suspendisse non augue vel nisi laoreet bibendum. Nullam bibendum nunc id gravida aliquam. Phasellus consectetur mi ligula, at varius lorem dapibus id. Curabitur a neque sed neque laoreet euismod. Aenean blandit diam sit amet purus aliquet, nec aliquet dolor dignissim. Nam mattis rutrum faucibus. Proin venenatis, enim non efficitur ullamcorper, urna augue dignissim ex, sit amet commodo magna lectus sit amet turpis. Curabitur mollis magna non nunc efficitur, a feugiat lorem convallis. Suspendisse sed ultricies ipsum, id consectetur velit. Sed pellentesque mauris sit amet tortor congue, vitae pellentesque mi venenatis. Nulla facilisi. Etiam feugiat placerat orci non ullamcorper. Sed rutrum fermentum arcu, sit amet pulvinar ex semper nec. Proin interdum feugiat turpis, sed consequat quam malesuada nec.
+
+                    Praesent tincidunt erat vel lacus lacinia, in ultricies velit gravida. Donec faucibus, erat ut consequat gravida, arcu augue consequat ipsum, ac feugiat tortor mi sit amet tellus. Sed id magna et metus iaculis semper. Nunc feugiat augue lectus, sed hendrerit nisl sollicitudin eget. Fusce sodales pulvinar leo, vitae maximus dolor. Donec ac neque facilisis, ullamcorper ipsum in, congue arcu. Nam vitae purus non enim aliquet interdum. Ut ullamcorper tristique lacus, sed fermentum mi rutrum vel. Nam non finibus urna, sit amet efficitur urna. Fusce ut erat a turpis dictum elementum. Pellentesque efficitur tortor id orci sagittis, sit amet suscipit ex venenatis. Curabitur porttitor tristique nulla, eu fermentum mauris bibendum sit amet.
+                </p>
+
+            </div>
+
+        </div>
+}
+</div>
