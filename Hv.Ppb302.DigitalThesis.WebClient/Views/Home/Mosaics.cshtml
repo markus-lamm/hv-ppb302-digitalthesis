@@ -12,18 +12,21 @@
 {
 var mosaicId = ViewBag.MosaicId.ToString();
         <div id="kolumn1" style="@(mosaicId == "mosaic1" ? "display:block;" : "display:none;")">
-            <p>Mosaic: 1</p>
+            @*<p>Mosaic: 1</p>*@
             <p>Title</p>
-            <p>Space</p>
-             <p>Author: Mona Tynkkinen</p>
-            <p>Tags: #ABC #DEF</p>
+            @*<p>Space</p>*@
+             @*<p>Author: Mona Tynkkinen</p>*@
+            <p>Tags:</p>
+                <p>#ABC #DEF</p>
             <div class="music-controls">
                 <i class="fas fa-play" id="play-button"></i>
                 <i class="fas fa-volume-up"></i>
                 <audio id="audio-player" src="https://files.musopen.org/recordings/6699358c-9a7b-4dc3-a3b9-331a532d1004.mp3?filename=The+Magic+Flute,+K.+620+-+Overture.mp3&amp;preview"></audio>
             </div>
         </div>
+
             <div id="kolumn2" style="@(mosaicId == "mosaic1" ? "display:block;" : "display:none;")">
+                
                 <div class="text" id="text1">
 
                 <h1>Heading 1</h1>
@@ -110,6 +113,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
             </div>
         </div>
         <div id="kolumn2" style="@(mosaicId == "mosaic3" ? "display:block;" : "display:none;")">
+           
             <div class="text" id="text3">
 
                 <h1>Heading 1</h1>
@@ -404,11 +408,12 @@ var mosaicId = ViewBag.MosaicId.ToString();
 
             </div>
         <div id="kolumn1" style="@(mosaicId == "mosaic10" ? "display:block;" : "display:none;")">
-            <p>Mosaic: 10</p>
+            @*<p>Mosaic: 10</p>*@
                 <p>Title</p>
             <p>Space</p>
-            <p>Author: Mona Tynkkinen</p>
-            <p>Tags: #ABC #DEF</p>
+            @*<p>Author: Mona Tynkkinen</p>*@
+            <p>Tags:</p> 
+            <p>#ABC #DEF</p>
             <div class="music-controls">
                 <i class="fas fa-play"></i> <!-- Musikavspelningslogga -->
                 <i class="fas fa-volume-up"></i> <!-- Volymhöjningslogga -->
