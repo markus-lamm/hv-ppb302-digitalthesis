@@ -29,6 +29,17 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             return View();
         }
 
+        public IActionResult MolarMosaics()
+        { 
+            return View(); 
+        }
+
+        public IActionResult MolecularMosaics()
+        {
+            return View();
+        }
+
+
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
