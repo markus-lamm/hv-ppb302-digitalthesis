@@ -1,4 +1,6 @@
+using Hv.Ppb302.DigitalThesis.WebClient.Models;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient
 {
@@ -8,6 +10,9 @@ namespace Hv.Ppb302.DigitalThesis.WebClient
         {
             var builder = WebApplication.CreateBuilder(args);
 
+
+            builder.Services.AddDbContext<DigitalThesisContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerConnection")));
             // Add services to the container.
             builder.Services.AddControllersWithViews();
             // Lägg till stöd för loginfunktionen. Skicka med rätt sida för LoginPath
