@@ -602,14 +602,20 @@ body {
     transition: 0.5s ease-in-out;
     opacity: 0;
 }
-
+.text{
+    padding-left:15px;
+    padding-right:15px;
+}
+.container {
+    display: flex;
+    align-items: stretch;
+}
 #kolumn1, #kolumn2 {
     box-sizing: border-box; 
     background: #fcf9ee;
     border: 1px solid #ccc;
     padding: 0 20px 20px 20px;
-    margin-top: 200px;
-}
+    }
 
 #kolumn1 {
     font-size: 15px;
@@ -620,44 +626,41 @@ body {
     background: #fcf9ee;
     border: 1px solid #ccc;
     margin-top: 180px;
-    margin-right: 1%; /* Mellanrum mellan kolumnerna */
+    margin-right: 1%; 
 }
 
 #kolumn2 {
-    float: left;
-    width: 89%;
-    min-height: 500px; /* Sätt en minimal höjd för att garantera scroll */
-    padding: 20px 20px 20px 20px;
+    padding: 0px;
+    flex-grow: 1;
     background: #fcf9ee;
     border: 1px solid #ccc;
     margin-top: 180px;
-    box-sizing: border-box;
-    position: relative;
-    padding-left: 6%;
-    overflow: scroll; /* Använd overflow-y för vertikal scroll */
-}
-
+    overflow-y: auto;
+    height: 80vh;
+ }
 
 #kolumn3 {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 6%; 
-    height: 100%;
+    width: 120px;
     background: #020C42;
     color: white;
-    padding: 15px;
     box-sizing: border-box;
-    color: white;
     font-size: 15px;
-    
- }
-.sections{
-    margin-top: 90px;
+    padding: 0px 110px 0 0; 
 }
+
+
+.sections {
+    margin-top:50px;
+    padding: 20px;
+    font-family: 'Inconsolata', serif;
+    white-space: nowrap;
+    margin-bottom: 80px;
+}
+
 
 #kolumn2 p {
     font-family: sans-serif;
+    
     }
 
 #kolumn2 h1, h2, h3 {
