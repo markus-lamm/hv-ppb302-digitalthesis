@@ -1,6 +1,6 @@
 ﻿namespace Hv.Ppb302.DigitalThesis.WebClient.Models;
 
-public class MolecularMosaic
+public class MolarMosaic
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public string? Title { get; set; }
