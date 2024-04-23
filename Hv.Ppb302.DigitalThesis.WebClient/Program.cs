@@ -10,8 +10,10 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
-        builder.Services.AddDbContext<DigitalThesisContext>(options =>
+        builder.Services.AddDbContext<DigitalThesisDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerConnection")));
+
+        builder.Services.AddScoped<GeoTagCrud>();
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
@@ -43,6 +45,7 @@ public class Program
 
         app.UseSession();
 
+        app.MapControllers();
         app.MapControllerRoute(
             name: "default",
             pattern: "{controller=Home}/{action=Index}/{id?}");

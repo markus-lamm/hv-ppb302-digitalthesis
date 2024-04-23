@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
 {
-    [DbContext(typeof(DigitalThesisContext))]
+    [DbContext(typeof(DigitalThesisDbContext))]
     partial class DigitalThesisContextModelSnapshot : ModelSnapshot
     {
         protected override void BuildModel(ModelBuilder modelBuilder)

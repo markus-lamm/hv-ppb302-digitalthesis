@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
 {
-    [DbContext(typeof(DigitalThesisContext))]
+    [DbContext(typeof(DigitalThesisDbContext))]
     [Migration("20240423121109_DatabaseCreation")]
     partial class DatabaseCreation
     {

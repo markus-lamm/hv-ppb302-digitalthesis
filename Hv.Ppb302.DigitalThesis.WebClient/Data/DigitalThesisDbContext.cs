@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
-public class DigitalThesisContext : DbContext
+public class DigitalThesisDbContext : DbContext
 {
-    public DigitalThesisContext(DbContextOptions<DigitalThesisContext> options) : base(options) { }
+    public DigitalThesisDbContext(DbContextOptions<DigitalThesisDbContext> options) : base(options) { }
 
     public DbSet<GeoTag> GeoTags { get; set; }
     public DbSet<GroupTag> GroupTags { get; set; }
