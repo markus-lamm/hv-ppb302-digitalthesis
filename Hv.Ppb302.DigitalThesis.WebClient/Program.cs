@@ -13,7 +13,10 @@ public class Program
         builder.Services.AddDbContext<DigitalThesisDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerConnection")));
 
-        builder.Services.AddScoped<GeoTagCrud>();
+        builder.Services.AddScoped<GeoTagRepository>();
+        builder.Services.AddScoped<GroupTagRepository>();
+        builder.Services.AddScoped<MolarMosaicRepository>();
+        builder.Services.AddScoped<MolecularMosaicRepository>();
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
@@ -48,7 +51,7 @@ public class Program
         app.MapControllers();
         app.MapControllerRoute(
             name: "default",
-            pattern: "{controller=Home}/{action=Home}/{id?}");
+            pattern: "{controller=Home}/{action=Index}/{id?}");
 
         app.Run();
     }
