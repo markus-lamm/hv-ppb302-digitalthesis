@@ -1,38 +1,34 @@
 ﻿@model List<GeoTag>
-
 @{
-    ViewData["Title"] = "Home Page";
+    var geoTagDictionary = Model.ToDictionary(g => g.Title, g => g);
 }
 
 <div class="background-home">
-    @{
-        var geoTagDictionary = Model.ToDictionary(g => g.Title, g => g);
-    }
-    <a href="Mosaics/@geoTagDictionary["Problems"]?.Id">
+    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Problems"].Id})">
         <div id="image-container1">
             <p class="image-text">Problems</p>
             <img src="~/images/geotags/geotag-black.png" />
         </div>
     </a>
-    <a href="Mosaics/@geoTagDictionary["A Solution"]?.Id">
+    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["A Solution"].Id})">
         <div id="image-container2">
             <p class="image-text">A Solution</p>
             <img src="~/images/geotags/geotag-black.png" />
         </div>
     </a>
-    <a href="Mosaics/@geoTagDictionary["Ignore This"]?.Id">
+    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Ignore This"].Id})">
         <div id="image-container3">
             <p class="image-text">Ignore This</p>
             <img src="~/images/geotags/geotag-black.png" />
         </div>
     </a>
-    <a href="Mosaics/@geoTagDictionary["Deleuzian Ontology in Education"]?.Id">
+    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Deleuzian Ontology in Education"].Id})">
         <div id="image-container4">
             <img src="~/images/geotags/geotag-white.png" />
             <p class="image-text">Deleuzian Ontology <br/> in Education</p>
         </div>
     </a>
-    <a href="Mosaics/@geoTagDictionary["An Inquiry-Machine"]?.Id">
+    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["An Inquiry-Machine"].Id})">
         <div id="image-container5">
             <img src="~/images/geotags/geotag-white.png" />
             <p class="image-text">An Inquiry-Machine</p>

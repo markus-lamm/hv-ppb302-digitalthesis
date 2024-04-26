@@ -26,10 +26,10 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             return View();
         }
 
-        [Route("Home/Mosaics/{mosaicId}")]
-        public IActionResult Mosaics(string mosaicId)
+        [Route("Home/Detail/{objectId}")]
+        public IActionResult Detail(string objectId)
         {
-            ViewBag.MosaicId = mosaicId;
+            ViewBag.ObjectId = objectId;
             return View();
         }
 

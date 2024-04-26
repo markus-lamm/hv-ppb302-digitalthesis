@@ -6,13 +6,13 @@
     </div>
 
     <div class="mosaic-klick" id="backgroundImg">
-         
-@if (!string.IsNullOrEmpty(ViewBag.MosaicId as string))
+
+    @if (!string.IsNullOrEmpty(ViewBag.ObjectId as string))
 
 {
-var mosaicId = ViewBag.MosaicId.ToString();
+        var objectId = ViewBag.ObjectId.ToString();
 
-        <div id="kolumn1" style="@(mosaicId == "mosaic1" ? "display:block;" : "display:none;")">
+        <div id="kolumn1" style="@(objectId == "mosaic1" ? "display:block;" : "display:none;")">
             @*<p>Mosaic: 1</p>*@
             <p class="title">Title</p>
             @*<p>Space</p>*@
@@ -28,7 +28,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
             </div>
         </div>
             
-            <div id="kolumn2" style="@(mosaicId == "mosaic1" ? "display:block;" : "display:none;")">
+            <div id="kolumn2" style="@(objectId == "mosaic1" ? "display:block;" : "display:none;")">
                 <div id="kolumn3">
                     <p class="sections">Section A</p>
                     <p class="sections">Section 2</p>
@@ -69,7 +69,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
             
             </div>
 
-        <div id="kolumn1" style="@(mosaicId == "mosaic2" ? "display:block;" : "display:none;")">
+        <div id="kolumn1" style="@(objectId == "mosaic2" ? "display:block;" : "display:none;")">
             @*<p>Mosaic: 2</p>*@
             <p class="title">Title</p>
             @*<p>Space</p>*@
@@ -84,7 +84,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
                 <audio id="audio-player" src="https://files.musopen.org/recordings/6699358c-9a7b-4dc3-a3b9-331a532d1004.mp3?filename=The+Magic+Flute,+K.+620+-+Overture.mp3&amp;preview"></audio>
             </div>
         </div>
-        <div id="kolumn2" style="@(mosaicId == "mosaic2" ? "display:block;" : "display:none;")">
+        <div id="kolumn2" style="@(objectId == "mosaic2" ? "display:block;" : "display:none;")">
             <div id="kolumn3">
                 <p class="sections">Section A</p>
                 <p class="sections">Section 2</p>
@@ -123,7 +123,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
             </div>
 
         </div>
-       <div id="kolumn1" style="@(mosaicId == "mosaic3" ? "display:block;" : "display:none;")">
+       <div id="kolumn1" style="@(objectId == "mosaic3" ? "display:block;" : "display:none;")">
             @*<p>Mosaic: 3</p>*@
             <p class="title">Title</p>
             @*<p>Space</p>*@
@@ -138,7 +138,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
                 <audio id="audio-player" src="https://files.musopen.org/recordings/6699358c-9a7b-4dc3-a3b9-331a532d1004.mp3?filename=The+Magic+Flute,+K.+620+-+Overture.mp3&amp;preview"></audio>
             </div>
         </div>
-        <div id="kolumn2" style="@(mosaicId == "mosaic3" ? "display:block;" : "display:none;")">
+        <div id="kolumn2" style="@(objectId == "mosaic3" ? "display:block;" : "display:none;")">
             <div id="kolumn3">
                 <p class="sections">Section A</p>
                 <p class="sections">Section 2</p>
@@ -177,7 +177,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
             </div>
 
         </div>
-        <div id="kolumn1" style="@(mosaicId == "mosaic4" ? "display:block;" : "display:none;")">
+        <div id="kolumn1" style="@(objectId == "mosaic4" ? "display:block;" : "display:none;")">
             @*<p>Mosaic: 4</p>*@
             <p class="title">Title</p>
             @*<p>Space</p>*@
@@ -192,7 +192,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
                 <audio id="audio-player" src="https://files.musopen.org/recordings/6699358c-9a7b-4dc3-a3b9-331a532d1004.mp3?filename=The+Magic+Flute,+K.+620+-+Overture.mp3&amp;preview"></audio>
             </div>
         </div>
-        <div id="kolumn2" style="@(mosaicId == "mosaic4" ? "display:block;" : "display:none;")">
+        <div id="kolumn2" style="@(objectId == "mosaic4" ? "display:block;" : "display:none;")">
             <div id="kolumn3">
                 <p class="sections">Section A</p>
                 <p class="sections">Section 2</p>
@@ -232,7 +232,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
 
         </div>
        
-        <div id="kolumn1" style="@(mosaicId == "mosaic5" ? "display:block;" : "display:none;")">
+        <div id="kolumn1" style="@(objectId == "mosaic5" ? "display:block;" : "display:none;")">
             @*<p>Mosaic: 5</p>*@
             <p class="title">Title</p>
             @*<p>Space</p>*@
@@ -247,7 +247,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
                 <audio id="audio-player" src="https://files.musopen.org/recordings/6699358c-9a7b-4dc3-a3b9-331a532d1004.mp3?filename=The+Magic+Flute,+K.+620+-+Overture.mp3&amp;preview"></audio>
             </div>
         </div>
-        <div id="kolumn2" style="@(mosaicId == "mosaic5" ? "display:block;" : "display:none;")">
+        <div id="kolumn2" style="@(objectId == "mosaic5" ? "display:block;" : "display:none;")">
             <div id="kolumn3">
                 <p class="sections">Section A</p>
                 <p class="sections">Section 2</p>
@@ -287,7 +287,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
 
         </div>
             
-            <div id="kolumn1" style="@(mosaicId == "mosaic6" ? "display:block;" : "display:none;")">
+            <div id="kolumn1" style="@(objectId == "mosaic6" ? "display:block;" : "display:none;")">
                 @*<p>Mosaic: 6</p>*@
                 <p class="title">Title</p>
                 @*<p>Space</p>*@
@@ -302,7 +302,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
                     <audio id="audio-player" src="https://files.musopen.org/recordings/6699358c-9a7b-4dc3-a3b9-331a532d1004.mp3?filename=The+Magic+Flute,+K.+620+-+Overture.mp3&amp;preview"></audio>
                 </div>
             </div>
-            <div id="kolumn2" style="@(mosaicId == "mosaic6" ? "display:block;" : "display:none;")">
+            <div id="kolumn2" style="@(objectId == "mosaic6" ? "display:block;" : "display:none;")">
             <div id="kolumn3">
                 <p class="sections">Section A</p>
                 <p class="sections">Section 2</p>
@@ -342,7 +342,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
 
             </div>
         
-        <div id="kolumn1" style="@(mosaicId == "mosaic7" ? "display:block;" : "display:none;")">
+        <div id="kolumn1" style="@(objectId == "mosaic7" ? "display:block;" : "display:none;")">
             @*<p>Mosaic: 7</p>*@
             <p class="title">Title</p>
             @*<p>Space</p>*@
@@ -357,7 +357,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
                 <audio id="audio-player" src="https://files.musopen.org/recordings/6699358c-9a7b-4dc3-a3b9-331a532d1004.mp3?filename=The+Magic+Flute,+K.+620+-+Overture.mp3&amp;preview"></audio>
             </div>
         </div>
-        <div id="kolumn2" style="@(mosaicId == "mosaic7" ? "display:block;" : "display:none;")">
+        <div id="kolumn2" style="@(objectId == "mosaic7" ? "display:block;" : "display:none;")">
             <div id="kolumn3">
                 <p class="sections">Section A</p>
                 <p class="sections">Section 2</p>
@@ -397,7 +397,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
 
         </div>
             
-            <div id="kolumn1" style="@(mosaicId == "mosaic8" ? "display:block;" : "display:none;")">
+            <div id="kolumn1" style="@(objectId == "mosaic8" ? "display:block;" : "display:none;")">
                 @*<p>Mosaic: 8</p>*@
                 <p class="title">Title</p>
                 @*<p>Space</p>*@
@@ -412,7 +412,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
                     <audio id="audio-player" src="https://files.musopen.org/recordings/6699358c-9a7b-4dc3-a3b9-331a532d1004.mp3?filename=The+Magic+Flute,+K.+620+-+Overture.mp3&amp;preview"></audio>
                 </div>
             </div>
-            <div id="kolumn2" style="@(mosaicId == "mosaic8" ? "display:block;" : "display:none;")">
+            <div id="kolumn2" style="@(objectId == "mosaic8" ? "display:block;" : "display:none;")">
             <div id="kolumn3">
                 <p class="sections">Section A</p>
                 <p class="sections">Section 2</p>
@@ -451,7 +451,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
                 </div>
 
             </div>
-            <div id="kolumn1" style="@(mosaicId == "mosaic9" ? "display:block;" : "display:none;")">
+            <div id="kolumn1" style="@(objectId == "mosaic9" ? "display:block;" : "display:none;")">
                 @*<p>Mosaic: 9</p>*@
                 <p class="title">Title</p>
                 @*<p>Space</p>*@
@@ -466,7 +466,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
                     <audio id="audio-player" src="https://files.musopen.org/recordings/6699358c-9a7b-4dc3-a3b9-331a532d1004.mp3?filename=The+Magic+Flute,+K.+620+-+Overture.mp3&amp;preview"></audio>
                 </div>
             </div>
-            <div id="kolumn2" style="@(mosaicId == "mosaic9" ? "display:block;" : "display:none;")">
+            <div id="kolumn2" style="@(objectId == "mosaic9" ? "display:block;" : "display:none;")">
             <div id="kolumn3">
                 <p class="sections">Section A</p>
                 <p class="sections">Section 2</p>
@@ -505,7 +505,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
                 </div>
 
             </div>
-        <div id="kolumn1" style="@(mosaicId == "mosaic10" ? "display:block;" : "display:none;")">
+        <div id="kolumn1" style="@(objectId == "mosaic10" ? "display:block;" : "display:none;")">
             @*<p>Mosaic: 10</p>*@
             <p class="title">Title</p>
             @*<p>Space</p>*@
@@ -520,7 +520,7 @@ var mosaicId = ViewBag.MosaicId.ToString();
                 <audio id="audio-player" src="https://files.musopen.org/recordings/6699358c-9a7b-4dc3-a3b9-331a532d1004.mp3?filename=The+Magic+Flute,+K.+620+-+Overture.mp3&amp;preview"></audio>
             </div>
         </div>
-        <div id="kolumn2" style="@(mosaicId == "mosaic10" ? "display:block;" : "display:none;")">
+        <div id="kolumn2" style="@(objectId == "mosaic10" ? "display:block;" : "display:none;")">
             <div id="kolumn3">
                 <p class="sections">Section A</p>
                 <p class="sections">Section 2</p>
