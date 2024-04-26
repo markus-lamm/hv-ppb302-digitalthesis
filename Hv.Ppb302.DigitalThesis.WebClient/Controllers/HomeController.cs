@@ -25,6 +25,9 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 
         public IActionResult Index()
         {
+            var geoTag = _geoTagRepo.GetAll();
+            var molarMosaics = _molarMosaicRepo.GetAll();
+            var molecularMosaics = _molecularMosaicRepo.GetAll();
             return View(_geoTagRepo.GetAll());
         }
 
@@ -33,13 +36,30 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             return View();
         }
 
-        [Route("Home/Detail/{objectId}")]
+        [Route("Home/Detail/{objectId:Guid}")]
         public IActionResult Detail(string objectId)
         {
             Guid guid = Guid.Parse(objectId);
+
             var geoTag = _geoTagRepo.Get(guid);
+            if (geoTag != null)
+            {
+                return View(BuildViewModel(geoTag));
+            }
+
             var molarMosaics = _molarMosaicRepo.Get(guid);
+            if (molarMosaics != null)
+            {
+                return View(BuildViewModel(molarMosaics));
+            }
+
             var molecularMosaics = _molecularMosaicRepo.Get(guid);
+            if (molecularMosaics != null)
+            {
+                return View(BuildViewModel(molecularMosaics));
+            }
+
+            return NotFound();
 
             static DetailViewModel BuildViewModel(dynamic model)
             {
@@ -52,23 +72,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     HasAudio = model.HasAudio,
                     AudioFilePath = model.AudioFilePath,
                 };
-            }
-
-            if (geoTag != null)
-            {
-                return View(BuildViewModel(geoTag));
-            }
-            else if (molarMosaics != null)
-            {
-                return View(BuildViewModel(molarMosaics));
-            }
-            else if (molecularMosaics != null)
-            {
-                return View(BuildViewModel(molecularMosaics));
-            }
-            else
-            {
-                return NotFound();
             }
         }
 
