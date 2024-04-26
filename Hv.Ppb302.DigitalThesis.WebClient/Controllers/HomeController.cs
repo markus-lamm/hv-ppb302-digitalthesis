@@ -8,17 +8,17 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly GeoTagCrud _geoTagCrud;
+        private readonly GeoTagRepository _geoTagRepo;
 
-        public HomeController(ILogger<HomeController> logger, GeoTagCrud geoTagCrud)
+        public HomeController(ILogger<HomeController> logger, GeoTagRepository geoTagRepo)
         {
             _logger = logger;
-            _geoTagCrud = geoTagCrud;
+            _geoTagRepo = geoTagRepo;
         }
 
         public IActionResult Home()
         {
-            return View(_geoTagCrud.GetGeoTags());
+            return View(_geoTagRepo.GetAll());
         }
 
         public IActionResult About()
