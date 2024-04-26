@@ -16,7 +16,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             _geoTagRepo = geoTagRepo;
         }
 
-        public IActionResult Home()
+        public IActionResult Index()
         {
             return View(_geoTagRepo.GetAll());
         }
@@ -43,6 +43,10 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             return View();
         }
 
+        public IActionResult Kaleidoscoping()
+        {
+            return View();
+        }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
