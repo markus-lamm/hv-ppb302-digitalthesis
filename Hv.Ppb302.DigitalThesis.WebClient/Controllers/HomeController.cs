@@ -16,19 +16,14 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             _geoTagCrud = geoTagCrud;
         }
 
-        public IActionResult Index()
+        public IActionResult Home()
         {
-            return View();
+            return View(_geoTagCrud.GetGeoTags());
         }
 
         public IActionResult About()
         {
             return View();
-        }
-
-        public IActionResult Home()
-        {
-            return View(_geoTagCrud.GetGeoTags());
         }
 
         [Route("Home/Mosaics/{mosaicId}")]
