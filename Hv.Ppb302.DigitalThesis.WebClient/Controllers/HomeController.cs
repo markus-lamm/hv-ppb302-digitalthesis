@@ -25,9 +25,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 
         public IActionResult Index()
         {
-            var geoTag = _geoTagRepo.GetAll();
-            var molarMosaics = _molarMosaicRepo.GetAll();
-            var molecularMosaics = _molecularMosaicRepo.GetAll();
             return View(_geoTagRepo.GetAll());
         }
 
