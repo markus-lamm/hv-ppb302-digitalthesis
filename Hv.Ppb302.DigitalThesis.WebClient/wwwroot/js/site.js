@@ -112,6 +112,3 @@ playButton.addEventListener('click', function () {
     }, 200);
     audioPlayer.play();
 });
-
-
-
