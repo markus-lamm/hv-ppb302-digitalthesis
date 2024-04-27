@@ -11,11 +11,16 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/detail.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/about.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/geotags.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/kaleidoscoping.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/mosaics.css" asp-append-version="true" />
 </head>
 <body>
     <header>
         <nav class="navbar">
-            <a asp-controller="Home" asp-action="Index"><img class="logo" src="~/images/logo.png" alt="Logotype of Mona Tynkkinen"/></a>
+            <a asp-controller="Home" asp-action="Geotags"><img class="logo" src="~/images/logo.png" alt="Logotype of Mona Tynkkinen"/></a>
             <ul class="nav-list">
                 @if (!User.Identity.IsAuthenticated)
                 {
@@ -33,7 +38,7 @@
                     <a class="nav-link nav-link-ltr" asp-controller="Home" asp-action="About">About</a>
                 </li>
                 <li>
-                    <a class="nav-link nav-link-ltr" asp-controller="Home" asp-action="Index">Tutorial</a>
+                    <a class="nav-link nav-link-ltr" asp-controller="Home" asp-action="Geotags">Tutorial</a>
                 </li>
           
             </ul>

@@ -31,12 +31,17 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 
         public IActionResult Index()
         {
-            return View(_geoTagRepo.GetAll());
+            return View();
         }
 
         public IActionResult About()
         {
             return View();
+        }
+
+        public IActionResult Geotags()
+        {
+            return View(_geoTagRepo.GetAll());
         }
 
         [Route("Home/Detail/{objectId:Guid}")]
