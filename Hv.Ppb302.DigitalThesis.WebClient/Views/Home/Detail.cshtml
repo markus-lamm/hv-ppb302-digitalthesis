@@ -11,6 +11,10 @@
     <div id="kolumn1">
         <p class="title">@viewModel.Title</p>
         <p class="tags">Tags:</p>
+        @foreach (var tag in viewModel.GroupTags)
+        {
+            <p class="tags">@tag.Name</p>
+        }
         <div class="music-controls">
             <i class="fas fa-play" id="play-button"></i>
             <i class="fas fa-volume-up"></i>

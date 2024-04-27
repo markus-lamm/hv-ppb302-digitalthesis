@@ -9,18 +9,24 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly GeoTagRepository _geoTagRepo;
+        private readonly GroupTagRepository _groupTagRepo;
         private readonly MolarMosaicRepository _molarMosaicRepo;
         private readonly MolecularMosaicRepository _molecularMosaicRepo;
+        private readonly TestDataUtils _testDataUtils;
 
         public HomeController(ILogger<HomeController> logger, 
             GeoTagRepository geoTagRepo, 
             MolarMosaicRepository molarMosaicRepo, 
-            MolecularMosaicRepository molecularMosaicRepo)
+            MolecularMosaicRepository molecularMosaicRepo,
+            TestDataUtils testDataUtils,
+            GroupTagRepository groupTagRepo)
         {
             _logger = logger;
             _geoTagRepo = geoTagRepo;
             _molarMosaicRepo = molarMosaicRepo;
             _molecularMosaicRepo = molecularMosaicRepo;
+            _testDataUtils = testDataUtils;
+            _groupTagRepo = groupTagRepo;
         }
 
         public IActionResult Index()
@@ -65,6 +71,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     ObjectId = model.Id,
                     Title = model.Title,
                     Content = model.Content,
+                    GroupTags = model.GroupTags,
                     PdfFilePath = model.PdfFilePath,
                     HasAudio = model.HasAudio,
                     AudioFilePath = model.AudioFilePath,
