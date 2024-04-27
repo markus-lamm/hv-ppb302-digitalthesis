@@ -33,7 +33,7 @@
                     <a class="nav-link nav-link-ltr" asp-controller="Home" asp-action="About">About</a>
                 </li>
                 <li>
-                    <a class="nav-link nav-link-ltr" asp-controller="Home" asp-action="Mosaics">Mosaics</a>
+                    <a class="nav-link nav-link-ltr" asp-controller="Home" asp-action="Index">Tutorial</a>
                 </li>
           
             </ul>
@@ -56,13 +56,8 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" />
                 </div>
-                <div class="remember-me">
-                    <input type="checkbox" id="rememberMe" onchange="handleRememberMe(this)">
-                    <label for="rememberMe">Remember me</label>
-                </div>
                 <div class="button input">
                      <button type="submit" onclick="return validateLoginForm()">Log in</button>
-                    <a href="#">Forgot password?</a>
                 </div>
             </form>
         </div>
