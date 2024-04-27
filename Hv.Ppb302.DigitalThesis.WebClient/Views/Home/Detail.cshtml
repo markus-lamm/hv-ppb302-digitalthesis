@@ -20,21 +20,24 @@
     </div>
             
     <div id="kolumn2">
-        <div id="kolumn3">
-            <p class="sections">Section A</p>
-            <p class="sections">Section 2</p>
-            <p class="sections">Section 3</p>
-            <p class="sections">Section 3.4</p>
-        </div>
-        <div class="text" id="text1">
-            <h1>@viewModel.Title</h1>
-            <p>
-                @for (int i = 0; i < 1000; i++)
-                {
-                    @viewModel.Content;
-                    @:&nbsp;
-                }
-            </p>
+        <div class="container">
+            <div id="kolumn3">
+                <p class="sections">Section A</p>
+                <p class="sections">Section 2</p>
+                <p class="sections">Section 3</p>
+                <p class="sections">Section 3.4</p>
+            </div>
+            <div class="text" id="text1">
+                <h1>@viewModel.Title</h1>
+                <p>
+                    @for (int i = 0; i < 1000; i++)
+                    {
+                        @viewModel.Content
+                        ;
+                        @:&nbsp;
+                    }
+                </p>
+            </div>
         </div>
     </div>
 </div>
