@@ -31,7 +31,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
         var existingMolecularMosaic = _dbContext.MolarMosaics.FirstOrDefault(m => m.Title == molecularMosaic.Title);
         if (existingMolecularMosaic != null)
         {
-            return;
+            throw new Exception("A molar mosaic with the same title already exists");
         }
         _dbContext.MolecularMosaics.Add(molecularMosaic);
         _dbContext.SaveChanges();
