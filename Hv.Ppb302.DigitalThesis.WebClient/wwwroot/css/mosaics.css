@@ -1,1 +1,212 @@
-﻿
+﻿.mosaic-container {
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-image: url(../images/background/background.png);
+    background-size: cover;
+    background-position: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.mosaic a div {
+    font-family: 'Source Code Pro', monospace;
+    position: absolute;
+    top: 20%;
+    width: 140px;
+    text-align: center;
+    font-size: 2.5rem;
+    color: white;
+    text-decoration: none !important;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 0;
+}
+
+.mosaic a:hover div {
+    transition: 0.3s ease;
+    text-decoration: none !important;
+    opacity: 1;
+    visibility: visible;
+    -webkit-filter: drop-shadow(0 0 5px #222);
+    filter: drop-shadow(0 0 5px #222);
+}
+
+.mosaicImg {
+    width: 140px;
+    height: auto;
+    -webkit-filter: drop-shadow(5px 5px 5px #222);
+    filter: drop-shadow(5px 5px 5px #222);
+}
+
+.mosaic {
+    position: absolute;
+    height: 20%;
+    width: auto;
+    z-index: 3;
+}
+
+    .mosaic:hover {
+        animation-play-state: paused;
+    }
+
+.mosaic1 {
+    animation: mosaic1 30s linear infinite;
+}
+
+.mosaic2 {
+    animation: mosaic2 28s linear infinite;
+}
+
+.mosaic3 {
+    animation: mosaic3 25s linear infinite;
+}
+
+.mosaic4 {
+    animation: mosaic4 35s linear infinite;
+}
+
+.mosaic5 {
+    animation: mosaic5 40s linear infinite;
+}
+
+.mosaic6 {
+    animation: mosaic6 30s linear infinite;
+}
+
+.mosaic7 {
+    animation: mosaic7 30s linear infinite;
+}
+
+.mosaic8 {
+    animation: mosaic8 25s linear infinite;
+}
+
+.mosaic9 {
+    animation: mosaic9 35s linear infinite;
+}
+
+.mosaic10 {
+    animation: mosaic10 37s linear infinite;
+}
+
+@keyframes mosaic1 {
+    from {
+        margin-left: 30%;
+        top: -10%;
+    }
+
+    to {
+        margin-left: 40%;
+        top: 110%;
+    }
+}
+
+@keyframes mosaic2 {
+    from {
+        margin-left: 110%;
+        top: 60%;
+    }
+
+    to {
+        margin-left: -10%;
+        top: 20%;
+    }
+}
+
+@keyframes mosaic3 {
+    from {
+        margin-left: -10%;
+        top: 10%;
+    }
+
+    to {
+        margin-left: 110%;
+        top: 30%;
+    }
+}
+
+@keyframes mosaic4 {
+    from {
+        margin-left: 10%;
+        top: 110%;
+    }
+
+    to {
+        margin-left: 40%;
+        top: -10%;
+    }
+}
+
+@keyframes mosaic5 {
+    from {
+        margin-left: 110%;
+        top: 50%;
+    }
+
+    to {
+        margin-left: -10%;
+        top: 80%;
+    }
+}
+
+@keyframes mosaic6 {
+    from {
+        margin-left: 60%;
+        top: -10%;
+    }
+
+    to {
+        margin-left: 80%;
+        top: 110%;
+    }
+}
+
+@keyframes mosaic7 {
+    from {
+        margin-left: 110%;
+        top: 60%;
+    }
+
+    to {
+        margin-left: 60%;
+        top: -10%;
+    }
+}
+
+@keyframes mosaic8 {
+    from {
+        margin-left: -10%;
+        top: 60%;
+    }
+
+    to {
+        margin-left: 70%;
+        top: -10%;
+    }
+}
+
+@keyframes mosaic9 {
+    from {
+        margin-left: 80%;
+        top: 110%;
+    }
+
+    to {
+        margin-left: 10%;
+        top: -10%;
+    }
+}
+
+@keyframes mosaic10 {
+    from {
+        margin-left: 50%;
+        top: -10%;
+    }
+
+    to {
+        margin-left: -10%;
+        top: 80%;
+    }
+}
