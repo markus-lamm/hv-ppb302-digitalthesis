@@ -1,5 +1,6 @@
 ﻿@model List<GeoTag>
 @{
+    ViewData["Title"] = "Geotags";
     var geoTagDictionary = Model.ToDictionary(g => g.Title, g => g);
 }
 
