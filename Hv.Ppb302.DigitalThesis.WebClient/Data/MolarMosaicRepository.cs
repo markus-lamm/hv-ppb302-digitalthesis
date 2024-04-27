@@ -1,4 +1,5 @@
 ﻿using Hv.Ppb302.DigitalThesis.WebClient.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
@@ -11,9 +12,19 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
         _dbContext = dbContext;
     }
 
-    public MolarMosaic? Get(Guid id) => _dbContext.MolarMosaics.Find(id);
+    public MolarMosaic? Get(Guid id)
+    {
+        return _dbContext.MolarMosaics
+            .Include(g => g.GroupTags)
+            .FirstOrDefault(g => g.Id == id);
+    }
 
-    public List<MolarMosaic>? GetAll() => _dbContext.MolarMosaics.ToList();
+    public List<MolarMosaic>? GetAll()
+    {
+        return _dbContext.MolarMosaics
+            .Include(g => g.GroupTags)
+            .ToList();
+    }
 
     public void Create(MolarMosaic molarMosaic)
     {
@@ -49,6 +60,39 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
             throw new Exception("The molar mosaic does not exist");
         }
         _dbContext.MolarMosaics.Remove(existingMolarMosaic);
+        _dbContext.SaveChanges();
+    }
+
+    public void DeleteAllByTitle(string title)
+    {
+        var existingMolarMosaics = _dbContext.MolarMosaics
+            .Where(g => g.Title!.Contains(title))
+            .ToList();
+        if (existingMolarMosaics.Count == 0)
+        {
+            return;
+        }
+        _dbContext.MolarMosaics.RemoveRange(existingMolarMosaics);
+        _dbContext.SaveChanges();
+    }
+
+    public void AddGroupTag(Guid molarMosaicId, Guid groupTagId)
+    {
+        var molarMosaic = _dbContext.MolarMosaics.Find(molarMosaicId);
+        if (molarMosaic == null)
+        {
+            throw new Exception("The molar mosaic does not exist");
+        }
+
+        var groupTag = _dbContext.GroupTags.Find(groupTagId);
+        if (groupTag == null)
+        {
+            throw new Exception("The group tag does not exist");
+        }
+
+        molarMosaic.GroupTags.Add(groupTag);
+        groupTag.MolarMosaics.Add(molarMosaic);
+
         _dbContext.SaveChanges();
     }
 }

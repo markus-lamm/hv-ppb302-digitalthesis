@@ -11,12 +11,14 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
 
         builder.Services.AddDbContext<DigitalThesisDbContext>(options =>
-            options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerConnection")));
+            options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerConnection")),
+            ServiceLifetime.Scoped);
 
         builder.Services.AddScoped<GeoTagRepository>();
         builder.Services.AddScoped<GroupTagRepository>();
         builder.Services.AddScoped<MolarMosaicRepository>();
         builder.Services.AddScoped<MolecularMosaicRepository>();
+        builder.Services.AddScoped<TestDataUtils>();
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();

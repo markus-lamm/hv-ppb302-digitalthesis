@@ -1,4 +1,5 @@
 ﻿using Hv.Ppb302.DigitalThesis.WebClient.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
@@ -11,9 +12,23 @@ public class GroupTagRepository : IRepository<GroupTag>
         _dbContext = dbContext;
     }
 
-    public GroupTag? Get(Guid id) => _dbContext.GroupTags.Find(id);
+    public GroupTag? Get(Guid id)
+    {
+        return _dbContext.GroupTags
+            .Include(g => g.GeoTags)
+            .Include(g => g.MolarMosaics)
+            .Include(g => g.MolecularMosaics)
+            .FirstOrDefault(g => g.Id == id);
+    }
 
-    public List<GroupTag>? GetAll() => _dbContext.GroupTags.ToList();
+    public List<GroupTag>? GetAll()
+    {
+        return _dbContext.GroupTags
+            .Include(g => g.GeoTags)
+            .Include(g => g.MolarMosaics)
+            .Include(g => g.MolecularMosaics)
+            .ToList();
+    }
 
     public void Create(GroupTag groupTag)
     {
@@ -47,6 +62,19 @@ public class GroupTagRepository : IRepository<GroupTag>
             throw new Exception("The group tag does not exist");
         }
         _dbContext.GroupTags.Remove(existingGroupTag);
+        _dbContext.SaveChanges();
+    }
+
+    public void DeleteAllByName(string name)
+    {
+        var existingGroupTags = _dbContext.GroupTags
+            .Where(g => g.Name!.Contains(name))
+            .ToList();
+        if (existingGroupTags.Count == 0)
+        {
+            return;
+        }
+        _dbContext.GroupTags.RemoveRange(existingGroupTags);
         _dbContext.SaveChanges();
     }
 }
