@@ -15,7 +15,7 @@
 <body>
     <header>
         <nav class="navbar">
-            <a asp-controller="Home" asp-action="Index"><img class="logo" src="~/images/logo.png" alt="Logotype of Mona Tynkkinen" /></a>
+            <a asp-controller="Home" asp-action="Index"><img class="logo" src="~/images/logo.png" alt="Logotype of Mona Tynkkinen"/></a>
             <ul class="nav-list">
                 @if (!User.Identity.IsAuthenticated)
                 {
@@ -68,21 +68,17 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
-
     <div class="container">
         <main role="main">
             @RenderBody()
         </main>
     </div>
 
-    <footer class="footer">
-        <div class="container">
-            @*&copy; 2023 - Mona Tynkkinen -*@
-        </div>
-    </footer>
+    <footer class="footer"></footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/mosaics.js" asp-append-version="true"></script>
+    <script src="~/js/authentication.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
