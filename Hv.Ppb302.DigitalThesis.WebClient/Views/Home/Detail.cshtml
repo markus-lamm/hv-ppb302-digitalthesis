@@ -1,0 +1,48 @@
+﻿@model DetailViewModel
+@{
+    var viewModel = Model;
+    ViewData["Title"] = viewModel.Title;
+}
+
+<div id="sidhuvud"></div>
+
+<div class="mosaic-klick" id="backgroundImg">
+
+    <div id="kolumn1">
+        <p class="title">@viewModel.Title</p>
+        <p class="tags">Tags:</p>
+        @foreach (var tag in viewModel.GroupTags)
+        {
+            <p class="tags">@tag.Name</p>
+        }
+        <div class="music-controls">
+            <i class="fas fa-play" id="play-button"></i>
+            <i class="fas fa-volume-up"></i>
+            <img class="pdf_icon" src="~/images/icons/favicon.ico"  />
+            <img class="play_icon" src="~/images/icons/play_icon.png" />
+            <audio id="audio-player" src="https://files.musopen.org/recordings/6699358c-9a7b-4dc3-a3b9-331a532d1004.mp3?filename=The+Magic+Flute,+K.+620+-+Overture.mp3&amp;preview"></audio>
+        </div>
+    </div>
+            
+    <div id="kolumn2">
+        <div class="container">
+            <div id="kolumn3">
+                <p class="sections">Section A</p>
+                <p class="sections">Section 2</p>
+                <p class="sections">Section 3</p>
+                <p class="sections">Section 3.4</p>
+            </div>
+            <div class="text" id="text1">
+                <h1>@viewModel.Title</h1>
+                <p>
+                    @for (int i = 0; i < 1000; i++)
+                    {
+                        @viewModel.Content
+                        ;
+                        @:&nbsp;
+                    }
+                </p>
+            </div>
+        </div>
+    </div>
+</div>

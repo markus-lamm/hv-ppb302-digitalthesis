@@ -1,3 +1,4 @@
+using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
@@ -7,10 +8,25 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly GeoTagRepository _geoTagRepo;
+        private readonly GroupTagRepository _groupTagRepo;
+        private readonly MolarMosaicRepository _molarMosaicRepo;
+        private readonly MolecularMosaicRepository _molecularMosaicRepo;
+        private readonly TestDataUtils _testDataUtils;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, 
+            GeoTagRepository geoTagRepo, 
+            MolarMosaicRepository molarMosaicRepo, 
+            MolecularMosaicRepository molecularMosaicRepo,
+            TestDataUtils testDataUtils,
+            GroupTagRepository groupTagRepo)
         {
             _logger = logger;
+            _geoTagRepo = geoTagRepo;
+            _molarMosaicRepo = molarMosaicRepo;
+            _molecularMosaicRepo = molecularMosaicRepo;
+            _testDataUtils = testDataUtils;
+            _groupTagRepo = groupTagRepo;
         }
 
         public IActionResult Index()
@@ -18,14 +34,68 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             return View();
         }
 
-
         public IActionResult About()
         {
             return View();
         }
-        public IActionResult Mosaics(string mosaicId)
+
+        public IActionResult Geotags()
         {
-            ViewBag.MosaicId = mosaicId;
+            return View(_geoTagRepo.GetAll());
+        }
+
+        [Route("Home/Detail/{objectId:Guid}")]
+        public IActionResult Detail(string objectId)
+        {
+            Guid guid = Guid.Parse(objectId);
+
+            var geoTag = _geoTagRepo.Get(guid);
+            if (geoTag != null)
+            {
+                return View(BuildViewModel(geoTag));
+            }
+
+            var molarMosaics = _molarMosaicRepo.Get(guid);
+            if (molarMosaics != null)
+            {
+                return View(BuildViewModel(molarMosaics));
+            }
+
+            var molecularMosaics = _molecularMosaicRepo.Get(guid);
+            if (molecularMosaics != null)
+            {
+                return View(BuildViewModel(molecularMosaics));
+            }
+
+            return NotFound();
+
+            static DetailViewModel BuildViewModel(dynamic model)
+            {
+                return new DetailViewModel
+                {
+                    ObjectId = model.Id,
+                    Title = model.Title,
+                    Content = model.Content,
+                    GroupTags = model.GroupTags,
+                    PdfFilePath = model.PdfFilePath,
+                    HasAudio = model.HasAudio,
+                    AudioFilePath = model.AudioFilePath,
+                };
+            }
+        }
+
+        public IActionResult MolarMosaics()
+        { 
+            return View(); 
+        }
+
+        public IActionResult MolecularMosaics()
+        {
+            return View();
+        }
+
+        public IActionResult Kaleidoscoping()
+        {
             return View();
         }
 

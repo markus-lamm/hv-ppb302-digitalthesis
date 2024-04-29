@@ -3,33 +3,44 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Mona Tynkkinen</title>
+    <link rel="icon" href="images/logo.png" type="image/x-icon">
+    <title>@ViewData["Title"]</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/VIsualiserad_Avhandling.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/detail.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/about.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/geotags.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/kaleidoscoping.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/mosaics.css" asp-append-version="true" />
 </head>
 <body>
     <header>
         <nav class="navbar">
-            <a asp-controller="Home" asp-action="Index"><img class="logo" src="~/images/logo.png" alt="Logotype of Mona Tynkkinen" /></a>
+            <a asp-controller="Home" asp-action="Geotags"><img class="logo" src="~/images/logo.png" alt="Logotype of Mona Tynkkinen"/></a>
             <ul class="nav-list">
-                <li>
-                    <a class="nav-link nav-link-ltr" asp-controller="Home" asp-action="Mosaics">Mosaics</a>
-                </li>
+                @if (!User.Identity.IsAuthenticated)
+                {
+                    <li class="nav-item">
+                        <a class="nav-link nav-link-ltr" href="javascript:void(0);" onclick="showLoginOverlay()">Log in</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Admin" asp-action="Logout">Log out</a>
+                    </li>
+                }
                 <li>
                     <a class="nav-link nav-link-ltr" asp-controller="Home" asp-action="About">About</a>
                 </li>
-           @if (!User.Identity.IsAuthenticated)
-            {
-                <li class="nav-item">
-                    <a class="nav-link nav-link-ltr" href="javascript:void(0);" onclick="showLoginOverlay()">Log in</a>
+                <li>
+                    <a class="nav-link nav-link-ltr" asp-controller="Home" asp-action="Geotags">Tutorial</a>
                 </li>
-            }
-            else
-            {
-                <li class="nav-item">
-                    <a class="nav-link" asp-controller="Admin" asp-action="Logout">Log out</a>
-                </li>
-            }
+          
             </ul>
         </nav>
     </header>
@@ -50,19 +61,12 @@
                     <label for="password">Password</label>
                     <input type="password" id="password" name="password" />
                 </div>
-                <div class="remember-me">
-                    <input type="checkbox" id="rememberMe" onchange="handleRememberMe(this)">
-                    <label for="rememberMe">Remember me</label>
-                </div>
                 <div class="button input">
                      <button type="submit" onclick="return validateLoginForm()">Log in</button>
-                    <a href="#">Forgot password?</a>
                 </div>
             </form>
         </div>
     </div>
-
-    <script src="script.js"></script>
 
     <div class="container">
         <main role="main">
@@ -70,13 +74,11 @@
         </main>
     </div>
 
-    <footer class="footer">
-        <div class="container">
-            @*&copy; 2023 - Mona Tynkkinen -*@
-        </div>
-    </footer>
+    <footer class="footer"></footer>
+
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/mosaics.js" asp-append-version="true"></script>
+    <script src="~/js/authentication.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
