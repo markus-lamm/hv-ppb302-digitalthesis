@@ -92,7 +92,25 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
 
         molecularMosaic.GroupTags.Add(groupTag);
         groupTag.MolecularMosaics.Add(molecularMosaic);
+        _dbContext.SaveChanges();
+    }
 
+    public void RemoveGroupTag(Guid molecularMosaicId, Guid groupTagId)
+    {
+        var molecularMosaic = _dbContext.MolecularMosaics.Find(molecularMosaicId);
+        if (molecularMosaic == null)
+        {
+            throw new Exception("The molecular mosaic does not exist");
+        }
+
+        var groupTag = _dbContext.GroupTags.Find(groupTagId);
+        if (groupTag == null)
+        {
+            throw new Exception("The group tag does not exist");
+        }
+
+        molecularMosaic.GroupTags.Remove(groupTag);
+        groupTag.MolecularMosaics.Remove(molecularMosaic);
         _dbContext.SaveChanges();
     }
 }
