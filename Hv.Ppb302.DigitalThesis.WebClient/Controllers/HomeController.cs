@@ -86,12 +86,30 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 
         public IActionResult MolarMosaics()
         {
-            return View(_molarMosaicRepo.GetAll()); 
+            return View(BuildViewModel(_molarMosaicRepo.GetAll()!));
+
+            static MolarMosaicsViewModel BuildViewModel(IEnumerable<MolarMosaic> molarMosaics)
+            {
+                return new MolarMosaicsViewModel
+                {
+                    MolarMosaics = molarMosaics.ToList(),
+                    GroupTags = molarMosaics.SelectMany(x => x.GroupTags).Distinct().ToList(),
+                };
+            }
         }
 
         public IActionResult MolecularMosaics()
         {
-            return View(_molecularMosaicRepo.GetAll());
+            return View(BuildViewModel(_molecularMosaicRepo.GetAll()!));
+
+            static MolecularMosaicsViewModel BuildViewModel(IEnumerable<MolecularMosaic> molecularMosaics)
+            {
+                return new MolecularMosaicsViewModel
+                {
+                    MolecularMosaics = molecularMosaics.ToList(),
+                    GroupTags = molecularMosaics.SelectMany(x => x.GroupTags).Distinct().ToList(),
+                };
+            }
         }
 
         public IActionResult Kaleidoscoping()
