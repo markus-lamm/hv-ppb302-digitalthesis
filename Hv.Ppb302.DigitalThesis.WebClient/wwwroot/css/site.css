@@ -54,7 +54,6 @@ body {
     margin-left: 30px;
 }
 
-
 .sidebar {
     font-family: "Inconsolata", sans-serif;
     color: black;
@@ -418,22 +417,3 @@ body {
         .music-controls .fa-play.clicked {
             transform: translateY(2px);
         }
-
-.mosaic-klick {
-    z-index: 0;
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    background-image: url(../images/background/background.png);
-    background-size: cover;
-    background-position: center;
-    justify-content: center;
-    align-items: center;
-}
-
-
-
-
-    
-
-
