@@ -1,11 +1,11 @@
-﻿@model List<MolecularMosaic>
+﻿@model MolecularMosaicsViewModel
 @{
     ViewData["Title"] = "Molecular Mosaics";
 }
 
 <div class="mosaic-container">
     <div class="mosaic-float">
-        @foreach(var mosaic in Model)
+        @foreach(var mosaic in Model.MolecularMosaics!)
         {
             <div class="mosaic">
                 <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id})">
@@ -22,54 +22,17 @@
     <h3 class="sidebarLine">Filter</h3>
     <h3 class="sidebarLine">Tags</h3>
     <ul class="tagList">
-        <li>
-            <div class="item">
-                <div class="checkbox-rect2">
-                    <input type="checkbox" id="checkbox-rect1" name="check">
-                    <label for="checkbox-rect1">Tag</label>
+        @foreach (var tag in Model.GroupTags!)
+        {
+            <li>
+                <div class="item">
+                    <div class="filter-checkbox">
+                        <input type="checkbox" name="check">
+                        <label for="filter-checkbox">@tag.Name</label>
+                    </div>
                 </div>
-            </div>
-        </li>
-        <li>
-            <div class="item">
-                <div class="checkbox-rect2">
-                    <input type="checkbox" id="checkbox-rect2" name="check">
-                    <label for="checkbox-rect2">Tag</label>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="item">
-                <div class="checkbox-rect2">
-                    <input type="checkbox" id="checkbox-rect3" name="check">
-                    <label for="checkbox-rect3">Tag</label>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="item">
-                <div class="checkbox-rect2">
-                    <input type="checkbox" id="checkbox-rect4" name="check">
-                    <label for="checkbox-rect4">Tag</label>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="item">
-                <div class="checkbox-rect2">
-                    <input type="checkbox" id="checkbox-rect5" name="check">
-                    <label for="checkbox-rect5">Tag</label>
-                </div>
-            </div>
-        </li>
-        <li>
-            <div class="item">
-                <div class="checkbox-rect2">
-                    <input type="checkbox" id="checkbox-rect6" name="check">
-                    <label for="checkbox-rect6">Tag</label>
-                </div>
-            </div>
-        </li>
+            </li>
+        }
     </ul>
     <a href="javascript:void(0)" class="filtrerabtn" onclick="">
         Filtrera
