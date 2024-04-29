@@ -56,6 +56,14 @@ mosaics.forEach((mosaic) => {
         x: (Math.random() > 0.5 ? 1 : -1) + Math.random() * 0.5 - 0.1,
         y: (Math.random() > 0.5 ? 1 : -1) + Math.random() * 0.5 - 0.1
     });
+
+    // Pause the animation when the mouse is over the mosaic
+    mosaic.addEventListener('mouseover', function () {
+        this.classList.add('paused');
+    });
+    mosaic.addEventListener('mouseout', function () {
+        this.classList.remove('paused');
+    });
 });
 
 // Define a speed factor (smaller values will make the animation slower)
@@ -63,6 +71,11 @@ const speedFactor = 0.5;
 
 function update() {
     mosaics.forEach((mosaic, index) => {
+        // Skip this mosaic if it's paused
+        if (mosaic.classList.contains('paused')) {
+            return;
+        }
+
         // Get current position
         const rect = mosaic.getBoundingClientRect();
 
