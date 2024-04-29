@@ -58,6 +58,9 @@ mosaics.forEach((mosaic) => {
     });
 });
 
+// Define a speed factor (smaller values will make the animation slower)
+const speedFactor = 0.5;
+
 function update() {
     mosaics.forEach((mosaic, index) => {
         // Get current position
@@ -72,8 +75,8 @@ function update() {
         }
 
         // Update position
-        mosaic.style.left = `${rect.left + directions[index].x}px`;
-        mosaic.style.top = `${rect.top + directions[index].y}px`;
+        mosaic.style.left = `${rect.left + directions[index].x * speedFactor}px`;
+        mosaic.style.top = `${rect.top + directions[index].y * speedFactor}px`;
     });
 
     // Call update again on the next frame

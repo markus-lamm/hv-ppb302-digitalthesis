@@ -10,17 +10,26 @@
     align-items: center;
 }
 
-.mosaic a div {
-    font-family: 'Source Code Pro', monospace;
-    width: 140px;
-    text-align: center;
-    font-size: 2.5rem;
-    color: white;
-    text-decoration: none !important;
-    opacity: 0;
-    visibility: hidden;
-    z-index: 0;
+.mosaic a {
+    position: relative;
+    display: inline-block;
 }
+
+    .mosaic a div {
+        font-family: 'Inconsolata', serif;
+        width: 100%;
+        text-align: center;
+        font-size: 2.5rem;
+        color: white;
+        text-decoration: none !important;
+        opacity: 0;
+        visibility: hidden;
+        z-index: 1;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 
 .mosaic a:hover div {
     transition: 0.3s ease;
@@ -42,20 +51,4 @@
     position: absolute;
     width: auto;
     z-index: 3;
-}
-
-    .mosaic:hover {
-        animation-play-state: paused;
-    }
-
-.mosaic-klick {
-    z-index: 0;
-    width: 100vw;
-    height: 100vh;
-    position: fixed;
-    background-image: url(../images/background/background.png);
-    background-size: cover;
-    background-position: center;
-    justify-content: center;
-    align-items: center;
 }
