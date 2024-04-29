@@ -85,13 +85,13 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         }
 
         public IActionResult MolarMosaics()
-        { 
-            return View(); 
+        {
+            return View(_molarMosaicRepo.GetAll()); 
         }
 
         public IActionResult MolecularMosaics()
         {
-            return View();
+            return View(_molecularMosaicRepo.GetAll());
         }
 
         public IActionResult Kaleidoscoping()

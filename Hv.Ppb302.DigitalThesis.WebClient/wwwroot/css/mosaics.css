@@ -1,1 +1,61 @@
-﻿
+﻿.mosaic-container {
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-image: url(../images/background/background.png);
+    background-size: cover;
+    background-position: center;
+    justify-content: center;
+    align-items: center;
+}
+
+.mosaic a div {
+    font-family: 'Source Code Pro', monospace;
+    width: 140px;
+    text-align: center;
+    font-size: 2.5rem;
+    color: white;
+    text-decoration: none !important;
+    opacity: 0;
+    visibility: hidden;
+    z-index: 0;
+}
+
+.mosaic a:hover div {
+    transition: 0.3s ease;
+    text-decoration: none !important;
+    opacity: 1;
+    visibility: visible;
+    -webkit-filter: drop-shadow(0 0 5px #222);
+    filter: drop-shadow(0 0 5px #222);
+}
+
+.mosaicImg {
+    width: 140px;
+    height: auto;
+    -webkit-filter: drop-shadow(5px 5px 5px #222);
+    filter: drop-shadow(5px 5px 5px #222);
+}
+
+.mosaic {
+    position: absolute;
+    width: auto;
+    z-index: 3;
+}
+
+    .mosaic:hover {
+        animation-play-state: paused;
+    }
+
+.mosaic-klick {
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-image: url(../images/background/background.png);
+    background-size: cover;
+    background-position: center;
+    justify-content: center;
+    align-items: center;
+}
