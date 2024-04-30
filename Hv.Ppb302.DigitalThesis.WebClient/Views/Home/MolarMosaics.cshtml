@@ -3,13 +3,13 @@
     ViewData["Title"] = "Molar Mosaics";
 }
 
-<div class="mosaic-container" id="backgroundImg">
+<div class="mosaic-container">
     <div class="mosaic-float">
         @foreach(var mosaic in Model.MolarMosaics!)
         {
-            <div class="mosaic">
+            <div class="mosaic" data-tags="@string.Join(',', mosaic.GroupTags.Select(tag => tag.Name))">
                 <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id})">
-                    <img class="mosaicImg" src="~/images/mosaics/yellow-mosaic.png" />
+                    <img class="mosaicImg" src="~/images/mosaics/mosaic-yellow-1.png" />
                     <div>@mosaic.Title</div>
                 </a>
             </div>
@@ -27,16 +27,13 @@
             <li>
                 <div class="item">
                     <div class="filter-checkbox">
-                        <input type="checkbox" name="check">
-                        <label for="filter-checkbox">@tag.Name</label>
+                        <input type="checkbox" id="@tag.Name" name="check" data-tag="@tag.Name">
+                        <label for="@tag.Name">@tag.Name</label>
                     </div>
                 </div>
             </li>
         }
     </ul>
-    <a href="javascript:void(0)" class="filtrerabtn" onclick="">
-        Filtrera
-    </a>
 </div>
 
 <div id="main">
