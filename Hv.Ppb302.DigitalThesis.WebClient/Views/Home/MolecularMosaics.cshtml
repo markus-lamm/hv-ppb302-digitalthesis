@@ -1,15 +1,18 @@
 ﻿@model MolecularMosaicsViewModel
 @{
     ViewData["Title"] = "Molecular Mosaics";
+    var mosaicImages = Enumerable.Range(1, 14).Select(i => $"~/images/mosaics/mosaic-blue-{i}.png").ToArray();
+    var random = new Random();
 }
 
 <div class="mosaic-container">
     <div class="mosaic-float">
         @foreach(var mosaic in Model.MolecularMosaics!)
         {
-            <div class="mosaic">
+            var randomBlueMosaicImg = mosaicImages[random.Next(mosaicImages.Length)];
+            <div class="mosaic" data-tags="@string.Join(',', mosaic.GroupTags.Select(tag => tag.Name))">
                 <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id})">
-                    <img class="mosaicImg" src="~/images/mosaics/mosaic1.png" />
+                    <img class="mosaicImg" src="@Url.Content(randomBlueMosaicImg)" />
                     <div>@mosaic.Title</div>
                 </a>
             </div>
@@ -22,21 +25,18 @@
     <h3 class="sidebarLine">Filter</h3>
     <h3 class="sidebarLine">Tags</h3>
     <ul class="tagList">
-        @foreach (var tag in Model.GroupTags!)
+        @foreach(var tag in Model.GroupTags!)
         {
             <li>
                 <div class="item">
                     <div class="filter-checkbox">
-                        <input type="checkbox" name="check">
-                        <label for="filter-checkbox">@tag.Name</label>
+                        <input type="checkbox" id="@tag.Name" name="check" data-tag="@tag.Name">
+                        <label for="@tag.Name">@tag.Name</label>
                     </div>
                 </div>
             </li>
         }
     </ul>
-    <a href="javascript:void(0)" class="filtrerabtn" onclick="">
-        Filtrera
-    </a>
 </div>
 
 <div id="main">

@@ -1,29 +1,7 @@
-﻿//Mosaics
-function hideMosaics() {
-    var mosaics = document.querySelectorAll('.mosaic-container .mosaic-float .mosaic');
-    mosaics.forEach(function (mosaic) {
-        mosaic.style.display = "none";
-    });
-}
-
-function showMosaics() {
-    var mosaics = document.querySelectorAll('.mosaic-container .mosaic-float .mosaic');
-    mosaics.forEach(function (mosaic) {
-        mosaic.style.display = "";
-    });
-}
-
-$(document).ready(function () {
-    $(".mosaic").click(function () {
-        var mosaicId = $(this).attr("id");
-        window.location.href = "/Home/Mosaics?mosaicId=" + mosaicId;
-    });
-});
-
-//Filter sidebar
+﻿//FILTER
 function openNav() {
-    document.getElementById("mySidebar").style.width = "250px";
-    document.getElementById("main").style.marginLeft = "250px";
+    document.getElementById("mySidebar").style.width = "20rem";
+    document.getElementById("main").style.marginLeft = "20rem";
     let btn = document.querySelector('.openbtn');
     btn.classList.add('hide');
 }
@@ -35,6 +13,8 @@ function closeNav() {
     let btn = document.querySelector('.openbtn');
     btn.classList.remove('hide');
 }
+
+//MOSAICS
 
 // Get the mosaic container
 const container = document.querySelector('.mosaic-container');
@@ -98,3 +78,33 @@ function update() {
 
 // Start the update loop
 update();
+
+// Get all checkboxes
+const checkboxes = Array.from(document.querySelectorAll('.filter-checkbox input[type="checkbox"]'));
+
+// Reset all checkboxes when the page loads
+window.onload = function () {
+    checkboxes.forEach((checkbox) => {
+        checkbox.checked = false;
+    });
+};
+
+// Add a click event listener to each checkbox
+checkboxes.forEach((checkbox) => {
+    checkbox.addEventListener('click', function () {
+        // Get all selected tags
+        const selectedTags = checkboxes.filter(checkbox => checkbox.checked).map(checkbox => checkbox.dataset.tag);
+
+        // Filter mosaics
+        mosaics.forEach((mosaic) => {
+            const mosaicTags = mosaic.dataset.tags.split(',');
+            if (selectedTags.length === 0 || selectedTags.some(tag => mosaicTags.includes(tag))) {
+                // If no checkboxes are selected or the mosaic has at least one of the selected tags, make it fully visible
+                mosaic.style.opacity = '1';
+            } else {
+                // Otherwise, make it almost transparent
+                mosaic.style.opacity = '0.2';
+            }
+        });
+    });
+});

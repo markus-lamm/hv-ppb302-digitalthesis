@@ -162,17 +162,6 @@ body {
     display: none;
 }
 
-.filtrerabtn {
-    position: absolute;
-    top: 70%;
-    left: 27%;
-    font-size: 30px;
-    color: black;
-    cursor: pointer;
-    text-decoration: none;
-
-}
-
 .overlay {
     position: fixed;
     top: 0;
