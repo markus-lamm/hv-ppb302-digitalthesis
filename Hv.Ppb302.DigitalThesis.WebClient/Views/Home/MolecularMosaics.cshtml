@@ -11,7 +11,7 @@
         {
             var randomBlueMosaicImg = mosaicImages[random.Next(mosaicImages.Length)];
             <div class="mosaic" data-tags="@string.Join(',', mosaic.GroupTags.Select(tag => tag.Name))">
-                <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id})">
+                <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id, objectType = "molecularmosaic" })">
                     <img class="mosaicImg" src="@Url.Content(randomBlueMosaicImg)" />
                     <div>@mosaic.Title</div>
                 </a>
