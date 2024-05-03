@@ -1,3 +1,40 @@
-﻿@{
+﻿@model List<GroupTag>
+@{
     ViewData["Title"] = "Kaleido-scoping";
 }
+
+
+<div class="kaleid-container">
+    <div class="roulette" id="biggi">
+        <div class="rouletteimage">
+            <img src="/images/background/kaleibackground.png" id="bigImage" />
+            @foreach (var tag in Model)
+            {
+                foreach (var mosaic in tag.MolarMosaics)
+                {
+                    <img src="/images/mosaics/mosaic-grey-1.png" class="smallCircle" data-tags="@string.Join(',', mosaic.GroupTags.Select(tag => tag.Name))" />
+                }
+                foreach (var molemosaic in tag.MolecularMosaics)
+                {
+                    <img src="/images/mosaics/mosaic-yellow-1.png" class="smallCircle" data-tags="@string.Join(',', molemosaic.GroupTags.Select(tag => tag.Name))" />
+                }
+            }
+        </div>
+    </div>
+
+    <div class="tagmenu">
+        <h2>Kaleidoscope</h2>
+        <hr />
+        <ul class="tagList">
+            @foreach (var tag in Model)
+            {
+                <li>
+                    <div class="tag-kaleiitem">
+                        <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name" class="custom-radio">
+                        <label for="tag_@tag.Name" class="custom-radio-label">@tag.Name</label>
+                    </div>
+                </li>
+            }
+        </ul>
+    </div>
+</div>
