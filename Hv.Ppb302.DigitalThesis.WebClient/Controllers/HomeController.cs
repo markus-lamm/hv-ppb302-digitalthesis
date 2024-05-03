@@ -45,26 +45,35 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         }
 
         [Route("Home/Detail/{objectId:Guid}")]
-        public IActionResult Detail(string objectId)
+        public IActionResult Detail(Guid objectId, string objectType)
         {
-            Guid guid = Guid.Parse(objectId);
-
-            var geoTag = _geoTagRepo.Get(guid);
-            if (geoTag != null)
+            if(objectType == "geotag")
             {
-                return View(BuildViewModel(geoTag));
+                var geoTag = _geoTagRepo.Get(objectId);
+                if (geoTag != null)
+                {
+                    return View(BuildViewModel(geoTag));
+                }
             }
-
-            var molarMosaics = _molarMosaicRepo.Get(guid);
-            if (molarMosaics != null)
+            else if(objectType == "molarmosaic")
             {
-                return View(BuildViewModel(molarMosaics));
+                var molarMosaics = _molarMosaicRepo.Get(objectId);
+                if (molarMosaics != null)
+                {
+                    return View(BuildViewModel(molarMosaics));
+                }
             }
-
-            var molecularMosaics = _molecularMosaicRepo.Get(guid);
-            if (molecularMosaics != null)
+            else if(objectType == "molecularmosaic")
             {
-                return View(BuildViewModel(molecularMosaics));
+                var molecularMosaics = _molecularMosaicRepo.Get(objectId);
+                if (molecularMosaics != null)
+                {
+                    return View(BuildViewModel(molecularMosaics));
+                }
+            }
+            else
+            {
+                throw new Exception("Invalid object type");
             }
 
             return NotFound();

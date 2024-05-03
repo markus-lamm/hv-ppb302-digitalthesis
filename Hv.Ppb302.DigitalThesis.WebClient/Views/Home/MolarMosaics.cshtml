@@ -8,7 +8,7 @@
         @foreach(var mosaic in Model.MolarMosaics!)
         {
             <div class="mosaic" data-tags="@string.Join(',', mosaic.GroupTags.Select(tag => tag.Name))">
-                <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id})">
+                <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id, objectType = "molarmosaic" })">
                     <img class="mosaicImg" src="~/images/mosaics/mosaic-yellow-1.png" />
                     <div>@mosaic.Title</div>
                 </a>
