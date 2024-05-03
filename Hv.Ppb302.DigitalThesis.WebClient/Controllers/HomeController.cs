@@ -114,7 +114,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 
         public IActionResult Kaleidoscoping()
         {
-            return View();
+            return View(_groupTagRepo.GetAll());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
