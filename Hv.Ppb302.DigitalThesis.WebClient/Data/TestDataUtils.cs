@@ -8,16 +8,19 @@ public class TestDataUtils
     private readonly GroupTagRepository _groupTagRepo;
     private readonly MolarMosaicRepository _molarMosaicRepo;
     private readonly MolecularMosaicRepository _molecularMosaicRepo;
+    private readonly KaleidoscopeMosaicRepository _kaleidoscopeMosaicRepository;
 
     public TestDataUtils(GeoTagRepository geoTagRepo,
         MolarMosaicRepository molarMosaicRepo,
         MolecularMosaicRepository molecularMosaicRepo,
-        GroupTagRepository groupTagRepo)
+        GroupTagRepository groupTagRepo,
+        KaleidoscopeMosaicRepository kaleidoscopeMosaicRepository)
     {
         _geoTagRepo = geoTagRepo;
         _molarMosaicRepo = molarMosaicRepo;
         _molecularMosaicRepo = molecularMosaicRepo;
         _groupTagRepo = groupTagRepo;
+        _kaleidoscopeMosaicRepository = kaleidoscopeMosaicRepository;
     }
 
     public void CreateGroupTag()
@@ -110,6 +113,22 @@ public class TestDataUtils
 
         _molecularMosaicRepo.Create(molecularMosaic);
         _molecularMosaicRepo.AddGroupTag(molecularMosaic.Id, groupTag.Id);
+    }
+
+    public void CreateKaleidoscopeMosaicWithGroupTag(string groupTagId)
+    {
+        var groupTag = FindGroupTagById(groupTagId);
+        if (groupTag == null) { return; }
+
+        var random = new Random();
+        var randomNumber = random.Next(1, 1000);
+        var KaleidoscopeMosaic = new KaleidoscopeMosaic
+        {
+            Title = "KaledoscopeTest" + randomNumber,
+        };
+
+        _kaleidoscopeMosaicRepository.Create(KaleidoscopeMosaic);
+        _kaleidoscopeMosaicRepository.AddGroupTag(KaleidoscopeMosaic.Id, groupTag.Id);
     }
 
     public GeoTag? FindGeoTagById(string id)

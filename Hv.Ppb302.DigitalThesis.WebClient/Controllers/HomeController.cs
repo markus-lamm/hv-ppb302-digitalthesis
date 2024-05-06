@@ -12,6 +12,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         private readonly GroupTagRepository _groupTagRepo;
         private readonly MolarMosaicRepository _molarMosaicRepo;
         private readonly MolecularMosaicRepository _molecularMosaicRepo;
+        private readonly KaleidoscopeMosaicRepository _kaleidoscopeMosaicRepo;
         private readonly TestDataUtils _testDataUtils;
 
         public HomeController(ILogger<HomeController> logger, 
@@ -19,7 +20,8 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             MolarMosaicRepository molarMosaicRepo, 
             MolecularMosaicRepository molecularMosaicRepo,
             TestDataUtils testDataUtils,
-            GroupTagRepository groupTagRepo)
+            GroupTagRepository groupTagRepo,
+            KaleidoscopeMosaicRepository kaleidoscopeMosaicRepository)
         {
             _logger = logger;
             _geoTagRepo = geoTagRepo;
@@ -27,6 +29,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             _molecularMosaicRepo = molecularMosaicRepo;
             _testDataUtils = testDataUtils;
             _groupTagRepo = groupTagRepo;
+            _kaleidoscopeMosaicRepo = kaleidoscopeMosaicRepository;
         }
 
         public IActionResult Index()
@@ -74,6 +77,12 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             else
             {
                 throw new Exception("Invalid object type");
+            }
+
+            var kaleidoscopeMosaic = _kaleidoscopeMosaicRepo.Get(guid);
+            if (kaleidoscopeMosaic != null)
+            {
+                return View(BuildViewModel(kaleidoscopeMosaic));
             }
 
             return NotFound();

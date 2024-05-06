@@ -18,6 +18,7 @@ public class Program
         builder.Services.AddScoped<GroupTagRepository>();
         builder.Services.AddScoped<MolarMosaicRepository>();
         builder.Services.AddScoped<MolecularMosaicRepository>();
+        builder.Services.AddScoped<KaleidoscopeMosaicRepository>();
         builder.Services.AddScoped<TestDataUtils>();
 
         // Add services to the container.
