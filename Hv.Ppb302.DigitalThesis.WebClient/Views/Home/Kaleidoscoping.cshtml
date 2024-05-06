@@ -12,7 +12,7 @@
             {
                 foreach (var mosaic in tag.KaleidoscopeMosaics)
                 {
-                     <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id})">
+                    <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id, objectType = "kaleidoscope" })">
                         <img src="~/images/mosaics/mosaic-yellow-1.png" class="smallCircle" data-tags="@string.Join(',', mosaic.GroupTags.Select(tag => tag.Name))" />
                      </a>
                 }

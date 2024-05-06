@@ -50,7 +50,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         [Route("Home/Detail/{objectId:Guid}")]
         public IActionResult Detail(Guid objectId, string objectType)
         {
-            if(objectType == "geotag")
+            if (objectType == "geotag")
             {
                 var geoTag = _geoTagRepo.Get(objectId);
                 if (geoTag != null)
@@ -58,7 +58,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     return View(BuildViewModel(geoTag));
                 }
             }
-            else if(objectType == "molarmosaic")
+            else if (objectType == "molarmosaic")
             {
                 var molarMosaics = _molarMosaicRepo.Get(objectId);
                 if (molarMosaics != null)
@@ -66,7 +66,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     return View(BuildViewModel(molarMosaics));
                 }
             }
-            else if(objectType == "molecularmosaic")
+            else if (objectType == "molecularmosaic")
             {
                 var molecularMosaics = _molecularMosaicRepo.Get(objectId);
                 if (molecularMosaics != null)
@@ -74,16 +74,19 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     return View(BuildViewModel(molecularMosaics));
                 }
             }
+            else if (objectType == "kaleidoscope")
+            { 
+                var kaleidoscopeMosaic = _kaleidoscopeMosaicRepo.Get(objectId);
+                if (kaleidoscopeMosaic != null)
+                {
+                    return View(BuildViewModel(kaleidoscopeMosaic));
+                }
+            }
             else
             {
                 throw new Exception("Invalid object type");
             }
 
-            var kaleidoscopeMosaic = _kaleidoscopeMosaicRepo.Get(objectId);
-            if (kaleidoscopeMosaic != null)
-            {
-                return View(BuildViewModel(kaleidoscopeMosaic));
-            }
 
             return NotFound();
 
