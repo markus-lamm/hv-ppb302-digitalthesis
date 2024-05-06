@@ -7,13 +7,13 @@
 <div class="kaleid-container">
     <div class="roulette" id="biggi">
         <div class="rouletteimage">
-            <img src="/images/background/kaleibackground.png" id="bigImage" />
+            <img src="~/images/background/kaleibackground.png" id="bigImage" />
             @foreach (var tag in Model)
             {
                 foreach (var mosaic in tag.KaleidoscopeMosaics)
                 {
                      <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id})">
-                        <img src="/images/mosaics/mosaic-yellow-1.png" class="smallCircle" data-tags="@string.Join(',', mosaic.GroupTags.Select(tag => tag.Name))" />
+                        <img src="~/images/mosaics/mosaic-yellow-1.png" class="smallCircle" data-tags="@string.Join(',', mosaic.GroupTags.Select(tag => tag.Name))" />
                      </a>
                 }
             }
