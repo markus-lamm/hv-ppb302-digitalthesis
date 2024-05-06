@@ -27,6 +27,7 @@ public class GroupTagRepository : IRepository<GroupTag>
             .Include(g => g.GeoTags)
             .Include(g => g.MolarMosaics)
             .Include(g => g.MolecularMosaics)
+            .Include(g => g.KaleidoscopeMosaics)
             .ToList();
     }
 
