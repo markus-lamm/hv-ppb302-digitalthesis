@@ -92,7 +92,25 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
 
         molarMosaic.GroupTags.Add(groupTag);
         groupTag.MolarMosaics.Add(molarMosaic);
+        _dbContext.SaveChanges();
+    }
 
+    public void RemoveGroupTag(Guid molarMosaicId, Guid groupTagId)
+    {
+        var molarMosaic = _dbContext.MolarMosaics.Find(molarMosaicId);
+        if (molarMosaic == null)
+        {
+            throw new Exception("The molar mosaic does not exist");
+        }
+
+        var groupTag = _dbContext.GroupTags.Find(groupTagId);
+        if (groupTag == null)
+        {
+            throw new Exception("The group tag does not exist");
+        }
+
+        molarMosaic.GroupTags.Remove(groupTag);
+        groupTag.MolarMosaics.Remove(molarMosaic);
         _dbContext.SaveChanges();
     }
 }

@@ -96,4 +96,23 @@ public class GeoTagRepository : IRepository<GeoTag>
         groupTag.GeoTags.Add(geoTag);
         _dbContext.SaveChanges();
     }
+
+    public void RemoveGroupTag(Guid geoTagId, Guid groupTagId)
+    {
+        var geoTag = _dbContext.GeoTags.Find(geoTagId);
+        if (geoTag == null)
+        {
+            throw new Exception("The geotag does not exist");
+        }
+
+        var groupTag = _dbContext.GroupTags.Find(groupTagId);
+        if (groupTag == null)
+        {
+            throw new Exception("The group tag does not exist");
+        }
+
+        geoTag.GroupTags.Remove(groupTag);
+        groupTag.GeoTags.Remove(geoTag);
+        _dbContext.SaveChanges();
+    }
 }

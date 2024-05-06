@@ -1,1 +1,105 @@
 ﻿
+.kaleid-container {
+    overflow: hidden !important;
+    background-image: url(../images/background/image.png);
+    background-size: cover;
+    height: 100%;
+    width: 100vw;
+    display: flex !important;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 10vh;
+    max-height: 90vh;
+}
+.tagmenu {
+    display: flex;
+    flex-direction: column;
+    padding-top: 15vh;
+    background-color: rgba(213, 208, 200, 0.4);
+    width: 20%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    backdrop-filter: blur(5px);
+    height: 100%;
+}
+
+.tagmenu hr {
+    width: 100%;
+}
+
+.tag-kaleiitem{
+    display: flex;
+    align-items: center;
+}
+/* Custom radio button */
+.custom-radio {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid #000;
+    border-radius: 5px;
+    outline: none;
+    cursor: pointer;
+    transition: border-color 0.3s;
+}
+
+/* When radio button is checked */
+.custom-radio:checked {
+    border-color: #000;
+    background-color: #000; /* Change color to black */
+}
+
+/* Label style */
+.custom-radio-label {
+    display: inline-block;
+    cursor: pointer;
+    margin-left: 5px;
+    justify-self: center;
+}
+
+.roulette {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    padding-top: 15vh;
+    transition: transform 1.5s ease-in-out;
+}
+
+.rouletteimage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.smallCircle {
+    width: 6rem;
+    height: 6rem;
+    border-radius: 50%;
+    position: absolute;
+    transition: transform 1.5s ease-out;
+}
+
+.filterbigimage {
+    filter: brightness(110%) saturate(90%) hue-rotate(195deg);
+}
+
+.filterbigimage2 {
+    filter: brightness(110%) saturate(110%) hue-rotate(50deg);
+}
+
+.filterbigimage3 {
+    filter: brightness(110%) saturate(50%) hue-rotate(145deg);
+}
+.filterbigimage4 {
+    filter: none;
+}
+#bigImage {
+    height: 40rem;
+    width: 40rem;
+}

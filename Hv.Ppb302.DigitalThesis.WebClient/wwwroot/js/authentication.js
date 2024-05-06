@@ -2,7 +2,6 @@
     var overlay = document.getElementById('overlay');
     overlay.style.display = "flex";
     document.querySelector('.mosaic-container').classList.add('blur-background');
-    hideMosaics();
 
     // Retrieve username and password from local storage
     var storedUsername = localStorage.getItem('rememberMeUsername');
@@ -18,7 +17,6 @@ function hideLoginOverlay() {
     var overlay = document.getElementById('overlay');
     overlay.style.display = "none";
     document.querySelector('.mosaic-container').classList.remove('blur-background');
-    showMosaics();
 }
 
 function validateLoginForm() {

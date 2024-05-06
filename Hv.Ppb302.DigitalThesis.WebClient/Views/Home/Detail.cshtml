@@ -4,9 +4,7 @@
     ViewData["Title"] = viewModel.Title;
 }
 
-<div id="sidhuvud"></div>
-
-<div class="mosaic-klick" id="backgroundImg">
+<div class="detail-container">
 
     <div id="kolumn1">
         <p class="title">@viewModel.Title</p>
@@ -35,12 +33,7 @@
             <div class="text" id="text1">
                 <h1>@viewModel.Title</h1>
                 <p>
-                    @for (int i = 0; i < 1000; i++)
-                    {
-                        @viewModel.Content
-                        ;
-                        @:&nbsp;
-                    }
+                    @Html.Raw(viewModel.Content)
                 </p>
             </div>
         </div>

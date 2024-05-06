@@ -11,4 +11,5 @@ public class DigitalThesisDbContext : DbContext
     public DbSet<GroupTag> GroupTags { get; set; }
     public DbSet<MolarMosaic> MolarMosaics { get; set; }
     public DbSet<MolecularMosaic> MolecularMosaics { get; set; }
+    public DbSet<KaleidoscopeMosaic> KaleidoscopeMosaics { get; set; }
 }

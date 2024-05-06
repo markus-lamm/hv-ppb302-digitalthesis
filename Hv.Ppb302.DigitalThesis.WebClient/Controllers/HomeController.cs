@@ -12,6 +12,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         private readonly GroupTagRepository _groupTagRepo;
         private readonly MolarMosaicRepository _molarMosaicRepo;
         private readonly MolecularMosaicRepository _molecularMosaicRepo;
+        private readonly KaleidoscopeMosaicRepository _kaleidoscopeMosaicRepo;
         private readonly TestDataUtils _testDataUtils;
 
         public HomeController(ILogger<HomeController> logger, 
@@ -19,7 +20,8 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             MolarMosaicRepository molarMosaicRepo, 
             MolecularMosaicRepository molecularMosaicRepo,
             TestDataUtils testDataUtils,
-            GroupTagRepository groupTagRepo)
+            GroupTagRepository groupTagRepo,
+            KaleidoscopeMosaicRepository kaleidoscopeMosaicRepository)
         {
             _logger = logger;
             _geoTagRepo = geoTagRepo;
@@ -27,6 +29,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             _molecularMosaicRepo = molecularMosaicRepo;
             _testDataUtils = testDataUtils;
             _groupTagRepo = groupTagRepo;
+            _kaleidoscopeMosaicRepo = kaleidoscopeMosaicRepository;
         }
 
         public IActionResult Index()
@@ -45,26 +48,41 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         }
 
         [Route("Home/Detail/{objectId:Guid}")]
-        public IActionResult Detail(string objectId)
+        public IActionResult Detail(Guid objectId, string objectType)
         {
-            Guid guid = Guid.Parse(objectId);
-
-            var geoTag = _geoTagRepo.Get(guid);
-            if (geoTag != null)
+            if(objectType == "geotag")
             {
-                return View(BuildViewModel(geoTag));
+                var geoTag = _geoTagRepo.Get(objectId);
+                if (geoTag != null)
+                {
+                    return View(BuildViewModel(geoTag));
+                }
+            }
+            else if(objectType == "molarmosaic")
+            {
+                var molarMosaics = _molarMosaicRepo.Get(objectId);
+                if (molarMosaics != null)
+                {
+                    return View(BuildViewModel(molarMosaics));
+                }
+            }
+            else if(objectType == "molecularmosaic")
+            {
+                var molecularMosaics = _molecularMosaicRepo.Get(objectId);
+                if (molecularMosaics != null)
+                {
+                    return View(BuildViewModel(molecularMosaics));
+                }
+            }
+            else
+            {
+                throw new Exception("Invalid object type");
             }
 
-            var molarMosaics = _molarMosaicRepo.Get(guid);
-            if (molarMosaics != null)
+            var kaleidoscopeMosaic = _kaleidoscopeMosaicRepo.Get(guid);
+            if (kaleidoscopeMosaic != null)
             {
-                return View(BuildViewModel(molarMosaics));
-            }
-
-            var molecularMosaics = _molecularMosaicRepo.Get(guid);
-            if (molecularMosaics != null)
-            {
-                return View(BuildViewModel(molecularMosaics));
+                return View(BuildViewModel(kaleidoscopeMosaic));
             }
 
             return NotFound();
@@ -85,18 +103,36 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         }
 
         public IActionResult MolarMosaics()
-        { 
-            return View(); 
+        {
+            return View(BuildViewModel(_molarMosaicRepo.GetAll()!));
+
+            static MolarMosaicsViewModel BuildViewModel(IEnumerable<MolarMosaic> molarMosaics)
+            {
+                return new MolarMosaicsViewModel
+                {
+                    MolarMosaics = molarMosaics.ToList(),
+                    GroupTags = molarMosaics.SelectMany(x => x.GroupTags).Distinct().ToList(),
+                };
+            }
         }
 
         public IActionResult MolecularMosaics()
         {
-            return View();
+            return View(BuildViewModel(_molecularMosaicRepo.GetAll()!));
+
+            static MolecularMosaicsViewModel BuildViewModel(IEnumerable<MolecularMosaic> molecularMosaics)
+            {
+                return new MolecularMosaicsViewModel
+                {
+                    MolecularMosaics = molecularMosaics.ToList(),
+                    GroupTags = molecularMosaics.SelectMany(x => x.GroupTags).Distinct().ToList(),
+                };
+            }
         }
 
         public IActionResult Kaleidoscoping()
         {
-            return View();
+            return View(_groupTagRepo.GetAll());
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

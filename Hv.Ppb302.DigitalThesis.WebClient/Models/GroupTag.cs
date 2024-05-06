@@ -7,4 +7,5 @@ public class GroupTag
     public List<GeoTag> GeoTags { get; set; } = [];
     public List<MolecularMosaic> MolecularMosaics { get; set; } = [];
     public List<MolarMosaic> MolarMosaics { get; set; } = [];
+    public List<KaleidoscopeMosaic> KaleidoscopeMosaics { get; set; } = [];
 }

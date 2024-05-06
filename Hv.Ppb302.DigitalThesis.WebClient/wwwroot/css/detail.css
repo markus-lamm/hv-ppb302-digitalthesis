@@ -46,7 +46,6 @@
     padding: 0px 110px 0 0;
 }
 
-
 .sections {
     margin-top: 50px;
     padding: 20px;
@@ -54,7 +53,6 @@
     white-space: nowrap;
     margin-bottom: 80px;
 }
-
 
 #kolumn2 p {
     font-family: sans-serif;
@@ -102,3 +100,14 @@
     cursor: pointer;
 }
 
+.detail-container {
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    background-image: url(../images/background/background.png);
+    background-size: cover;
+    background-position: center;
+    justify-content: center;
+    align-items: center;
+}
