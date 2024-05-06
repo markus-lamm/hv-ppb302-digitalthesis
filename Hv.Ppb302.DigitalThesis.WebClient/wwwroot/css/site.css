@@ -13,6 +13,7 @@ html {
 }
 
 body {
+    font-family: 'Inconsolata';
     margin: 0px;
     width: 100vw;
     height: auto;
@@ -34,7 +35,7 @@ body {
 }
 
     .nav-list li a {
-        font-family: "Inconsolata", sans-serif;
+        font-family: 'Inconsolata';
         text-decoration: none;
         font-size: 1.5rem;
         color: black;
@@ -55,7 +56,7 @@ body {
 }
 
 .sidebar {
-    font-family: "Inconsolata", sans-serif;
+    font-family: 'Inconsolata';
     color: black;
     height: 95%;
     bottom: 2px;

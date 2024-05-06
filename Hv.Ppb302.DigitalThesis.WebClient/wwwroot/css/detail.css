@@ -1,57 +1,64 @@
 ﻿.text {
-    padding-left: 15px;
-    padding-right: 15px;
+    padding-left: 1rem;
+    padding-right: 1rem;
 }
 
 .container {
     display: flex;
     align-items: stretch;
+    position: relative;
 }
 
 #kolumn1, #kolumn2 {
     box-sizing: border-box;
     background: #fcf9ee;
     border: 1px solid #ccc;
-    padding: 0 20px 20px 20px;
+    padding: 0 1.25rem 1.25rem 1.25rem; 
 }
 
 #kolumn1 {
-    font-size: 15px;
+    position: relative;
+    flex-grow: 1;
+    min-height:15rem;
+    font-size: 0.9375rem;
     float: left;
-    width: 10%;
-    height: 30%;
-    padding: 0 20px 20px 20px;
+    width: 12rem;
+    padding: 0 1.25rem 1.25rem 1.25rem;
     background: #fcf9ee;
     border: 1px solid #ccc;
-    margin-top: 180px;
+    margin-top: 11.25rem;
     margin-right: 1%;
 }
 
 #kolumn2 {
-    padding: 0px;
+    display: flex;
+    padding: 0;
     flex-grow: 1;
     background: #fcf9ee;
     border: 1px solid #ccc;
-    margin-top: 180px;
-    overflow-y: auto;
+    margin-top: 11.25rem;
     height: 80vh;
-}
+    overflow-y: auto;
+   }
 
 #kolumn3 {
-    width: 120px;
+    width: 7.5rem;
     background: #020C42;
     color: white;
     box-sizing: border-box;
-    font-size: 15px;
-    padding: 0px 110px 0 0;
+    font-size: 0.9375rem;
+    padding: 0 6.875rem 0 0;
+    align-self: stretch;
+    flex-grow: 1; 
+    height: 100%; 
 }
 
 .sections {
-    margin-top: 50px;
-    padding: 20px;
+    margin-top: 3.125rem; 
+    padding: 1.25rem;
     font-family: 'Inconsolata', serif;
     white-space: nowrap;
-    margin-bottom: 80px;
+    margin-bottom: 5rem; 
 }
 
 #kolumn2 p {
@@ -65,7 +72,7 @@
 }
 
 .tags, .title {
-    font-size: 20px;
+    font-size: 1.25rem;
 }
 
 .tags {
@@ -77,24 +84,25 @@
     font-weight: bold;
 }
 
+.pdf_icon, .play_icon {
+    position: sticky;
+    height: 2.1875rem;
+    margin-top:2rem;
+}
+
 .pdf_icon {
-    position: absolute;
-    top: 80px;
-    height: 35px;
-    margin-right: 40px;
+    left: 1rem; /* Placera till vänster med marginal */
+    padding-left:1.5rem;
 }
 
 .play_icon {
-    float: left;
-    position: absolute;
-    top: 80px;
-    height: 35px;
-    margin-left: 70px;
+    padding-left:1rem;
+    left: 5rem; /* Placera till höger med marginal */
 }
 
-    .play_icon:hover {
-        cursor: pointer;
-    }
+.play_icon:hover {
+    cursor: pointer;
+}
 
 .pdf_icon:hover {
     cursor: pointer;

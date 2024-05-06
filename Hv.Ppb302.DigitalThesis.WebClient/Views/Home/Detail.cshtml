@@ -9,13 +9,13 @@
     <div id="kolumn1">
         <p class="title">@viewModel.Title</p>
         <p class="tags">Tags:</p>
+       
+                       
         @foreach (var tag in viewModel.GroupTags)
         {
             <p class="tags">@tag.Name</p>
         }
         <div class="music-controls">
-            <i class="fas fa-play" id="play-button"></i>
-            <i class="fas fa-volume-up"></i>
             <img class="pdf_icon" src="~/images/icons/favicon.ico"  />
             <img class="play_icon" src="~/images/icons/play_icon.png" />
             <audio id="audio-player" src="https://files.musopen.org/recordings/6699358c-9a7b-4dc3-a3b9-331a532d1004.mp3?filename=The+Magic+Flute,+K.+620+-+Overture.mp3&amp;preview"></audio>
