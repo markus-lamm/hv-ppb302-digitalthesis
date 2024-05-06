@@ -79,7 +79,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                 throw new Exception("Invalid object type");
             }
 
-            var kaleidoscopeMosaic = _kaleidoscopeMosaicRepo.Get(guid);
+            var kaleidoscopeMosaic = _kaleidoscopeMosaicRepo.Get(objectId);
             if (kaleidoscopeMosaic != null)
             {
                 return View(BuildViewModel(kaleidoscopeMosaic));
