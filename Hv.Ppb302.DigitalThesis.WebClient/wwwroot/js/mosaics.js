@@ -109,3 +109,38 @@ checkboxes.forEach((checkbox) => {
     });
 });
 
+// Select the button that will toggle the visibility of the text
+const toggleTextButton = document.getElementById('becomings-btn'); // Ensure this ID matches your button's ID
+
+// Add a click event listener to the button
+toggleTextButton.addEventListener('click', function() {
+    // Toggle the 'visible' class on all text elements within the mosaics
+    mosaics.forEach(mosaic => {
+        const textElement = mosaic.querySelector('.mosaic a div');
+        if (textElement.classList.contains('visible')) {
+            textElement.classList.remove('visible');
+        } else {
+            textElement.classList.add('visible');
+        }
+    });
+});
+
+// Select the button that will pause the mosaics
+const BecomingsBtn = document.getElementById('becomings-btn');
+
+// Add a click event listener to the button
+BecomingsBtn.addEventListener('click', function () {
+    // Pause all mosaics by adding the 'paused' class to each mosaic
+    mosaics.forEach(mosaic => {
+        mosaic.classList.add('paused');
+    });
+
+    if (this.classList.contains('resume')) {
+        mosaics.forEach(mosaic => {
+            mosaic.classList.remove('paused');
+        });
+        this.classList.remove('resume');
+    } else {
+        this.classList.add('resume');
+    }
+});
