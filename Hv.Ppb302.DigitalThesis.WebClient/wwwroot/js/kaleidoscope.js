@@ -112,8 +112,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (restart) {
             var bufferZone = 0;
             smallCircles.forEach(function (circle) {
-                circle.style.width = 3 + 'rem';
-                circle.style.height = 3 + 'rem';
+                circle.style.width = 5 + 'rem';
+                circle.style.height = 5 + 'rem';
             });
             placeSmallCircles();
         }

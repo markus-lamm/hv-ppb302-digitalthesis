@@ -23,17 +23,6 @@
                     <img src="@Url.Content(randomBlueMosaicImg)" class="smallCircle" data-tags="@string.Join(',', molecularMosaic.ConnectorTags.Select(tag => tag.Name))" />
                 </a>
             }
-            @*          
-            @foreach (var tag in Model)
-            {
-                foreach (var mosaic in tag.KaleidoscopeMosaics)
-                {
-                    <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id, objectType = "kaleidoscope" })">
-                        <img src="~/images/mosaics/mosaic-yellow-1.png" class="smallCircle" data-tags="@string.Join(',', mosaic.ConnectorTags.Select(tag => tag.Name))" />
-                     </a>
-                }
-            } 
-            *@
         </div>
     </div>
 
@@ -41,8 +30,7 @@
         <h2>Kaleido-scope</h2>
         <hr />
         <ul class="tagList">
-            @*             
-            @foreach (var tag in Model.Where(t => t.KaleidoscopeMosaics.Any()))
+            @foreach (var tag in Model.KaleidoscopeTags!)
             {
                 <li>
                     <div class="tag-kaleiitem">
@@ -51,7 +39,6 @@
                     </div>
                 </li>
             } 
-            *@
         </ul>
     </div>
 </div>

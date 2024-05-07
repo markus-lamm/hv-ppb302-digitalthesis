@@ -49,6 +49,7 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
         existingMolarMosaic.PdfFilePath = molarMosaic.PdfFilePath;
         existingMolarMosaic.HasAudio = molarMosaic.HasAudio;
         existingMolarMosaic.AudioFilePath = molarMosaic.AudioFilePath;
+        existingMolarMosaic.Becomings = molarMosaic.Becomings;
         _dbContext.SaveChanges();
     }
 
