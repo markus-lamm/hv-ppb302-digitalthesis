@@ -108,3 +108,4 @@ checkboxes.forEach((checkbox) => {
         });
     });
 });
+

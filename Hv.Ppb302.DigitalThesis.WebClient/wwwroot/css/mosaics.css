@@ -10,6 +10,11 @@
     align-items: center;
 }
 
+.mosaic-content {
+    display: flex;
+    flex-direction: column;
+}
+
 .mosaic a {
     position: relative;
     display: inline-block;
@@ -118,3 +123,9 @@
         background: #50565a;
         box-shadow: 2px 1px 0 #50565a;
     }
+
+.becomings-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

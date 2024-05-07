@@ -8,16 +8,19 @@ public class TestDataUtils
     private readonly ConnectorTagRepository _connectorTagRepo;
     private readonly MolarMosaicRepository _molarMosaicRepo;
     private readonly MolecularMosaicRepository _molecularMosaicRepo;
+    private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
 
     public TestDataUtils(GeoTagRepository geoTagRepo,
         MolarMosaicRepository molarMosaicRepo,
         MolecularMosaicRepository molecularMosaicRepo,
-        ConnectorTagRepository connectorTagRepo)
+        ConnectorTagRepository connectorTagRepo,
+        KaleidoscopeTagRepository kaleidoscopeTagRepo)
     {
         _geoTagRepo = geoTagRepo;
         _molarMosaicRepo = molarMosaicRepo;
         _molecularMosaicRepo = molecularMosaicRepo;
         _connectorTagRepo = connectorTagRepo;
+        _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
     }
 
     public void CreateConnectorTag()
@@ -110,6 +113,23 @@ public class TestDataUtils
 
         _molecularMosaicRepo.Create(molecularMosaic);
         _molecularMosaicRepo.AddConnectorTag(molecularMosaic.Id, connectorTag.Id);
+    }
+
+    public void CreatePredeterminedKaleidoscopeTags()
+    {
+        var kaleidoscopeTags = new List<KaleidoscopeTag>
+        {
+            new KaleidoscopeTag { Name = "Duration and Rhythm" },
+            new KaleidoscopeTag { Name = "Spaciality" },
+            new KaleidoscopeTag { Name = "Molecular Alliances" },
+            new KaleidoscopeTag { Name = "Experiment" },
+            new KaleidoscopeTag { Name = "Assemblages" }
+        };
+
+        foreach (var kaleidoscopeTag in kaleidoscopeTags)
+        {
+            _kaleidoscopeTagRepo.Create(kaleidoscopeTag);
+        }
     }
 
     public GeoTag? FindGeoTagById(string id)

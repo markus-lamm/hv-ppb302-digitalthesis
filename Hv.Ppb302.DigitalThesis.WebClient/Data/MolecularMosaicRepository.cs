@@ -31,7 +31,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
         var existingMolecularMosaic = _dbContext.MolarMosaics.FirstOrDefault(m => m.Title == molecularMosaic.Title);
         if (existingMolecularMosaic != null)
         {
-            throw new Exception("A molar mosaic with the same title already exists");
+            throw new Exception("A molecular mosaic with the same title already exists");
         }
         _dbContext.MolecularMosaics.Add(molecularMosaic);
         _dbContext.SaveChanges();
@@ -39,16 +39,17 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
 
     public void Update(MolecularMosaic molecularMosaic)
     {
-        var existingMolecularMosaic = _dbContext.MolarMosaics.Find(molecularMosaic.Id);
+        var existingMolecularMosaic = _dbContext.MolecularMosaics.Find(molecularMosaic.Id);
         if (existingMolecularMosaic == null)
         {
-            throw new Exception("The molar mosaic does not exist");
+            throw new Exception("The molecular mosaic does not exist");
         }
         existingMolecularMosaic.Title = molecularMosaic.Title;
         existingMolecularMosaic.Content = molecularMosaic.Content;
         existingMolecularMosaic.PdfFilePath = molecularMosaic.PdfFilePath;
         existingMolecularMosaic.HasAudio = molecularMosaic.HasAudio;
         existingMolecularMosaic.AudioFilePath = molecularMosaic.AudioFilePath;
+        existingMolecularMosaic.Becomings = molecularMosaic.Becomings;
         _dbContext.SaveChanges();
     }
 
@@ -57,7 +58,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
         var existingMolecularMosaic = _dbContext.MolecularMosaics.Find(id);
         if (existingMolecularMosaic == null)
         {
-            throw new Exception("The molar mosaic does not exist");
+            throw new Exception("The molecular mosaic does not exist");
         }
         _dbContext.MolecularMosaics.Remove(existingMolecularMosaic);
         _dbContext.SaveChanges();
