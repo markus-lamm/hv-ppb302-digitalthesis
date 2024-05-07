@@ -7,16 +7,14 @@
 <div class="kaleid-container">
     <div class="roulette" id="biggi">
         <div class="rouletteimage">
-            <img src="/images/background/kaleibackground.png" id="bigImage" />
+            <img src="~/images/background/kaleibackground.png" id="bigImage" />
             @foreach (var tag in Model)
             {
-                foreach (var mosaic in tag.MolarMosaics)
+                foreach (var mosaic in tag.KaleidoscopeMosaics)
                 {
-                    <img src="/images/mosaics/mosaic-grey-1.png" class="smallCircle" data-tags="@string.Join(',', mosaic.GroupTags.Select(tag => tag.Name))" />
-                }
-                foreach (var molemosaic in tag.MolecularMosaics)
-                {
-                    <img src="/images/mosaics/mosaic-yellow-1.png" class="smallCircle" data-tags="@string.Join(',', molemosaic.GroupTags.Select(tag => tag.Name))" />
+                    <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id, objectType = "kaleidoscope" })">
+                        <img src="~/images/mosaics/mosaic-yellow-1.png" class="smallCircle" data-tags="@string.Join(',', mosaic.GroupTags.Select(tag => tag.Name))" />
+                     </a>
                 }
             }
         </div>
@@ -26,7 +24,7 @@
         <h2>Kaleidoscope</h2>
         <hr />
         <ul class="tagList">
-            @foreach (var tag in Model)
+            @foreach (var tag in Model.Where(t => t.KaleidoscopeMosaics.Any()))
             {
                 <li>
                     <div class="tag-kaleiitem">

@@ -9,14 +9,28 @@ document.addEventListener("DOMContentLoaded", function () {
             // Get the current rotation value (if any)
             const currentRotation = parseInt(bigImage.style.transform.replace('rotate(', '').replace('deg)', ''), 10) || 0;
             const currentRotationsm = parseInt(smallCircles[0].style.transform.replace('rotate(', '').replace('deg)', ''), 10) || 0;
-            // Add 45 degrees to the current rotation
-            const newRotation = currentRotation + 180;
-            const newRotationsm = currentRotationsm - 510;
+            // Add 90 degrees to the current rotation
+            const newRotation = currentRotation + 90;
+            const newRotationsm = currentRotationsm + 90;
             // Apply the new rotation
             smallCircles.forEach((smallCircle, index) => {
                 smallCircle.style.transform = `rotate(${newRotationsm}deg)`;
             });
             bigImage.style.transform = `rotate(${newRotation}deg)`;
+
+            const imagefilter = ["filterbigimage", "filterbigimage2", "filterbigimage3", "filterbigimage4"]
+
+            const appliedFilter = Array.from(bigImage.classList).find(className => imagefilter.includes(className));
+
+            const availableFilters = imagefilter.filter(className => className !== appliedFilter);
+
+            const randomFilter = availableFilters[Math.floor(Math.random() * availableFilters.length)];
+
+            bigImage.classList.remove(...imagefilter);
+
+            bigImage.classList.add(randomFilter);
+
+            
         });
     });
 });

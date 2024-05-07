@@ -12,6 +12,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         private readonly GroupTagRepository _groupTagRepo;
         private readonly MolarMosaicRepository _molarMosaicRepo;
         private readonly MolecularMosaicRepository _molecularMosaicRepo;
+        private readonly KaleidoscopeMosaicRepository _kaleidoscopeMosaicRepo;
         private readonly TestDataUtils _testDataUtils;
 
         public HomeController(ILogger<HomeController> logger, 
@@ -19,7 +20,8 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             MolarMosaicRepository molarMosaicRepo, 
             MolecularMosaicRepository molecularMosaicRepo,
             TestDataUtils testDataUtils,
-            GroupTagRepository groupTagRepo)
+            GroupTagRepository groupTagRepo,
+            KaleidoscopeMosaicRepository kaleidoscopeMosaicRepository)
         {
             _logger = logger;
             _geoTagRepo = geoTagRepo;
@@ -27,6 +29,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             _molecularMosaicRepo = molecularMosaicRepo;
             _testDataUtils = testDataUtils;
             _groupTagRepo = groupTagRepo;
+            _kaleidoscopeMosaicRepo = kaleidoscopeMosaicRepository;
         }
 
         public IActionResult Index()
@@ -47,7 +50,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         [Route("Home/Detail/{objectId:Guid}")]
         public IActionResult Detail(Guid objectId, string objectType)
         {
-            if(objectType == "geotag")
+            if (objectType == "geotag")
             {
                 var geoTag = _geoTagRepo.Get(objectId);
                 if (geoTag != null)
@@ -55,7 +58,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     return View(BuildViewModel(geoTag));
                 }
             }
-            else if(objectType == "molarmosaic")
+            else if (objectType == "molarmosaic")
             {
                 var molarMosaics = _molarMosaicRepo.Get(objectId);
                 if (molarMosaics != null)
@@ -63,7 +66,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     return View(BuildViewModel(molarMosaics));
                 }
             }
-            else if(objectType == "molecularmosaic")
+            else if (objectType == "molecularmosaic")
             {
                 var molecularMosaics = _molecularMosaicRepo.Get(objectId);
                 if (molecularMosaics != null)
@@ -71,10 +74,19 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     return View(BuildViewModel(molecularMosaics));
                 }
             }
+            else if (objectType == "kaleidoscope")
+            { 
+                var kaleidoscopeMosaic = _kaleidoscopeMosaicRepo.Get(objectId);
+                if (kaleidoscopeMosaic != null)
+                {
+                    return View(BuildViewModel(kaleidoscopeMosaic));
+                }
+            }
             else
             {
                 throw new Exception("Invalid object type");
             }
+
 
             return NotFound();
 
