@@ -31,7 +31,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data
             var existingKaleidoscopeMosaic = _dbContext.KaleidoscopeMosaics.FirstOrDefault(m => m.Title == KaleidoscopeMosaic.Title);
             if (existingKaleidoscopeMosaic != null)
             {
-                throw new Exception("A molar mosaic with the same title already exists");
+                throw new Exception("A kaleidoscope mosaic with the same title already exists");
             }
             _dbContext.KaleidoscopeMosaics.Add(KaleidoscopeMosaic);
             _dbContext.SaveChanges();
@@ -42,7 +42,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data
             var existingKaleidoscopeMosaic = _dbContext.KaleidoscopeMosaics.Find(KaleidoscopeMosaic.Id);
             if (existingKaleidoscopeMosaic == null)
             {
-                throw new Exception("The molar mosaic does not exist");
+                throw new Exception("The kaleidoscope mosaic does not exist");
             }
             existingKaleidoscopeMosaic.Title = KaleidoscopeMosaic.Title;
             existingKaleidoscopeMosaic.Content = KaleidoscopeMosaic.Content;
@@ -57,7 +57,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data
             var existingKaleidoscopeMosaic = _dbContext.KaleidoscopeMosaics.Find(id);
             if (existingKaleidoscopeMosaic == null)
             {
-                throw new Exception("The molar mosaic does not exist");
+                throw new Exception("The kaleidoscope mosaic does not exist");
             }
             _dbContext.KaleidoscopeMosaics.Remove(existingKaleidoscopeMosaic);
             _dbContext.SaveChanges();
@@ -81,7 +81,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data
             var KaleidoscopeMosaic = _dbContext.KaleidoscopeMosaics.Find(KaleidoscopeMosaicId);
             if (KaleidoscopeMosaic == null)
             {
-                throw new Exception("The molar mosaic does not exist");
+                throw new Exception("The kaleidoscope mosaic does not exist");
             }
 
             var groupTag = _dbContext.GroupTags.Find(groupTagId);
@@ -100,7 +100,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data
             var KaleidoscopeMosaic = _dbContext.KaleidoscopeMosaics.Find(KaleidoscopeMosaicId);
             if (KaleidoscopeMosaic == null)
             {
-                throw new Exception("The molar mosaic does not exist");
+                throw new Exception("The kaleidoscope mosaic does not exist");
             }
 
             var groupTag = _dbContext.GroupTags.Find(groupTagId);
