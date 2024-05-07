@@ -3,7 +3,7 @@
     padding-right: 1rem;
 }
 
-.container {
+.column3_container {
     display: flex;
     align-items: stretch;
     position: relative;
