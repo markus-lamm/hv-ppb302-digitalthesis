@@ -8,19 +8,16 @@ public class TestDataUtils
     private readonly ConnectorTagRepository _connectorTagRepo;
     private readonly MolarMosaicRepository _molarMosaicRepo;
     private readonly MolecularMosaicRepository _molecularMosaicRepo;
-    private readonly KaleidoscopeMosaicRepository _kaleidoscopeMosaicRepository;
 
     public TestDataUtils(GeoTagRepository geoTagRepo,
         MolarMosaicRepository molarMosaicRepo,
         MolecularMosaicRepository molecularMosaicRepo,
-        ConnectorTagRepository connectorTagRepo,
-        KaleidoscopeMosaicRepository kaleidoscopeMosaicRepository)
+        ConnectorTagRepository connectorTagRepo)
     {
         _geoTagRepo = geoTagRepo;
         _molarMosaicRepo = molarMosaicRepo;
         _molecularMosaicRepo = molecularMosaicRepo;
         _connectorTagRepo = connectorTagRepo;
-        _kaleidoscopeMosaicRepository = kaleidoscopeMosaicRepository;
     }
 
     public void CreateConnectorTag()
@@ -113,22 +110,6 @@ public class TestDataUtils
 
         _molecularMosaicRepo.Create(molecularMosaic);
         _molecularMosaicRepo.AddConnectorTag(molecularMosaic.Id, connectorTag.Id);
-    }
-
-    public void CreateKaleidoscopeMosaicWithConnectorTag(string connectorTagId)
-    {
-        var connectorTag = FindConnectorTagById(connectorTagId);
-        if (connectorTag == null) { return; }
-
-        var random = new Random();
-        var randomNumber = random.Next(1, 1000);
-        var KaleidoscopeMosaic = new KaleidoscopeMosaic
-        {
-            Title = "KaleidoscopeMosaicTest" + randomNumber,
-        };
-
-        _kaleidoscopeMosaicRepository.Create(KaleidoscopeMosaic);
-        _kaleidoscopeMosaicRepository.AddConnectorTag(KaleidoscopeMosaic.Id, connectorTag.Id);
     }
 
     public GeoTag? FindGeoTagById(string id)

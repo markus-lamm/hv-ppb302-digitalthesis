@@ -12,7 +12,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         private readonly ConnectorTagRepository _connectorTagRepo;
         private readonly MolarMosaicRepository _molarMosaicRepo;
         private readonly MolecularMosaicRepository _molecularMosaicRepo;
-        private readonly KaleidoscopeMosaicRepository _kaleidoscopeMosaicRepo;
         private readonly TestDataUtils _testDataUtils;
 
         public HomeController(ILogger<HomeController> logger, 
@@ -20,8 +19,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             MolarMosaicRepository molarMosaicRepo, 
             MolecularMosaicRepository molecularMosaicRepo,
             TestDataUtils testDataUtils,
-            ConnectorTagRepository connectorTagRepo,
-            KaleidoscopeMosaicRepository kaleidoscopeMosaicRepository)
+            ConnectorTagRepository connectorTagRepo)
         {
             _logger = logger;
             _geoTagRepo = geoTagRepo;
@@ -29,7 +27,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             _molecularMosaicRepo = molecularMosaicRepo;
             _testDataUtils = testDataUtils;
             _connectorTagRepo = connectorTagRepo;
-            _kaleidoscopeMosaicRepo = kaleidoscopeMosaicRepository;
         }
 
         public IActionResult Index()
@@ -72,14 +69,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                 if (molecularMosaics != null)
                 {
                     return View(BuildViewModel(molecularMosaics));
-                }
-            }
-            else if (objectType == "kaleidoscope")
-            { 
-                var kaleidoscopeMosaic = _kaleidoscopeMosaicRepo.Get(objectId);
-                if (kaleidoscopeMosaic != null)
-                {
-                    return View(BuildViewModel(kaleidoscopeMosaic));
                 }
             }
             else

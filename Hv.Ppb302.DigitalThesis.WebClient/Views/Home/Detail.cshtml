@@ -9,14 +9,28 @@
     <div id="kolumn1">
         <p class="title">@viewModel.Title</p>
         <p class="tags">Connectors:</p>
-        @foreach (var tag in viewModel.ConnectorTags)
+        @if (viewModel.ConnectorTags.Count == 0)
         {
-            <p class="tags">@tag.Name</p>
+            <p class="tags">No connectors</p>
+        }
+        else
+        {
+            foreach (var tag in viewModel.ConnectorTags)
+            {
+                <p class="tags">@tag.Name</p>
+            }
         }
         <p class="tags">Becomings:</p>
-        @foreach (var tag in viewModel.Becomings)
+        @if (viewModel.Becomings.Count == 0)
         {
-            <p class="tags">@tag</p>
+            <p class="tags">No becomings</p>
+        }
+        else
+        {
+            foreach (var tag in viewModel.Becomings)
+            {
+                <p class="tags">@tag</p>
+            }
         }
         <div class="music-controls">
             <i class="fas fa-play" id="play-button"></i>

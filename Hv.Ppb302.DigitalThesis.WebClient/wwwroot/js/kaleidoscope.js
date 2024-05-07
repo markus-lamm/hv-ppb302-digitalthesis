@@ -1,5 +1,4 @@
-﻿
-document.addEventListener("DOMContentLoaded", function () {
+﻿document.addEventListener("DOMContentLoaded", function () {
     const radios = document.querySelectorAll('.custom-radio');
     var bigImage = document.getElementById('biggi');
     var smallCircles = document.querySelectorAll('.smallCircle');
@@ -29,14 +28,9 @@ document.addEventListener("DOMContentLoaded", function () {
             bigImage.classList.remove(...imagefilter);
 
             bigImage.classList.add(randomFilter);
-
-            
         });
     });
 });
-
-
-
 
 // Add event listeners to radio buttons
 document.querySelectorAll('.custom-radio').forEach(function (radio) {
@@ -53,7 +47,6 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
         });
     });
 });
-
 
 document.addEventListener("DOMContentLoaded", function () {
     window.onload = function () {

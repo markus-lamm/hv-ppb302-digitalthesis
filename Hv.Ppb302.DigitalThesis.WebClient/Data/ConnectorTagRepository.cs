@@ -27,7 +27,6 @@ public class ConnectorTagRepository : IRepository<ConnectorTag>
             .Include(g => g.GeoTags)
             .Include(g => g.MolarMosaics)
             .Include(g => g.MolecularMosaics)
-            .Include(g => g.KaleidoscopeMosaics)
             .ToList();
     }
 

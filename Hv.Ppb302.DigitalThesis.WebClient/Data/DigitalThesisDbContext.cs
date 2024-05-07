@@ -11,5 +11,4 @@ public class DigitalThesisDbContext : DbContext
     public DbSet<ConnectorTag> ConnectorTags { get; set; }
     public DbSet<MolarMosaic> MolarMosaics { get; set; }
     public DbSet<MolecularMosaic> MolecularMosaics { get; set; }
-    public DbSet<KaleidoscopeMosaic> KaleidoscopeMosaics { get; set; }
 }
