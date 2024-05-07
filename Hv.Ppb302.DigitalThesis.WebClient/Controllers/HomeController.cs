@@ -98,6 +98,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     Title = model.Title,
                     Content = model.Content,
                     ConnectorTags = model.ConnectorTags,
+                    Becomings = model.Becomings,
                     PdfFilePath = model.PdfFilePath,
                     HasAudio = model.HasAudio,
                     AudioFilePath = model.AudioFilePath,

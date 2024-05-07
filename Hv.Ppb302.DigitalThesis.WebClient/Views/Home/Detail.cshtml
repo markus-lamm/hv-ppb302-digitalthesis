@@ -13,6 +13,11 @@
         {
             <p class="tags">@tag.Name</p>
         }
+        <p class="tags">Becomings:</p>
+        @foreach (var tag in viewModel.Becomings)
+        {
+            <p class="tags">@tag</p>
+        }
         <div class="music-controls">
             <i class="fas fa-play" id="play-button"></i>
             <i class="fas fa-volume-up"></i>
