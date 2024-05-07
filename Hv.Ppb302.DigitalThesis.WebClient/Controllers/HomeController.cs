@@ -9,7 +9,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly GeoTagRepository _geoTagRepo;
-        private readonly GroupTagRepository _groupTagRepo;
+        private readonly ConnectorTagRepository _connectorTagRepo;
         private readonly MolarMosaicRepository _molarMosaicRepo;
         private readonly MolecularMosaicRepository _molecularMosaicRepo;
         private readonly KaleidoscopeMosaicRepository _kaleidoscopeMosaicRepo;
@@ -20,7 +20,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             MolarMosaicRepository molarMosaicRepo, 
             MolecularMosaicRepository molecularMosaicRepo,
             TestDataUtils testDataUtils,
-            GroupTagRepository groupTagRepo,
+            ConnectorTagRepository connectorTagRepo,
             KaleidoscopeMosaicRepository kaleidoscopeMosaicRepository)
         {
             _logger = logger;
@@ -28,7 +28,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             _molarMosaicRepo = molarMosaicRepo;
             _molecularMosaicRepo = molecularMosaicRepo;
             _testDataUtils = testDataUtils;
-            _groupTagRepo = groupTagRepo;
+            _connectorTagRepo = connectorTagRepo;
             _kaleidoscopeMosaicRepo = kaleidoscopeMosaicRepository;
         }
 
@@ -97,7 +97,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     ObjectId = model.Id,
                     Title = model.Title,
                     Content = model.Content,
-                    GroupTags = model.GroupTags,
+                    ConnectorTags = model.ConnectorTags,
                     PdfFilePath = model.PdfFilePath,
                     HasAudio = model.HasAudio,
                     AudioFilePath = model.AudioFilePath,
@@ -114,7 +114,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                 return new MolarMosaicsViewModel
                 {
                     MolarMosaics = molarMosaics.ToList(),
-                    GroupTags = molarMosaics.SelectMany(x => x.GroupTags).Distinct().ToList(),
+                    ConnectorTags = molarMosaics.SelectMany(x => x.ConnectorTags).Distinct().ToList(),
                 };
             }
         }
@@ -128,14 +128,23 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                 return new MolecularMosaicsViewModel
                 {
                     MolecularMosaics = molecularMosaics.ToList(),
-                    GroupTags = molecularMosaics.SelectMany(x => x.GroupTags).Distinct().ToList(),
+                    ConnectorTags = molecularMosaics.SelectMany(x => x.ConnectorTags).Distinct().ToList(),
                 };
             }
         }
 
         public IActionResult Kaleidoscoping()
         {
-            return View(_groupTagRepo.GetAll());
+            return View(BuildViewModel(_molarMosaicRepo.GetAll()!, _molecularMosaicRepo.GetAll()!));
+
+            static KaleidoscopingViewModel BuildViewModel(IEnumerable<MolarMosaic> molarMosaics, IEnumerable<MolecularMosaic> molecularMosaics)
+            {
+                return new KaleidoscopingViewModel
+                {
+                    MolarMosaics = molarMosaics.ToList(),
+                    MolecularMosaics = molecularMosaics.ToList(),
+                };
+            }
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

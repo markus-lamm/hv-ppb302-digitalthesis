@@ -15,14 +15,14 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data
         public KaleidoscopeMosaic? Get(Guid id)
         {
             return _dbContext.KaleidoscopeMosaics
-                .Include(g => g.GroupTags)
+                .Include(g => g.ConnectorTags)
                 .FirstOrDefault(g => g.Id == id);
         }
 
         public List<KaleidoscopeMosaic>? GetAll()
         {
             return _dbContext.KaleidoscopeMosaics
-                .Include(g => g.GroupTags)
+                .Include(g => g.ConnectorTags)
                 .ToList();
         }
 
@@ -76,7 +76,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data
             _dbContext.SaveChanges();
         }
 
-        public void AddGroupTag(Guid KaleidoscopeMosaicId, Guid groupTagId)
+        public void AddConnectorTag(Guid KaleidoscopeMosaicId, Guid connectorTagId)
         {
             var KaleidoscopeMosaic = _dbContext.KaleidoscopeMosaics.Find(KaleidoscopeMosaicId);
             if (KaleidoscopeMosaic == null)
@@ -84,18 +84,18 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data
                 throw new Exception("The kaleidoscope mosaic does not exist");
             }
 
-            var groupTag = _dbContext.GroupTags.Find(groupTagId);
-            if (groupTag == null)
+            var connectorTag = _dbContext.ConnectorTags.Find(connectorTagId);
+            if (connectorTag == null)
             {
-                throw new Exception("The group tag does not exist");
+                throw new Exception("The connector tag does not exist");
             }
 
-            KaleidoscopeMosaic.GroupTags.Add(groupTag);
-            groupTag.KaleidoscopeMosaics.Add(KaleidoscopeMosaic);
+            KaleidoscopeMosaic.ConnectorTags.Add(connectorTag);
+            connectorTag.KaleidoscopeMosaics.Add(KaleidoscopeMosaic);
             _dbContext.SaveChanges();
         }
 
-        public void RemoveGroupTag(Guid KaleidoscopeMosaicId, Guid groupTagId)
+        public void RemoveConnectorTag(Guid KaleidoscopeMosaicId, Guid connectorTagId)
         {
             var KaleidoscopeMosaic = _dbContext.KaleidoscopeMosaics.Find(KaleidoscopeMosaicId);
             if (KaleidoscopeMosaic == null)
@@ -103,14 +103,14 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data
                 throw new Exception("The kaleidoscope mosaic does not exist");
             }
 
-            var groupTag = _dbContext.GroupTags.Find(groupTagId);
-            if (groupTag == null)
+            var connectorTag = _dbContext.ConnectorTags.Find(connectorTagId);
+            if (connectorTag == null)
             {
-                throw new Exception("The group tag does not exist");
+                throw new Exception("The connector tag does not exist");
             }
 
-            KaleidoscopeMosaic.GroupTags.Remove(groupTag);
-            groupTag.KaleidoscopeMosaics.Remove(KaleidoscopeMosaic);
+            KaleidoscopeMosaic.ConnectorTags.Remove(connectorTag);
+            connectorTag.KaleidoscopeMosaics.Remove(KaleidoscopeMosaic);
             _dbContext.SaveChanges();
         }
     }

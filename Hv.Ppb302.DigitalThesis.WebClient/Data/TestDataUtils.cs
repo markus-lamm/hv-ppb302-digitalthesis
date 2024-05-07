@@ -5,7 +5,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 public class TestDataUtils
 {
     private readonly GeoTagRepository _geoTagRepo;
-    private readonly GroupTagRepository _groupTagRepo;
+    private readonly ConnectorTagRepository _connectorTagRepo;
     private readonly MolarMosaicRepository _molarMosaicRepo;
     private readonly MolecularMosaicRepository _molecularMosaicRepo;
     private readonly KaleidoscopeMosaicRepository _kaleidoscopeMosaicRepository;
@@ -13,25 +13,25 @@ public class TestDataUtils
     public TestDataUtils(GeoTagRepository geoTagRepo,
         MolarMosaicRepository molarMosaicRepo,
         MolecularMosaicRepository molecularMosaicRepo,
-        GroupTagRepository groupTagRepo,
+        ConnectorTagRepository connectorTagRepo,
         KaleidoscopeMosaicRepository kaleidoscopeMosaicRepository)
     {
         _geoTagRepo = geoTagRepo;
         _molarMosaicRepo = molarMosaicRepo;
         _molecularMosaicRepo = molecularMosaicRepo;
-        _groupTagRepo = groupTagRepo;
+        _connectorTagRepo = connectorTagRepo;
         _kaleidoscopeMosaicRepository = kaleidoscopeMosaicRepository;
     }
 
-    public void CreateGroupTag()
+    public void CreateConnectorTag()
     {
         var random = new Random();
         var randomNumber = random.Next(1, 1000);
-        var groupTag = new GroupTag
+        var connectorTag = new ConnectorTag
         {
-            Name = "GroupTagTest" + randomNumber,
+            Name = "ConnectorTagTest" + randomNumber,
         };
-        _groupTagRepo.Create(groupTag);
+        _connectorTagRepo.Create(connectorTag);
     }
 
     public void CreateGeoTag()
@@ -67,10 +67,10 @@ public class TestDataUtils
         _molecularMosaicRepo.Create(molecularMosaic);
     }
 
-    public void CreateGeoTagWithGroupTag(string groupTagId)
+    public void CreateGeoTagWithConnectorTag(string connectorTagId)
     {
-        var groupTag = FindGroupTagById(groupTagId);
-        if (groupTag == null) { return; }
+        var connectorTag = FindConnectorTagById(connectorTagId);
+        if (connectorTag == null) { return; }
 
         var random = new Random();
         var randomNumber = random.Next(1, 1000);
@@ -80,13 +80,13 @@ public class TestDataUtils
         };
 
         _geoTagRepo.Create(geoTag);
-        _geoTagRepo.AddGroupTag(geoTag.Id, groupTag.Id);
+        _geoTagRepo.AddConnectorTag(geoTag.Id, connectorTag.Id);
     }
 
-    public void CreateMolarMosaicWithGroupTag(string groupTagId)
+    public void CreateMolarMosaicWithConnectorTag(string connectorTagId)
     {
-        var groupTag = FindGroupTagById(groupTagId);
-        if (groupTag == null) { return; }
+        var connectorTag = FindConnectorTagById(connectorTagId);
+        if (connectorTag == null) { return; }
 
         var random = new Random();
         var randomNumber = random.Next(1, 1000);
@@ -96,13 +96,13 @@ public class TestDataUtils
         };
 
         _molarMosaicRepo.Create(molarMosaic);
-        _molarMosaicRepo.AddGroupTag(molarMosaic.Id, groupTag.Id);
+        _molarMosaicRepo.AddConnectorTag(molarMosaic.Id, connectorTag.Id);
     }
 
-    public void CreateMolecularMosaicWithGroupTag(string groupTagId)
+    public void CreateMolecularMosaicWithConnectorTag(string connectorTagId)
     {
-        var groupTag = FindGroupTagById(groupTagId);
-        if (groupTag == null) { return; }
+        var connectorTag = FindConnectorTagById(connectorTagId);
+        if (connectorTag == null) { return; }
 
         var random = new Random();
         var randomNumber = random.Next(1, 1000);
@@ -112,13 +112,13 @@ public class TestDataUtils
         };
 
         _molecularMosaicRepo.Create(molecularMosaic);
-        _molecularMosaicRepo.AddGroupTag(molecularMosaic.Id, groupTag.Id);
+        _molecularMosaicRepo.AddConnectorTag(molecularMosaic.Id, connectorTag.Id);
     }
 
-    public void CreateKaleidoscopeMosaicWithGroupTag(string groupTagId)
+    public void CreateKaleidoscopeMosaicWithConnectorTag(string connectorTagId)
     {
-        var groupTag = FindGroupTagById(groupTagId);
-        if (groupTag == null) { return; }
+        var connectorTag = FindConnectorTagById(connectorTagId);
+        if (connectorTag == null) { return; }
 
         var random = new Random();
         var randomNumber = random.Next(1, 1000);
@@ -128,7 +128,7 @@ public class TestDataUtils
         };
 
         _kaleidoscopeMosaicRepository.Create(KaleidoscopeMosaic);
-        _kaleidoscopeMosaicRepository.AddGroupTag(KaleidoscopeMosaic.Id, groupTag.Id);
+        _kaleidoscopeMosaicRepository.AddConnectorTag(KaleidoscopeMosaic.Id, connectorTag.Id);
     }
 
     public GeoTag? FindGeoTagById(string id)
@@ -136,9 +136,9 @@ public class TestDataUtils
         return _geoTagRepo.Get(Guid.Parse(id));
     }
 
-    public GroupTag? FindGroupTagById(string id)
+    public ConnectorTag? FindConnectorTagById(string id)
     {
-        return _groupTagRepo.Get(Guid.Parse(id));
+        return _connectorTagRepo.Get(Guid.Parse(id));
     }
 
     public MolarMosaic? FindMolarMosaicById(string id)
@@ -156,6 +156,6 @@ public class TestDataUtils
         _geoTagRepo.DeleteAllByTitle(name);
         _molarMosaicRepo.DeleteAllByTitle(name);
         _molecularMosaicRepo.DeleteAllByTitle(name);
-        _groupTagRepo.DeleteAllByName(name);
+        _connectorTagRepo.DeleteAllByName(name);
     }
 }

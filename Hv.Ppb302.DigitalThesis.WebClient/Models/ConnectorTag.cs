@@ -1,6 +1,6 @@
 ﻿namespace Hv.Ppb302.DigitalThesis.WebClient.Models;
 
-public class GroupTag
+public class ConnectorTag
 {
     public Guid Id { get; set; } = Guid.NewGuid();
     public string? Name { get; set; }

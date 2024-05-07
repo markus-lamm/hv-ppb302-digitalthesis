@@ -15,14 +15,14 @@ public class GeoTagRepository : IRepository<GeoTag>
     public GeoTag? Get(Guid id)
     {
         return _dbContext.GeoTags
-            .Include(g => g.GroupTags)
+            .Include(g => g.ConnectorTags)
             .FirstOrDefault(g => g.Id == id);
     }
 
     public List<GeoTag>? GetAll()
     {
         return _dbContext.GeoTags
-            .Include(g => g.GroupTags)
+            .Include(g => g.ConnectorTags)
             .ToList();
     }
 
@@ -78,7 +78,7 @@ public class GeoTagRepository : IRepository<GeoTag>
         _dbContext.SaveChanges();
     }
 
-    public void AddGroupTag(Guid geoTagId, Guid groupTagId)
+    public void AddConnectorTag(Guid geoTagId, Guid connectorTagId)
     {
         var geoTag = _dbContext.GeoTags.Find(geoTagId);
         if (geoTag == null)
@@ -86,18 +86,18 @@ public class GeoTagRepository : IRepository<GeoTag>
             throw new Exception("The geotag does not exist");
         }
 
-        var groupTag = _dbContext.GroupTags.Find(groupTagId);
-        if (groupTag == null)
+        var connectorTag = _dbContext.ConnectorTags.Find(connectorTagId);
+        if (connectorTag == null)
         {
-            throw new Exception("The group tag does not exist");
+            throw new Exception("The connector tag does not exist");
         }
 
-        geoTag.GroupTags.Add(groupTag);
-        groupTag.GeoTags.Add(geoTag);
+        geoTag.ConnectorTags.Add(connectorTag);
+        connectorTag.GeoTags.Add(geoTag);
         _dbContext.SaveChanges();
     }
 
-    public void RemoveGroupTag(Guid geoTagId, Guid groupTagId)
+    public void RemoveConnectorTag(Guid geoTagId, Guid connectorTagId)
     {
         var geoTag = _dbContext.GeoTags.Find(geoTagId);
         if (geoTag == null)
@@ -105,14 +105,14 @@ public class GeoTagRepository : IRepository<GeoTag>
             throw new Exception("The geotag does not exist");
         }
 
-        var groupTag = _dbContext.GroupTags.Find(groupTagId);
-        if (groupTag == null)
+        var connectorTag = _dbContext.ConnectorTags.Find(connectorTagId);
+        if (connectorTag == null)
         {
-            throw new Exception("The group tag does not exist");
+            throw new Exception("The connector tag does not exist");
         }
 
-        geoTag.GroupTags.Remove(groupTag);
-        groupTag.GeoTags.Remove(geoTag);
+        geoTag.ConnectorTags.Remove(connectorTag);
+        connectorTag.GeoTags.Remove(geoTag);
         _dbContext.SaveChanges();
     }
 }

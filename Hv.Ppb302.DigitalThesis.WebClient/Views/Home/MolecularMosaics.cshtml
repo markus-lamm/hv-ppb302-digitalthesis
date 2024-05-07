@@ -10,7 +10,7 @@
         @foreach(var mosaic in Model.MolecularMosaics!)
         {
             var randomBlueMosaicImg = mosaicImages[random.Next(mosaicImages.Length)];
-            <div class="mosaic" data-tags="@string.Join(',', mosaic.GroupTags.Select(tag => tag.Name))">
+            <div class="mosaic" data-tags="@string.Join(',', mosaic.ConnectorTags.Select(tag => tag.Name))">
                 <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id, objectType = "molecularmosaic" })">
                     <img class="mosaicImg" src="@Url.Content(randomBlueMosaicImg)" />
                     <div>@mosaic.Title</div>
@@ -22,10 +22,9 @@
 
 <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48" opacity="0.7"> <path d="M0 976 400 576l-400-400-56 57 343 343-343 343 56 57Z" /></svg></a>
-    <h3 class="sidebarLine">Filter</h3>
-    <h3 class="sidebarLine">Tags</h3>
+    <h3 class="sidebarLine">Connectors</h3>
     <ul class="tagList">
-        @foreach(var tag in Model.GroupTags!)
+        @foreach (var tag in Model.ConnectorTags!)
         {
             <li>
                 <div class="item">

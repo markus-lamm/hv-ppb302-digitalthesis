@@ -15,7 +15,7 @@ public class Program
             ServiceLifetime.Scoped);
 
         builder.Services.AddScoped<GeoTagRepository>();
-        builder.Services.AddScoped<GroupTagRepository>();
+        builder.Services.AddScoped<ConnectorTagRepository>();
         builder.Services.AddScoped<MolarMosaicRepository>();
         builder.Services.AddScoped<MolecularMosaicRepository>();
         builder.Services.AddScoped<KaleidoscopeMosaicRepository>();
