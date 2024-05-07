@@ -3,5 +3,5 @@
 public class MolecularMosaicsViewModel
 {
     public List<MolecularMosaic>? MolecularMosaics { get; set; }
-    public List<GroupTag>? GroupTags { get; set; }
+    public List<ConnectorTag>? ConnectorTags { get; set; }
 }

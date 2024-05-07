@@ -8,12 +8,29 @@
 
     <div id="kolumn1">
         <p class="title">@viewModel.Title</p>
-        <p class="tags">Tags:</p>
-       
-                       
-        @foreach (var tag in viewModel.GroupTags)
+        <p class="tags">Connectors:</p>
+        @if (viewModel.ConnectorTags.Count == 0)
         {
-            <p class="tags">@tag.Name</p>
+            <p class="tags">No connectors</p>
+        }
+        else
+        {
+            foreach (var tag in viewModel.ConnectorTags)
+            {
+                <p class="tags">@tag.Name</p>
+            }
+        }
+        <p class="tags">Becomings:</p>
+        @if (viewModel.Becomings.Count == 0)
+        {
+            <p class="tags">No becomings</p>
+        }
+        else
+        {
+            foreach (var tag in viewModel.Becomings)
+            {
+                <p class="tags">@tag</p>
+            }
         }
         <div class="music-controls">
             <img class="pdf_icon" src="~/images/icons/favicon.ico"  />
