@@ -124,7 +124,7 @@ public class TestDataUtils
         var randomNumber = random.Next(1, 1000);
         var KaleidoscopeMosaic = new KaleidoscopeMosaic
         {
-            Title = "KaledoscopeTest" + randomNumber,
+            Title = "KaleidoscopeMosaicTest" + randomNumber,
         };
 
         _kaleidoscopeMosaicRepository.Create(KaleidoscopeMosaic);

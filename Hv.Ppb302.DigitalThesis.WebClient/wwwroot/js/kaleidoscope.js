@@ -9,7 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Get the current rotation value (if any)
             const currentRotation = parseInt(bigImage.style.transform.replace('rotate(', '').replace('deg)', ''), 10) || 0;
             const currentRotationsm = parseInt(smallCircles[0].style.transform.replace('rotate(', '').replace('deg)', ''), 10) || 0;
-            // Add 45 degrees to the current rotation
+            // Add 90 degrees to the current rotation
             const newRotation = currentRotation + 90;
             const newRotationsm = currentRotationsm + 90;
             // Apply the new rotation
