@@ -15,14 +15,14 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
     public MolecularMosaic? Get(Guid id)
     {
         return _dbContext.MolecularMosaics
-            .Include(g => g.GroupTags)
+            .Include(g => g.ConnectorTags)
             .FirstOrDefault(g => g.Id == id);
     }
 
     public List<MolecularMosaic>? GetAll()
     {
         return _dbContext.MolecularMosaics
-            .Include(g => g.GroupTags)
+            .Include(g => g.ConnectorTags)
             .ToList();
     }
 
@@ -76,7 +76,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
         _dbContext.SaveChanges();
     }
 
-    public void AddGroupTag(Guid molecularMosaicId, Guid groupTagId)
+    public void AddConnectorTag(Guid molecularMosaicId, Guid connectorTagId)
     {
         var molecularMosaic = _dbContext.MolecularMosaics.Find(molecularMosaicId);
         if (molecularMosaic == null)
@@ -84,18 +84,18 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
             throw new Exception("The molecular mosaic does not exist");
         }
 
-        var groupTag = _dbContext.GroupTags.Find(groupTagId);
-        if (groupTag == null)
+        var connectorTag = _dbContext.ConnectorTags.Find(connectorTagId);
+        if (connectorTag == null)
         {
-            throw new Exception("The group tag does not exist");
+            throw new Exception("The connector tag does not exist");
         }
 
-        molecularMosaic.GroupTags.Add(groupTag);
-        groupTag.MolecularMosaics.Add(molecularMosaic);
+        molecularMosaic.ConnectorTags.Add(connectorTag);
+        connectorTag.MolecularMosaics.Add(molecularMosaic);
         _dbContext.SaveChanges();
     }
 
-    public void RemoveGroupTag(Guid molecularMosaicId, Guid groupTagId)
+    public void RemoveConnectorTag(Guid molecularMosaicId, Guid connectorTagId)
     {
         var molecularMosaic = _dbContext.MolecularMosaics.Find(molecularMosaicId);
         if (molecularMosaic == null)
@@ -103,14 +103,14 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
             throw new Exception("The molecular mosaic does not exist");
         }
 
-        var groupTag = _dbContext.GroupTags.Find(groupTagId);
-        if (groupTag == null)
+        var connectorTag = _dbContext.ConnectorTags.Find(connectorTagId);
+        if (connectorTag == null)
         {
-            throw new Exception("The group tag does not exist");
+            throw new Exception("The connector tag does not exist");
         }
 
-        molecularMosaic.GroupTags.Remove(groupTag);
-        groupTag.MolecularMosaics.Remove(molecularMosaic);
+        molecularMosaic.ConnectorTags.Remove(connectorTag);
+        connectorTag.MolecularMosaics.Remove(molecularMosaic);
         _dbContext.SaveChanges();
     }
 }
