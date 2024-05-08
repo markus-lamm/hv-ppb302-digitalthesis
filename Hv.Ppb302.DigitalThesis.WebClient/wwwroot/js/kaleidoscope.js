@@ -119,3 +119,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     };
 });
+
+// Get the mosaic container
+const rouletteContainer = document.querySelector('.rouletteimage');
+
+// Get all mosaic elements
+const kaleidoscopeMosaics = Array.from(rouletteContainer.querySelectorAll('.kaleidoscope-mosaic'));
+
+// Assuming mosaics is a collection of your mosaic elements
+kaleidoscopeMosaics.forEach((kaleidoscopeMosaics) => {
+    kaleidoscopeMosaics.addEventListener('mouseover', displayMosaicText);
+    kaleidoscopeMosaics.addEventListener('mouseout', hideMosaicText);
+});
+
+function displayMosaicText() {
+    this.classList.add('mosaic-title-show');
+}
+
+function hideMosaicText() {
+    this.classList.remove('mosaic-title-show');
+}

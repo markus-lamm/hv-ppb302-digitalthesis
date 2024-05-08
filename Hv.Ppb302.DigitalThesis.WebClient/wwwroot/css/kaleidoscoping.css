@@ -103,3 +103,14 @@
     height: 40rem;
     width: 40rem;
 }
+
+.mosaic-title {
+    display: none;
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: white;
+}
+
+.mosaic-title-show .mosaic-title {
+    display: flex;
+}
