@@ -4,7 +4,10 @@
     var geoTagDictionary = Model.ToDictionary(g => g.Title, g => g);
 }
 
-<div class="background-home">
+
+
+
+<div class="background-geotags">
     <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Problems"].Id, objectType = "geotag" })">
         <div id="image-container1">
             <p class="image-text">Problems</p>
@@ -19,8 +22,8 @@
     </a>
     <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Ignore This"].Id, objectType = "geotag" })">
         <div id="image-container3">
-            <p class="image-text">Ignore This</p>
             <img src="~/images/geotags/geotag-black.png" />
+            <p class="image-text">Ignore This</p>
         </div>
     </a>
     <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Deleuzian Ontology in Education"].Id, objectType = "geotag" })">
@@ -49,11 +52,11 @@
             <img src="~/images/geotags/geotag-white.png"/>
             <p class="image-text">Molecular Mosaics</p>
         </div>
-        <img id="blue-mosaic1" src="~/images/mosaics/mosaic-blue-10.png" />
-        <img id="blue-mosaic2" src="~/images/mosaics/mosaic-blue-10.png" />
-        <img id="blue-mosaic3" src="~/images/mosaics/mosaic-blue-10.png" />
-        <img id="blue-mosaic4" src="~/images/mosaics/mosaic-blue-10.png" />
-        <img id="blue-mosaic5" src="~/images/mosaics/mosaic-blue-10.png" />
+        <img id="blue-mosaic1" src="~/images/mosaics/mosaic-blue-6.png" />
+        <img id="blue-mosaic2" src="~/images/mosaics/mosaic-blue-6.png" />
+        <img id="blue-mosaic3" src="~/images/mosaics/mosaic-blue-6.png" />
+        <img id="blue-mosaic4" src="~/images/mosaics/mosaic-blue-6.png" />
+        <img id="blue-mosaic5" src="~/images/mosaics/mosaic-blue-6.png" />
     </a>
     <a href="@Url.Action("Kaleidoscoping", "Home")">
         <div id="image-container8">
@@ -62,3 +65,4 @@
         </div>
     </a>
 </div>
+

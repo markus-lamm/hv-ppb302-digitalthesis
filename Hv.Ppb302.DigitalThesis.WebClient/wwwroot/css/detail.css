@@ -113,8 +113,8 @@
     width: 100vw;
     height: 100vh;
     position: fixed;
-    background-image: url(../images/background/background.png);
-    background-size: cover;
+    background-image: url(../images/background/background2.jpg);
+    background-size: 100% 100%;
     background-position: center;
     justify-content: center;
     align-items: center;
