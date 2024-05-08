@@ -3,6 +3,10 @@
     ViewData["Title"] = "Molar Mosaics";
 }
 
+<head>
+    <link rel="stylesheet" href="~/css/mosaics.css" asp-append-version="true" />
+</head>
+
 <div class="mosaic-container">
     <div class="mosaic-float">
         @foreach(var mosaic in Model.MolarMosaics!)

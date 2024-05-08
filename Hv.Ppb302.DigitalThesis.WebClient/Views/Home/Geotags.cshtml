@@ -3,6 +3,9 @@
     ViewData["Title"] = "Geotags";
     var geoTagDictionary = Model.ToDictionary(g => g.Title, g => g);
 }
+<head>
+    <link rel="stylesheet" href="~/css/geotags.css" asp-append-version="true" />
+</head>
 <div class="background-geotags">
     <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Problems"].Id, objectType = "geotag" })">
         <div id="image-container1">
@@ -61,4 +64,3 @@
         </div>
     </a>
 </div>
-
