@@ -41,8 +41,10 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
             var tags = image.getAttribute('data-tags').split(',');
             if (tags.includes(selectedTag)) {
                 image.style.opacity = 1; // Set full opacity for matching tags
+                image.classList.add('mosaic-highlight-effect'); // Add the highlight effect class
             } else {
                 image.style.opacity = 0.5; // Set lower opacity for non-matching tags
+                image.classList.remove('mosaic-highlight-effect'); // Remove the highlight effect class
             }
         });
     });
@@ -111,10 +113,6 @@ document.addEventListener("DOMContentLoaded", function () {
         placeSmallCircles();
         if (restart) {
             var bufferZone = 0;
-            smallCircles.forEach(function (circle) {
-                circle.style.width = 5 + 'rem';
-                circle.style.height = 5 + 'rem';
-            });
             placeSmallCircles();
         }
     };
