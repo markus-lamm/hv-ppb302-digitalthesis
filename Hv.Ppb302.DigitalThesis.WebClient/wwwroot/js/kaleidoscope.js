@@ -39,7 +39,22 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
         var images = document.querySelectorAll('.smallCircle');
         images.forEach(function (image) {
             var tags = image.getAttribute('data-tags').split(',');
-            if (tags.includes(selectedTag)) {
+
+            if (selectedTag === 'Experiment') {
+                // Create a random value between 1 and 3
+                const randomValue = 3;
+                var random = Math.floor(Math.random() * randomValue) + 1;
+
+                // If the random value is 1, set the opacity to 1 and add the highlight effect class
+                if (random === 1) {
+                    image.style.opacity = 1;
+                    image.classList.add('mosaic-highlight-effect');
+                } else {
+                    image.style.opacity = 0.5;
+                    image.classList.remove('mosaic-highlight-effect');
+                }
+            }
+            else if (tags.includes(selectedTag)) {
                 image.style.opacity = 1; // Set full opacity for matching tags
                 image.classList.add('mosaic-highlight-effect'); // Add the highlight effect class
             } else {
