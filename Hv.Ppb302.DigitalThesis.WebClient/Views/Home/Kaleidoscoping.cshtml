@@ -4,7 +4,9 @@
     var mosaicImages = Enumerable.Range(1, 14).Select(i => $"~/images/mosaics/mosaic-blue-{i}.png").ToArray();
     var random = new Random();
 }
-
+<head>
+    <link rel="stylesheet" href="~/css/kaleidoscoping.css" asp-append-version="true" />
+</head>
 <div class="kaleid-container">
     <div class="roulette" id="biggi">
         <div class="rouletteimage">
@@ -13,14 +15,14 @@
             {
                 var randomBlueMosaicImg = mosaicImages[random.Next(mosaicImages.Length)];
                 <a href="@Url.Action("Detail", "Home", new {id = molarMosaic.Id, objectType = "molarmosaic" })">
-                    <img src="@Url.Content(randomBlueMosaicImg)" class="smallCircle" data-tags="@string.Join(',', molarMosaic.ConnectorTags.Select(tag => tag.Name))" />
+                    <img src="@Url.Content(randomBlueMosaicImg)" class="smallCircle" data-tags="@string.Join(',', molarMosaic.KaleidoscopeTags.Select(tag => tag.Name))" />
                 </a>
             }
             @foreach (var molecularMosaic in Model.MolecularMosaics!)
             {
                 var randomBlueMosaicImg = mosaicImages[random.Next(mosaicImages.Length)];
                 <a href="@Url.Action("Detail", "Home", new {id = molecularMosaic.Id, objectType = "molecularmosaic" })">
-                    <img src="@Url.Content(randomBlueMosaicImg)" class="smallCircle" data-tags="@string.Join(',', molecularMosaic.ConnectorTags.Select(tag => tag.Name))" />
+                    <img src="@Url.Content(randomBlueMosaicImg)" class="smallCircle" data-tags="@string.Join(',', molecularMosaic.KaleidoscopeTags.Select(tag => tag.Name))" />
                 </a>
             }
         </div>

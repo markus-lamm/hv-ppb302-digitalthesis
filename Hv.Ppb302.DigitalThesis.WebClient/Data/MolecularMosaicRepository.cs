@@ -96,6 +96,25 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
         _dbContext.SaveChanges();
     }
 
+    public void AddKaleidoscopeTag(Guid molecularMosaicId, Guid kaleidoscopeTagId)
+    {
+        var molecularMosaic = _dbContext.MolecularMosaics.Find(molecularMosaicId);
+        if (molecularMosaic == null)
+        {
+            throw new Exception("The molecular mosaic does not exist");
+        }
+
+        var kaleidoscopeTag = _dbContext.KaleidoscopeTags.Find(kaleidoscopeTagId);
+        if (kaleidoscopeTag == null)
+        {
+            throw new Exception("The kaleidoscope tag does not exist");
+        }
+
+        molecularMosaic.KaleidoscopeTags.Add(kaleidoscopeTag);
+        kaleidoscopeTag.MolecularMosaics.Add(molecularMosaic);
+        _dbContext.SaveChanges();
+    }
+
     public void RemoveConnectorTag(Guid molecularMosaicId, Guid connectorTagId)
     {
         var molecularMosaic = _dbContext.MolecularMosaics.Find(molecularMosaicId);

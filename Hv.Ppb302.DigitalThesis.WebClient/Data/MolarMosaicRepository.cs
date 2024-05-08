@@ -96,6 +96,25 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
         _dbContext.SaveChanges();
     }
 
+    public void AddKaleidoscopeTag(Guid molarMosaicId, Guid kaleidoscopeTagId)
+    {
+        var molarMosaic = _dbContext.MolarMosaics.Find(molarMosaicId);
+        if (molarMosaic == null)
+        {
+            throw new Exception("The molar mosaic does not exist");
+        }
+
+        var kaleidoscopeTag = _dbContext.KaleidoscopeTags.Find(kaleidoscopeTagId);
+        if (kaleidoscopeTag == null)
+        {
+            throw new Exception("The kaleidoscope tag does not exist");
+        }
+
+        molarMosaic.KaleidoscopeTags.Add(kaleidoscopeTag);
+        kaleidoscopeTag.MolarMosaics.Add(molarMosaic);
+        _dbContext.SaveChanges();
+    }
+
     public void RemoveConnectorTag(Guid molarMosaicId, Guid connectorTagId)
     {
         var molarMosaic = _dbContext.MolarMosaics.Find(molarMosaicId);

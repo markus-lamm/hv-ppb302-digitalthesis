@@ -78,11 +78,11 @@
 }
 
 .smallCircle {
-    width: 6rem;
-    height: 6rem;
+    width: 5rem;
+    height: 5rem;
     border-radius: 50%;
     position: absolute;
-    transition: transform 1.5s ease-out;
+    transition: 1.8s ease;
 }
 
 .filterbigimage {
@@ -102,4 +102,24 @@
 #bigImage {
     height: 40rem;
     width: 40rem;
+}
+
+.tagList {
+    list-style: none;
+}
+
+    .tagList li {
+        margin-bottom: 15px;
+    }
+
+        .tagList li input {
+            text-align: center;
+        }
+
+.mosaic-highlight-effect {
+    width: 7rem;
+    height: 7rem;
+    transition: 1.8s ease;
+    -webkit-filter: drop-shadow(0 0 5px #222);
+    filter: drop-shadow(0 0 5px #222);
 }
