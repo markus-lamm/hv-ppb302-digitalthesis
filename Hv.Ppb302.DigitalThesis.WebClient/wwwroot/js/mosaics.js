@@ -24,8 +24,8 @@ let isInitialUpdateTriggered = false;
 // Set the initial position and direction of each mosaic
 mosaics.forEach((mosaic) => {
     // Set the initial position of the mosaic
-    mosaic.style.left = `${Math.random() * 100}vw`;
-    mosaic.style.top = `${Math.random() * 100}vh`;
+    mosaic.style.left = `${Math.random() * 80}vw`;
+    mosaic.style.top = `${Math.random() * 80}vh`;
 
     // Set the initial direction of the mosaic
     directions.push({
