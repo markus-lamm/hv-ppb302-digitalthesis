@@ -38,6 +38,14 @@
     filter: drop-shadow(0 0 5px #222);
 }
 
+.mosaic-becomingsbtn-effect {
+    transition: 0.3s ease;
+    opacity: 1;
+    visibility: visible;
+    -webkit-filter: drop-shadow(0 0 5px #222);
+    filter: drop-shadow(0 0 5px #222);
+}
+
 .mosaicImg {
     width: 9rem;
     -webkit-filter: drop-shadow(5px 5px 5px #222);
