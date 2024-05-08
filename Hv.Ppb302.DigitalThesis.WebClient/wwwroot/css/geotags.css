@@ -88,13 +88,18 @@
     left: 83%;
 }
 
-
-a:hover img {
-    
-    transform: scale(1.2);
-    transition: 0.5s ease;
-    cursor: pointer;
-}
+    #image-container1:hover,
+    #image-container2:hover,
+    #image-container3:hover,
+    #image-container4:hover,
+    #image-container5:hover,
+    #image-container6:hover,
+    #image-container7:hover,
+    #image-container8:hover {
+        transform: scale(1.2);
+        transition: 0.5s ease;
+        cursor: pointer;
+    }
 
 #blue-mosaic1 {
     width: 8.75rem;

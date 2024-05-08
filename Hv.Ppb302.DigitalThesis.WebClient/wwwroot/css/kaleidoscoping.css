@@ -78,11 +78,9 @@
 }
 
 .smallCircle {
-    width: 6rem;
-    height: 6rem;
+    /*Size determined by javascript*/
     border-radius: 50%;
     position: absolute;
-    transition: transform 1.5s ease-out;
 }
 
 .filterbigimage {
@@ -102,15 +100,4 @@
 #bigImage {
     height: 40rem;
     width: 40rem;
-}
-
-.mosaic-title {
-    display: none;
-    text-decoration: none;
-    font-size: 1.5rem;
-    color: white;
-}
-
-.mosaic-title-show .mosaic-title {
-    display: flex;
 }
