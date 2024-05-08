@@ -24,7 +24,7 @@
     font-size: 1.2rem;
     color: black;
     text-align: center;
-    position: fixed;
+    position: absolute;
     bottom: 55%;
     left: 13%;
 }
@@ -34,7 +34,7 @@
     font-size: 1.2rem;
     color: black;
     text-align: center;
-    position: fixed;
+    position: absolute;
     bottom: 5%;
     left: 42%;
 }
