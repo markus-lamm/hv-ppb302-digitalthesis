@@ -61,6 +61,11 @@ a:hover img {
     font-size: 1.5rem;
 }
 
+.sidebarLine {
+    padding-top: 3rem;
+    padding-bottom: 1rem;
+}
+
 .tagList {
     list-style: none;
 }
@@ -131,4 +136,16 @@ a:hover img {
     display: flex;
     justify-content: center;
     align-items: center;
+    border: 1px solid #343a3f;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    padding: 1rem;
+    background-image: linear-gradient(90deg, #4E6B98, #7B8DA3);
+    color: white;
 }
+
+    .becomings-btn:hover {
+        background-image: linear-gradient(90deg, #7B8DA3, #4E6B98);
+        color: white;
+        cursor: pointer;
+    }
