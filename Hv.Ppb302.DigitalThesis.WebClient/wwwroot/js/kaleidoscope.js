@@ -32,15 +32,41 @@
     });
 });
 
+// Dictionary to store the tags for each connector and a seperate value
+var connectorTagsDictionary = {};
+
+function assignConnectorTags(tag) {
+    // If the connectorTag is not already assigned, assign a random value between 1 and 3
+    if (!connectorTagsDictionary[tag]) {
+        var randomValue = Math.floor(Math.random() * 361);
+        connectorTagsDictionary[tag] = randomValue;
+    }
+    return connectorTagsDictionary[tag];
+}
+
+
 // Add event listeners to radio buttons
 document.querySelectorAll('.custom-radio').forEach(function (radio) {
     radio.addEventListener('change', function () {
         var selectedTag = this.getAttribute('data-tag');
         var images = document.querySelectorAll('.smallCircle');
         images.forEach(function (image) {
-            var tags = image.getAttribute('data-tags').split(',');
+            var tags = image.getAttribute('data-tags').split(':');
+            var kaleidoscopeTags = tags[0].split(',');
+            var connectorTags = tags[1].split(',');
 
-            if (selectedTag === 'Experiment') {
+            // Reset the hue value
+            image.style.filter = 'hue-rotate(0deg)';
+
+            if (selectedTag === 'Assemblages') {
+                image.style.opacity = 1;
+                image.classList.remove('mosaic-highlight-effect');
+                connectorTags.forEach(function (tag) {
+                    var randomValue = assignConnectorTags(tag);
+                    image.style.filter = 'hue-rotate(' + randomValue + 'deg)';
+                });
+            }
+            else if (selectedTag === 'Experiment') {
                 // Create a random value between 1 and 3
                 const randomValue = 3;
                 var random = Math.floor(Math.random() * randomValue) + 1;
@@ -54,7 +80,7 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
                     image.classList.remove('mosaic-highlight-effect');
                 }
             }
-            else if (tags.includes(selectedTag)) {
+            else if (kaleidoscopeTags.includes(selectedTag)) {
                 image.style.opacity = 1; // Set full opacity for matching tags
                 image.classList.add('mosaic-highlight-effect'); // Add the highlight effect class
             } else {
