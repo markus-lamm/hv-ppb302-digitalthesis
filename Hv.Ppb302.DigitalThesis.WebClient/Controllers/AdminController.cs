@@ -1,44 +1,65 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+using Hv.Ppb302.DigitalThesis.WebClient.Data;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly UserRepository _userRepository;
+
+        public AdminController(UserRepository userRepository)
+        {
+            _userRepository = userRepository;
+        }
+
         public IActionResult Index()
         {
+            if (!CheckAuthentication())
+            {
+                return RedirectToAction("Login", "Admin");
+            }
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Index(string username, string password)
+        public IActionResult Login()
         {
-            if (username == "admin" && password == "admin")
+            if (TempData["LoginError"] != null)
             {
-                // Autentisering lyckades, skapa en claims identity med användarens id
-                var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, "admin") }, CookieAuthenticationDefaults.AuthenticationScheme);
+                TempData.Remove("LoginError");
+                ViewBag.Error = "Invalid username or password";
+            }
+            return View();
+        }
 
-                // Skapa en autentiseringscookie
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+        public IActionResult Logout()
+        {
+            RemoveAuthentication();
+            return RedirectToAction("Index", "Home");
+        }
 
-                // Omdirigera till önskad vy
-                return RedirectToAction("Index");
+        public IActionResult AddAuthentication(string username, string password)
+        {
+            var user = _userRepository.GetByCredentials(username, password);
+            if(user == null)
+            {
+                TempData["LoginError"] = true;
+                return RedirectToAction("Login", "Admin");
             }
 
-            // Felaktiga autentiseringsuppgifter, visa felmeddelande eller hantera på lämpligt sätt
-            TempData["Message"] = "Invalid username or password";
-            return RedirectToAction("Index", "Home");
+            HttpContext.Session.SetString("Username", username);
 
-
+            return RedirectToAction("Index", "Admin");
         }
-        public async Task<IActionResult> Logout()
-        {
-            // Logga ut användaren genom att ta bort autentiseringscookie
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
-            return RedirectToAction("Index", "Home");
+        public void RemoveAuthentication()
+        {
+            HttpContext.Session.Remove("Username");
+        }
+
+        public bool CheckAuthentication()
+        {
+            return HttpContext.Session.GetString("Username") != null;
         }
     }
 }

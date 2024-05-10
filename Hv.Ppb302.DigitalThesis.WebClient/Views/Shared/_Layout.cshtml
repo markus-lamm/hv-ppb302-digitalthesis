@@ -1,5 +1,8 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+@{
+    var username = Context.Session.GetString("Username");
+}
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,16 +18,19 @@
         <nav class="navbar">
             <a asp-controller="Home" asp-action="Geotags"><img class="logo" src="~/images/logo.png" alt="Logotype of Mona Tynkkinen"/></a>
             <ul class="nav-list">
-                @if (!User.Identity!.IsAuthenticated)
+                @if (username != null)
                 {
                     <li class="nav-item">
-                        <a class="nav-link nav-link-ltr" href="javascript:void(0);" onclick="showLoginOverlay()">Log in</a>
+                        <a class="nav-link nav-link-ltr" asp-controller="Admin" asp-action="Index">Admin</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Admin" asp-action="Logout">Log out</a>
                     </li>
                 }
                 else
                 {
                     <li class="nav-item">
-                        <a class="nav-link" asp-controller="Admin" asp-action="Logout">Log out</a>
+                        <a class="nav-link nav-link-ltr" asp-controller="Admin" asp-action="Login">Log in</a>
                     </li>
                 }
                 <li>
@@ -33,33 +39,9 @@
                 <li>
                     <a class="nav-link nav-link-ltr" asp-controller="Home" asp-action="Geotags">Tutorial</a>
                 </li>
-          
             </ul>
         </nav>
     </header>
-
-    <div id="overlay" class="overlay" style="display: none;">
-        <div class="login-section">
-            <div class="close-btn" onclick="hideLoginOverlay()">&times;</div>
-            <div class="heading">
-                <h2>Welcome</h2>
-                <p>Log in to manage the mosaics</p>
-            </div>
-            <form class="login-form" method="post" action="/Admin/Index">
-                <div class="input">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" autocomplete="off" required />
-                </div>
-                <div class="input">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" />
-                </div>
-                <div class="button input">
-                     <button type="submit" onclick="return validateLoginForm()">Log in</button>
-                </div>
-            </form>
-        </div>
-    </div>
 
     <div class="container">
         <main role="main">
