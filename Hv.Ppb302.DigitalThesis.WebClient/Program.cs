@@ -19,14 +19,12 @@ public class Program
         builder.Services.AddScoped<MolarMosaicRepository>();
         builder.Services.AddScoped<MolecularMosaicRepository>();
         builder.Services.AddScoped<KaleidoscopeTagRepository>();
+        builder.Services.AddScoped<UserRepository>();
         builder.Services.AddScoped<TestDataUtils>();
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 
-        // Lägg till stöd för loginfunktionen. Skicka med rätt sida för LoginPath
-        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-        .AddCookie(options => { options.LoginPath = "/Admin/Index/"; });
         builder.Services.AddSession(options =>
         {
             options.IdleTimeout = TimeSpan.FromMinutes(30);
