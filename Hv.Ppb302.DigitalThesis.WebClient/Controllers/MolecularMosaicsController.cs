@@ -160,15 +160,19 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 
             var becomingsSelectListItems = becomingsList.Select(b => new SelectListItem { Value = b, Text = b }).ToList();
             var connectorsSelectList = connectors
-                .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
+                .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name, Selected = molecularMosaic.ConnectorTags.Any(ct => ct.Id == c.Id) })
                 .ToList();
             var kaleidoscopeSelectList = Kaleidoscope
-                .Select(k => new SelectListItem { Value = k.Id.ToString(), Text = k.Name })
+                .Select(k => new SelectListItem { Value = k.Id.ToString(), Text = k.Name, Selected = molecularMosaic.KaleidoscopeTags.Any(ct => ct.Id == k.Id) })
                 .ToList();
+
+            var selectedConnectorIds = molecularMosaic.ConnectorTags.Select(ct => ct.Id).ToList();
+
+            var connectorsMultiSelectList = new MultiSelectList(connectors, "Id", "Name", selectedConnectorIds);
 
 
             ViewData["Becomings"] = becomingsSelectListItems;
-            ViewData["Connectors"] = connectorsSelectList;
+            ViewData["Connectors"] = connectorsMultiSelectList;
             ViewData["Kaleidoscope"] = kaleidoscopeSelectList;
 
 
