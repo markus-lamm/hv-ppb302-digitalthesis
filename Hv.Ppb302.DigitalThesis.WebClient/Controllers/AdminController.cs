@@ -6,6 +6,7 @@ using MimeDetective;
 using MimeDetective.Storage;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
+using System.Drawing;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 {
@@ -58,39 +59,32 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     await file.CopyToAsync(stream);
                 }
             }
-            return View();
+
+            var fileViewModels = GetFiles();
+            return View("FileView", fileViewModels);
         }
 
+        [HttpGet]
         public IActionResult FileView()
         {
-            var Inspector = new ContentInspectorBuilder()
-            {
-                Definitions = MimeDetective.Definitions.Default.All()
-            }.Build();
-
-            var path = Path.Combine(@"C:\Uploads");
-            var files = Directory.GetFiles(path)
-                                 .Select(path => Path.GetFileName(path))
-                                 .ToList();
-
-            List<FileViewViewModel> fileViewModels = [];
-            foreach (var file in files)
-            {
-                var Results = Inspector.Inspect(Path.Combine(@"C:\Uploads", file));
-                var fileType = Results.FirstOrDefault().Definition.File.Categories.FirstOrDefault();
-                var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
-
-                fileViewModels.Add(new FileViewViewModel
-                {
-                    Category = fileType,
-                    File = file,
-                    FileUrl = fileUrl
-                });
-            }
+            var fileViewModels = GetFiles();
 
             return View(fileViewModels);
         }
 
+        [HttpPost]
+        public IActionResult FileView(string FileName)
+        {
+            var path = Path.Combine(@"C:\Uploads", FileName);
+            FileInfo file = new(path);
+            if (file.Exists)//check file exsit or not  
+            {
+                file.Delete();
+            }
+            var fileViewModels = GetFiles();
+
+            return View("FileView", fileViewModels);
+        }
         public IActionResult Login()
         {
             if (TempData["LoginError"] != null)
@@ -129,6 +123,35 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         public bool CheckAuthentication()
         {
             return HttpContext.Session.GetString("Username") != null;
+        }
+
+        public List<FileViewViewModel> GetFiles()
+        {
+            var Inspector = new ContentInspectorBuilder()
+            {
+                Definitions = MimeDetective.Definitions.Default.All()
+            }.Build();
+
+            var path = Path.Combine(@"C:\Uploads");
+            var files = Directory.GetFiles(path)
+                                 .Select(path => Path.GetFileName(path))
+                                 .ToList();
+
+            List<FileViewViewModel> fileViewModels = [];
+            foreach (var file in files)
+            {
+                var Results = Inspector.Inspect(Path.Combine(@"C:\Uploads", file));
+                var fileType = Results.FirstOrDefault().Definition.File.Categories.FirstOrDefault();
+                var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
+
+                fileViewModels.Add(new FileViewViewModel
+                {
+                    Category = fileType,
+                    File = file,
+                    FileUrl = fileUrl
+                });
+            }
+            return fileViewModels;
         }
     }
 }

@@ -97,3 +97,22 @@ function copyFunction() {
     navigator.clipboard.writeText(selectedTag);
 
 }
+
+const playButton = document.getElementById('audio-icon');
+
+if (playButton) {
+    const audioPlayer = document.getElementById('audio-player');
+    // Add click event listener to the button
+    playButton.addEventListener('click', function () {
+        // Check if audio is currently playing
+        if (audioPlayer.paused) {
+            // If paused, play the audio
+            audioPlayer.play();
+        } else {
+            // If playing, pause the audio
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+        }
+    });
+}
+

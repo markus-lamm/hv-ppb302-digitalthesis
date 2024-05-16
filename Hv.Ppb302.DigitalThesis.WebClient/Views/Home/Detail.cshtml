@@ -2,6 +2,8 @@
 @{
     var viewModel = Model;
     ViewData["Title"] = viewModel.Title;
+    string fileName = System.IO.Path.GetFileName(Model.PdfFilePath);
+
 }
 
 <head>
@@ -36,9 +38,11 @@
             }
         }
         <div class="music-controls">
+            <a href="@Model.PdfFilePath" download="@fileName">
             <img class="pdf_icon" src="~/images/icons/favicon.ico"  />
-            <img class="play_icon" src="~/images/icons/play_icon.png" />
-            <audio id="audio-player" src="https://files.musopen.org/recordings/6699358c-9a7b-4dc3-a3b9-331a532d1004.mp3?filename=The+Magic+Flute,+K.+620+-+Overture.mp3&amp;preview"></audio>
+            </a>
+            <img id="audio-icon" class="play_icon" src="~/images/icons/play_icon.png" />
+            <audio id="audio-player" src="@Model.AudioFilePath"></audio>
         </div>
     </div>
             
