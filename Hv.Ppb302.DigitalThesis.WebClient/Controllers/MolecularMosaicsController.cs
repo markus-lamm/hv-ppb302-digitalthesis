@@ -166,13 +166,9 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                 .Select(k => new SelectListItem { Value = k.Id.ToString(), Text = k.Name, Selected = molecularMosaic.KaleidoscopeTags.Any(ct => ct.Id == k.Id) })
                 .ToList();
 
-            var selectedConnectorIds = molecularMosaic.ConnectorTags.Select(ct => ct.Id).ToList();
-
-            var connectorsMultiSelectList = new MultiSelectList(connectors, "Id", "Name", selectedConnectorIds);
-
 
             ViewData["Becomings"] = becomingsSelectListItems;
-            ViewData["Connectors"] = connectorsMultiSelectList;
+            ViewData["Connectors"] = connectorsSelectList;
             ViewData["Kaleidoscope"] = kaleidoscopeSelectList;
 
 
