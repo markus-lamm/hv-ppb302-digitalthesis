@@ -33,8 +33,14 @@ public class Program
             options.Cookie.IsEssential = true;
         });
 
+
         var app = builder.Build();
 
+        var uploadsDirectory = Path.Combine(@"C:\Uploads");
+        if (!Directory.Exists(uploadsDirectory))
+        {
+            Directory.CreateDirectory(uploadsDirectory);
+        }
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
@@ -49,10 +55,11 @@ public class Program
         app.UseAuthorization();
 
         app.UseSession();
+
         app.UseStaticFiles(new StaticFileOptions
         {
             FileProvider = new PhysicalFileProvider(
-           Path.Combine(@"C:\inetpub\wwwroot\Uploads")),
+           Path.Combine(@"C:\Uploads")),
             RequestPath = "/StaticFiles"
         });
         app.MapControllers();

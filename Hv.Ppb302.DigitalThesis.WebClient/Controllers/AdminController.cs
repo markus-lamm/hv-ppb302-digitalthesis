@@ -51,7 +51,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             if (file != null)
             {
                 var fileName = Path.GetFileName(file.FileName);
-                var path = Path.Combine(@"C:\inetpub\wwwroot\Uploads", fileName); // Specify the absolute path
+                var path = Path.Combine(@"C:\Uploads", fileName); // Specify the absolute path
 
                 using (var stream = System.IO.File.Create(path))
                 {
@@ -68,7 +68,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                 Definitions = MimeDetective.Definitions.Default.All()
             }.Build();
 
-            var path = Path.Combine(@"C:\inetpub\wwwroot\Uploads");
+            var path = Path.Combine(@"C:\Uploads");
             var files = Directory.GetFiles(path)
                                  .Select(path => Path.GetFileName(path))
                                  .ToList();
@@ -76,9 +76,9 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             List<FileViewViewModel> fileViewModels = [];
             foreach (var file in files)
             {
-                var Results = Inspector.Inspect(Path.Combine(@"C:\inetpub\wwwroot\Uploads", file));
+                var Results = Inspector.Inspect(Path.Combine(@"C:\Uploads", file));
                 var fileType = Results.FirstOrDefault().Definition.File.Categories.FirstOrDefault();
-                var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles", file);
+                var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
 
                 fileViewModels.Add(new FileViewViewModel
                 {
