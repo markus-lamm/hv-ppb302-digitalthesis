@@ -1,1 +1,104 @@
-﻿
+﻿.admincontainer{
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    width: 100vw;
+    background: url(../images/background/image.png);
+    background-size: cover;
+}
+.admintable {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding-top: 15vh;
+
+}
+.createform{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.editor-layout {
+    height: 340px;
+
+}
+.editor-layout {
+    height: 300px;
+    /* added these styles */
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+td {
+    max-width:50vw
+}
+.fileview {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.card-body img{
+    height: 80%;
+    width: 100%;
+}
+:root {
+    --cardWidth: 240px;
+    --cardHeight: 280px;
+    --cardMargin: 16px;
+}
+
+.card {
+    width: var(--cardWidth);
+    height: var(--cardHeight);
+    margin: var(--cardMargin);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background: #fff;
+    box-sizing: border-box;
+}
+
+.card-title{
+    text-align: center;
+}
+
+.containerss {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    background-color: #1E3A60;
+    padding: 20px;
+    border: 2px solid #9B7FB4;
+}
+
+.box {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    margin: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    width: calc(50% - 40px);
+    height: 150px;
+    box-sizing: border-box;
+}
+
+.box img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 10px;
+}
+
+.box p {
+    margin: 0;
+    font-size: 16px;
+    color: black;
+    text-align: center;
+}

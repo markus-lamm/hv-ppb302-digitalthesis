@@ -1,12 +1,14 @@
 ﻿.text {
     padding-left: 1rem;
     padding-right: 1rem;
+    flex-grow: 1;
 }
 
 .column3_container {
     display: flex;
     align-items: stretch;
     position: relative;
+    width: 100%;
 }
 
 #kolumn1, #kolumn2 {
@@ -49,7 +51,6 @@
     font-size: 0.9375rem;
     padding: 0 6.875rem 0 0;
     align-self: stretch;
-    flex-grow: 1; 
     height: 100%; 
 }
 
