@@ -1,0 +1,46 @@
+﻿@model List<FileViewViewModel>
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<head>
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+</head>
+<div class="admincontainers">
+    <div class="admintable">
+        <a href="/admin/fileupload">
+            <p>klicka för att ladda upp fil</p>
+        </a>
+    </div>
+
+    <div class="fileview">
+
+        @foreach (var item in Model)
+        {
+            <div class="card">
+                <div class="card-body">
+                    @switch (item.Category)
+                    {
+                        case MimeDetective.Storage.Category.Document:
+                            <img src="~/images/pdf.png" />
+                            break;
+                        case MimeDetective.Storage.Category.Video:
+                            <img src="~/images/video.png" />
+                            break;
+                        case MimeDetective.Storage.Category.Audio:
+                            <img src="~/images/audio.png" />
+                            break;
+                        default:
+                            break;
+                    }
+                    <input id="fileurl" hidden data-tags="@item.FileUrl"/>
+                    <h5 class="card-title">@item.File</h5>
+                    <button onclick="copyFunction()">Kopiera Länk</button>
+
+                    <!-- Add more details or buttons as needed -->
+                </div>
+            </div>
+        }
+    </div>
+</div>

@@ -3,5 +3,5 @@
 public class MolarMosaicsViewModel
 {
     public List<MolarMosaic>? MolarMosaics { get; set; }
-    public List<GroupTag>? GroupTags { get; set; }
+    public List<ConnectorTag>? ConnectorTags { get; set; }
 }

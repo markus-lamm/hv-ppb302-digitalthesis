@@ -1,39 +1,50 @@
 ﻿.mosaic-container {
-    z-index: 0;
-    width: 100vw;
     height: 100vh;
-    position: fixed;
-    background-image: url(../images/background/background.png);
-    background-size: cover;
+    width: 100vw;
+    background-attachment: fixed;
+    background-image: url(../images/background/background2.jpg);
+    background-repeat: no-repeat;
     background-position: center;
-    justify-content: center;
-    align-items: center;
+    background-size: 100% 100%;
+    position: absolute;
+}
+
+.mosaic {
+    position: absolute;
+}
+
+.mosaic-content {
+    display: flex;
+    flex-direction: column;
 }
 
 .mosaic a {
-    position: relative;
-    display: inline-block;
+    text-decoration: none;
+}
+
+a:hover img {
+    transform: scale(1.2);
+    transition: 0.5s ease;
+    cursor: pointer;
 }
 
     .mosaic a div {
-        font-family: 'Inconsolata', serif;
-        width: 100%;
-        text-align: center;
         font-size: 2.5rem;
         color: white;
-        text-decoration: none !important;
         opacity: 0;
         visibility: hidden;
-        z-index: 1;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
     }
 
 .mosaic a:hover div {
     transition: 0.3s ease;
-    text-decoration: none !important;
+    opacity: 1;
+    visibility: visible;
+    -webkit-filter: drop-shadow(0 0 5px #222);
+    filter: drop-shadow(0 0 5px #222);
+}
+
+.mosaic-becomingsbtn-effect {
+    transition: 0.3s ease;
     opacity: 1;
     visibility: visible;
     -webkit-filter: drop-shadow(0 0 5px #222);
@@ -41,16 +52,18 @@
 }
 
 .mosaicImg {
-    width: 140px;
-    height: auto;
+    width: 9rem;
     -webkit-filter: drop-shadow(5px 5px 5px #222);
     filter: drop-shadow(5px 5px 5px #222);
 }
 
-.mosaic {
-    position: absolute;
-    width: auto;
-    z-index: 3;
+.mosaic-becoming {
+    font-size: 1.5rem;
+}
+
+.sidebarLine {
+    padding-top: 3rem;
+    padding-bottom: 1rem;
 }
 
 .tagList {
@@ -117,4 +130,22 @@
         border-radius: 0.3em;
         background: #50565a;
         box-shadow: 2px 1px 0 #50565a;
+    }
+
+.becomings-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #343a3f;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    padding: 1rem;
+    background-image: linear-gradient(90deg, #4E6B98, #7B8DA3);
+    color: white;
+}
+
+    .becomings-btn:hover {
+        background-image: linear-gradient(90deg, #7B8DA3, #4E6B98);
+        color: white;
+        cursor: pointer;
     }

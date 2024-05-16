@@ -15,14 +15,14 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
     public MolecularMosaic? Get(Guid id)
     {
         return _dbContext.MolecularMosaics
-            .Include(g => g.GroupTags)
+            .Include(g => g.ConnectorTags)
             .FirstOrDefault(g => g.Id == id);
     }
 
     public List<MolecularMosaic>? GetAll()
     {
         return _dbContext.MolecularMosaics
-            .Include(g => g.GroupTags)
+            .Include(g => g.ConnectorTags)
             .ToList();
     }
 
@@ -31,7 +31,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
         var existingMolecularMosaic = _dbContext.MolarMosaics.FirstOrDefault(m => m.Title == molecularMosaic.Title);
         if (existingMolecularMosaic != null)
         {
-            throw new Exception("A molar mosaic with the same title already exists");
+            throw new Exception("A molecular mosaic with the same title already exists");
         }
         _dbContext.MolecularMosaics.Add(molecularMosaic);
         _dbContext.SaveChanges();
@@ -39,16 +39,17 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
 
     public void Update(MolecularMosaic molecularMosaic)
     {
-        var existingMolecularMosaic = _dbContext.MolarMosaics.Find(molecularMosaic.Id);
+        var existingMolecularMosaic = _dbContext.MolecularMosaics.Find(molecularMosaic.Id);
         if (existingMolecularMosaic == null)
         {
-            throw new Exception("The molar mosaic does not exist");
+            throw new Exception("The molecular mosaic does not exist");
         }
         existingMolecularMosaic.Title = molecularMosaic.Title;
         existingMolecularMosaic.Content = molecularMosaic.Content;
         existingMolecularMosaic.PdfFilePath = molecularMosaic.PdfFilePath;
         existingMolecularMosaic.HasAudio = molecularMosaic.HasAudio;
         existingMolecularMosaic.AudioFilePath = molecularMosaic.AudioFilePath;
+        existingMolecularMosaic.Becomings = molecularMosaic.Becomings;
         _dbContext.SaveChanges();
     }
 
@@ -57,7 +58,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
         var existingMolecularMosaic = _dbContext.MolecularMosaics.Find(id);
         if (existingMolecularMosaic == null)
         {
-            throw new Exception("The molar mosaic does not exist");
+            throw new Exception("The molecular mosaic does not exist");
         }
         _dbContext.MolecularMosaics.Remove(existingMolecularMosaic);
         _dbContext.SaveChanges();
@@ -76,7 +77,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
         _dbContext.SaveChanges();
     }
 
-    public void AddGroupTag(Guid molecularMosaicId, Guid groupTagId)
+    public void AddConnectorTag(Guid molecularMosaicId, Guid connectorTagId)
     {
         var molecularMosaic = _dbContext.MolecularMosaics.Find(molecularMosaicId);
         if (molecularMosaic == null)
@@ -84,18 +85,18 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
             throw new Exception("The molecular mosaic does not exist");
         }
 
-        var groupTag = _dbContext.GroupTags.Find(groupTagId);
-        if (groupTag == null)
+        var connectorTag = _dbContext.ConnectorTags.Find(connectorTagId);
+        if (connectorTag == null)
         {
-            throw new Exception("The group tag does not exist");
+            throw new Exception("The connector tag does not exist");
         }
 
-        molecularMosaic.GroupTags.Add(groupTag);
-        groupTag.MolecularMosaics.Add(molecularMosaic);
+        molecularMosaic.ConnectorTags.Add(connectorTag);
+        connectorTag.MolecularMosaics.Add(molecularMosaic);
         _dbContext.SaveChanges();
     }
 
-    public void RemoveGroupTag(Guid molecularMosaicId, Guid groupTagId)
+    public void AddKaleidoscopeTag(Guid molecularMosaicId, Guid kaleidoscopeTagId)
     {
         var molecularMosaic = _dbContext.MolecularMosaics.Find(molecularMosaicId);
         if (molecularMosaic == null)
@@ -103,14 +104,33 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
             throw new Exception("The molecular mosaic does not exist");
         }
 
-        var groupTag = _dbContext.GroupTags.Find(groupTagId);
-        if (groupTag == null)
+        var kaleidoscopeTag = _dbContext.KaleidoscopeTags.Find(kaleidoscopeTagId);
+        if (kaleidoscopeTag == null)
         {
-            throw new Exception("The group tag does not exist");
+            throw new Exception("The kaleidoscope tag does not exist");
         }
 
-        molecularMosaic.GroupTags.Remove(groupTag);
-        groupTag.MolecularMosaics.Remove(molecularMosaic);
+        molecularMosaic.KaleidoscopeTags.Add(kaleidoscopeTag);
+        kaleidoscopeTag.MolecularMosaics.Add(molecularMosaic);
+        _dbContext.SaveChanges();
+    }
+
+    public void RemoveConnectorTag(Guid molecularMosaicId, Guid connectorTagId)
+    {
+        var molecularMosaic = _dbContext.MolecularMosaics.Find(molecularMosaicId);
+        if (molecularMosaic == null)
+        {
+            throw new Exception("The molecular mosaic does not exist");
+        }
+
+        var connectorTag = _dbContext.ConnectorTags.Find(connectorTagId);
+        if (connectorTag == null)
+        {
+            throw new Exception("The connector tag does not exist");
+        }
+
+        molecularMosaic.ConnectorTags.Remove(connectorTag);
+        connectorTag.MolecularMosaics.Remove(molecularMosaic);
         _dbContext.SaveChanges();
     }
 }

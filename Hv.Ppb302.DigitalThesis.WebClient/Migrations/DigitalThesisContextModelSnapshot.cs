@@ -22,64 +22,63 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("GeoTagGroupTag", b =>
+            modelBuilder.Entity("ConnectorTagGeoTag", b =>
                 {
+                    b.Property<Guid>("ConnectorTagsId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("GeoTagsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("GroupTagsId")
-                        .HasColumnType("uniqueidentifier");
+                    b.HasKey("ConnectorTagsId", "GeoTagsId");
 
-                    b.HasKey("GeoTagsId", "GroupTagsId");
+                    b.HasIndex("GeoTagsId");
 
-                    b.HasIndex("GroupTagsId");
-
-                    b.ToTable("GeoTagGroupTag");
+                    b.ToTable("ConnectorTagGeoTag");
                 });
 
-            modelBuilder.Entity("GroupTagKaleidoscopeMosaic", b =>
+            modelBuilder.Entity("ConnectorTagMolarMosaic", b =>
                 {
-                    b.Property<Guid>("GroupTagsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("KaleidoscopeMosaicsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("GroupTagsId", "KaleidoscopeMosaicsId");
-
-                    b.HasIndex("KaleidoscopeMosaicsId");
-
-                    b.ToTable("GroupTagKaleidoscopeMosaic");
-                });
-
-            modelBuilder.Entity("GroupTagMolarMosaic", b =>
-                {
-                    b.Property<Guid>("GroupTagsId")
+                    b.Property<Guid>("ConnectorTagsId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("MolarMosaicsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("GroupTagsId", "MolarMosaicsId");
+                    b.HasKey("ConnectorTagsId", "MolarMosaicsId");
 
                     b.HasIndex("MolarMosaicsId");
 
-                    b.ToTable("GroupTagMolarMosaic");
+                    b.ToTable("ConnectorTagMolarMosaic");
                 });
 
-            modelBuilder.Entity("GroupTagMolecularMosaic", b =>
+            modelBuilder.Entity("ConnectorTagMolecularMosaic", b =>
                 {
-                    b.Property<Guid>("GroupTagsId")
+                    b.Property<Guid>("ConnectorTagsId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("MolecularMosaicsId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.HasKey("GroupTagsId", "MolecularMosaicsId");
+                    b.HasKey("ConnectorTagsId", "MolecularMosaicsId");
 
                     b.HasIndex("MolecularMosaicsId");
 
-                    b.ToTable("GroupTagMolecularMosaic");
+                    b.ToTable("ConnectorTagMolecularMosaic");
+                });
+
+            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.ConnectorTag", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("ConnectorTags");
                 });
 
             modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.GeoTag", b =>
@@ -89,6 +88,9 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AudioFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Becomings")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Content")
@@ -108,7 +110,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.ToTable("GeoTags");
                 });
 
-            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.GroupTag", b =>
+            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.KaleidoscopeTag", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -119,33 +121,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("GroupTags");
-                });
-
-            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.KaleidoscopeMosaic", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("AudioFilePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("HasAudio")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("PdfFilePath")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Title")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("KaleidoscopeMosaics");
+                    b.ToTable("KaleidoscopeTags");
                 });
 
             modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.MolarMosaic", b =>
@@ -155,6 +131,9 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("AudioFilePath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Becomings")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Content")
@@ -183,6 +162,9 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.Property<string>("AudioFilePath")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Becomings")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
@@ -200,41 +182,73 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.ToTable("MolecularMosaics");
                 });
 
-            modelBuilder.Entity("GeoTagGroupTag", b =>
+            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.User", b =>
                 {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Username")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
+            modelBuilder.Entity("KaleidoscopeTagMolarMosaic", b =>
+                {
+                    b.Property<Guid>("KaleidoscopeTagsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MolarMosaicsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("KaleidoscopeTagsId", "MolarMosaicsId");
+
+                    b.HasIndex("MolarMosaicsId");
+
+                    b.ToTable("KaleidoscopeTagMolarMosaic");
+                });
+
+            modelBuilder.Entity("KaleidoscopeTagMolecularMosaic", b =>
+                {
+                    b.Property<Guid>("KaleidoscopeTagsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("MolecularMosaicsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("KaleidoscopeTagsId", "MolecularMosaicsId");
+
+                    b.HasIndex("MolecularMosaicsId");
+
+                    b.ToTable("KaleidoscopeTagMolecularMosaic");
+                });
+
+            modelBuilder.Entity("ConnectorTagGeoTag", b =>
+                {
+                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.ConnectorTag", null)
+                        .WithMany()
+                        .HasForeignKey("ConnectorTagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.GeoTag", null)
                         .WithMany()
                         .HasForeignKey("GeoTagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.GroupTag", null)
-                        .WithMany()
-                        .HasForeignKey("GroupTagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
-            modelBuilder.Entity("GroupTagKaleidoscopeMosaic", b =>
+            modelBuilder.Entity("ConnectorTagMolarMosaic", b =>
                 {
-                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.GroupTag", null)
+                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.ConnectorTag", null)
                         .WithMany()
-                        .HasForeignKey("GroupTagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.KaleidoscopeMosaic", null)
-                        .WithMany()
-                        .HasForeignKey("KaleidoscopeMosaicsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
-            modelBuilder.Entity("GroupTagMolarMosaic", b =>
-                {
-                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.GroupTag", null)
-                        .WithMany()
-                        .HasForeignKey("GroupTagsId")
+                        .HasForeignKey("ConnectorTagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -245,11 +259,41 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("GroupTagMolecularMosaic", b =>
+            modelBuilder.Entity("ConnectorTagMolecularMosaic", b =>
                 {
-                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.GroupTag", null)
+                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.ConnectorTag", null)
                         .WithMany()
-                        .HasForeignKey("GroupTagsId")
+                        .HasForeignKey("ConnectorTagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.MolecularMosaic", null)
+                        .WithMany()
+                        .HasForeignKey("MolecularMosaicsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("KaleidoscopeTagMolarMosaic", b =>
+                {
+                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.KaleidoscopeTag", null)
+                        .WithMany()
+                        .HasForeignKey("KaleidoscopeTagsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.MolarMosaic", null)
+                        .WithMany()
+                        .HasForeignKey("MolarMosaicsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("KaleidoscopeTagMolecularMosaic", b =>
+                {
+                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.KaleidoscopeTag", null)
+                        .WithMany()
+                        .HasForeignKey("KaleidoscopeTagsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

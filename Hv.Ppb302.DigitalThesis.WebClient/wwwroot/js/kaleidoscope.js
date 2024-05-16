@@ -1,5 +1,4 @@
-﻿
-document.addEventListener("DOMContentLoaded", function () {
+﻿document.addEventListener("DOMContentLoaded", function () {
     const radios = document.querySelectorAll('.custom-radio');
     var bigImage = document.getElementById('biggi');
     var smallCircles = document.querySelectorAll('.smallCircle');
@@ -9,7 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
             // Get the current rotation value (if any)
             const currentRotation = parseInt(bigImage.style.transform.replace('rotate(', '').replace('deg)', ''), 10) || 0;
             const currentRotationsm = parseInt(smallCircles[0].style.transform.replace('rotate(', '').replace('deg)', ''), 10) || 0;
-            // Add 45 degrees to the current rotation
+            // Add 90 degrees to the current rotation
             const newRotation = currentRotation + 90;
             const newRotationsm = currentRotationsm + 90;
             // Apply the new rotation
@@ -29,13 +28,21 @@ document.addEventListener("DOMContentLoaded", function () {
             bigImage.classList.remove(...imagefilter);
 
             bigImage.classList.add(randomFilter);
-
-            
         });
     });
 });
 
+// Dictionary to store the tags for each connector and a seperate value
+var connectorTagsDictionary = {};
 
+function assignConnectorTags(tag) {
+    // If the connectorTag is not already assigned, assign a random value between 1 and 3
+    if (!connectorTagsDictionary[tag]) {
+        var randomValue = Math.floor(Math.random() * 361);
+        connectorTagsDictionary[tag] = randomValue;
+    }
+    return connectorTagsDictionary[tag];
+}
 
 
 // Add event listeners to radio buttons
@@ -44,16 +51,45 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
         var selectedTag = this.getAttribute('data-tag');
         var images = document.querySelectorAll('.smallCircle');
         images.forEach(function (image) {
-            var tags = image.getAttribute('data-tags').split(',');
-            if (tags.includes(selectedTag)) {
+            var tags = image.getAttribute('data-tags').split(':');
+            var kaleidoscopeTags = tags[0].split(',');
+            var connectorTags = tags[1].split(',');
+
+            // Reset the hue value
+            image.style.filter = 'hue-rotate(0deg)';
+
+            if (selectedTag === 'Assemblages') {
+                image.style.opacity = 1;
+                image.classList.remove('mosaic-highlight-effect');
+                connectorTags.forEach(function (tag) {
+                    var randomValue = assignConnectorTags(tag);
+                    image.style.filter = 'hue-rotate(' + randomValue + 'deg)';
+                });
+            }
+            else if (selectedTag === 'Experiment') {
+                // Create a random value between 1 and 3
+                const randomValue = 3;
+                var random = Math.floor(Math.random() * randomValue) + 1;
+
+                // If the random value is 1, set the opacity to 1 and add the highlight effect class
+                if (random === 1) {
+                    image.style.opacity = 1;
+                    image.classList.add('mosaic-highlight-effect');
+                } else {
+                    image.style.opacity = 0.5;
+                    image.classList.remove('mosaic-highlight-effect');
+                }
+            }
+            else if (kaleidoscopeTags.includes(selectedTag)) {
                 image.style.opacity = 1; // Set full opacity for matching tags
+                image.classList.add('mosaic-highlight-effect'); // Add the highlight effect class
             } else {
                 image.style.opacity = 0.5; // Set lower opacity for non-matching tags
+                image.classList.remove('mosaic-highlight-effect'); // Remove the highlight effect class
             }
         });
     });
 });
-
 
 document.addEventListener("DOMContentLoaded", function () {
     window.onload = function () {
@@ -118,10 +154,6 @@ document.addEventListener("DOMContentLoaded", function () {
         placeSmallCircles();
         if (restart) {
             var bufferZone = 0;
-            smallCircles.forEach(function (circle) {
-                circle.style.width = 3 + 'rem';
-                circle.style.height = 3 + 'rem';
-            });
             placeSmallCircles();
         }
     };

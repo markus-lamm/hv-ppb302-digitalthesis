@@ -1,0 +1,18 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<head>
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+</head>
+<div class="admintable">
+    @using (Html.BeginForm("FileUpload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+    {
+        <label for="files" class="btn">Välj en fil</label>
+        <input type="file" name="file" id="files" />
+        <br /> <br /> <br />
+
+        <input type="submit" value="FileUpload" />
+    }
+</div>

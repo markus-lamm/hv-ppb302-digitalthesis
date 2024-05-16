@@ -1,6 +1,7 @@
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient;
 
@@ -15,18 +16,16 @@ public class Program
             ServiceLifetime.Scoped);
 
         builder.Services.AddScoped<GeoTagRepository>();
-        builder.Services.AddScoped<GroupTagRepository>();
+        builder.Services.AddScoped<ConnectorTagRepository>();
         builder.Services.AddScoped<MolarMosaicRepository>();
         builder.Services.AddScoped<MolecularMosaicRepository>();
-        builder.Services.AddScoped<KaleidoscopeMosaicRepository>();
+        builder.Services.AddScoped<KaleidoscopeTagRepository>();
+        builder.Services.AddScoped<UserRepository>();
         builder.Services.AddScoped<TestDataUtils>();
 
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 
-        // Lägg till stöd för loginfunktionen. Skicka med rätt sida för LoginPath
-        builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-        .AddCookie(options => { options.LoginPath = "/Admin/Index/"; });
         builder.Services.AddSession(options =>
         {
             options.IdleTimeout = TimeSpan.FromMinutes(30);
@@ -50,7 +49,12 @@ public class Program
         app.UseAuthorization();
 
         app.UseSession();
-
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new PhysicalFileProvider(
+           Path.Combine(@"C:\inetpub\wwwroot\Uploads")),
+            RequestPath = "/StaticFiles"
+        });
         app.MapControllers();
         app.MapControllerRoute(
             name: "default",

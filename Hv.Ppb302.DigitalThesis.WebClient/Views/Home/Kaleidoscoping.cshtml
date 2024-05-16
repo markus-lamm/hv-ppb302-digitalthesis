@@ -1,30 +1,40 @@
-﻿@model List<GroupTag>
+﻿@model KaleidoscopingViewModel
 @{
     ViewData["Title"] = "Kaleido-scoping";
+    var mosaicImages = Enumerable.Range(1, 14).Select(i => $"~/images/mosaics/mosaic-blue-{i}.png").ToArray();
+    var random = new Random();
 }
-
-
+<head>
+    <link rel="stylesheet" href="~/css/kaleidoscoping.css" asp-append-version="true" />
+</head>
 <div class="kaleid-container">
     <div class="roulette" id="biggi">
         <div class="rouletteimage">
             <img src="~/images/background/kaleibackground.png" id="bigImage" />
-            @foreach (var tag in Model)
+            @foreach (var molarMosaic in Model.MolarMosaics!)
             {
-                foreach (var mosaic in tag.KaleidoscopeMosaics)
-                {
-                    <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id, objectType = "kaleidoscope" })">
-                        <img src="~/images/mosaics/mosaic-yellow-1.png" class="smallCircle" data-tags="@string.Join(',', mosaic.GroupTags.Select(tag => tag.Name))" />
-                     </a>
-                }
+                var randomBlueMosaicImg = mosaicImages[random.Next(mosaicImages.Length)];
+                <a href="@Url.Action("Detail", "Home", new {id = molarMosaic.Id, objectType = "molarmosaic" })">
+                    <img src="@Url.Content(randomBlueMosaicImg)" class="smallCircle"
+                         data-tags="@string.Join(',', molarMosaic.KaleidoscopeTags.Select(tag => tag.Name)):@string.Join(':', molarMosaic.ConnectorTags.Select(tag => tag.Name))" />
+                </a>
+            }
+            @foreach (var molecularMosaic in Model.MolecularMosaics!)
+            {
+                var randomBlueMosaicImg = mosaicImages[random.Next(mosaicImages.Length)];
+                <a href="@Url.Action("Detail", "Home", new {id = molecularMosaic.Id, objectType = "molecularmosaic" })">
+                    <img src="@Url.Content(randomBlueMosaicImg)" class="smallCircle"
+                         data-tags="@string.Join(',', molecularMosaic.KaleidoscopeTags.Select(tag => tag.Name)):@string.Join(':', molecularMosaic.ConnectorTags.Select(tag => tag.Name))" />
+                </a>
             }
         </div>
     </div>
 
     <div class="tagmenu">
-        <h2>Kaleidoscope</h2>
+        <h2 class="tagmenu-title">Kaleido-scope</h2>
         <hr />
         <ul class="tagList">
-            @foreach (var tag in Model.Where(t => t.KaleidoscopeMosaics.Any()))
+            @foreach (var tag in Model.KaleidoscopeTags!)
             {
                 <li>
                     <div class="tag-kaleiitem">
@@ -32,7 +42,7 @@
                         <label for="tag_@tag.Name" class="custom-radio-label">@tag.Name</label>
                     </div>
                 </li>
-            }
+            } 
         </ul>
     </div>
 </div>

@@ -1,44 +1,134 @@
-﻿using Microsoft.AspNetCore.Authentication.Cookies;
-using Microsoft.AspNetCore.Authentication;
+﻿using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
+using Hv.Ppb302.DigitalThesis.WebClient.Data;
+using Microsoft.AspNetCore.Http;
+using MimeDetective;
+using MimeDetective.Storage;
+using Microsoft.AspNetCore.Http.HttpResults;
+using Hv.Ppb302.DigitalThesis.WebClient.Models;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly UserRepository _userRepository;
+        private readonly GeoTagRepository _geoTagRepo;
+        private readonly ConnectorTagRepository _connectorTagRepo;
+        private readonly MolarMosaicRepository _molarMosaicRepo;
+        private readonly MolecularMosaicRepository _molecularMosaicRepo;
+        private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
+
+        public AdminController(UserRepository userRepository, GeoTagRepository geoTagRepo,
+            MolarMosaicRepository molarMosaicRepo,
+            MolecularMosaicRepository molecularMosaicRepo,
+            ConnectorTagRepository connectorTagRepo,
+            KaleidoscopeTagRepository kaleidoscopeTagRepo)
+        {
+            _userRepository = userRepository;
+            _geoTagRepo = geoTagRepo;
+            _molarMosaicRepo = molarMosaicRepo;
+            _molecularMosaicRepo = molecularMosaicRepo;
+            _connectorTagRepo = connectorTagRepo;
+            _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
+        }
+
         public IActionResult Index()
         {
+            if (!CheckAuthentication())
+            {
+                return RedirectToAction("Login", "Admin");
+            }
             return View();
         }
 
-        [HttpPost]
-        public async Task<IActionResult> Index(string username, string password)
+        public IActionResult FileUpload()
         {
-            if (username == "admin" && password == "admin")
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult>  FileUpload(IFormFile file)
+        {
+            if (file != null)
             {
-                // Autentisering lyckades, skapa en claims identity med användarens id
-                var identity = new ClaimsIdentity(new[] { new Claim(ClaimTypes.NameIdentifier, "admin") }, CookieAuthenticationDefaults.AuthenticationScheme);
+                var fileName = Path.GetFileName(file.FileName);
+                var path = Path.Combine(@"C:\inetpub\wwwroot\Uploads", fileName); // Specify the absolute path
 
-                // Skapa en autentiseringscookie
-                await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
+                using (var stream = System.IO.File.Create(path))
+                {
+                    await file.CopyToAsync(stream);
+                }
+            }
+            return View();
+        }
 
-                // Omdirigera till önskad vy
-                return RedirectToAction("Index");
+        public IActionResult FileView()
+        {
+            var Inspector = new ContentInspectorBuilder()
+            {
+                Definitions = MimeDetective.Definitions.Default.All()
+            }.Build();
+
+            var path = Path.Combine(@"C:\inetpub\wwwroot\Uploads");
+            var files = Directory.GetFiles(path)
+                                 .Select(path => Path.GetFileName(path))
+                                 .ToList();
+
+            List<FileViewViewModel> fileViewModels = [];
+            foreach (var file in files)
+            {
+                var Results = Inspector.Inspect(Path.Combine(@"C:\inetpub\wwwroot\Uploads", file));
+                var fileType = Results.FirstOrDefault().Definition.File.Categories.FirstOrDefault();
+                var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles", file);
+
+                fileViewModels.Add(new FileViewViewModel
+                {
+                    Category = fileType,
+                    File = file,
+                    FileUrl = fileUrl
+                });
             }
 
-            // Felaktiga autentiseringsuppgifter, visa felmeddelande eller hantera på lämpligt sätt
-            TempData["Message"] = "Invalid username or password";
-            return RedirectToAction("Index", "Home");
-
-
+            return View(fileViewModels);
         }
-        public async Task<IActionResult> Logout()
-        {
-            // Logga ut användaren genom att ta bort autentiseringscookie
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
 
+        public IActionResult Login()
+        {
+            if (TempData["LoginError"] != null)
+            {
+                TempData.Remove("LoginError");
+                ViewBag.Error = "Invalid username or password";
+            }
+            return View();
+        }
+
+        public IActionResult Logout()
+        {
+            RemoveAuthentication();
             return RedirectToAction("Index", "Home");
+        }
+
+        public IActionResult AddAuthentication(string username, string password)
+        {
+            var user = _userRepository.GetByCredentials(username, password);
+            if(user == null)
+            {
+                TempData["LoginError"] = true;
+                return RedirectToAction("Login", "Admin");
+            }
+
+            HttpContext.Session.SetString("Username", username);
+
+            return RedirectToAction("Index", "Admin");
+        }
+
+        public void RemoveAuthentication()
+        {
+            HttpContext.Session.Remove("Username");
+        }
+
+        public bool CheckAuthentication()
+        {
+            return HttpContext.Session.GetString("Username") != null;
         }
     }
 }

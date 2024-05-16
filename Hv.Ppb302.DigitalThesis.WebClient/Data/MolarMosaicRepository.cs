@@ -15,14 +15,14 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
     public MolarMosaic? Get(Guid id)
     {
         return _dbContext.MolarMosaics
-            .Include(g => g.GroupTags)
+            .Include(g => g.ConnectorTags)
             .FirstOrDefault(g => g.Id == id);
     }
 
     public List<MolarMosaic>? GetAll()
     {
         return _dbContext.MolarMosaics
-            .Include(g => g.GroupTags)
+            .Include(g => g.ConnectorTags)
             .ToList();
     }
 
@@ -49,6 +49,7 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
         existingMolarMosaic.PdfFilePath = molarMosaic.PdfFilePath;
         existingMolarMosaic.HasAudio = molarMosaic.HasAudio;
         existingMolarMosaic.AudioFilePath = molarMosaic.AudioFilePath;
+        existingMolarMosaic.Becomings = molarMosaic.Becomings;
         _dbContext.SaveChanges();
     }
 
@@ -76,7 +77,7 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
         _dbContext.SaveChanges();
     }
 
-    public void AddGroupTag(Guid molarMosaicId, Guid groupTagId)
+    public void AddConnectorTag(Guid molarMosaicId, Guid connectorTagId)
     {
         var molarMosaic = _dbContext.MolarMosaics.Find(molarMosaicId);
         if (molarMosaic == null)
@@ -84,18 +85,18 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
             throw new Exception("The molar mosaic does not exist");
         }
 
-        var groupTag = _dbContext.GroupTags.Find(groupTagId);
-        if (groupTag == null)
+        var connectorTag = _dbContext.ConnectorTags.Find(connectorTagId);
+        if (connectorTag == null)
         {
-            throw new Exception("The group tag does not exist");
+            throw new Exception("The connector tag does not exist");
         }
 
-        molarMosaic.GroupTags.Add(groupTag);
-        groupTag.MolarMosaics.Add(molarMosaic);
+        molarMosaic.ConnectorTags.Add(connectorTag);
+        connectorTag.MolarMosaics.Add(molarMosaic);
         _dbContext.SaveChanges();
     }
 
-    public void RemoveGroupTag(Guid molarMosaicId, Guid groupTagId)
+    public void AddKaleidoscopeTag(Guid molarMosaicId, Guid kaleidoscopeTagId)
     {
         var molarMosaic = _dbContext.MolarMosaics.Find(molarMosaicId);
         if (molarMosaic == null)
@@ -103,14 +104,33 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
             throw new Exception("The molar mosaic does not exist");
         }
 
-        var groupTag = _dbContext.GroupTags.Find(groupTagId);
-        if (groupTag == null)
+        var kaleidoscopeTag = _dbContext.KaleidoscopeTags.Find(kaleidoscopeTagId);
+        if (kaleidoscopeTag == null)
         {
-            throw new Exception("The group tag does not exist");
+            throw new Exception("The kaleidoscope tag does not exist");
         }
 
-        molarMosaic.GroupTags.Remove(groupTag);
-        groupTag.MolarMosaics.Remove(molarMosaic);
+        molarMosaic.KaleidoscopeTags.Add(kaleidoscopeTag);
+        kaleidoscopeTag.MolarMosaics.Add(molarMosaic);
+        _dbContext.SaveChanges();
+    }
+
+    public void RemoveConnectorTag(Guid molarMosaicId, Guid connectorTagId)
+    {
+        var molarMosaic = _dbContext.MolarMosaics.Find(molarMosaicId);
+        if (molarMosaic == null)
+        {
+            throw new Exception("The molar mosaic does not exist");
+        }
+
+        var connectorTag = _dbContext.ConnectorTags.Find(connectorTagId);
+        if (connectorTag == null)
+        {
+            throw new Exception("The connector tag does not exist");
+        }
+
+        molarMosaic.ConnectorTags.Remove(connectorTag);
+        connectorTag.MolarMosaics.Remove(molarMosaic);
         _dbContext.SaveChanges();
     }
 }
