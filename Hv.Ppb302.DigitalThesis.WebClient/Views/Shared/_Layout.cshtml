@@ -11,6 +11,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
+    <script>hljs.highlightAll();</script>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.snow.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/quill@2.0.1/dist/quill.bubble.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/default.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/quill-image-resize-module-v2@3.0.0/image-resize.min.js"></script>
+    @Html.Raw("<script src='https://cdn.jsdelivr.net/npm/@yaireo/tagify'></script>")
+    @Html.Raw("<link href='https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css' rel='stylesheet' type='text/css' />")
+
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
 </head>
 <body>
@@ -53,6 +64,7 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/authentication.js" asp-append-version="true"></script>
     <script src="~/js/kaleidoscope.js" asp-append-version="true"></script>
+    <script src="~/js/richeditor.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

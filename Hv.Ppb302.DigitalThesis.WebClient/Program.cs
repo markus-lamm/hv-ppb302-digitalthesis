@@ -1,6 +1,7 @@
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient;
 
@@ -48,7 +49,12 @@ public class Program
         app.UseAuthorization();
 
         app.UseSession();
-
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new PhysicalFileProvider(
+           Path.Combine(@"C:\inetpub\wwwroot\Uploads")),
+            RequestPath = "/StaticFiles"
+        });
         app.MapControllers();
         app.MapControllerRoute(
             name: "default",
