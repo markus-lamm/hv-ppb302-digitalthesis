@@ -23,6 +23,16 @@ public class Program
         builder.Services.AddScoped<UserRepository>();
         builder.Services.AddScoped<TestDataUtils>();
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(
+                policy =>
+                {
+                    policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+        });
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 
