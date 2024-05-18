@@ -14,6 +14,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         private readonly MolecularMosaicRepository _molecularMosaicRepo;
         private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
         private readonly TestDataUtils _testDataUtils;
+        private readonly PageRepository _pageRepository;
 
         public HomeController(ILogger<HomeController> logger, 
             GeoTagRepository geoTagRepo, 
@@ -21,7 +22,8 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             MolecularMosaicRepository molecularMosaicRepo,
             TestDataUtils testDataUtils,
             ConnectorTagRepository connectorTagRepo,
-            KaleidoscopeTagRepository kaleidoscopeTagRepo)
+            KaleidoscopeTagRepository kaleidoscopeTagRepo,
+            PageRepository pageRepo)
         {
             _logger = logger;
             _geoTagRepo = geoTagRepo;
@@ -30,6 +32,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             _testDataUtils = testDataUtils;
             _connectorTagRepo = connectorTagRepo;
             _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
+            _pageRepository = pageRepo;
         }
 
         public IActionResult Index()
@@ -39,7 +42,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 
         public IActionResult About()
         {
-            return View();
+            return View(_pageRepository.GetByName("About"));
         }
 
         public IActionResult Geotags()
@@ -128,10 +131,13 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 
         public IActionResult Kaleidoscoping()
         {
-            return View(BuildViewModel(_molarMosaicRepo.GetAll()!, _molecularMosaicRepo.GetAll()!, _kaleidoscopeTagRepo.GetAll()!));
+            return View(BuildViewModel(_molarMosaicRepo.GetAll()!, 
+                _molecularMosaicRepo.GetAll()!, 
+                _kaleidoscopeTagRepo.GetAll()!));
 
             static KaleidoscopingViewModel BuildViewModel(IEnumerable<MolarMosaic> molarMosaics, 
-                IEnumerable<MolecularMosaic> molecularMosaics, IEnumerable<KaleidoscopeTag> kaleidoscopeTags)
+                IEnumerable<MolecularMosaic> molecularMosaics, 
+                IEnumerable<KaleidoscopeTag> kaleidoscopeTags)
             {
                 return new KaleidoscopingViewModel
                 {

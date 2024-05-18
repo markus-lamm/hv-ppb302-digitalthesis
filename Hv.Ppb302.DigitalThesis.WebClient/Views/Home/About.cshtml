@@ -1,7 +1,25 @@
-﻿@{
+﻿@model Page
+@{
     ViewData["Title"] = "About";
 }
 
 <head>
     <link rel="stylesheet" href="~/css/about.css" asp-append-version="true" />
 </head>
+
+<div class="about-container">
+    <div class="about-content">
+        <div class="about-text">
+            @if (Model.Content != null || Model.Content == "")
+            {
+                @Html.Raw(Model.Content)
+            }
+            else{
+                <p>
+                    About content is empty
+                </p>
+            }
+        </div>
+        <img class="about-logo" src="~/images/logo.png" alt="Logotype of Mona Tynkkinen" />
+    </div>
+</div>
