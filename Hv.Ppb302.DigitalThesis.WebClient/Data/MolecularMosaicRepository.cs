@@ -50,6 +50,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
         existingMolecularMosaic.HasAudio = molecularMosaic.HasAudio;
         existingMolecularMosaic.AudioFilePath = molecularMosaic.AudioFilePath;
         existingMolecularMosaic.Becomings = molecularMosaic.Becomings;
+        existingMolecularMosaic.AssemblageTag = molecularMosaic.AssemblageTag;
         _dbContext.SaveChanges();
     }
 
