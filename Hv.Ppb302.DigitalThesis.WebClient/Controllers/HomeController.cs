@@ -128,10 +128,13 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 
         public IActionResult Kaleidoscoping()
         {
-            return View(BuildViewModel(_molarMosaicRepo.GetAll()!, _molecularMosaicRepo.GetAll()!, _kaleidoscopeTagRepo.GetAll()!));
+            return View(BuildViewModel(_molarMosaicRepo.GetAll()!, 
+                _molecularMosaicRepo.GetAll()!, 
+                _kaleidoscopeTagRepo.GetAll()!));
 
             static KaleidoscopingViewModel BuildViewModel(IEnumerable<MolarMosaic> molarMosaics, 
-                IEnumerable<MolecularMosaic> molecularMosaics, IEnumerable<KaleidoscopeTag> kaleidoscopeTags)
+                IEnumerable<MolecularMosaic> molecularMosaics, 
+                IEnumerable<KaleidoscopeTag> kaleidoscopeTags)
             {
                 return new KaleidoscopingViewModel
                 {
