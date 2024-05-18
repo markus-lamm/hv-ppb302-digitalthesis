@@ -36,7 +36,7 @@
         <ul class="tagList">
             @foreach (var tag in Model.KaleidoscopeTags!)
             {
-                if(tag.Name != "Experiment" || tag.Name != "Assemblages")
+                if(tag.Name != "Experiment" && tag.Name != "Assemblages")
                 {
                     <li>
                         <div class="tag-kaleiitem">
