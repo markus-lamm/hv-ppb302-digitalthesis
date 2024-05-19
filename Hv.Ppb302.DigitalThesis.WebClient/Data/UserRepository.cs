@@ -40,7 +40,7 @@ public class UserRepository : IRepository<User>
 
     public void Update(User user)
     {
-        var existingUser = _dbContext.Users.Find(user.Id);
+        var existingUser = _dbContext.Users.FirstOrDefault( m => m.Username == user.Username);
         if (existingUser == null)
         {
             throw new Exception("The user does not exist");

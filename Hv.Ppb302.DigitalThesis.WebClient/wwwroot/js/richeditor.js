@@ -2,7 +2,6 @@
 var editorDiv = document.getElementById('editor');
 if (editorDiv) {
     const quill = new Quill('#editor', {
-        placeholder: 'Compose an epic...',
         theme: 'bubble',
     });
     quill.enable(false);

@@ -2,6 +2,8 @@
 
 @{
     ViewData["Title"] = "Create";
+    var assemblageTags = ViewData["AssemblageTags"] as SelectList;
+
 }
 <head>
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
@@ -27,6 +29,11 @@
                     </div>
 
                 <span asp-validation-for="Content" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="AssemblageTagId" class="control-label"></label>
+                @Html.DropDownListFor(model => model.AssemblageTagId, assemblageTags, "Select an Assemblage Tag", new { @class = "form-control" })
+                <span asp-validation-for="AssemblageTagId" class="text-danger"></span><br />
             </div>
             <div class="form-group">
                     <label asp-for="Becomings" class="control-label"></label>
