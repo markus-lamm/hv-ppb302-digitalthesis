@@ -18,12 +18,14 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         private readonly MolarMosaicRepository _molarMosaicRepo;
         private readonly MolecularMosaicRepository _molecularMosaicRepo;
         private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
+        private readonly PageRepository _pageRepository;
 
         public AdminController(UserRepository userRepository, GeoTagRepository geoTagRepo,
             MolarMosaicRepository molarMosaicRepo,
             MolecularMosaicRepository molecularMosaicRepo,
             ConnectorTagRepository connectorTagRepo,
-            KaleidoscopeTagRepository kaleidoscopeTagRepo)
+            KaleidoscopeTagRepository kaleidoscopeTagRepo,
+            PageRepository pageRepo)
         {
             _userRepository = userRepository;
             _geoTagRepo = geoTagRepo;
@@ -31,6 +33,8 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             _molecularMosaicRepo = molecularMosaicRepo;
             _connectorTagRepo = connectorTagRepo;
             _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
+            _pageRepository = pageRepo;
+
         }
 
         public IActionResult Index()
@@ -123,6 +127,18 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             ViewBag.Username = user.Username;
 
             return View();
+        }
+
+        public IActionResult AboutAdmin()
+        {
+            return View(_pageRepository.GetByName("About"));
+        }
+
+        [HttpPost]
+        public IActionResult AboutAdmin(Page page)
+        {
+            _pageRepository.Update(page);
+            return View(page);
         }
 
         public IActionResult Login()
