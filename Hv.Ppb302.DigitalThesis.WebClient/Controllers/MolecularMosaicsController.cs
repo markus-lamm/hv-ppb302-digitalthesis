@@ -22,12 +22,15 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         private readonly MolarMosaicRepository _molarMosaicRepo;
         private readonly MolecularMosaicRepository _molecularMosaicRepo;
         private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
+        private readonly AssemblageTagRepository _assemblageTagRepository;
+
 
         public MolecularMosaicsController(DigitalThesisDbContext context, GeoTagRepository geoTagRepo,
             MolarMosaicRepository molarMosaicRepo,
             MolecularMosaicRepository molecularMosaicRepo,
             ConnectorTagRepository connectorTagRepo,
-            KaleidoscopeTagRepository kaleidoscopeTagRepo)
+            KaleidoscopeTagRepository kaleidoscopeTagRepo,
+            AssemblageTagRepository assemblageTagRepository)
         {
             _context = context;
             _geoTagRepo = geoTagRepo;
@@ -35,6 +38,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             _molecularMosaicRepo = molecularMosaicRepo;
             _connectorTagRepo = connectorTagRepo;
             _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
+            _assemblageTagRepository = assemblageTagRepository;
         }
 
         // GET: MolecularMosaics
@@ -78,8 +82,10 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             var kaleidoscopeSelectList = Kaleidoscope
                 .Select(k => new SelectListItem { Value = k.Id.ToString(), Text = k.Name })
                 .ToList();
+            var s = _assemblageTagRepository.GetAll();
 
 
+            ViewData["AssemblageTags"] = new SelectList(s, "Id", "Name");
             ViewData["Becomings"] = becomingsSelectListItems;
             ViewData["Connectors"] = connectorsSelectList;
             ViewData["Kaleidoscope"] = kaleidoscopeSelectList;
@@ -166,7 +172,8 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                 .Select(k => new SelectListItem { Value = k.Id.ToString(), Text = k.Name, Selected = molecularMosaic.KaleidoscopeTags.Any(ct => ct.Id == k.Id) })
                 .ToList();
 
-
+            var s = _assemblageTagRepository.GetAll();
+            ViewData["AssemblageTags"] = new SelectList(s, "Id", "Name", molecularMosaic.AssemblageTagId);
             ViewData["Becomings"] = becomingsSelectListItems;
             ViewData["Connectors"] = connectorsSelectList;
             ViewData["Kaleidoscope"] = kaleidoscopeSelectList;
@@ -308,6 +315,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     existingMolecularMosaic.HasAudio = molecularMosaic.HasAudio;
                     existingMolecularMosaic.AudioFilePath = molecularMosaic.AudioFilePath;
                     existingMolecularMosaic.Becomings = molecularMosaic.Becomings;
+                    existingMolecularMosaic.AssemblageTagId = molecularMosaic.AssemblageTagId;
 
                     _context.Update(existingMolecularMosaic);
                     await _context.SaveChangesAsync();

@@ -44,11 +44,17 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 
         public IActionResult FileUpload()
         {
+            if (!CheckAuthentication())
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult>  FileUpload(IFormFile file)
+        public async Task<IActionResult> FileUpload(IFormFile file)
         {
+
             if (file != null)
             {
                 var fileName = Path.GetFileName(file.FileName);
@@ -67,6 +73,11 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         [HttpGet]
         public IActionResult FileView()
         {
+            if (!CheckAuthentication())
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
             var fileViewModels = GetFiles();
 
             return View(fileViewModels);
@@ -85,6 +96,35 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 
             return View("FileView", fileViewModels);
         }
+
+        public IActionResult Profile()
+        {
+            if (!CheckAuthentication())
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
+            string? username = HttpContext.Session.GetString("Username");
+            ViewBag.Username = username;
+
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Profile(User user)
+        {
+            if (!CheckAuthentication())
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
+            _userRepository.Update(user);
+            ViewBag.lyckad = "Lösenordet har ändrats";
+            ViewBag.Username = user.Username;
+
+            return View();
+        }
+
         public IActionResult Login()
         {
             if (TempData["LoginError"] != null)
