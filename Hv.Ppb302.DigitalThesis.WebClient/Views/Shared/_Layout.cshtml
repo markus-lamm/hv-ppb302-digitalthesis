@@ -26,8 +26,8 @@
 </head>
 <body>
     <header>
-        <nav class="navbar">
-            <a asp-controller="Home" asp-action="Geotags"><img class="logo" id="logo" src="~/images/logo.png" alt="Logotype of Mona Tynkkinen"/></a>
+        <nav class="navbar" id="navbar">
+            <a asp-controller="Home" asp-action="Geotags"><img class="logo" src="~/images/logo.png" alt="Logotype of Mona Tynkkinen"/></a>
             <ul class="nav-list">
                 @if (username != null)
                 {
@@ -65,7 +65,7 @@
     <script src="~/js/authentication.js" asp-append-version="true"></script>
     <script src="~/js/kaleidoscope.js" asp-append-version="true"></script>
     <script src="~/js/richeditor.js"></script>
-    <script src="~/js/geotags.js"></script>
+    <script src="~/js/geotags.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

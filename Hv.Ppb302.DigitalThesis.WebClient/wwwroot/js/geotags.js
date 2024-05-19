@@ -23,13 +23,13 @@ function showStep(step) {
         document.getElementById('tutorial-overlay').style.display = "none";
     }
 
-    
-    //const elementLogo = document.getElementById("logo");
-    //if (currentStep === 1) {
-    //    elementLogo.style.zIndex = 1002;
-    //} else {
-    //    elementLogo.style.zIndex = 1000;
-    //}
+    const elementLogo = document.getElementById("navbar");
+    if (currentStep === 1) {
+        elementLogo.style.zIndex = 1001
+
+    } else {
+        elementLogo.style.zIndex = 1000;
+    }
     
 
     const geotagIDs = ["image-container1", "image-container2", "image-container3"];

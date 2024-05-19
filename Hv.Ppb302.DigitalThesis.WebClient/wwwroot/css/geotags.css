@@ -199,7 +199,7 @@ a:hover img {
     right: 2rem;
     position: fixed;
     max-width: 20%;
-    min-height: auto; /* Ensure there is enough height */
+    min-height: auto; 
 }
 
 .overlay {
