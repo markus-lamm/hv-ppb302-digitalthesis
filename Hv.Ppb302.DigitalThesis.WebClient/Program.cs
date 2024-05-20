@@ -22,7 +22,19 @@ public class Program
         builder.Services.AddScoped<KaleidoscopeTagRepository>();
         builder.Services.AddScoped<UserRepository>();
         builder.Services.AddScoped<TestDataUtils>();
+        builder.Services.AddScoped<PageRepository>();
+        builder.Services.AddScoped<AssemblageTagRepository>();
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(
+                policy =>
+                {
+                    policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+        });
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 
@@ -33,8 +45,14 @@ public class Program
             options.Cookie.IsEssential = true;
         });
 
+
         var app = builder.Build();
 
+        var uploadsDirectory = Path.Combine(@"C:\Uploads");
+        if (!Directory.Exists(uploadsDirectory))
+        {
+            Directory.CreateDirectory(uploadsDirectory);
+        }
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {
@@ -49,10 +67,11 @@ public class Program
         app.UseAuthorization();
 
         app.UseSession();
+
         app.UseStaticFiles(new StaticFileOptions
         {
             FileProvider = new PhysicalFileProvider(
-           Path.Combine(@"C:\inetpub\wwwroot\Uploads")),
+           Path.Combine(@"C:\Uploads")),
             RequestPath = "/StaticFiles"
         });
         app.MapControllers();

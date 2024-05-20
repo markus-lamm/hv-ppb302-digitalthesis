@@ -22,12 +22,15 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         private readonly MolarMosaicRepository _molarMosaicRepo;
         private readonly MolecularMosaicRepository _molecularMosaicRepo;
         private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
+        private readonly AssemblageTagRepository _assemblageTagRepository;
+
 
         public MolecularMosaicsController(DigitalThesisDbContext context, GeoTagRepository geoTagRepo,
             MolarMosaicRepository molarMosaicRepo,
             MolecularMosaicRepository molecularMosaicRepo,
             ConnectorTagRepository connectorTagRepo,
-            KaleidoscopeTagRepository kaleidoscopeTagRepo)
+            KaleidoscopeTagRepository kaleidoscopeTagRepo,
+            AssemblageTagRepository assemblageTagRepository)
         {
             _context = context;
             _geoTagRepo = geoTagRepo;
@@ -35,6 +38,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             _molecularMosaicRepo = molecularMosaicRepo;
             _connectorTagRepo = connectorTagRepo;
             _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
+            _assemblageTagRepository = assemblageTagRepository;
         }
 
         // GET: MolecularMosaics
@@ -78,8 +82,10 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             var kaleidoscopeSelectList = Kaleidoscope
                 .Select(k => new SelectListItem { Value = k.Id.ToString(), Text = k.Name })
                 .ToList();
+            var s = _assemblageTagRepository.GetAll();
 
 
+            ViewData["AssemblageTags"] = new SelectList(s, "Id", "Name");
             ViewData["Becomings"] = becomingsSelectListItems;
             ViewData["Connectors"] = connectorsSelectList;
             ViewData["Kaleidoscope"] = kaleidoscopeSelectList;
@@ -166,7 +172,8 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                 .Select(k => new SelectListItem { Value = k.Id.ToString(), Text = k.Name, Selected = molecularMosaic.KaleidoscopeTags.Any(ct => ct.Id == k.Id) })
                 .ToList();
 
-
+            var s = _assemblageTagRepository.GetAll();
+            ViewData["AssemblageTags"] = new SelectList(s, "Id", "Name", molecularMosaic.AssemblageTagId);
             ViewData["Becomings"] = becomingsSelectListItems;
             ViewData["Connectors"] = connectorsSelectList;
             ViewData["Kaleidoscope"] = kaleidoscopeSelectList;
@@ -194,6 +201,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     // Update ConnectorTags collection
                     var existingMolecularMosaic = await _context.MolecularMosaics
                         .Include(m => m.ConnectorTags)
+                        .Include(m => m.KaleidoscopeTags)
                         .FirstOrDefaultAsync(m => m.Id == id);
 
                     if (existingMolecularMosaic == null)
@@ -217,30 +225,88 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 
                     }
 
-                    if (ConnectorTags != null)
-                    {
-                        existingMolecularMosaic.ConnectorTags.Clear();
-                        foreach (var tagId in ConnectorTags)
-                        {
-                            var connectorTag = await _context.ConnectorTags.FindAsync(Guid.Parse(tagId));
-                            if (connectorTag != null)
-                            {
-                                existingMolecularMosaic.ConnectorTags.Add(connectorTag);
-                            }
-                        }
-                    }
                     if (KaleidoscopeTags != null)
                     {
-                        existingMolecularMosaic.KaleidoscopeTags.Clear();
-                        foreach (var tagId in KaleidoscopeTags)
+                        var newKaleidoscopeTagIds = KaleidoscopeTags.Distinct().Select(Guid.Parse).ToList();
+                        var existingKaleidoscopeTagIds = existingMolecularMosaic.KaleidoscopeTags.Select(t => t.Id).ToList();
+
+                        var kaleidoscopeTagsToAdd = newKaleidoscopeTagIds.Except(existingKaleidoscopeTagIds).ToList();
+                        var kaleidoscopeTagsToRemove = existingKaleidoscopeTagIds.Except(newKaleidoscopeTagIds).ToList();
+
+                        using (var transaction = await _context.Database.BeginTransactionAsync())
                         {
-                            var kaleidoscopeTags = await _context.KaleidoscopeTags.FindAsync(Guid.Parse(tagId));
-                            if (kaleidoscopeTags != null)
+                            try
                             {
-                                existingMolecularMosaic.KaleidoscopeTags.Add(kaleidoscopeTags);
+                                // Remove old Kaleidoscope tags
+                                foreach (var tagId in kaleidoscopeTagsToRemove)
+                                {
+                                    var tagToRemove = existingMolecularMosaic.KaleidoscopeTags.FirstOrDefault(t => t.Id == tagId);
+                                    if (tagToRemove != null)
+                                    {
+                                        existingMolecularMosaic.KaleidoscopeTags.Remove(tagToRemove);
+                                    }
+                                }
+
+                                // Add new Kaleidoscope tags
+                                foreach (var tagId in kaleidoscopeTagsToAdd)
+                                {
+                                    var tagToAdd = await _context.KaleidoscopeTags.FindAsync(tagId);
+                                    if (tagToAdd != null)
+                                    {
+                                        existingMolecularMosaic.KaleidoscopeTags.Add(tagToAdd);
+                                    }
+                                }
+
+                            }
+                            catch (Exception)
+                            {
+                                await transaction.RollbackAsync();
+                                throw;
                             }
                         }
                     }
+
+                    if (ConnectorTags != null)
+                    {
+                        var newConnectorTagIds = ConnectorTags.Distinct().Select(Guid.Parse).ToList();
+                        var existingConnectorTagIds = existingMolecularMosaic.ConnectorTags.Select(t => t.Id).ToList();
+
+                        var connectorTagsToAdd = newConnectorTagIds.Except(existingConnectorTagIds).ToList();
+                        var connectorTagsToRemove = existingConnectorTagIds.Except(newConnectorTagIds).ToList();
+
+                        using (var transaction = await _context.Database.BeginTransactionAsync())
+                        {
+                            try
+                            {
+                                // Remove old Connector tags
+                                foreach (var tagId in connectorTagsToRemove)
+                                {
+                                    var tagToRemove = existingMolecularMosaic.ConnectorTags.FirstOrDefault(t => t.Id == tagId);
+                                    if (tagToRemove != null)
+                                    {
+                                        existingMolecularMosaic.ConnectorTags.Remove(tagToRemove);
+                                    }
+                                }
+
+                                // Add new Connector tags
+                                foreach (var tagId in connectorTagsToAdd)
+                                {
+                                    var tagToAdd = await _context.ConnectorTags.FindAsync(tagId);
+                                    if (tagToAdd != null)
+                                    {
+                                        existingMolecularMosaic.ConnectorTags.Add(tagToAdd);
+                                    }
+                                }
+
+                            }
+                            catch (Exception)
+                            {
+                                await transaction.RollbackAsync();
+                                throw;
+                            }
+                        }
+                    }
+
 
                     // Update other properties if necessary
                     existingMolecularMosaic.Title = molecularMosaic.Title;
@@ -249,6 +315,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     existingMolecularMosaic.HasAudio = molecularMosaic.HasAudio;
                     existingMolecularMosaic.AudioFilePath = molecularMosaic.AudioFilePath;
                     existingMolecularMosaic.Becomings = molecularMosaic.Becomings;
+                    existingMolecularMosaic.AssemblageTagId = molecularMosaic.AssemblageTagId;
 
                     _context.Update(existingMolecularMosaic);
                     await _context.SaveChangesAsync();

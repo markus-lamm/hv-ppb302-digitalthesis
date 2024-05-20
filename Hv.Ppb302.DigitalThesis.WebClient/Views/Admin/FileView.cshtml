@@ -7,9 +7,9 @@
 <head>
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
-<div class="admincontainers">
+<div class="">
     <div class="admintable">
-        <a href="/admin/fileupload">
+        <a href="fileupload">
             <p>klicka för att ladda upp fil</p>
         </a>
     </div>
@@ -37,7 +37,10 @@
                     <input id="fileurl" hidden data-tags="@item.FileUrl"/>
                     <h5 class="card-title">@item.File</h5>
                     <button onclick="copyFunction()">Kopiera Länk</button>
-
+                    <form method="post" asp-action="FileView" asp-controller="Admin">
+                        <input type="hidden" name="FileName" value="@item.File" />
+                        <button type="submit">Delete</button>
+                    </form>
                     <!-- Add more details or buttons as needed -->
                 </div>
             </div>

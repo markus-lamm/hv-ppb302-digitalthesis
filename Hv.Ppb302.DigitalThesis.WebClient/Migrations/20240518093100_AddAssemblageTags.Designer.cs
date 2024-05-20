@@ -4,6 +4,7 @@ using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
 {
     [DbContext(typeof(DigitalThesisDbContext))]
-    partial class DigitalThesisContextModelSnapshot : ModelSnapshot
+    [Migration("20240518093100_AddAssemblageTags")]
+    partial class AddAssemblageTags
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -204,23 +207,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.HasIndex("AssemblageTagId");
 
                     b.ToTable("MolecularMosaics");
-                });
-
-            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.Page", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Content")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Pages");
                 });
 
             modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.User", b =>

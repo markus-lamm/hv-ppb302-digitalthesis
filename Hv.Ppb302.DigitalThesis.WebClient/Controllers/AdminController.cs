@@ -6,6 +6,7 @@ using MimeDetective;
 using MimeDetective.Storage;
 using Microsoft.AspNetCore.Http.HttpResults;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
+using System.Drawing;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 {
@@ -17,12 +18,14 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         private readonly MolarMosaicRepository _molarMosaicRepo;
         private readonly MolecularMosaicRepository _molecularMosaicRepo;
         private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
+        private readonly PageRepository _pageRepository;
 
         public AdminController(UserRepository userRepository, GeoTagRepository geoTagRepo,
             MolarMosaicRepository molarMosaicRepo,
             MolecularMosaicRepository molecularMosaicRepo,
             ConnectorTagRepository connectorTagRepo,
-            KaleidoscopeTagRepository kaleidoscopeTagRepo)
+            KaleidoscopeTagRepository kaleidoscopeTagRepo,
+            PageRepository pageRepo)
         {
             _userRepository = userRepository;
             _geoTagRepo = geoTagRepo;
@@ -30,6 +33,8 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             _molecularMosaicRepo = molecularMosaicRepo;
             _connectorTagRepo = connectorTagRepo;
             _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
+            _pageRepository = pageRepo;
+
         }
 
         public IActionResult Index()
@@ -43,52 +48,97 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 
         public IActionResult FileUpload()
         {
+            if (!CheckAuthentication())
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult>  FileUpload(IFormFile file)
+        public async Task<IActionResult> FileUpload(IFormFile file)
         {
+
             if (file != null)
             {
                 var fileName = Path.GetFileName(file.FileName);
-                var path = Path.Combine(@"C:\inetpub\wwwroot\Uploads", fileName); // Specify the absolute path
+                var path = Path.Combine(@"C:\Uploads", fileName); // Specify the absolute path
 
                 using (var stream = System.IO.File.Create(path))
                 {
                     await file.CopyToAsync(stream);
                 }
             }
+
+            var fileViewModels = GetFiles();
+            return View("FileView", fileViewModels);
+        }
+
+        [HttpGet]
+        public IActionResult FileView()
+        {
+            if (!CheckAuthentication())
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
+            var fileViewModels = GetFiles();
+
+            return View(fileViewModels);
+        }
+
+        [HttpPost]
+        public IActionResult FileView(string FileName)
+        {
+            var path = Path.Combine(@"C:\Uploads", FileName);
+            FileInfo file = new(path);
+            if (file.Exists)//check file exsit or not  
+            {
+                file.Delete();
+            }
+            var fileViewModels = GetFiles();
+
+            return View("FileView", fileViewModels);
+        }
+
+        public IActionResult Profile()
+        {
+            if (!CheckAuthentication())
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
+            string? username = HttpContext.Session.GetString("Username");
+            ViewBag.Username = username;
+
             return View();
         }
 
-        public IActionResult FileView()
+        [HttpPost]
+        public IActionResult Profile(User user)
         {
-            var Inspector = new ContentInspectorBuilder()
+            if (!CheckAuthentication())
             {
-                Definitions = MimeDetective.Definitions.Default.All()
-            }.Build();
-
-            var path = Path.Combine(@"C:\inetpub\wwwroot\Uploads");
-            var files = Directory.GetFiles(path)
-                                 .Select(path => Path.GetFileName(path))
-                                 .ToList();
-
-            List<FileViewViewModel> fileViewModels = [];
-            foreach (var file in files)
-            {
-                var Results = Inspector.Inspect(Path.Combine(@"C:\inetpub\wwwroot\Uploads", file));
-                var fileType = Results.FirstOrDefault().Definition.File.Categories.FirstOrDefault();
-                var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles", file);
-
-                fileViewModels.Add(new FileViewViewModel
-                {
-                    Category = fileType,
-                    File = file,
-                    FileUrl = fileUrl
-                });
+                return RedirectToAction("Login", "Admin");
             }
 
-            return View(fileViewModels);
+            _userRepository.Update(user);
+            ViewBag.lyckad = "Lösenordet har ändrats";
+            ViewBag.Username = user.Username;
+
+            return View();
+        }
+
+        public IActionResult AboutAdmin()
+        {
+            return View(_pageRepository.GetByName("About"));
+        }
+
+        [HttpPost]
+        public IActionResult AboutAdmin(Page page)
+        {
+            _pageRepository.Update(page);
+            return View(page);
         }
 
         public IActionResult Login()
@@ -129,6 +179,35 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         public bool CheckAuthentication()
         {
             return HttpContext.Session.GetString("Username") != null;
+        }
+
+        public List<FileViewViewModel> GetFiles()
+        {
+            var Inspector = new ContentInspectorBuilder()
+            {
+                Definitions = MimeDetective.Definitions.Default.All()
+            }.Build();
+
+            var path = Path.Combine(@"C:\Uploads");
+            var files = Directory.GetFiles(path)
+                                 .Select(path => Path.GetFileName(path))
+                                 .ToList();
+
+            List<FileViewViewModel> fileViewModels = [];
+            foreach (var file in files)
+            {
+                var Results = Inspector.Inspect(Path.Combine(@"C:\Uploads", file));
+                var fileType = Results.FirstOrDefault().Definition.File.Categories.FirstOrDefault();
+                var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
+
+                fileViewModels.Add(new FileViewViewModel
+                {
+                    Category = fileType,
+                    File = file,
+                    FileUrl = fileUrl
+                });
+            }
+            return fileViewModels;
         }
     }
 }

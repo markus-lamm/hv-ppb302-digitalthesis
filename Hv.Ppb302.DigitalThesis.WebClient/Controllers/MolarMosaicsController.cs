@@ -21,12 +21,15 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         private readonly MolarMosaicRepository _molarMosaicRepo;
         private readonly MolecularMosaicRepository _molecularMosaicRepo;
         private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
+        private readonly AssemblageTagRepository _assemblageTagRepository;
+
 
         public MolarMosaicsController(DigitalThesisDbContext context, GeoTagRepository geoTagRepo,
             MolarMosaicRepository molarMosaicRepo,
             MolecularMosaicRepository molecularMosaicRepo,
             ConnectorTagRepository connectorTagRepo,
-            KaleidoscopeTagRepository kaleidoscopeTagRepo)
+            KaleidoscopeTagRepository kaleidoscopeTagRepo,
+            AssemblageTagRepository assemblageTagRepository)
         {
             _context = context;
             _geoTagRepo = geoTagRepo;
@@ -34,6 +37,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             _molecularMosaicRepo = molecularMosaicRepo;
             _connectorTagRepo = connectorTagRepo;
             _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
+            _assemblageTagRepository = assemblageTagRepository;
         }
 
         // GET: MolarMosaics
@@ -77,8 +81,10 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             var kaleidoscopeSelectList = Kaleidoscope
                 .Select(k => new SelectListItem { Value = k.Id.ToString(), Text = k.Name })
                 .ToList();
+            var s = _assemblageTagRepository.GetAll();
 
 
+            ViewData["AssemblageTags"] = new SelectList(s, "Id", "Name");
             ViewData["Becomings"] = becomingsSelectListItems;
             ViewData["Connectors"] = connectorsSelectList;
             ViewData["Kaleidoscope"] = kaleidoscopeSelectList;
@@ -110,8 +116,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                                         select item.value);
 
                     molarMosaic.Becomings = valuesList;
-
-
                 }
 
                 foreach (var connectorTagId in ConnectorTags)
@@ -159,13 +163,14 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
 
             var becomingsSelectListItems = becomingsList.Select(b => new SelectListItem { Value = b, Text = b }).ToList();
             var connectorsSelectList = connectors
-                .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
+                .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name, Selected = molarMosaic.ConnectorTags.Any(ct => ct.Id == c.Id) })
                 .ToList();
             var kaleidoscopeSelectList = Kaleidoscope
-                .Select(k => new SelectListItem { Value = k.Id.ToString(), Text = k.Name })
+                .Select(k => new SelectListItem { Value = k.Id.ToString(), Text = k.Name, Selected = molarMosaic.KaleidoscopeTags.Any(ct => ct.Id == k.Id) })
                 .ToList();
 
-
+            var s = _assemblageTagRepository.GetAll();
+            ViewData["AssemblageTags"] = new SelectList(s, "Id", "Name", molarMosaic.AssemblageTagId);
             ViewData["Becomings"] = becomingsSelectListItems;
             ViewData["Connectors"] = connectorsSelectList;
             ViewData["Kaleidoscope"] = kaleidoscopeSelectList;
@@ -178,7 +183,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Content,Becomings,PdfFilePath,HasAudio,AudioFilePath")] MolarMosaic molarMosaic, string[] ConnectorTags, string[] KaleidoscopeTags)
+        public async Task<IActionResult> Edit(Guid id, MolarMosaic molarMosaic, string[] ConnectorTags, string[] KaleidoscopeTags)
         {
             if (id != molarMosaic.Id)
             {
@@ -190,11 +195,12 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                 try
                 {
                     // Update ConnectorTags collection
-                    var MolarMosaics = await _context.MolarMosaics
+                    var existingmolarMosaic = await _context.MolarMosaics
                         .Include(m => m.ConnectorTags)
+                        .Include(m => m.KaleidoscopeTags)
                         .FirstOrDefaultAsync(m => m.Id == id);
 
-                    if (MolarMosaics == null)
+                    if (existingmolarMosaic == null)
                     {
                         return NotFound();
                     }
@@ -211,41 +217,103 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                                             select item.value);
 
                         molarMosaic.Becomings = valuesList;
+
+
                     }
-                    if (ConnectorTags != null)
-                    {
-                        MolarMosaics.ConnectorTags.Clear();
-                        foreach (var tagId in ConnectorTags)
-                        {
-                            var connectorTag = await _context.ConnectorTags.FindAsync(Guid.Parse(tagId));
-                            if (connectorTag != null)
-                            {
-                                MolarMosaics.ConnectorTags.Add(connectorTag);
-                            }
-                        }
-                    }
+
                     if (KaleidoscopeTags != null)
                     {
-                        MolarMosaics.KaleidoscopeTags.Clear();
-                        foreach (var tagId in KaleidoscopeTags)
+                        var newKaleidoscopeTagIds = KaleidoscopeTags.Distinct().Select(Guid.Parse).ToList();
+                        var existingKaleidoscopeTagIds = existingmolarMosaic.KaleidoscopeTags.Select(t => t.Id).ToList();
+
+                        var kaleidoscopeTagsToAdd = newKaleidoscopeTagIds.Except(existingKaleidoscopeTagIds).ToList();
+                        var kaleidoscopeTagsToRemove = existingKaleidoscopeTagIds.Except(newKaleidoscopeTagIds).ToList();
+
+                        using (var transaction = await _context.Database.BeginTransactionAsync())
                         {
-                            var kaleidoscopeTags = await _context.KaleidoscopeTags.FindAsync(Guid.Parse(tagId));
-                            if (kaleidoscopeTags != null)
+                            try
                             {
-                                MolarMosaics.KaleidoscopeTags.Add(kaleidoscopeTags);
+                                // Remove old Kaleidoscope tags
+                                foreach (var tagId in kaleidoscopeTagsToRemove)
+                                {
+                                    var tagToRemove = existingmolarMosaic.KaleidoscopeTags.FirstOrDefault(t => t.Id == tagId);
+                                    if (tagToRemove != null)
+                                    {
+                                        existingmolarMosaic.KaleidoscopeTags.Remove(tagToRemove);
+                                    }
+                                }
+
+                                // Add new Kaleidoscope tags
+                                foreach (var tagId in kaleidoscopeTagsToAdd)
+                                {
+                                    var tagToAdd = await _context.KaleidoscopeTags.FindAsync(tagId);
+                                    if (tagToAdd != null)
+                                    {
+                                        existingmolarMosaic.KaleidoscopeTags.Add(tagToAdd);
+                                    }
+                                }
+
+                            }
+                            catch (Exception)
+                            {
+                                await transaction.RollbackAsync();
+                                throw;
                             }
                         }
                     }
 
-                    // Update other properties if necessary
-                    MolarMosaics.Title = molarMosaic.Title;
-                    MolarMosaics.Content = molarMosaic.Content;
-                    MolarMosaics.PdfFilePath = molarMosaic.PdfFilePath;
-                    MolarMosaics.HasAudio = molarMosaic.HasAudio;
-                    MolarMosaics.AudioFilePath = molarMosaic.AudioFilePath;
-                    MolarMosaics.Becomings = molarMosaic.Becomings;
+                    if (ConnectorTags != null)
+                    {
+                        var newConnectorTagIds = ConnectorTags.Distinct().Select(Guid.Parse).ToList();
+                        var existingConnectorTagIds = existingmolarMosaic.ConnectorTags.Select(t => t.Id).ToList();
 
-                    _context.Update(MolarMosaics);
+                        var connectorTagsToAdd = newConnectorTagIds.Except(existingConnectorTagIds).ToList();
+                        var connectorTagsToRemove = existingConnectorTagIds.Except(newConnectorTagIds).ToList();
+
+                        using (var transaction = await _context.Database.BeginTransactionAsync())
+                        {
+                            try
+                            {
+                                // Remove old Connector tags
+                                foreach (var tagId in connectorTagsToRemove)
+                                {
+                                    var tagToRemove = existingmolarMosaic.ConnectorTags.FirstOrDefault(t => t.Id == tagId);
+                                    if (tagToRemove != null)
+                                    {
+                                        existingmolarMosaic.ConnectorTags.Remove(tagToRemove);
+                                    }
+                                }
+
+                                // Add new Connector tags
+                                foreach (var tagId in connectorTagsToAdd)
+                                {
+                                    var tagToAdd = await _context.ConnectorTags.FindAsync(tagId);
+                                    if (tagToAdd != null)
+                                    {
+                                        existingmolarMosaic.ConnectorTags.Add(tagToAdd);
+                                    }
+                                }
+
+                            }
+                            catch (Exception)
+                            {
+                                await transaction.RollbackAsync();
+                                throw;
+                            }
+                        }
+                    }
+
+
+                    // Update other properties if necessary
+                    existingmolarMosaic.Title = molarMosaic.Title;
+                    existingmolarMosaic.Content = molarMosaic.Content;
+                    existingmolarMosaic.PdfFilePath = molarMosaic.PdfFilePath;
+                    existingmolarMosaic.HasAudio = molarMosaic.HasAudio;
+                    existingmolarMosaic.AudioFilePath = molarMosaic.AudioFilePath;
+                    existingmolarMosaic.Becomings = molarMosaic.Becomings;
+                    existingmolarMosaic.AssemblageTagId = molarMosaic.AssemblageTagId;
+
+                    _context.Update(existingmolarMosaic);
                     await _context.SaveChangesAsync();
 
                 }
