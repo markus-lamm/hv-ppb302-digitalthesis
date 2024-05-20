@@ -32,7 +32,7 @@ function showStep(step) {
     }
     
 
-    const geotagIDs = ["image-container1", "image-container2", "image-container3"];
+    const geotagIDs = ["image-container1", "image-container2", "image-container3", "image-container9"];
     geotagIDs.forEach(id => {
         const element = document.getElementById(id);
         if (currentStep === 2) {
@@ -63,10 +63,18 @@ function showStep(step) {
     });
 
     const element = document.getElementById("image-container8");
+    const whiteImage = document.getElementById("geotag-white");
+    const blackImage = document.getElementById("geotag-black");
+    
     if (currentStep === 5) {
         element.style.zIndex = 1001;
+        whiteImage.style.display = 'none';
+        blackImage.style.display = '';
     } else {
         element.style.zIndex = 1000;
+        blackImage.style.display = 'none';
+        whiteImage.style.display = '';
+
     }
 }
 
@@ -86,5 +94,10 @@ function prevStep() {
 
 document.addEventListener('DOMContentLoaded', () => {
     showStep(currentStep);
+
+    if (@showTutorial.ToString().ToLower()) {
+        console.log("Tutorial visible");
+    }
+
 });
 

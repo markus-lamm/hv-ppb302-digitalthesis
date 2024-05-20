@@ -45,8 +45,9 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             return View(_pageRepository.GetByName("About"));
         }
 
-        public IActionResult Geotags()
+        public IActionResult Geotags(bool showTutorial = false)
         {
+            ViewBag.ShowTutorial = showTutorial;
             return View(_geoTagRepo.GetAll());
         }
 
