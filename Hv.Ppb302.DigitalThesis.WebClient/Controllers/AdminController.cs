@@ -141,6 +141,18 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
             return View(page);
         }
 
+        public IActionResult StartAdmin()
+        {
+            return View(_pageRepository.GetByName("Start"));
+        }
+
+        [HttpPost]
+        public IActionResult StartAdmin(Page page)
+        {
+            _pageRepository.Update(page);
+            return View(page);
+        }
+
         public IActionResult Login()
         {
             if (TempData["LoginError"] != null)

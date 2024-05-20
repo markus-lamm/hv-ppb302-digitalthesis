@@ -1,0 +1,25 @@
+﻿@model Page
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+
+<head>
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+</head>
+<div class="admintable">
+    <form asp-controller="admin">
+        <input hidden asp-for="Id" />
+        <input hidden asp-for="Name" />
+        <label asp-for="Content" class="control-label"></label>
+        <input type="hidden" id="hiddeninput" asp-for="Content" class="form-control" />
+        <div class="editor-layout">
+            <div id="editortest">
+                @Html.Raw(Model.Content)
+            </div>
+        </div>
+        <span asp-validation-for="Content" class="text-danger"></span>
+        <button type="submit">Spara Start sidans innehåll</button>
+    </form>
+</div>
