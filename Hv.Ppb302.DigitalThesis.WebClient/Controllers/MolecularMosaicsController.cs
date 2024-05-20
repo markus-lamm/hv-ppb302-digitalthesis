@@ -230,7 +230,7 @@ public class MolecularMosaicsController : Controller
                     // Add new Kaleidoscope tags
                     foreach (var tagId in kaleidoscopeTagsToAdd)
                     {
-                        var tagToAdd = await _context.KaleidoscopeTags.FindAsync(tagId);
+                        var tagToAdd = _kaleidoscopeTagRepo.Get(tagId);
                         if (tagToAdd != null)
                         {
                             existingMolecularMosaic.KaleidoscopeTags!.Add(tagToAdd);
@@ -270,7 +270,7 @@ public class MolecularMosaicsController : Controller
                     // Add new Connector tags
                     foreach (var tagId in connectorTagsToAdd)
                     {
-                        var tagToAdd = await _context.ConnectorTags.FindAsync(tagId);
+                        var tagToAdd = _connectorTagRepo.Get(tagId);
                         if (tagToAdd != null)
                         {
                             existingMolecularMosaic.ConnectorTags!.Add(tagToAdd);
