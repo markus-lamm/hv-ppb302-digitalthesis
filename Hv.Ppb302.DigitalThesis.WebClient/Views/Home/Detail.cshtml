@@ -2,16 +2,24 @@
 @{
     var viewModel = Model;
     ViewData["Title"] = viewModel.Title;
-    string fileName = System.IO.Path.GetFileName(Model.PdfFilePath);
+    string fileName = System.IO.Path.GetFileName(Model.PdfFilePath)!;
 }
 
 <head>
     <link rel="stylesheet" href="~/css/detail.css" asp-append-version="true" />
 </head>
 <div class="detail-container">
-
     <div id="kolumn1">
         <p class="title">@viewModel.Title</p>
+        <p class="tags">Assemblage:</p>
+        @if (viewModel.AssemblageTag == null)
+        {
+            <p class="tags">No Assemblage</p>
+        }
+        else
+        {
+            <p class="tags">@Model.AssemblageTag</p>
+        }
         <p class="tags">Connectors:</p>
         @if (viewModel.ConnectorTags.Count == 0)
         {
@@ -50,7 +58,6 @@
             }
         </div>
     </div>
-            
     <div id="kolumn2">
         <div class="column3_container">
             <div id="kolumn3">

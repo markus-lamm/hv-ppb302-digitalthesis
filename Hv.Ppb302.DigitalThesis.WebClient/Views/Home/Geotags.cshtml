@@ -1,107 +1,106 @@
 ﻿@model List<GeoTag> 
-<GeoTag>
 @{
-ViewData["Title"] = "Geotags";
-var geoTagDictionary = Model.ToDictionary(g => g.Title, g => g);
-bool showTutorial = ViewBag.ShowTutorial;
+    ViewData["Title"] = "Geotags";
+    var geoTagDictionary = Model.ToDictionary(g => g.Title, g => g);
+    bool showTutorial = ViewBag.ShowTutorial;
 }
 <head>
    <link rel="stylesheet" href="~/css/geotags.css" asp-append-version="true" />
 </head>
 <div class="background-geotags">
-<a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Problems"].Id, objectType = "geotag" })">
-<div id="image-container1">
-   <p class="image-text">Problems</p>
-   <img src="~/images/geotags/geotag-black.png" />
+    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Problems"].Id, objectType = "geotag" })">
+        <div id="image-container1">
+           <p class="image-text">Problems</p>
+           <img src="~/images/geotags/geotag-black.png" />
+        </div>
+    </a>
+    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["A Solution"].Id, objectType = "geotag" })">
+        <div id="image-container2">
+           <p class="image-text">A Solution</p>
+           <img src="~/images/geotags/geotag-black.png" />
+        </div>
+    </a>
+    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Ignore This"].Id, objectType = "geotag" })">
+        <div id="image-container3">
+           <img src="~/images/geotags/geotag-black.png" />
+           <p class="image-text">Ignore This</p>
+        </div>
+    </a>
+    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Deleuzian Ontology in Education"].Id, objectType = "geotag" })">
+        <div id="image-container4">
+           <img src="~/images/geotags/geotag-white.png" />
+           <p class="image-text">Deleuzian Ontology <br/> in Education</p>
+        </div>
+    </a>
+    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["An Inquiry-Machine"].Id, objectType = "geotag" })">
+        <div id="image-container5">
+           <img src="~/images/geotags/geotag-white.png" />
+           <p class="image-text">An Inquiry-Machine</p>
+        </div>
+    </a>
+    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Aim...ish"].Id, objectType = "geotag" })">
+        <div id="image-container9">
+           <p class="image-text">Aim...ish</p>
+           <img src="~/images/geotags/geotag-black.png" />
+        </div>
+    </a>
+    <a href="@Url.Action("MolarMosaics", "Home")">
+        <div id="image-container6">
+           <img src="~/images/geotags/geotag-white.png" />
+           <p class="image-text">Molar Mosaics</p>
+        </div>
+        <img id="yellow-mosaic1" src="~/images/mosaics/mosaic-yellow-1.png" />
+        <img id="yellow-mosaic2" src="~/images/mosaics/mosaic-yellow-1.png" />
+        <img id="yellow-mosaic3" src="~/images/mosaics/mosaic-yellow-1.png" />
+    </a>
+    <a href="@Url.Action("MolecularMosaics", "Home")">
+        <div id="image-container7">
+           <img src="~/images/geotags/geotag-white.png"/>
+           <p class="image-text">Molecular Mosaics</p>
+        </div>
+        <img id="blue-mosaic1" src="~/images/mosaics/mosaic-blue-6.png" />
+        <img id="blue-mosaic2" src="~/images/mosaics/mosaic-blue-6.png" />
+        <img id="blue-mosaic3" src="~/images/mosaics/mosaic-blue-6.png" />
+        <img id="blue-mosaic4" src="~/images/mosaics/mosaic-blue-6.png" />
+        <img id="blue-mosaic5" src="~/images/mosaics/mosaic-blue-6.png" />
+    </a>
+    <a href="@Url.Action("Kaleidoscoping", "Home")">
+        <div id="image-container8">
+           <img id="geotag-white" src="~/images/geotags/geotag-white.png" />
+           <img id="geotag-black" src="~/images/geotags/geotag-black.png" style="display: none;" />
+           <p class="image-text">Kaleido-scoping</p>
+        </div>
+    </a>
+    <div class="overlay" id="tutorial-overlay" style="display: @(showTutorial ? "" : "none");">
+        <div class="overlay-box" id="box-1">
+            <p>Welcome to Fragile Mosaics of Teacher Becoming tutorial!</p>
+        </div>
+        <div class="overlay-box" id="box-2">
+            <p>When you want to come back to the mapview, click the Teacher Becoming logo in the top left.</p>
+        </div>
+        <div class="overlay-box" id="box-3">
+            <p>To explore the various texts, click on any of the geo tags.</p>
+        </div>
+        <div class="overlay-box" id="box-4">
+            <p>Set Molar Mosaics free and begin exploring them.</p>
+        </div>
+        <div class="overlay-box" id="box-5">
+            <p>Set Molecular Mosaics free and begin exploring them.</p>
+        </div>
+        <div class="overlay-box" id="box-6">
+            <p>Experience a one of a kind Kaleido-scoping mechanism</p>
+        </div>
+        <div class="button-container">
+            <button class="back-button" onclick="prevStep()">Back</button>
+            <div class="step-bar">
+                <div class="step" id="step-1"></div>
+                <div class="step" id="step-2"></div>
+                <div class="step" id="step-3"></div>
+                <div class="step" id="step-4"></div>
+                <div class="step" id="step-5"></div>
+                <div class="step" id="step-6"></div>
+            </div>
+            <button class="next-button" onclick="nextStep()">Next</button>
+        </div>
+    </div>
 </div>
-</a>
-<a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["A Solution"].Id, objectType = "geotag" })">
-<div id="image-container2">
-   <p class="image-text">A Solution</p>
-   <img src="~/images/geotags/geotag-black.png" />
-</div>
-</a>
-<a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Ignore This"].Id, objectType = "geotag" })">
-<div id="image-container3">
-   <img src="~/images/geotags/geotag-black.png" />
-   <p class="image-text">Ignore This</p>
-</div>
-</a>
-<a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Deleuzian Ontology in Education"].Id, objectType = "geotag" })">
-<div id="image-container4">
-   <img src="~/images/geotags/geotag-white.png" />
-   <p class="image-text">Deleuzian Ontology <br/> in Education</p>
-</div>
-</a>
-<a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["An Inquiry-Machine"].Id, objectType = "geotag" })">
-<div id="image-container5">
-   <img src="~/images/geotags/geotag-white.png" />
-   <p class="image-text">An Inquiry-Machine</p>
-</div>
-</a>
-<a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Aim...ish"].Id, objectType = "geotag" })">
-<div id="image-container9">
-   <p class="image-text">Aim...ish</p>
-   <img src="~/images/geotags/geotag-black.png" />
-</div>
-</a>
-<a href="@Url.Action("MolarMosaics", "Home")">
-<div id="image-container6">
-   <img src="~/images/geotags/geotag-white.png" />
-   <p class="image-text">Molar Mosaics</p>
-</div>
-<img id="yellow-mosaic1" src="~/images/mosaics/mosaic-yellow-1.png" />
-<img id="yellow-mosaic2" src="~/images/mosaics/mosaic-yellow-1.png" />
-<img id="yellow-mosaic3" src="~/images/mosaics/mosaic-yellow-1.png" />
-</a>
-<a href="@Url.Action("MolecularMosaics", "Home")">
-<div id="image-container7">
-   <img src="~/images/geotags/geotag-white.png"/>
-   <p class="image-text">Molecular Mosaics</p>
-</div>
-<img id="blue-mosaic1" src="~/images/mosaics/mosaic-blue-6.png" />
-<img id="blue-mosaic2" src="~/images/mosaics/mosaic-blue-6.png" />
-<img id="blue-mosaic3" src="~/images/mosaics/mosaic-blue-6.png" />
-<img id="blue-mosaic4" src="~/images/mosaics/mosaic-blue-6.png" />
-<img id="blue-mosaic5" src="~/images/mosaics/mosaic-blue-6.png" />
-</a>
-<a href="@Url.Action("Kaleidoscoping", "Home")">
-<div id="image-container8">
-   <img id="geotag-white" src="~/images/geotags/geotag-white.png" />
-   <img id="geotag-black" src="~/images/geotags/geotag-black.png" style="display: none;" />
-   <p class="image-text">Kaleido-scoping</p>
-</div>
-</a>
-   <div class="overlay" id="tutorial-overlay" style="display: @(showTutorial ? "" : "none");">
-   <div class="overlay-box" id="box-1">
-      <p>Welcome to Fragile Mosaics of Teacher Becoming tutorial!</p>
-   </div>
-   <div class="overlay-box" id="box-2">
-      <p>When you want to come back to the mapview, click the Teacher Becoming logo in the top left.</p>
-   </div>
-   <div class="overlay-box" id="box-3">
-      <p>To explore the various texts, click on any of the geo tags.</p>
-   </div>
-   <div class="overlay-box" id="box-4">
-      <p>Set Molar Mosaics free and begin exploring them.</p>
-   </div>
-   <div class="overlay-box" id="box-5">
-      <p>Set Molecular Mosaics free and begin exploring them.</p>
-   </div>
-   <div class="overlay-box" id="box-6">
-      <p>Experience a one of a kind Kaleido-scoping mechanism</p>
-   </div>
-   <div class="button-container">
-      <button class="back-button" onclick="prevStep()">Back</button>
-      <div class="step-bar">
-         <div class="step" id="step-1"></div>
-         <div class="step" id="step-2"></div>
-         <div class="step" id="step-3"></div>
-         <div class="step" id="step-4"></div>
-         <div class="step" id="step-5"></div>
-         <div class="step" id="step-6"></div>
-      </div>
-      <button class="next-button" onclick="nextStep()">Next</button>
-   </div>
-</div>
-

@@ -78,16 +78,39 @@ public class HomeController : Controller
 
         static DetailViewModel BuildViewModel(dynamic model)
         {
-            return new DetailViewModel
+            var viewModel = new DetailViewModel
             {
-                ObjectId = model.Id,
+                Id = model.Id,
                 Title = model.Title,
                 Content = model.Content,
-                ConnectorTags = model.ConnectorTags,
-                Becomings = model.Becomings,
                 PdfFilePath = model.PdfFilePath,
                 AudioFilePath = model.AudioFilePath,
+                ConnectorTags = [],
+                Becomings = [],
+                AssemblageTag = null
             };
+            if (model != null)
+            {
+                var propertyInfo = model.GetType().GetProperty("ConnectorTags");
+                if (propertyInfo != null)
+                {
+                    viewModel.ConnectorTags = (List<ConnectorTag>)propertyInfo.GetValue(model);
+                }
+
+                propertyInfo = model.GetType().GetProperty("Becomings");
+                if (propertyInfo != null)
+                {
+                    viewModel.Becomings = (List<string>)propertyInfo.GetValue(model);
+                }
+
+                propertyInfo = model.GetType().GetProperty("AssemblageTag");
+                if (propertyInfo != null)
+                {
+                    viewModel.AssemblageTag = (AssemblageTag)propertyInfo.GetValue(model);
+                }
+            }
+
+            return viewModel;
         }
     }
 
