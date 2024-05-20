@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
 using System.Text.Json;
@@ -9,20 +8,17 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
 public class MolarMosaicsController : Controller
 {
-    private readonly DigitalThesisDbContext _context;
     private readonly ConnectorTagRepository _connectorTagRepo;
     private readonly MolarMosaicRepository _molarMosaicRepo;
     private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
     private readonly AssemblageTagRepository _assemblageTagRepository;
 
 
-    public MolarMosaicsController(DigitalThesisDbContext context, 
-        MolarMosaicRepository molarMosaicRepo,
+    public MolarMosaicsController(MolarMosaicRepository molarMosaicRepo,
         ConnectorTagRepository connectorTagRepo,
         KaleidoscopeTagRepository kaleidoscopeTagRepo,
         AssemblageTagRepository assemblageTagRepository)
     {
-        _context = context;
         _molarMosaicRepo = molarMosaicRepo;
         _connectorTagRepo = connectorTagRepo;
         _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
@@ -111,20 +107,23 @@ public class MolarMosaicsController : Controller
             // Extract the "value" field from each object and collect into a list
             List<string> valuesList = [];
             valuesList.AddRange(from item in data select item.Value);
-
             molarMosaic.Becomings = valuesList;
         }
         foreach (var connectorTagId in connectorTags)
         {
-            var connectorTag = new ConnectorTag { Id = Guid.Parse(connectorTagId) };
-            _context.Attach(connectorTag); // Try to remove this direct database call
-            molarMosaic.ConnectorTags.Add(connectorTag);
+            var connectorTagToAdd = _connectorTagRepo.Get(Guid.Parse(connectorTagId));
+            if (connectorTagToAdd != null)
+            {
+                molarMosaic.ConnectorTags.Add(connectorTagToAdd);
+            }
         }
-        foreach (var kaleidoscopeId in kaleidoscopeTags)
+        foreach (var kaleidoscopeTagId in kaleidoscopeTags)
         {
-            var kaleidoscopeTag = new KaleidoscopeTag { Id = Guid.Parse(kaleidoscopeId) };
-            _context.Attach(kaleidoscopeTag); // Try to remove this direct database call
-            molarMosaic.KaleidoscopeTags.Add(kaleidoscopeTag);
+            var kaleidoscopeTagToAdd = _kaleidoscopeTagRepo.Get(Guid.Parse(kaleidoscopeTagId));
+            if (kaleidoscopeTagToAdd != null)
+            {
+                molarMosaic.KaleidoscopeTags.Add(kaleidoscopeTagToAdd);
+            }
         }
         _molarMosaicRepo.Create(molarMosaic);
 
@@ -170,7 +169,7 @@ public class MolarMosaicsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(Guid id, MolarMosaic molarMosaic, string[] connectorTags, string[] kaleidoscopeTags)
+    public IActionResult Edit(Guid id, MolarMosaic molarMosaic, string[] connectorTags, string[] kaleidoscopeTags)
     {
         if (!CheckAuthentication())
         {
@@ -187,8 +186,8 @@ public class MolarMosaicsController : Controller
         }
 
         // Update ConnectorTags collection
-        var existingmolarMosaic = _molarMosaicRepo.Get(id);
-        if (existingmolarMosaic == null)
+        var existingMolarMosaic = _molarMosaicRepo.Get(id);
+        if (existingMolarMosaic == null)
         {
             return NotFound();
         }
@@ -202,84 +201,31 @@ public class MolarMosaicsController : Controller
             // Extract the "value" field from each object and collect into a list
             List<string> valuesList = [];
             valuesList.AddRange(from item in data select item.Value);
-
             molarMosaic.Becomings = valuesList;
         }
         if (kaleidoscopeTags != null)
         {
+            molarMosaic.KaleidoscopeTags?.Clear();
             var newKaleidoscopeTagIds = kaleidoscopeTags.Distinct().Select(Guid.Parse).ToList();
-            var existingKaleidoscopeTagIds = existingmolarMosaic.KaleidoscopeTags!.Select(t => t.Id).ToList();
-
-            var kaleidoscopeTagsToAdd = newKaleidoscopeTagIds.Except(existingKaleidoscopeTagIds).ToList();
-            var kaleidoscopeTagsToRemove = existingKaleidoscopeTagIds.Except(newKaleidoscopeTagIds).ToList();
-
-            using (var transaction = await _context.Database.BeginTransactionAsync())
+            foreach (var tagId in newKaleidoscopeTagIds)
             {
-                try
+                var tagToAdd = _kaleidoscopeTagRepo.Get(tagId);
+                if (tagToAdd != null)
                 {
-                    // Remove old Kaleidoscope tags
-                    foreach (var tagId in kaleidoscopeTagsToRemove)
-                    {
-                        var tagToRemove = existingmolarMosaic.KaleidoscopeTags!.FirstOrDefault(t => t.Id == tagId);
-                        if (tagToRemove != null)
-                        {
-                            existingmolarMosaic.KaleidoscopeTags!.Remove(tagToRemove);
-                        }
-                    }
-
-                    // Add new Kaleidoscope tags
-                    foreach (var tagId in kaleidoscopeTagsToAdd)
-                    {
-                        var tagToAdd = _kaleidoscopeTagRepo.Get(tagId);
-                        if (tagToAdd != null)
-                        {
-                            existingmolarMosaic.KaleidoscopeTags!.Add(tagToAdd);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    await transaction.RollbackAsync();
-                    throw;
+                    molarMosaic.KaleidoscopeTags!.Add(tagToAdd);
                 }
             }
         }
         if (connectorTags != null)
         {
+            molarMosaic.ConnectorTags?.Clear();
             var newConnectorTagIds = connectorTags.Distinct().Select(Guid.Parse).ToList();
-            var existingConnectorTagIds = existingmolarMosaic.ConnectorTags!.Select(t => t.Id).ToList();
-
-            var connectorTagsToAdd = newConnectorTagIds.Except(existingConnectorTagIds).ToList();
-            var connectorTagsToRemove = existingConnectorTagIds.Except(newConnectorTagIds).ToList();
-
-            using (var transaction = await _context.Database.BeginTransactionAsync())
+            foreach (var tagId in newConnectorTagIds)
             {
-                try
+                var tagToAdd = _connectorTagRepo.Get(tagId);
+                if (tagToAdd != null)
                 {
-                    // Remove old Connector tags
-                    foreach (var tagId in connectorTagsToRemove)
-                    {
-                        var tagToRemove = existingmolarMosaic.ConnectorTags!.FirstOrDefault(t => t.Id == tagId);
-                        if (tagToRemove != null)
-                        {
-                            existingmolarMosaic.ConnectorTags!.Remove(tagToRemove);
-                        }
-                    }
-
-                    // Add new Connector tags
-                    foreach (var tagId in connectorTagsToAdd)
-                    {
-                        var tagToAdd = _connectorTagRepo.Get(tagId);
-                        if (tagToAdd != null)
-                        {
-                            existingmolarMosaic.ConnectorTags!.Add(tagToAdd);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    await transaction.RollbackAsync();
-                    throw;
+                    molarMosaic.ConnectorTags!.Add(tagToAdd);
                 }
             }
         }

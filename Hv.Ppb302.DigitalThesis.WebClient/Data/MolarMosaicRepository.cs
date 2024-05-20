@@ -75,6 +75,9 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
             existingMolarMosaic.AudioFilePath = molarMosaic.AudioFilePath;
             existingMolarMosaic.Becomings = molarMosaic.Becomings;
             existingMolarMosaic.AssemblageTag = molarMosaic.AssemblageTag;
+            existingMolarMosaic.ConnectorTags = molarMosaic.ConnectorTags;
+            existingMolarMosaic.KaleidoscopeTags = molarMosaic.KaleidoscopeTags;
+            existingMolarMosaic.AssemblageTagId = molarMosaic.AssemblageTagId;
             _dbContext.SaveChanges();
         }
         catch (Exception)

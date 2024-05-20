@@ -75,6 +75,9 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
             existingMolecularMosaic.AudioFilePath = molecularMosaic.AudioFilePath;
             existingMolecularMosaic.Becomings = molecularMosaic.Becomings;
             existingMolecularMosaic.AssemblageTag = molecularMosaic.AssemblageTag;
+            existingMolecularMosaic.ConnectorTags = molecularMosaic.ConnectorTags;
+            existingMolecularMosaic.KaleidoscopeTags = molecularMosaic.KaleidoscopeTags;
+            existingMolecularMosaic.AssemblageTagId = molecularMosaic.AssemblageTagId;
             _dbContext.SaveChanges();
         }
         catch (Exception)

@@ -8,20 +8,17 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
 public class MolecularMosaicsController : Controller
 {
-    private readonly DigitalThesisDbContext _context;
     private readonly ConnectorTagRepository _connectorTagRepo;
     private readonly MolecularMosaicRepository _molecularMosaicRepo;
     private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
     private readonly AssemblageTagRepository _assemblageTagRepository;
 
 
-    public MolecularMosaicsController(DigitalThesisDbContext context, 
-        MolecularMosaicRepository molecularMosaicRepo,
+    public MolecularMosaicsController(MolecularMosaicRepository molecularMosaicRepo,
         ConnectorTagRepository connectorTagRepo,
         KaleidoscopeTagRepository kaleidoscopeTagRepo,
         AssemblageTagRepository assemblageTagRepository)
     {
-        _context = context;
         _molecularMosaicRepo = molecularMosaicRepo;
         _connectorTagRepo = connectorTagRepo;
         _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
@@ -110,20 +107,23 @@ public class MolecularMosaicsController : Controller
             // Extract the "value" field from each object and collect into a list
             List<string> valuesList = [];
             valuesList.AddRange(from item in data select item.Value);
-
             molecularMosaic.Becomings = valuesList;
         }
         foreach (var connectorTagId in connectorTags)
         {
-            var connectorTag = new ConnectorTag { Id = Guid.Parse(connectorTagId) };
-            _context.Attach(connectorTag); // Try to remove this direct database call
-            molecularMosaic.ConnectorTags.Add(connectorTag);
+            var connectorTagToAdd = _connectorTagRepo.Get(Guid.Parse(connectorTagId));
+            if (connectorTagToAdd != null)
+            {
+                molecularMosaic.ConnectorTags.Add(connectorTagToAdd);
+            }
         }
-        foreach (var kaleidoscopeId in kaleidoscopeTags)
+        foreach (var kaleidoscopeTagId in kaleidoscopeTags)
         {
-            var kaleidoscopeTag = new KaleidoscopeTag { Id = Guid.Parse(kaleidoscopeId) };
-            _context.Attach(kaleidoscopeTag); // Try to remove this direct database call
-            molecularMosaic.KaleidoscopeTags.Add(kaleidoscopeTag);
+            var kaleidoscopeTagToAdd = _kaleidoscopeTagRepo.Get(Guid.Parse(kaleidoscopeTagId));
+            if (kaleidoscopeTagToAdd != null)
+            {
+                molecularMosaic.KaleidoscopeTags.Add(kaleidoscopeTagToAdd);
+            }
         }
         _molecularMosaicRepo.Create(molecularMosaic);
 
@@ -169,7 +169,7 @@ public class MolecularMosaicsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(Guid id, MolecularMosaic molecularMosaic, string[] connectorTags, string[] kaleidoscopeTags)
+    public IActionResult Edit(Guid id, MolecularMosaic molecularMosaic, string[] connectorTags, string[] kaleidoscopeTags)
     {
         if (!CheckAuthentication())
         {
@@ -201,87 +201,31 @@ public class MolecularMosaicsController : Controller
             // Extract the "value" field from each object and collect into a list
             List<string> valuesList = [];
             valuesList.AddRange(from item in data select item.Value);
-
             molecularMosaic.Becomings = valuesList;
         }
-
         if (kaleidoscopeTags != null)
         {
+            molecularMosaic.KaleidoscopeTags?.Clear();
             var newKaleidoscopeTagIds = kaleidoscopeTags.Distinct().Select(Guid.Parse).ToList();
-            var existingKaleidoscopeTagIds = existingMolecularMosaic.KaleidoscopeTags!.Select(t => t.Id).ToList();
-
-            var kaleidoscopeTagsToAdd = newKaleidoscopeTagIds.Except(existingKaleidoscopeTagIds).ToList();
-            var kaleidoscopeTagsToRemove = existingKaleidoscopeTagIds.Except(newKaleidoscopeTagIds).ToList();
-
-            using (var transaction = await _context.Database.BeginTransactionAsync())
+            foreach (var tagId in newKaleidoscopeTagIds)
             {
-                try
+                var tagToAdd = _kaleidoscopeTagRepo.Get(tagId);
+                if (tagToAdd != null)
                 {
-                    // Remove old Kaleidoscope tags
-                    foreach (var tagId in kaleidoscopeTagsToRemove)
-                    {
-                        var tagToRemove = existingMolecularMosaic.KaleidoscopeTags!.FirstOrDefault(t => t.Id == tagId);
-                        if (tagToRemove != null)
-                        {
-                            existingMolecularMosaic.KaleidoscopeTags!.Remove(tagToRemove);
-                        }
-                    }
-
-                    // Add new Kaleidoscope tags
-                    foreach (var tagId in kaleidoscopeTagsToAdd)
-                    {
-                        var tagToAdd = _kaleidoscopeTagRepo.Get(tagId);
-                        if (tagToAdd != null)
-                        {
-                            existingMolecularMosaic.KaleidoscopeTags!.Add(tagToAdd);
-                        }
-                    }
-                }
-                catch (Exception)
-                {
-                    await transaction.RollbackAsync();
-                    throw;
+                    molecularMosaic.KaleidoscopeTags!.Add(tagToAdd);
                 }
             }
         }
-
         if (connectorTags != null)
         {
+            molecularMosaic.ConnectorTags?.Clear();
             var newConnectorTagIds = connectorTags.Distinct().Select(Guid.Parse).ToList();
-            var existingConnectorTagIds = existingMolecularMosaic.ConnectorTags!.Select(t => t.Id).ToList();
-
-            var connectorTagsToAdd = newConnectorTagIds.Except(existingConnectorTagIds).ToList();
-            var connectorTagsToRemove = existingConnectorTagIds.Except(newConnectorTagIds).ToList();
-
-            using (var transaction = await _context.Database.BeginTransactionAsync())
+            foreach (var tagId in newConnectorTagIds)
             {
-                try
+                var tagToAdd = _connectorTagRepo.Get(tagId);
+                if (tagToAdd != null)
                 {
-                    // Remove old Connector tags
-                    foreach (var tagId in connectorTagsToRemove)
-                    {
-                        var tagToRemove = existingMolecularMosaic.ConnectorTags!.FirstOrDefault(t => t.Id == tagId);
-                        if (tagToRemove != null)
-                        {
-                            existingMolecularMosaic.ConnectorTags!.Remove(tagToRemove);
-                        }
-                    }
-
-                    // Add new Connector tags
-                    foreach (var tagId in connectorTagsToAdd)
-                    {
-                        var tagToAdd = _connectorTagRepo.Get(tagId);
-                        if (tagToAdd != null)
-                        {
-                            existingMolecularMosaic.ConnectorTags!.Add(tagToAdd);
-                        }
-                    }
-
-                }
-                catch (Exception)
-                {
-                    await transaction.RollbackAsync();
-                    throw;
+                    molecularMosaic.ConnectorTags!.Add(tagToAdd);
                 }
             }
         }
