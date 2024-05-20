@@ -16,9 +16,7 @@ public class GeoTagRepository : IRepository<GeoTag>
     {
         try
         {
-            return _dbContext.GeoTags
-                .Include(g => g.ConnectorTags)
-                .FirstOrDefault(g => g.Id == id);
+            return _dbContext.GeoTags.FirstOrDefault(g => g.Id == id);
         }
         catch (Exception)
         {
@@ -30,9 +28,7 @@ public class GeoTagRepository : IRepository<GeoTag>
     {
         try
         {
-            return _dbContext.GeoTags
-                .Include(g => g.ConnectorTags)
-                .ToList();
+            return _dbContext.GeoTags.ToList();
         }
         catch (Exception)
         {
@@ -111,58 +107,6 @@ public class GeoTagRepository : IRepository<GeoTag>
             }
 
             _dbContext.GeoTags.RemoveRange(existingGeoTags);
-            _dbContext.SaveChanges();
-        }
-        catch (Exception)
-        {
-            throw new Exception("Internal Server Error");
-        }
-    }
-
-    public void AddConnectorTag(Guid geoTagId, Guid connectorTagId)
-    {
-        try
-        {
-            var geoTag = _dbContext.GeoTags.Find(geoTagId);
-            if (geoTag == null)
-            {
-                throw new Exception("The geotag does not exist");
-            }
-
-            var connectorTag = _dbContext.ConnectorTags.Find(connectorTagId);
-            if (connectorTag == null)
-            {
-                throw new Exception("The connector tag does not exist");
-            }
-
-            geoTag.ConnectorTags!.Add(connectorTag);
-            connectorTag.GeoTags.Add(geoTag);
-            _dbContext.SaveChanges();
-        }
-        catch (Exception)
-        {
-            throw new Exception("Internal Server Error");
-        }
-    }
-
-    public void RemoveConnectorTag(Guid geoTagId, Guid connectorTagId)
-    {
-        try
-        {
-            var geoTag = _dbContext.GeoTags.Find(geoTagId);
-            if (geoTag == null)
-            {
-                throw new Exception("The geotag does not exist");
-            }
-
-            var connectorTag = _dbContext.ConnectorTags.Find(connectorTagId);
-            if (connectorTag == null)
-            {
-                throw new Exception("The connector tag does not exist");
-            }
-
-            geoTag.ConnectorTags!.Remove(connectorTag);
-            connectorTag.GeoTags.Remove(geoTag);
             _dbContext.SaveChanges();
         }
         catch (Exception)

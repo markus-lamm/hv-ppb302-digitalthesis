@@ -34,27 +34,23 @@ public class MolecularMosaicsController : Controller
         _assemblageTagRepository = assemblageTagRepository;
     }
 
-    // GET: MolecularMosaics
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
+    {
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
+        }
+        return View(_molecularMosaicRepo.GetAll());
+    }
+
+    public IActionResult Details(Guid id)
     {
         if (!CheckAuthentication())
         {
             return RedirectToAction("Login", "Admin");
         }
 
-        return View(await _context.MolecularMosaics.ToListAsync());
-    }
-
-    // GET: MolecularMosaics/Details/5
-    public async Task<IActionResult> Details(Guid? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
-        }
-
-        var molecularMosaic = await _context.MolecularMosaics
-            .FirstOrDefaultAsync(m => m.Id == id);
+        var molecularMosaic = _molecularMosaicRepo.Get(id);
         if (molecularMosaic == null)
         {
             return NotFound();
@@ -63,27 +59,30 @@ public class MolecularMosaicsController : Controller
         return View(molecularMosaic);
     }
 
-    // GET: MolecularMosaics/Create
     public IActionResult Create()
     {
-        List<MolecularMosaic> molecularMosaic = _molecularMosaicRepo.GetAll();
-        var becomingsList = new List<string>(); // Replace this with the actual list of strings you want to display
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
+        }
 
-        becomingsList = molecularMosaic.SelectMany(m => m.Becomings).Distinct().ToList();
-        var connectors = _connectorTagRepo.GetAll();
-        var Kaleidoscope = _kaleidoscopeTagRepo.GetAll();
+        var molecularMosaicList = _molecularMosaicRepo.GetAll();
+        var becomingsList = molecularMosaicList!.SelectMany(m => m.Becomings!).Distinct().ToList();
+        var connectorTagList = _connectorTagRepo.GetAll();
+        var kaleidoscopeTagList = _kaleidoscopeTagRepo.GetAll();
+        var assemblageTagList = _assemblageTagRepository.GetAll();
 
-        var becomingsSelectListItems = becomingsList.Select(b => new SelectListItem { Value = b, Text = b }).ToList();
-        var connectorsSelectList = connectors
+        var becomingsSelectListItems = becomingsList
+            .Select(b => new SelectListItem { Value = b, Text = b })
+            .ToList();
+        var connectorsSelectList = connectorTagList!
             .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
             .ToList();
-        var kaleidoscopeSelectList = Kaleidoscope
+        var kaleidoscopeSelectList = kaleidoscopeTagList!
             .Select(k => new SelectListItem { Value = k.Id.ToString(), Text = k.Name })
             .ToList();
-        var s = _assemblageTagRepository.GetAll();
 
-
-        ViewData["AssemblageTags"] = new SelectList(s, "Id", "Name");
+        ViewData["AssemblageTags"] = new SelectList(assemblageTagList, "Id", "Name");
         ViewData["Becomings"] = becomingsSelectListItems;
         ViewData["Connectors"] = connectorsSelectList;
         ViewData["Kaleidoscope"] = kaleidoscopeSelectList;
@@ -91,59 +90,61 @@ public class MolecularMosaicsController : Controller
         return View();
     }
 
-    // POST: MolecularMosaics/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create( MolecularMosaic molecularMosaic, string[] ConnectorTags, string[] KaleidoscopeTags, string Becomings)
+    public async Task<IActionResult> Create(MolecularMosaic molecularMosaic, string[] connectorTags, string[] kaleidoscopeTags, string becomings)
     {
-        if (ModelState.IsValid)
+        if (!CheckAuthentication())
         {
-
-            molecularMosaic.ConnectorTags ??= [];
-            molecularMosaic.KaleidoscopeTags ??= [];
-
-            if (!System.String.IsNullOrEmpty(Becomings))
-            {
-                molecularMosaic.Becomings ??= [];
-
-                List<ValueContainer>? data = JsonSerializer.Deserialize<List<ValueContainer>>(Becomings);
-
-                // Extract the "value" field from each object and collect into a list
-                List<string> valuesList = [];
-                valuesList.AddRange(from item in data
-                                    select item.Value);
-
-                molecularMosaic.Becomings = valuesList;
-
-
-            }
-
-            foreach (var connectorTagId in ConnectorTags)
-            {
-                var connectorTag = new ConnectorTag { Id = Guid.Parse(connectorTagId) };
-                _context.Attach(connectorTag);
-                molecularMosaic.ConnectorTags.Add(connectorTag);
-            }
-
-            foreach (var kaleidoscopeId in KaleidoscopeTags)
-            {
-                var kaleidoscopeTag = new KaleidoscopeTag { Id = Guid.Parse(kaleidoscopeId) };
-                _context.Attach(kaleidoscopeTag);
-                molecularMosaic.KaleidoscopeTags.Add(kaleidoscopeTag);
-            }
-            molecularMosaic.Id = Guid.NewGuid();
-            _context.Add(molecularMosaic);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Login", "Admin");
         }
-        return View(molecularMosaic);
+
+        if (!ModelState.IsValid)
+        {
+            return View(molecularMosaic);
+        }
+
+        molecularMosaic.ConnectorTags ??= [];
+        molecularMosaic.KaleidoscopeTags ??= [];
+
+        if (!string.IsNullOrEmpty(becomings))
+        {
+            molecularMosaic.Becomings ??= [];
+
+            List<ValueContainer>? data = JsonSerializer.Deserialize<List<ValueContainer>>(becomings);
+
+            // Extract the "value" field from each object and collect into a list
+            List<string> valuesList = [];
+            valuesList.AddRange(from item in data select item.Value);
+
+            molecularMosaic.Becomings = valuesList;
+        }
+        foreach (var connectorTagId in connectorTags)
+        {
+            var connectorTag = new ConnectorTag { Id = Guid.Parse(connectorTagId) };
+            _context.Attach(connectorTag);
+            molecularMosaic.ConnectorTags.Add(connectorTag);
+        }
+        foreach (var kaleidoscopeId in kaleidoscopeTags)
+        {
+            var kaleidoscopeTag = new KaleidoscopeTag { Id = Guid.Parse(kaleidoscopeId) };
+            _context.Attach(kaleidoscopeTag);
+            molecularMosaic.KaleidoscopeTags.Add(kaleidoscopeTag);
+        }
+
+        molecularMosaic.Id = Guid.NewGuid();
+        _context.Add(molecularMosaic);
+        await _context.SaveChangesAsync();
+        return RedirectToAction(nameof(Index));
     }
 
-    // GET: MolecularMosaics/Edit/5
     public async Task<IActionResult> Edit(Guid? id)
     {
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
+        }
+
         if (id == null)
         {
             return NotFound();
@@ -180,13 +181,15 @@ public class MolecularMosaicsController : Controller
         return View(molecularMosaic);
     }
 
-    // POST: MolecularMosaics/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
     public async Task<IActionResult> Edit(Guid id, MolecularMosaic molecularMosaic, string[] ConnectorTags, string[] KaleidoscopeTags)
     {
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
+        }
+
         if (id != molecularMosaic.Id)
         {
             return NotFound();
@@ -305,7 +308,6 @@ public class MolecularMosaicsController : Controller
                     }
                 }
 
-
                 // Update other properties if necessary
                 existingMolecularMosaic.Title = molecularMosaic.Title;
                 existingMolecularMosaic.Content = molecularMosaic.Content;
@@ -316,7 +318,6 @@ public class MolecularMosaicsController : Controller
 
                 _context.Update(existingMolecularMosaic);
                 await _context.SaveChangesAsync();
-
             }
             catch (DbUpdateConcurrencyException)
             {
@@ -334,16 +335,14 @@ public class MolecularMosaicsController : Controller
         return View(molecularMosaic);
     }
 
-    // GET: MolecularMosaics/Delete/5
-    public async Task<IActionResult> Delete(Guid? id)
+    public IActionResult Delete(Guid id)
     {
-        if (id == null)
+        if (!CheckAuthentication())
         {
-            return NotFound();
+            return RedirectToAction("Login", "Admin");
         }
 
-        var molecularMosaic = await _context.MolecularMosaics
-            .FirstOrDefaultAsync(m => m.Id == id);
+        var molecularMosaic = _molecularMosaicRepo.Get(id);
         if (molecularMosaic == null)
         {
             return NotFound();
@@ -352,25 +351,27 @@ public class MolecularMosaicsController : Controller
         return View(molecularMosaic);
     }
 
-    // POST: MolecularMosaics/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(Guid id)
+    public IActionResult DeleteConfirmed(Guid id)
     {
-        var molecularMosaic = await _context.MolecularMosaics.FindAsync(id);
-        if (molecularMosaic != null)
+        if (!CheckAuthentication())
         {
-            _context.MolecularMosaics.Remove(molecularMosaic);
+            return RedirectToAction("Login", "Admin");
         }
 
-        await _context.SaveChangesAsync();
+        var molecularMosaic = _molecularMosaicRepo.Get(id);
+        if (molecularMosaic == null)
+        {
+            return NotFound();
+        }
+        _molecularMosaicRepo.Delete(id);
+
         return RedirectToAction(nameof(Index));
     }
 
-    private bool MolecularMosaicExists(Guid id)
-    {
-        return _context.MolecularMosaics.Any(e => e.Id == id);
-    }
+    private bool MolecularMosaicExists(Guid id) => _molecularMosaicRepo.Get(id) != null;
+
     public bool CheckAuthentication()
     {
         return HttpContext.Session.GetString("Username") != null;

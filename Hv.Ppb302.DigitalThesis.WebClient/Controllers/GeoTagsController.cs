@@ -55,73 +55,27 @@ public class GeoTagsController : Controller
             return NotFound();
         }
 
-        var geoTagList = _geoTagRepo.GetAll();
-        var connectorTagList = _connectorTagRepo.GetAll();
-        var becomingsList = geoTagList!.SelectMany(m => m.Becomings!).Distinct().ToList();
-
-        var becomingsSelectListItems = becomingsList
-            .Select(b => new SelectListItem { Value = b, Text = b })
-            .ToList();
-        var connectorsSelectList = connectorTagList!
-            .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
-            .ToList();
-
-        ViewData["Becomings"] = becomingsSelectListItems;
-        ViewData["Connectors"] = connectorsSelectList;
-
         return View(geoTag);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(Guid id, [Bind("Id,Title,Content,Becomings,PdfFilePath,AudioFilePath")] GeoTag geoTagInput, string[] connectorTags)
+    public IActionResult Edit(Guid id, [Bind("Id,Title,Content,PdfFilePath,AudioFilePath")] GeoTag geoTag)
     {
         if (!CheckAuthentication())
         {
             return RedirectToAction("Login", "Admin");
         }
 
-        if (id != geoTagInput.Id)
+        if (id != geoTag.Id)
         {
             return NotFound();
         }
         if (!ModelState.IsValid)
         {
-            return View(geoTagInput);
+            return View(geoTag);
         }
-
-        var geoTagDb = _geoTagRepo.Get(id);
-        if (geoTagDb == null)
-        {
-            return NotFound();
-        }
-
-        // Unsure if GeoTags are supposed to have becomings and connectors
-        if (geoTagInput.Becomings != null && geoTagInput.Becomings.Count > 0 && !string.IsNullOrEmpty(geoTagInput.Becomings[0]?.Trim()))
-        {
-            geoTagDb.Becomings ??= [];
-
-            var data = JsonSerializer.Deserialize<List<ValueContainer>>(geoTagInput.Becomings[0]);
-
-            // Extract the "value" field from each object and collect into a list
-            List<string> valuesList = [];
-            valuesList.AddRange(from item in data select item.Value);
-
-            geoTagDb.Becomings = valuesList;
-        }
-        if (connectorTags != null)
-        {
-            geoTagDb.ConnectorTags!.Clear();
-            foreach (var tagId in connectorTags)
-            {
-                var connectorTag = _connectorTagRepo.Get(Guid.Parse(tagId));
-                if (connectorTag != null)
-                {
-                    geoTagDb.ConnectorTags.Add(connectorTag);
-                }
-            }
-        }
-        _geoTagRepo.Update(geoTagInput);
+        _geoTagRepo.Update(geoTag);
 
         return RedirectToAction(nameof(Index));
     }
