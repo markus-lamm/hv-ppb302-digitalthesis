@@ -1,4 +1,4 @@
-﻿@model List
+﻿@model List<GeoTag> 
 <GeoTag>
 @{
 ViewData["Title"] = "Geotags";
@@ -72,8 +72,7 @@ bool showTutorial = ViewBag.ShowTutorial;
    <p class="image-text">Kaleido-scoping</p>
 </div>
 </a>
-<div id="tutorial">
-   <div class="overlay" id="tutorial-overlay" style="display: @(showTutorial ? "none");">
+   <div class="overlay" id="tutorial-overlay" style="display: @(showTutorial ? "" : "none");">
    <div class="overlay-box" id="box-1">
       <p>Welcome to Fragile Mosaics of Teacher Becoming tutorial!</p>
    </div>
@@ -105,4 +104,4 @@ bool showTutorial = ViewBag.ShowTutorial;
       <button class="next-button" onclick="nextStep()">Next</button>
    </div>
 </div>
-<div/>
+

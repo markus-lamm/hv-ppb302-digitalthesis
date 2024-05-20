@@ -11,12 +11,10 @@ function showStep(step) {
         overlayBoxes[step].style.display = 'block';
         steps[step].classList.add('active');
 
-        // Position the button container within the active box
         const buttonContainer = document.querySelector('.button-container');
         const activeBox = overlayBoxes[step];
         activeBox.appendChild(buttonContainer);
 
-        // Enable/disable buttons based on the step
         document.querySelector('.back-button').disabled = step === 0;
         document.querySelector('.next-button').disabled = step === overlayBoxes.length;
     } else {
@@ -74,7 +72,6 @@ function showStep(step) {
         element.style.zIndex = 1000;
         blackImage.style.display = 'none';
         whiteImage.style.display = '';
-
     }
 }
 
@@ -94,10 +91,5 @@ function prevStep() {
 
 document.addEventListener('DOMContentLoaded', () => {
     showStep(currentStep);
-
-    if (@showTutorial.ToString().ToLower()) {
-        console.log("Tutorial visible");
-    }
-
 });
 
