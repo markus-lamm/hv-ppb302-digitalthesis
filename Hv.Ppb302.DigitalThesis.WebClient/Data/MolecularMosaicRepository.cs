@@ -47,7 +47,6 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
         existingMolecularMosaic.Title = molecularMosaic.Title;
         existingMolecularMosaic.Content = molecularMosaic.Content;
         existingMolecularMosaic.PdfFilePath = molecularMosaic.PdfFilePath;
-        existingMolecularMosaic.HasAudio = molecularMosaic.HasAudio;
         existingMolecularMosaic.AudioFilePath = molecularMosaic.AudioFilePath;
         existingMolecularMosaic.Becomings = molecularMosaic.Becomings;
         existingMolecularMosaic.AssemblageTag = molecularMosaic.AssemblageTag;

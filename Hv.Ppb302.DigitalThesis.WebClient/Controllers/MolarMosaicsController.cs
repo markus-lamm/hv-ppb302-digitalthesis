@@ -43,6 +43,11 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         // GET: MolarMosaics
         public async Task<IActionResult> Index()
         {
+            if (!CheckAuthentication())
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
             return View(await _context.MolarMosaics.ToListAsync());
         }
 
@@ -308,7 +313,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     existingmolarMosaic.Title = molarMosaic.Title;
                     existingmolarMosaic.Content = molarMosaic.Content;
                     existingmolarMosaic.PdfFilePath = molarMosaic.PdfFilePath;
-                    existingmolarMosaic.HasAudio = molarMosaic.HasAudio;
                     existingmolarMosaic.AudioFilePath = molarMosaic.AudioFilePath;
                     existingmolarMosaic.Becomings = molarMosaic.Becomings;
                     existingmolarMosaic.AssemblageTagId = molarMosaic.AssemblageTagId;
@@ -370,5 +374,10 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         {
             return _context.MolarMosaics.Any(e => e.Id == id);
         }
+        public bool CheckAuthentication()
+        {
+            return HttpContext.Session.GetString("Username") != null;
+        }
+
     }
 }

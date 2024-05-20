@@ -47,7 +47,6 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
         existingMolarMosaic.Title = molarMosaic.Title;
         existingMolarMosaic.Content = molarMosaic.Content;
         existingMolarMosaic.PdfFilePath = molarMosaic.PdfFilePath;
-        existingMolarMosaic.HasAudio = molarMosaic.HasAudio;
         existingMolarMosaic.AudioFilePath = molarMosaic.AudioFilePath;
         existingMolarMosaic.Becomings = molarMosaic.Becomings;
         existingMolarMosaic.AssemblageTag = molarMosaic.AssemblageTag;

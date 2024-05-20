@@ -3,7 +3,8 @@
 @{
     ViewData["Title"] = "Create";
     var assemblageTags = ViewData["AssemblageTags"] as SelectList;
-
+    var KaleidoscopeTags = ViewData["Kaleidoscope"] as List<SelectListItem>;
+    var ConnectorTags = ViewData["Connectors"] as List<SelectListItem>;
 }
 <head>
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
@@ -43,21 +44,24 @@
                 </div>
                 <div class="form-group">
                     <label asp-for="ConnectorTags" class="control-label"></label>
-                    <select asp-for="ConnectorTags" asp-items="@(ViewData["Connectors"] as List<SelectListItem>)" class="form-control" multiple="multiple"></select>
+                    @foreach (var item in ConnectorTags)
+                    {
+                        <input type="checkbox" class="form-check-input" id="@item.Value" name="ConnectorTags" value="@item.Value" @(item.Selected ? "checked=\"checked\"" : "") />
+                        <label class="form-check-label" for="@item.Value">@item.Text</label>
+                    }
                 </div>
                 <div class="form-group">
                     <label asp-for="KaleidoscopeTags" class="control-label"></label>
-                    <select asp-for="KaleidoscopeTags" asp-items="@(ViewData["Kaleidoscope"] as List<SelectListItem>)" class="form-control" multiple="multiple"></select>
+                    @foreach (var item in KaleidoscopeTags)
+                    {
+                        <input type="checkbox" class="form-check-input" id="@item.Value" name="KaleidoscopeTags" value="@item.Value" @(item.Selected ? "checked=\"checked\"" : "") />
+                        <label class="form-check-label" for="@item.Value">@item.Text</label>
+                    }
                 </div>
                 <div class="form-group">
                     <label asp-for="PdfFilePath" class="control-label"></label>
                     <input asp-for="PdfFilePath" class="form-control" />
                     <span asp-validation-for="PdfFilePath" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <label asp-for="HasAudio" class="control-label"></label>
-                    <input asp-for="HasAudio" class="form-control" />
-                    <span asp-validation-for="HasAudio" class="text-danger"></span>
                 </div>
                 <div class="form-group">
                     <label asp-for="AudioFilePath" class="control-label"></label>

@@ -44,6 +44,11 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         // GET: MolecularMosaics
         public async Task<IActionResult> Index()
         {
+            if (!CheckAuthentication())
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
             return View(await _context.MolecularMosaics.ToListAsync());
         }
 
@@ -312,7 +317,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     existingMolecularMosaic.Title = molecularMosaic.Title;
                     existingMolecularMosaic.Content = molecularMosaic.Content;
                     existingMolecularMosaic.PdfFilePath = molecularMosaic.PdfFilePath;
-                    existingMolecularMosaic.HasAudio = molecularMosaic.HasAudio;
                     existingMolecularMosaic.AudioFilePath = molecularMosaic.AudioFilePath;
                     existingMolecularMosaic.Becomings = molecularMosaic.Becomings;
                     existingMolecularMosaic.AssemblageTagId = molecularMosaic.AssemblageTagId;
@@ -374,6 +378,11 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         {
             return _context.MolecularMosaics.Any(e => e.Id == id);
         }
+        public bool CheckAuthentication()
+        {
+            return HttpContext.Session.GetString("Username") != null;
+        }
+
         public class ValueContainer
         {
             public string value { get; set; }

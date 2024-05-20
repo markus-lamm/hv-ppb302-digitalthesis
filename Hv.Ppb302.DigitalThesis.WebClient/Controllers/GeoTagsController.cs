@@ -29,6 +29,11 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         // GET: GeoTags
         public async Task<IActionResult> Index()
         {
+            if (!CheckAuthentication())
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
             return View(await _context.GeoTags.ToListAsync());
         }
 
@@ -137,7 +142,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     GeoTag.Title = geoTag.Title;
                     GeoTag.Content = geoTag.Content;
                     GeoTag.PdfFilePath = geoTag.PdfFilePath;
-                    GeoTag.HasAudio = geoTag.HasAudio;
                     GeoTag.AudioFilePath = geoTag.AudioFilePath;
                     GeoTag.Becomings = geoTag.Becomings;
 
@@ -197,5 +201,10 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         {
             return _context.GeoTags.Any(e => e.Id == id);
         }
+        public bool CheckAuthentication()
+        {
+            return HttpContext.Session.GetString("Username") != null;
+        }
+
     }
 }

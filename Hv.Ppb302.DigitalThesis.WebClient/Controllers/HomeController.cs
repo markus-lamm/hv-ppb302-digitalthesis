@@ -83,7 +83,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                 throw new Exception("Invalid object type");
             }
 
-
             return NotFound();
 
             static DetailViewModel BuildViewModel(dynamic model)
@@ -96,7 +95,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     ConnectorTags = model.ConnectorTags,
                     Becomings = model.Becomings,
                     PdfFilePath = model.PdfFilePath,
-                    HasAudio = model.HasAudio,
                     AudioFilePath = model.AudioFilePath,
                 };
             }
@@ -111,7 +109,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                 return new MolarMosaicsViewModel
                 {
                     MolarMosaics = molarMosaics.ToList(),
-                    ConnectorTags = molarMosaics.SelectMany(x => x.ConnectorTags).Distinct().ToList(),
+                    ConnectorTags = molarMosaics.SelectMany(x => x.ConnectorTags!).Distinct().ToList(),
                 };
             }
         }
@@ -125,7 +123,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                 return new MolecularMosaicsViewModel
                 {
                     MolecularMosaics = molecularMosaics.ToList(),
-                    ConnectorTags = molecularMosaics.SelectMany(x => x.ConnectorTags).Distinct().ToList(),
+                    ConnectorTags = molecularMosaics.SelectMany(x => x.ConnectorTags!).Distinct().ToList(),
                 };
             }
         }
