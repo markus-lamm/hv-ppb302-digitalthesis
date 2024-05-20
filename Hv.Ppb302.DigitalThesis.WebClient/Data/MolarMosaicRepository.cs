@@ -18,6 +18,7 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
         {
             return _dbContext.MolarMosaics
                 .Include(g => g.ConnectorTags)
+                .Include(m => m.KaleidoscopeTags)
                 .FirstOrDefault(g => g.Id == id);
         }
         catch (Exception)
@@ -32,6 +33,7 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
         {
             return _dbContext.MolarMosaics
                 .Include(g => g.ConnectorTags)
+                .Include(m => m.KaleidoscopeTags)
                 .ToList();
         }
         catch (Exception)
