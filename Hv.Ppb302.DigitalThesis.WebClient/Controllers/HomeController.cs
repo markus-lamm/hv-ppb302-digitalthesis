@@ -36,10 +36,11 @@ public class HomeController : Controller
         return View(_pageRepository.GetByName("About"));
     }
 
-    public IActionResult Geotags()
-    {
-        return View(_geoTagRepo.GetAll());
-    }
+        public IActionResult Geotags(bool showTutorial = false)
+        {
+            ViewBag.ShowTutorial = showTutorial;
+            return View(_geoTagRepo.GetAll());
+        }
 
     [Route("Home/Detail/{objectId:Guid}")]
     public IActionResult Detail(Guid objectId, string objectType)
