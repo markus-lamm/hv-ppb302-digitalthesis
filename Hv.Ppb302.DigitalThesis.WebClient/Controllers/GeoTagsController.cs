@@ -142,7 +142,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     GeoTag.Title = geoTag.Title;
                     GeoTag.Content = geoTag.Content;
                     GeoTag.PdfFilePath = geoTag.PdfFilePath;
-                    GeoTag.HasAudio = geoTag.HasAudio;
                     GeoTag.AudioFilePath = geoTag.AudioFilePath;
                     GeoTag.Becomings = geoTag.Becomings;
 

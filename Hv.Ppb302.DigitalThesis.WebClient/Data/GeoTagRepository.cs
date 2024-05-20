@@ -47,7 +47,6 @@ public class GeoTagRepository : IRepository<GeoTag>
         existingGeoTag.Title = geoTag.Title;
         existingGeoTag.Content = geoTag.Content;
         existingGeoTag.PdfFilePath = geoTag.PdfFilePath;
-        existingGeoTag.HasAudio = geoTag.HasAudio;
         existingGeoTag.AudioFilePath = geoTag.AudioFilePath;
         _dbContext.SaveChanges();
     }

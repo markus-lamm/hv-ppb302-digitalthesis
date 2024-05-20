@@ -1,5 +1,4 @@
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.FileProviders;
 
@@ -53,6 +52,7 @@ public class Program
         {
             Directory.CreateDirectory(uploadsDirectory);
         }
+
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
         {

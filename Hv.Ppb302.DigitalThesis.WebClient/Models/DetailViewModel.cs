@@ -8,6 +8,5 @@ public class DetailViewModel
     public List<ConnectorTag> ConnectorTags { get; set; } = [];
     public List<string> Becomings { get; set; } = [];
     public string? PdfFilePath { get; set; }
-    public bool? HasAudio { get; set; }
     public string? AudioFilePath { get; set; }
 }
