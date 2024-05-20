@@ -317,7 +317,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     existingMolecularMosaic.Title = molecularMosaic.Title;
                     existingMolecularMosaic.Content = molecularMosaic.Content;
                     existingMolecularMosaic.PdfFilePath = molecularMosaic.PdfFilePath;
-                    existingMolecularMosaic.HasAudio = molecularMosaic.HasAudio;
                     existingMolecularMosaic.AudioFilePath = molecularMosaic.AudioFilePath;
                     existingMolecularMosaic.Becomings = molecularMosaic.Becomings;
                     existingMolecularMosaic.AssemblageTagId = molecularMosaic.AssemblageTagId;

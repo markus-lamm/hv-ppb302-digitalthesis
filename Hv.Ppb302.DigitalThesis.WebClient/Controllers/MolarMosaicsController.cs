@@ -313,7 +313,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
                     existingmolarMosaic.Title = molarMosaic.Title;
                     existingmolarMosaic.Content = molarMosaic.Content;
                     existingmolarMosaic.PdfFilePath = molarMosaic.PdfFilePath;
-                    existingmolarMosaic.HasAudio = molarMosaic.HasAudio;
                     existingmolarMosaic.AudioFilePath = molarMosaic.AudioFilePath;
                     existingmolarMosaic.Becomings = molarMosaic.Becomings;
                     existingmolarMosaic.AssemblageTagId = molarMosaic.AssemblageTagId;
