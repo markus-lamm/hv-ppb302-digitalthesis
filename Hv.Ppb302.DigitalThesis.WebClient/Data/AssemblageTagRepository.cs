@@ -14,65 +14,107 @@ public class AssemblageTagRepository : IRepository<AssemblageTag>
 
     public AssemblageTag? Get(Guid id)
     {
-        return _dbContext.AssemblageTags
-            .Include(g => g.MolarMosaics)
-            .Include(g => g.MolecularMosaics)
-            .FirstOrDefault(g => g.Id == id);
+        try
+        {
+            return _dbContext.AssemblageTags
+                .Include(g => g.MolarMosaics)
+                .Include(g => g.MolecularMosaics)
+                .FirstOrDefault(g => g.Id == id);
+        }
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 
     public List<AssemblageTag>? GetAll()
     {
-        return _dbContext.AssemblageTags
-            .Include(g => g.MolarMosaics)
-            .Include(g => g.MolecularMosaics)
-            .ToList();
+        try
+        {
+            return _dbContext.AssemblageTags
+                .Include(g => g.MolarMosaics)
+                .Include(g => g.MolecularMosaics)
+                .ToList();
+        }
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 
     public void Create(AssemblageTag assemblageTag)
     {
-        var existingAssemblageTag = _dbContext.AssemblageTags.FirstOrDefault(g => g.Name == assemblageTag.Name);
-        if (existingAssemblageTag != null)
+        try
         {
-            throw new Exception("A assemblage tag with the same name already exists");
+            var existingAssemblageTag = _dbContext.AssemblageTags.FirstOrDefault(g => g.Name == assemblageTag.Name);
+            if (existingAssemblageTag != null)
+            {
+                throw new Exception("A assemblage tag with the same name already exists");
+            }
+            _dbContext.AssemblageTags.Add(assemblageTag);
+            _dbContext.SaveChanges();
         }
-        _dbContext.AssemblageTags.Add(assemblageTag);
-        _dbContext.SaveChanges();
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 
     public void Update(AssemblageTag assemblageTag)
     {
-        var existingAssemblageTag = _dbContext.AssemblageTags.Find(assemblageTag.Id);
-        if (existingAssemblageTag == null)
+        try
         {
-            throw new Exception("The assemblage tag does not exist");
+            var existingAssemblageTag = _dbContext.AssemblageTags.Find(assemblageTag.Id);
+            if (existingAssemblageTag == null)
+            {
+                throw new Exception("The assemblage tag does not exist");
+            }
+            existingAssemblageTag.Name = assemblageTag.Name;
+            existingAssemblageTag.MolarMosaics = assemblageTag.MolarMosaics;
+            existingAssemblageTag.MolecularMosaics = assemblageTag.MolecularMosaics;
+            _dbContext.SaveChanges();
         }
-        existingAssemblageTag.Name = assemblageTag.Name;
-        existingAssemblageTag.MolarMosaics = assemblageTag.MolarMosaics;
-        existingAssemblageTag.MolecularMosaics = assemblageTag.MolecularMosaics;
-        _dbContext.SaveChanges();
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 
     public void Delete(Guid id)
     {
-        var existingAssemblageTag = _dbContext.AssemblageTags.Find(id);
-        if (existingAssemblageTag == null)
+        try
         {
-            throw new Exception("The assemblage tag does not exist");
+            var existingAssemblageTag = _dbContext.AssemblageTags.Find(id);
+            if (existingAssemblageTag == null)
+            {
+                throw new Exception("The assemblage tag does not exist");
+            }
+            _dbContext.AssemblageTags.Remove(existingAssemblageTag);
+            _dbContext.SaveChanges();
         }
-        _dbContext.AssemblageTags.Remove(existingAssemblageTag);
-        _dbContext.SaveChanges();
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 
     public void DeleteAllByName(string name)
     {
-        var existingAssemblageTag = _dbContext.AssemblageTags
-            .Where(g => g.Name!.Contains(name))
-            .ToList();
-        if (existingAssemblageTag.Count == 0)
+        try
         {
-            return;
+            var existingAssemblageTag = _dbContext.AssemblageTags
+                .Where(g => g.Name!.Contains(name))
+                .ToList();
+            if (existingAssemblageTag.Count == 0)
+            {
+                return;
+            }
+            _dbContext.AssemblageTags.RemoveRange(existingAssemblageTag);
+            _dbContext.SaveChanges();
         }
-        _dbContext.AssemblageTags.RemoveRange(existingAssemblageTag);
-        _dbContext.SaveChanges();
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 }
