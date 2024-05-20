@@ -91,7 +91,7 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
             throw new Exception("The connector tag does not exist");
         }
 
-        molarMosaic.ConnectorTags.Add(connectorTag);
+        molarMosaic.ConnectorTags!.Add(connectorTag);
         connectorTag.MolarMosaics.Add(molarMosaic);
         _dbContext.SaveChanges();
     }
@@ -110,7 +110,7 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
             throw new Exception("The kaleidoscope tag does not exist");
         }
 
-        molarMosaic.KaleidoscopeTags.Add(kaleidoscopeTag);
+        molarMosaic.KaleidoscopeTags!.Add(kaleidoscopeTag);
         kaleidoscopeTag.MolarMosaics.Add(molarMosaic);
         _dbContext.SaveChanges();
     }
@@ -129,7 +129,7 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
             throw new Exception("The connector tag does not exist");
         }
 
-        molarMosaic.ConnectorTags.Remove(connectorTag);
+        molarMosaic.ConnectorTags!.Remove(connectorTag);
         connectorTag.MolarMosaics.Remove(molarMosaic);
         _dbContext.SaveChanges();
     }

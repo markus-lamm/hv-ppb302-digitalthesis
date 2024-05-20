@@ -91,7 +91,7 @@ public class GeoTagRepository : IRepository<GeoTag>
             throw new Exception("The connector tag does not exist");
         }
 
-        geoTag.ConnectorTags.Add(connectorTag);
+        geoTag.ConnectorTags!.Add(connectorTag);
         connectorTag.GeoTags.Add(geoTag);
         _dbContext.SaveChanges();
     }
@@ -110,7 +110,7 @@ public class GeoTagRepository : IRepository<GeoTag>
             throw new Exception("The connector tag does not exist");
         }
 
-        geoTag.ConnectorTags.Remove(connectorTag);
+        geoTag.ConnectorTags!.Remove(connectorTag);
         connectorTag.GeoTags.Remove(geoTag);
         _dbContext.SaveChanges();
     }

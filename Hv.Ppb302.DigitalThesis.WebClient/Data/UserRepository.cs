@@ -1,5 +1,4 @@
 ﻿using Hv.Ppb302.DigitalThesis.WebClient.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
@@ -55,7 +54,7 @@ public class UserRepository : IRepository<User>
         var existingUser = _dbContext.Users.Find(id);
         if (existingUser == null)
         {
-            throw new Exception("The molecular mosaic does not exist");
+            throw new Exception("The user does not exist");
         }
         _dbContext.Users.Remove(existingUser);
         _dbContext.SaveChanges();

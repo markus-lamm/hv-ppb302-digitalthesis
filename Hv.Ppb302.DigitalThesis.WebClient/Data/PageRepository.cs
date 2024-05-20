@@ -1,5 +1,4 @@
 ﻿using Hv.Ppb302.DigitalThesis.WebClient.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 

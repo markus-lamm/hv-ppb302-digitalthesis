@@ -91,7 +91,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
             throw new Exception("The connector tag does not exist");
         }
 
-        molecularMosaic.ConnectorTags.Add(connectorTag);
+        molecularMosaic.ConnectorTags!.Add(connectorTag);
         connectorTag.MolecularMosaics.Add(molecularMosaic);
         _dbContext.SaveChanges();
     }
@@ -110,7 +110,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
             throw new Exception("The kaleidoscope tag does not exist");
         }
 
-        molecularMosaic.KaleidoscopeTags.Add(kaleidoscopeTag);
+        molecularMosaic.KaleidoscopeTags!.Add(kaleidoscopeTag);
         kaleidoscopeTag.MolecularMosaics.Add(molecularMosaic);
         _dbContext.SaveChanges();
     }
@@ -129,7 +129,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
             throw new Exception("The connector tag does not exist");
         }
 
-        molecularMosaic.ConnectorTags.Remove(connectorTag);
+        molecularMosaic.ConnectorTags!.Remove(connectorTag);
         connectorTag.MolecularMosaics.Remove(molecularMosaic);
         _dbContext.SaveChanges();
     }
