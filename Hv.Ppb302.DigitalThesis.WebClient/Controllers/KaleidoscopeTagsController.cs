@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
 
@@ -7,12 +6,10 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
 public class KaleidoscopeTagsController : Controller
 {
-    private readonly DigitalThesisDbContext _context;
     private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
 
-    public KaleidoscopeTagsController(DigitalThesisDbContext context, KaleidoscopeTagRepository kaleidoscopeTagRepo)
+    public KaleidoscopeTagsController(KaleidoscopeTagRepository kaleidoscopeTagRepo)
     {
-        _context = context;
         _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
     }
 
