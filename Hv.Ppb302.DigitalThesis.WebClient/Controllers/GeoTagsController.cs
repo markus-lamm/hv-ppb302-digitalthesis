@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
 using static Hv.Ppb302.DigitalThesis.WebClient.Controllers.MolecularMosaicsController;
@@ -10,39 +9,32 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
 public class GeoTagsController : Controller
 {
-    private readonly DigitalThesisDbContext _context;
     private readonly GeoTagRepository _geoTagRepo;
     private readonly ConnectorTagRepository _connectorTagRepo;
 
-    public GeoTagsController(DigitalThesisDbContext context, GeoTagRepository geoTagRepo
-        , ConnectorTagRepository connectorTagRepo)
+    public GeoTagsController(GeoTagRepository geoTagRepo, ConnectorTagRepository connectorTagRepo)
     {
-        _context = context;
         _geoTagRepo = geoTagRepo;
         _connectorTagRepo = connectorTagRepo;
     }
 
-    // GET: GeoTags
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
+    {
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
+        }
+        return View(_geoTagRepo.GetAll());
+    }
+
+    public IActionResult Details(Guid id)
     {
         if (!CheckAuthentication())
         {
             return RedirectToAction("Login", "Admin");
         }
 
-        return View(await _context.GeoTags.ToListAsync());
-    }
-
-    // GET: GeoTags/Details/5
-    public async Task<IActionResult> Details(Guid? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
-        }
-
-        var geoTag = await _context.GeoTags
-            .FirstOrDefaultAsync(m => m.Id == id);
+        var geoTag = _geoTagRepo.Get(id);
         if (geoTag == null)
         {
             return NotFound();
@@ -51,28 +43,27 @@ public class GeoTagsController : Controller
         return View(geoTag);
     }
 
-    // GET: GeoTags/Edit/5
-    public async Task<IActionResult> Edit(Guid? id)
+    public IActionResult Edit(Guid id)
     {
-        if (id == null)
+        if (!CheckAuthentication())
         {
-            return NotFound();
+            return RedirectToAction("Login", "Admin");
         }
 
-        var geoTag = await _context.GeoTags.FindAsync(id);
+        var geoTag = _geoTagRepo.Get(id);
         if (geoTag == null)
         {
             return NotFound();
         }
 
-        List<GeoTag> geoTagMosaic = _geoTagRepo.GetAll();
-        var becomingsList = new List<string>();
+        var geoTagList = _geoTagRepo.GetAll();
+        var connectorTagList = _connectorTagRepo.GetAll();
+        var becomingsList = geoTagList!.SelectMany(m => m.Becomings!).Distinct().ToList();
 
-        becomingsList = geoTagMosaic.SelectMany(m => m.Becomings).Distinct().ToList();
-        var connectors = _connectorTagRepo.GetAll();
-
-        var becomingsSelectListItems = becomingsList.Select(b => new SelectListItem { Value = b, Text = b }).ToList();
-        var connectorsSelectList = connectors
+        var becomingsSelectListItems = becomingsList
+            .Select(b => new SelectListItem { Value = b, Text = b })
+            .ToList();
+        var connectorsSelectList = connectorTagList!
             .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
             .ToList();
 
@@ -82,94 +73,68 @@ public class GeoTagsController : Controller
         return View(geoTag);
     }
 
-    // POST: GeoTags/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(Guid id, [Bind("Id,Title,Content,Becomings,PdfFilePath,HasAudio,AudioFilePath")] GeoTag geoTag, string[] ConnectorTags)
+    public IActionResult Edit(Guid id, [Bind("Id,Title,Content,Becomings,PdfFilePath,AudioFilePath")] GeoTag geoTagInput, string[] connectorTags)
     {
-        if (id != geoTag.Id)
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
+        }
+
+        if (id != geoTagInput.Id)
+        {
+            return NotFound();
+        }
+        if (!ModelState.IsValid)
+        {
+            return View(geoTagInput);
+        }
+
+        var geoTagDb = _geoTagRepo.Get(id);
+        if (geoTagDb == null)
         {
             return NotFound();
         }
 
-        if (ModelState.IsValid)
+        // Unsure if GeoTags are supposed to have becomings and connectors
+        if (geoTagInput.Becomings != null && geoTagInput.Becomings.Count > 0 && !string.IsNullOrEmpty(geoTagInput.Becomings[0]?.Trim()))
         {
-            try
-            {
-                var GeoTag = await _context.GeoTags
-                    .Include(m => m.ConnectorTags)
-                    .FirstOrDefaultAsync(m => m.Id == id);
+            geoTagDb.Becomings ??= [];
 
-                if (GeoTag == null)
-                {
-                    return NotFound();
-                }
+            var data = JsonSerializer.Deserialize<List<ValueContainer>>(geoTagInput.Becomings[0]);
 
-                if (geoTag.Becomings != null && geoTag.Becomings.Count > 0 && !string.IsNullOrEmpty(geoTag.Becomings[0]?.Trim()))
-                {
-                    GeoTag.Becomings ??= [];
+            // Extract the "value" field from each object and collect into a list
+            List<string> valuesList = [];
+            valuesList.AddRange(from item in data select item.value);
 
-                    List<ValueContainer>? data = JsonSerializer.Deserialize<List<ValueContainer>>(geoTag.Becomings[0]);
-
-                    // Extract the "value" field from each object and collect into a list
-                    List<string> valuesList = [];
-                    valuesList.AddRange(from item in data
-                                        select item.value);
-
-                    GeoTag.Becomings = valuesList;
-
-
-                }
-                if (ConnectorTags != null)
-                {
-                    GeoTag.ConnectorTags.Clear();
-                    foreach (var tagId in ConnectorTags)
-                    {
-                        var connectorTag = await _context.ConnectorTags.FindAsync(Guid.Parse(tagId));
-                        if (connectorTag != null)
-                        {
-                            GeoTag.ConnectorTags.Add(connectorTag);
-                        }
-                    }
-                }
-
-                GeoTag.Title = geoTag.Title;
-                GeoTag.Content = geoTag.Content;
-                GeoTag.PdfFilePath = geoTag.PdfFilePath;
-                GeoTag.AudioFilePath = geoTag.AudioFilePath;
-                GeoTag.Becomings = geoTag.Becomings;
-
-                _context.Update(GeoTag);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GeoTagExists(geoTag.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Index));
+            geoTagDb.Becomings = valuesList;
         }
-        return View(geoTag);
+        //if (connectorTags != null)
+        //{
+        //    geoTagDb.ConnectorTags!.Clear();
+        //    foreach (var tagId in connectorTags)
+        //    {
+        //        var connectorTag = await _context.ConnectorTags.FindAsync(Guid.Parse(tagId));
+        //        if (connectorTag != null)
+        //        {
+        //            geoTagDb.ConnectorTags.Add(connectorTag);
+        //        }
+        //    }
+        //}
+        _geoTagRepo.Update(geoTagInput);
+
+        return RedirectToAction(nameof(Index));
     }
 
-    // GET: GeoTags/Delete/5
-    public async Task<IActionResult> Delete(Guid? id)
+    public IActionResult Delete(Guid id)
     {
-        if (id == null)
+        if (!CheckAuthentication())
         {
-            return NotFound();
+            return RedirectToAction("Login", "Admin");
         }
 
-        var geoTag = await _context.GeoTags
-            .FirstOrDefaultAsync(m => m.Id == id);
+        var geoTag = _geoTagRepo.Get(id);
         if (geoTag == null)
         {
             return NotFound();
@@ -178,28 +143,29 @@ public class GeoTagsController : Controller
         return View(geoTag);
     }
 
-    // POST: GeoTags/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(Guid id)
+    public IActionResult DeleteConfirmed(Guid id)
     {
-        var geoTag = await _context.GeoTags.FindAsync(id);
-        if (geoTag != null)
+        if (!CheckAuthentication())
         {
-            _context.GeoTags.Remove(geoTag);
+            return RedirectToAction("Login", "Admin");
         }
 
-        await _context.SaveChangesAsync();
+        var geoTag = _geoTagRepo.Get(id);
+        if (geoTag == null)
+        {
+            return NotFound();
+        }
+        _geoTagRepo.Delete(id);
+
         return RedirectToAction(nameof(Index));
     }
 
-    private bool GeoTagExists(Guid id)
-    {
-        return _context.GeoTags.Any(e => e.Id == id);
-    }
+    private bool GeoTagExists(Guid id) => _geoTagRepo.Get(id) != null;
+
     public bool CheckAuthentication()
     {
         return HttpContext.Session.GetString("Username") != null;
     }
-
 }
