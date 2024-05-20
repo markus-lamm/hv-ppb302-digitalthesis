@@ -10,76 +10,73 @@
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
 <div class="admintable">
-<h1>Edit</h1>
-
-<h4>MolarMosaic</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Edit">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" />
-            <div class="form-group">
-                <label asp-for="Title" class="control-label"></label>
-                <input asp-for="Title" class="form-control" />
-                <span asp-validation-for="Title" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                    <label asp-for="Content" class="control-label"></label>
-                    <input type="hidden" id="hiddeninput" asp-for="Content" class="form-control" />
-                    <div class="editor-layout">
-                        <div id="editortest">
-                            @Html.Raw(Model.Content);
+    <h1>Edit</h1>
+    <h4>MolarMosaic</h4>
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <form asp-action="Edit">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Id" />
+                <div class="form-group">
+                    <label asp-for="Title" class="control-label"></label>
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                        <label asp-for="Content" class="control-label"></label>
+                        <input type="hidden" id="hiddeninput" asp-for="Content" class="form-control" />
+                        <div class="editor-layout">
+                            <div id="editortest">
+                                @Html.Raw(Model.Content)
+                            </div>
                         </div>
-                    </div>
-                    <span asp-validation-for="Content" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AssemblageTagId" class="control-label"></label>
-                @Html.DropDownListFor(model => model.AssemblageTagId, assemblageTags, "Select an Assemblage Tag", new { @class = "form-control" })
-                <span asp-validation-for="AssemblageTagId" class="text-danger"></span><br />
-            </div>
-            <div class="form-group">
-                    <label asp-for="Becomings" class="control-label"></label>
-                    <input value="" data-tags="@string.Join(',', Model.Becomings)" asp-for="Becomings" class="form-control inputbecomings" multiple="multiple"></input>
-            </div>
-            <div class="form-group">
-                <label asp-for="ConnectorTags" class="control-label"></label>
-                @foreach (var item in ConnectorTags)
-                {
-                    <input type="checkbox" class="form-check-input" id="@item.Value" name="ConnectorTags" value="@item.Value" @(item.Selected ? "checked=\"checked\"" : "") />
-                    <label class="form-check-label" for="@item.Value">@item.Text</label>
-                }
-            </div>
-            <div class="form-group">
-                <label asp-for="KaleidoscopeTags" class="control-label"></label>
-                @foreach (var item in KaleidoscopeTags)
-                {
-                    <input type="checkbox" class="form-check-input" id="@item.Value" name="KaleidoscopeTags" value="@item.Value" @(item.Selected ? "checked=\"checked\"" : "") />
-                    <label class="form-check-label" for="@item.Value">@item.Text</label>
-                }
-            </div>
-            <div class="form-group">
-                <label asp-for="PdfFilePath" class="control-label"></label>
-                <input asp-for="PdfFilePath" class="form-control" />
-                <span asp-validation-for="PdfFilePath" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="AudioFilePath" class="control-label"></label>
-                <input asp-for="AudioFilePath" class="form-control" />
-                <span asp-validation-for="AudioFilePath" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+                        <span asp-validation-for="Content" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AssemblageTagId" class="control-label"></label>
+                    @Html.DropDownListFor(model => model.AssemblageTagId, assemblageTags, "Select an Assemblage Tag", new { @class = "form-control" })
+                    <span asp-validation-for="AssemblageTagId" class="text-danger"></span><br />
+                </div>
+                <div class="form-group">
+                        <label asp-for="Becomings" class="control-label"></label>
+                        <input value="" data-tags="@string.Join(',', Model.Becomings!)" asp-for="Becomings" class="form-control inputbecomings" multiple="multiple"></input>
+                </div>
+                <div class="form-group">
+                    <label asp-for="ConnectorTags" class="control-label"></label>
+                    @foreach (var item in ConnectorTags!)
+                    {
+                        <input type="checkbox" class="form-check-input" id="@item.Value" name="ConnectorTags" value="@item.Value" @(item.Selected ? "checked=\"checked\"" : "") />
+                        <label class="form-check-label" for="@item.Value">@item.Text</label>
+                    }
+                </div>
+                <div class="form-group">
+                    <label asp-for="KaleidoscopeTags" class="control-label"></label>
+                    @foreach (var item in KaleidoscopeTags!)
+                    {
+                        <input type="checkbox" class="form-check-input" id="@item.Value" name="KaleidoscopeTags" value="@item.Value" @(item.Selected ? "checked=\"checked\"" : "") />
+                        <label class="form-check-label" for="@item.Value">@item.Text</label>
+                    }
+                </div>
+                <div class="form-group">
+                    <label asp-for="PdfFilePath" class="control-label"></label>
+                    <input asp-for="PdfFilePath" class="form-control" />
+                    <span asp-validation-for="PdfFilePath" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="AudioFilePath" class="control-label"></label>
+                    <input asp-for="AudioFilePath" class="form-control" />
+                    <span asp-validation-for="AudioFilePath" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+            </form>
+        </div>
     </div>
-</div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-
+    <div>
+        <a asp-action="Index">Back to List</a>
+    </div>
 </div>
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

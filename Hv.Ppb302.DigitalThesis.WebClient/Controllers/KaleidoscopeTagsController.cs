@@ -1,169 +1,85 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
 
-namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
+namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
+
+public class KaleidoscopeTagsController : Controller
 {
-    public class KaleidoscopeTagsController : Controller
+    private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
+
+    public KaleidoscopeTagsController(KaleidoscopeTagRepository kaleidoscopeTagRepo)
     {
-        private readonly DigitalThesisDbContext _context;
+        _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
+    }
 
-        public KaleidoscopeTagsController(DigitalThesisDbContext context)
+    public IActionResult Index()
+    {
+        if (!CheckAuthentication())
         {
-            _context = context;
+            return RedirectToAction("Login", "Admin");
+        }
+        return View(_kaleidoscopeTagRepo.GetAll());
+    }
+
+    public IActionResult Details(Guid id)
+    {
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
         }
 
-        // GET: KaleidoscopeTags
-        public async Task<IActionResult> Index()
+        var kaleidoscopeTag = _kaleidoscopeTagRepo.Get(id);
+        if (kaleidoscopeTag == null)
         {
-            if (!CheckAuthentication())
-            {
-                return RedirectToAction("Login", "Admin");
-            }
-
-            return View(await _context.KaleidoscopeTags.ToListAsync());
+            return NotFound();
         }
 
-        // GET: KaleidoscopeTags/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        return View(kaleidoscopeTag);
+    }
+
+    public IActionResult Edit(Guid id)
+    {
+        if (!CheckAuthentication())
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return RedirectToAction("Login", "Admin");
+        }
 
-            var kaleidoscopeTag = await _context.KaleidoscopeTags
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (kaleidoscopeTag == null)
-            {
-                return NotFound();
-            }
+        var kaleidoscopeTag = _kaleidoscopeTagRepo.Get(id);
+        if (kaleidoscopeTag == null)
+        {
+            return NotFound();
+        }
 
+        return View(kaleidoscopeTag);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(Guid id, [Bind("Id,Name")] KaleidoscopeTag kaleidoscopeTag)
+    {
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
+        }
+
+        if (id != kaleidoscopeTag.Id)
+        {
+            return NotFound();
+        }
+        if (!ModelState.IsValid)
+        {
             return View(kaleidoscopeTag);
         }
+        _kaleidoscopeTagRepo.Update(kaleidoscopeTag);
 
-        // GET: KaleidoscopeTags/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
+        return RedirectToAction(nameof(Index));
+    }
 
-        // POST: KaleidoscopeTags/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] KaleidoscopeTag kaleidoscopeTag)
-        {
-            if (ModelState.IsValid)
-            {
-                kaleidoscopeTag.Id = Guid.NewGuid();
-                _context.Add(kaleidoscopeTag);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(kaleidoscopeTag);
-        }
+    private bool KaleidoscopeTagExists(Guid id) => _kaleidoscopeTagRepo.Get(id) != null;
 
-        // GET: KaleidoscopeTags/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var kaleidoscopeTag = await _context.KaleidoscopeTags.FindAsync(id);
-            if (kaleidoscopeTag == null)
-            {
-                return NotFound();
-            }
-            return View(kaleidoscopeTag);
-        }
-
-        // POST: KaleidoscopeTags/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name")] KaleidoscopeTag kaleidoscopeTag)
-        {
-            if (id != kaleidoscopeTag.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(kaleidoscopeTag);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!KaleidoscopeTagExists(kaleidoscopeTag.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(kaleidoscopeTag);
-        }
-
-        // GET: KaleidoscopeTags/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var kaleidoscopeTag = await _context.KaleidoscopeTags
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (kaleidoscopeTag == null)
-            {
-                return NotFound();
-            }
-
-            return View(kaleidoscopeTag);
-        }
-
-        // POST: KaleidoscopeTags/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
-        {
-            var kaleidoscopeTag = await _context.KaleidoscopeTags.FindAsync(id);
-            if (kaleidoscopeTag != null)
-            {
-                _context.KaleidoscopeTags.Remove(kaleidoscopeTag);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool KaleidoscopeTagExists(Guid id)
-        {
-            return _context.KaleidoscopeTags.Any(e => e.Id == id);
-        }
-
-        public bool CheckAuthentication()
-        {
-            return HttpContext.Session.GetString("Username") != null;
-        }
-
+    public bool CheckAuthentication()
+    {
+        return HttpContext.Session.GetString("Username") != null;
     }
 }

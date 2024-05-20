@@ -1,168 +1,147 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.AspNetCore.Mvc;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
 
-namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
+namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
+
+public class AssemblageTagsController : Controller
 {
-    public class AssemblageTagsController : Controller
+    private readonly AssemblageTagRepository _assemblageTagRepo;
+
+    public AssemblageTagsController(AssemblageTagRepository assemblageTagRepo)
     {
-        private readonly DigitalThesisDbContext _context;
+        _assemblageTagRepo = assemblageTagRepo;
+    }
 
-        public AssemblageTagsController(DigitalThesisDbContext context)
+    public IActionResult Index()
+    {
+        if (!CheckAuthentication())
         {
-            _context = context;
+            return RedirectToAction("Login", "Admin");
+        }
+        return View(_assemblageTagRepo.GetAll());
+    }
+
+    public IActionResult Details(Guid id)
+    {
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
         }
 
-        // GET: AssemblageTags
-        public async Task<IActionResult> Index()
+        var assemblageTag = _assemblageTagRepo.Get(id);
+        if (assemblageTag == null)
         {
-            if (!CheckAuthentication())
-            {
-                return RedirectToAction("Login", "Admin");
-            }
-
-            return View(await _context.AssemblageTags.ToListAsync());
+            return NotFound();
         }
 
-        // GET: AssemblageTags/Details/5
-        public async Task<IActionResult> Details(Guid? id)
+        return View(assemblageTag);
+    }
+
+    public IActionResult Create()
+    {
+        if (!CheckAuthentication())
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
+            return RedirectToAction("Login", "Admin");
+        }
+        return View();
+    }
 
-            var assemblageTag = await _context.AssemblageTags
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (assemblageTag == null)
-            {
-                return NotFound();
-            }
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Create([Bind("Id,Name")] AssemblageTag assemblageTag)
+    {
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
+        }
 
+        if (!ModelState.IsValid)
+        {
             return View(assemblageTag);
         }
+        _assemblageTagRepo.Create(assemblageTag);
 
-        // GET: AssemblageTags/Create
-        public IActionResult Create()
+        return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult Edit(Guid id)
+    {
+        if (!CheckAuthentication())
         {
-            return View();
+            return RedirectToAction("Login", "Admin");
         }
 
-        // POST: AssemblageTags/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name")] AssemblageTag assemblageTag)
+        var assemblageTag = _assemblageTagRepo.Get(id);
+        if (assemblageTag == null)
         {
-            if (ModelState.IsValid)
-            {
-                assemblageTag.Id = Guid.NewGuid();
-                _context.Add(assemblageTag);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
+            return NotFound();
+        }
+
+        return View(assemblageTag);
+    }
+
+    [HttpPost]
+    [ValidateAntiForgeryToken]
+    public IActionResult Edit(Guid id, [Bind("Id,Name")] AssemblageTag assemblageTag)
+    {
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
+        }
+
+        if (id != assemblageTag.Id)
+        {
+            return NotFound();
+        }
+        if (!ModelState.IsValid)
+        {
             return View(assemblageTag);
         }
+        _assemblageTagRepo.Update(assemblageTag);
 
-        // GET: AssemblageTags/Edit/5
-        public async Task<IActionResult> Edit(Guid? id)
+        return RedirectToAction(nameof(Index));
+    }
+
+    public IActionResult Delete(Guid id)
+    {
+        if (!CheckAuthentication())
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var assemblageTag = await _context.AssemblageTags.FindAsync(id);
-            if (assemblageTag == null)
-            {
-                return NotFound();
-            }
-            return View(assemblageTag);
+            return RedirectToAction("Login", "Admin");
         }
 
-        // POST: AssemblageTags/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name")] AssemblageTag assemblageTag)
+        var assemblageTag = _assemblageTagRepo.Get(id);
+        if (assemblageTag == null)
         {
-            if (id != assemblageTag.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(assemblageTag);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!AssemblageTagExists(assemblageTag.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(assemblageTag);
+            return NotFound();
         }
 
-        // GET: AssemblageTags/Delete/5
-        public async Task<IActionResult> Delete(Guid? id)
+        return View(assemblageTag);
+    }
+
+    [HttpPost, ActionName("Delete")]
+    [ValidateAntiForgeryToken]
+    public IActionResult DeleteConfirmed(Guid id)
+    {
+        if (!CheckAuthentication())
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var assemblageTag = await _context.AssemblageTags
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (assemblageTag == null)
-            {
-                return NotFound();
-            }
-
-            return View(assemblageTag);
+            return RedirectToAction("Login", "Admin");
         }
 
-        // POST: AssemblageTags/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(Guid id)
+        var assemblageTag = _assemblageTagRepo.Get(id);
+        if (assemblageTag == null)
         {
-            var assemblageTag = await _context.AssemblageTags.FindAsync(id);
-            if (assemblageTag != null)
-            {
-                _context.AssemblageTags.Remove(assemblageTag);
-            }
-
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return NotFound();
         }
+        _assemblageTagRepo.Delete(id);
 
-        private bool AssemblageTagExists(Guid id)
-        {
-            return _context.AssemblageTags.Any(e => e.Id == id);
-        }
-        public bool CheckAuthentication()
-        {
-            return HttpContext.Session.GetString("Username") != null;
-        }
+        return RedirectToAction(nameof(Index));
+    }
 
+    private bool AssemblageTagExists(Guid id) => _assemblageTagRepo.Get(id) != null;
+
+    public bool CheckAuthentication()
+    {
+        return HttpContext.Session.GetString("Username") != null;
     }
 }

@@ -67,22 +67,6 @@ public class TestDataUtils
         _molecularMosaicRepo.Create(molecularMosaic);
     }
 
-    public void CreateGeoTagWithConnectorTag(string connectorTagId)
-    {
-        var connectorTag = FindConnectorTagById(connectorTagId);
-        if (connectorTag == null) { return; }
-
-        var random = new Random();
-        var randomNumber = random.Next(1, 1000);
-        var geoTag = new GeoTag
-        {
-            Title = "GeoTagTest" + randomNumber,
-        };
-
-        _geoTagRepo.Create(geoTag);
-        _geoTagRepo.AddConnectorTag(geoTag.Id, connectorTag.Id);
-    }
-
     public void CreateMolarMosaicWithConnectorTag(string connectorTagId)
     {
         var connectorTag = FindConnectorTagById(connectorTagId);
