@@ -95,7 +95,7 @@ public class AdminController : Controller
         }
 
         _userRepo.Update(user);
-        ViewBag.lyckad = "Lösenordet har ändrats";
+        ViewBag.Success = "Password has been changed";
         ViewBag.Username = user.Username;
 
         return View();

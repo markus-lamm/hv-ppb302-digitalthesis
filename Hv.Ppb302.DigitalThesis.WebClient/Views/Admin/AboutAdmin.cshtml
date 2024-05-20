@@ -4,17 +4,17 @@
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
 <div class="admintable">
-<form asp-controller="admin">
-    <input hidden asp-for="Id" />
-    <input hidden asp-for="Name" />
-    <label asp-for="Content" class="control-label"></label>
-    <input type="hidden" id="hiddeninput" asp-for="Content" class="form-control" />
-    <div class="editor-layout">
-        <div id="editortest">
-            @Html.Raw(Model.Content)
+    <form asp-controller="admin">
+        <input hidden asp-for="Id" />
+        <input hidden asp-for="Name" />
+        <label asp-for="Content" class="control-label"></label>
+        <input type="hidden" id="hiddeninput" asp-for="Content" class="form-control" />
+        <div class="editor-layout">
+            <div id="editortest">
+                @Html.Raw(Model.Content)
+            </div>
         </div>
-    </div>
-    <span asp-validation-for="Content" class="text-danger"></span>
-        <button type="submit">Spara about sidans innehåll</button>
-</form>
+        <span asp-validation-for="Content" class="text-danger"></span>
+        <button type="submit">Save</button>
+    </form>
 </div>
