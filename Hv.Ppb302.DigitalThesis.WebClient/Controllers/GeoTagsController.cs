@@ -78,41 +78,6 @@ public class GeoTagsController : Controller
         return RedirectToAction(nameof(Index));
     }
 
-    public IActionResult Delete(Guid id)
-    {
-        if (!CheckAuthentication())
-        {
-            return RedirectToAction("Login", "Admin");
-        }
-
-        var geoTag = _geoTagRepo.Get(id);
-        if (geoTag == null)
-        {
-            return NotFound();
-        }
-
-        return View(geoTag);
-    }
-
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public IActionResult DeleteConfirmed(Guid id)
-    {
-        if (!CheckAuthentication())
-        {
-            return RedirectToAction("Login", "Admin");
-        }
-
-        var geoTag = _geoTagRepo.Get(id);
-        if (geoTag == null)
-        {
-            return NotFound();
-        }
-        _geoTagRepo.Delete(id);
-
-        return RedirectToAction(nameof(Index));
-    }
-
     private bool GeoTagExists(Guid id) => _geoTagRepo.Get(id) != null;
 
     public bool CheckAuthentication()

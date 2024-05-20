@@ -90,9 +90,10 @@ public class MolarMosaicsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
+        ModelState.Remove("Becomings"); // Find a better way to handle this
         if (!ModelState.IsValid)
         {
-            return View(molarMosaic);
+            RedirectToAction(nameof(Index));
         }
 
         molarMosaic.ConnectorTags ??= [];

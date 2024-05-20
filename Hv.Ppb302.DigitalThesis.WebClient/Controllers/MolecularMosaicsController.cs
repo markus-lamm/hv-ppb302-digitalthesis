@@ -90,9 +90,10 @@ public class MolecularMosaicsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
+        ModelState.Remove("Becomings"); // Find a better way to handle this
         if (!ModelState.IsValid)
         {
-            return View(molecularMosaic);
+            RedirectToAction(nameof(Index));
         }
 
         molecularMosaic.ConnectorTags ??= [];

@@ -38,33 +38,6 @@ public class KaleidoscopeTagsController : Controller
         return View(kaleidoscopeTag);
     }
 
-    public IActionResult Create()
-    {
-        if (!CheckAuthentication())
-        {
-            return RedirectToAction("Login", "Admin");
-        }
-        return View();
-    }
-
-    [HttpPost]
-    [ValidateAntiForgeryToken]
-    public IActionResult Create([Bind("Id,Name")] KaleidoscopeTag kaleidoscopeTag)
-    {
-        if (!CheckAuthentication())
-        {
-            return RedirectToAction("Login", "Admin");
-        }
-
-        if (!ModelState.IsValid)
-        {
-            return View(kaleidoscopeTag);
-        }
-        _kaleidoscopeTagRepo.Create(kaleidoscopeTag);
-
-        return RedirectToAction(nameof(Index));
-    }
-
     public IActionResult Edit(Guid id)
     {
         if (!CheckAuthentication())
@@ -99,41 +72,6 @@ public class KaleidoscopeTagsController : Controller
             return View(kaleidoscopeTag);
         }
         _kaleidoscopeTagRepo.Update(kaleidoscopeTag);
-
-        return RedirectToAction(nameof(Index));
-    }
-
-    public IActionResult Delete(Guid id)
-    {
-        if (!CheckAuthentication())
-        {
-            return RedirectToAction("Login", "Admin");
-        }
-
-        var kaleidoscopeTag = _kaleidoscopeTagRepo.Get(id);
-        if (kaleidoscopeTag == null)
-        {
-            return NotFound();
-        }
-
-        return View(kaleidoscopeTag);
-    }
-
-    [HttpPost, ActionName("Delete")]
-    [ValidateAntiForgeryToken]
-    public IActionResult DeleteConfirmed(Guid id)
-    {
-        if (!CheckAuthentication())
-        {
-            return RedirectToAction("Login", "Admin");
-        }
-
-        var kaleidoscopeTag = _kaleidoscopeTagRepo.Get(id);
-        if (kaleidoscopeTag == null)
-        {
-            return NotFound();
-        }
-        _kaleidoscopeTagRepo.Delete(id);
 
         return RedirectToAction(nameof(Index));
     }
