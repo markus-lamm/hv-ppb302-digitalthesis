@@ -22,6 +22,11 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         // GET: AssemblageTags
         public async Task<IActionResult> Index()
         {
+            if (!CheckAuthentication())
+            {
+                return RedirectToAction("Login", "Admin");
+            }
+
             return View(await _context.AssemblageTags.ToListAsync());
         }
 
@@ -154,5 +159,10 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers
         {
             return _context.AssemblageTags.Any(e => e.Id == id);
         }
+        public bool CheckAuthentication()
+        {
+            return HttpContext.Session.GetString("Username") != null;
+        }
+
     }
 }
