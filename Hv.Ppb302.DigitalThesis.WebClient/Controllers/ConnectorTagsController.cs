@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
 
@@ -7,34 +6,30 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
 public class ConnectorTagsController : Controller
 {
-    private readonly DigitalThesisDbContext _context;
+    private readonly ConnectorTagRepository _connectorTagRepo;
 
-    public ConnectorTagsController(DigitalThesisDbContext context)
+    public ConnectorTagsController(ConnectorTagRepository connectorTagRepo)
     {
-        _context = context;
+        _connectorTagRepo = connectorTagRepo;
     }
 
-    // GET: ConnectorTags
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
+    {
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
+        }
+        return View(_connectorTagRepo.GetAll());
+    }
+
+    public IActionResult Details(Guid id)
     {
         if (!CheckAuthentication())
         {
             return RedirectToAction("Login", "Admin");
         }
 
-        return View(await _context.ConnectorTags.ToListAsync());
-    }
-
-    // GET: ConnectorTags/Details/5
-    public async Task<IActionResult> Details(Guid? id)
-    {
-        if (id == null)
-        {
-            return NotFound();
-        }
-
-        var connectorTag = await _context.ConnectorTags
-            .FirstOrDefaultAsync(m => m.Id == id);
+        var connectorTag = _connectorTagRepo.Get(id);
         if (connectorTag == null)
         {
             return NotFound();
@@ -43,90 +38,79 @@ public class ConnectorTagsController : Controller
         return View(connectorTag);
     }
 
-    // GET: ConnectorTags/Create
     public IActionResult Create()
     {
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
+        }
         return View();
     }
 
-    // POST: ConnectorTags/Create
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Create([Bind("Id,Name")] ConnectorTag connectorTag)
+    public IActionResult Create([Bind("Id,Name")] ConnectorTag connectorTag)
     {
-        if (ModelState.IsValid)
+        if (!CheckAuthentication())
         {
-            connectorTag.Id = Guid.NewGuid();
-            _context.Add(connectorTag);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Login", "Admin");
         }
-        return View(connectorTag);
+
+        if (!ModelState.IsValid)
+        {
+            return View(connectorTag);
+        }
+        _connectorTagRepo.Create(connectorTag);
+
+        return RedirectToAction(nameof(Index));
     }
 
-    // GET: ConnectorTags/Edit/5
-    public async Task<IActionResult> Edit(Guid? id)
+    public IActionResult Edit(Guid id)
     {
-        if (id == null)
+        if (!CheckAuthentication())
         {
-            return NotFound();
+            return RedirectToAction("Login", "Admin");
         }
 
-        var connectorTag = await _context.ConnectorTags.FindAsync(id);
+        var connectorTag = _connectorTagRepo.Get(id);
         if (connectorTag == null)
         {
             return NotFound();
         }
+
         return View(connectorTag);
     }
 
-    // POST: ConnectorTags/Edit/5
-    // To protect from overposting attacks, enable the specific properties you want to bind to.
-    // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> Edit(Guid id, [Bind("Id,Name")] ConnectorTag connectorTag)
+    public IActionResult Edit(Guid id, [Bind("Id,Name")] ConnectorTag connectorTag)
     {
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
+        }
+
         if (id != connectorTag.Id)
         {
             return NotFound();
         }
-
-        if (ModelState.IsValid)
+        if (!ModelState.IsValid)
         {
-            try
-            {
-                _context.Update(connectorTag);
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ConnectorTagExists(connectorTag.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-            return RedirectToAction(nameof(Index));
+            return View(connectorTag);
         }
-        return View(connectorTag);
+        _connectorTagRepo.Update(connectorTag);
+
+        return RedirectToAction(nameof(Index));
     }
 
-    // GET: ConnectorTags/Delete/5
-    public async Task<IActionResult> Delete(Guid? id)
+    public IActionResult Delete(Guid id)
     {
-        if (id == null)
+        if (!CheckAuthentication())
         {
-            return NotFound();
+            return RedirectToAction("Login", "Admin");
         }
 
-        var connectorTag = await _context.ConnectorTags
-            .FirstOrDefaultAsync(m => m.Id == id);
+        var connectorTag = _connectorTagRepo.Get(id);
         if (connectorTag == null)
         {
             return NotFound();
@@ -135,28 +119,29 @@ public class ConnectorTagsController : Controller
         return View(connectorTag);
     }
 
-    // POST: ConnectorTags/Delete/5
     [HttpPost, ActionName("Delete")]
     [ValidateAntiForgeryToken]
-    public async Task<IActionResult> DeleteConfirmed(Guid id)
+    public IActionResult DeleteConfirmed(Guid id)
     {
-        var connectorTag = await _context.ConnectorTags.FindAsync(id);
-        if (connectorTag != null)
+        if (!CheckAuthentication())
         {
-            _context.ConnectorTags.Remove(connectorTag);
+            return RedirectToAction("Login", "Admin");
         }
 
-        await _context.SaveChangesAsync();
+        var connectorTag = _connectorTagRepo.Get(id);
+        if (connectorTag == null)
+        {
+            return NotFound();
+        }
+        _connectorTagRepo.Delete(id);
+
         return RedirectToAction(nameof(Index));
     }
 
-    private bool ConnectorTagExists(Guid id)
-    {
-        return _context.ConnectorTags.Any(e => e.Id == id);
-    }
+    private bool ConnectorTagExists(Guid id) => _connectorTagRepo.Get(id) != null;
+
     public bool CheckAuthentication()
     {
         return HttpContext.Session.GetString("Username") != null;
     }
-
 }

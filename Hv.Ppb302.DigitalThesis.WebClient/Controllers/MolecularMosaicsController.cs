@@ -113,7 +113,7 @@ public class MolecularMosaicsController : Controller
                 // Extract the "value" field from each object and collect into a list
                 List<string> valuesList = [];
                 valuesList.AddRange(from item in data
-                                    select item.value);
+                                    select item.Value);
 
                 molecularMosaic.Becomings = valuesList;
 
@@ -216,7 +216,7 @@ public class MolecularMosaicsController : Controller
                     // Extract the "value" field from each object and collect into a list
                     List<string> valuesList = [];
                     valuesList.AddRange(from item in data
-                                        select item.value);
+                                        select item.Value);
 
                     molecularMosaic.Becomings = valuesList;
 
@@ -374,10 +374,5 @@ public class MolecularMosaicsController : Controller
     public bool CheckAuthentication()
     {
         return HttpContext.Session.GetString("Username") != null;
-    }
-
-    public class ValueContainer
-    {
-        public string value { get; set; }
     }
 }

@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
-using static Hv.Ppb302.DigitalThesis.WebClient.Controllers.MolecularMosaicsController;
 using System.Text.Json;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
@@ -106,22 +105,22 @@ public class GeoTagsController : Controller
 
             // Extract the "value" field from each object and collect into a list
             List<string> valuesList = [];
-            valuesList.AddRange(from item in data select item.value);
+            valuesList.AddRange(from item in data select item.Value);
 
             geoTagDb.Becomings = valuesList;
         }
-        //if (connectorTags != null)
-        //{
-        //    geoTagDb.ConnectorTags!.Clear();
-        //    foreach (var tagId in connectorTags)
-        //    {
-        //        var connectorTag = await _context.ConnectorTags.FindAsync(Guid.Parse(tagId));
-        //        if (connectorTag != null)
-        //        {
-        //            geoTagDb.ConnectorTags.Add(connectorTag);
-        //        }
-        //    }
-        //}
+        if (connectorTags != null)
+        {
+            geoTagDb.ConnectorTags!.Clear();
+            foreach (var tagId in connectorTags)
+            {
+                var connectorTag = _connectorTagRepo.Get(Guid.Parse(tagId));
+                if (connectorTag != null)
+                {
+                    geoTagDb.ConnectorTags.Add(connectorTag);
+                }
+            }
+        }
         _geoTagRepo.Update(geoTagInput);
 
         return RedirectToAction(nameof(Index));

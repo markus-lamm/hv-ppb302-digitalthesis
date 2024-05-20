@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
-using static Hv.Ppb302.DigitalThesis.WebClient.Controllers.MolecularMosaicsController;
 using System.Text.Json;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
@@ -113,7 +112,7 @@ public class MolarMosaicsController : Controller
                 // Extract the "value" field from each object and collect into a list
                 List<string> valuesList = [];
                 valuesList.AddRange(from item in data
-                                    select item.value);
+                                    select item.Value);
 
                 molarMosaic.Becomings = valuesList;
             }
@@ -214,7 +213,7 @@ public class MolarMosaicsController : Controller
                     // Extract the "value" field from each object and collect into a list
                     List<string> valuesList = [];
                     valuesList.AddRange(from item in data
-                                        select item.value);
+                                        select item.Value);
 
                     molarMosaic.Becomings = valuesList;
 
