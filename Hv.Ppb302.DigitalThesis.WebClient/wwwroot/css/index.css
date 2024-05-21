@@ -1,1 +1,66 @@
-﻿
+﻿body {
+    background-image: url(../images/background/image.png);
+    background-size: cover;
+    height: 1000px;
+    width: 1920px;
+    overflow: hidden;
+}
+.Content {
+    display: flex;
+    flex-direction: row;
+    height: 1000px;
+    width: 100%;
+}
+.Explorefield {
+    height: 100%;
+    width: 30%;
+    text-align: left;
+    display: flex;
+    justify-content: center;
+}
+.btn {
+    color: white;
+    height: 90px;
+    width: 300px;
+    background-color: rgba(123, 141, 163, 1);
+    position: absolute;
+    bottom: 35%;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 30px;
+}
+
+.logo {
+    margin-top: 80px;
+    width: 500px;
+    height: auto;
+    margin-left: 50px;
+}
+
+.nav-list {
+    display: none;
+    flex: none;
+}
+h1 {
+    text-align: center;
+    
+}
+
+.Textfield {
+    overflow-y: scroll;
+    height: 100%;
+    width: 100%;
+    background: white;
+    text-align: center;
+}
+.Textcontent {
+    height: 100%;
+    width: 70%;
+}
+p {
+    padding: 35px;
+    padding-left: 50px;
+    padding-right: 50px;
+}
