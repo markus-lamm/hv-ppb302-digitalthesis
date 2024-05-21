@@ -6,67 +6,37 @@
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
 
-<div class="admintables">
-    <div class="containerss">
-        <div class="box">
-            <a href="Molarmosaics/index">
-                <img src="icon1.png" alt="Icon 1">
-                <p>Molar Mosaics</p>
-            </a>
-        </div>
-        <div class="box">
-            <a href="Molecularmosaics/index">
-                <img src="icon2.png" alt="Icon 2">
-                <p>Molecular Mosaics</p>
-            </a>
-        </div>
-        <div class="box">
-            <a href="Geotags/index">
-                <img src="icon3.png" alt="Icon 3">
-                <p>GeoTags</p>
-            </a>
-        </div>
-        <div class="box">
-            <a href="kaleidoscopetags/index">
-                <img src="icon4.png" alt="Icon 4">
-                <p>KaleidoscopeTags</p>
-            </a>
-        </div>
-        <div class="box">
-            <a href="connectortags/index">
-                <img src="icon5.png" alt="Icon 5">
-                <p>ConnectorTags</p>
-            </a>
-        </div>
-        <div class="box">
-            <a href="admin/fileview">
-                <img src="icon6.png" alt="Icon 6">
-                <p>Uploads</p>
-            </a>
-        </div>
-        <div class="box">
-            <a href="admin/profile">
-                <img src="icon6.png" alt="Icon 6">
-                <p>Change Password</p>
-            </a>
-        </div>
-        <div class="box">
-            <a href="AssemblageTags/index">
-                <img src="icon6.png" alt="Icon 6">
-                <p>AssemblageTags</p>
-            </a>
-        </div>
-        <div class="box">
-            <a href="admin/aboutadmin">
-                <img src="icon6.png" alt="Icon 6">
-                <p>Edit Aboutpage</p>
-            </a>
-        </div>
-        <div class="box">
-            <a href="admin/startadmin">
-                <img src="icon6.png" alt="Icon 6">
-                <p>Edit Startpage</p>
-            </a>
-        </div>
+<div class="admin-container">
+    <div class="options-container">
+        <a class="menu-option" asp-controller="Molarmosaics" asp-action="Index">
+            Molar Mosaics
+        </a>
+        <a class="menu-option" asp-controller="Molecularmosaics" asp-action="Index">
+            Molecular Mosaics
+        </a>
+        <a class="menu-option" asp-controller="Geotags" asp-action="Index">
+            Geo Tags
+        </a>
+        <a class="menu-option" asp-controller="Kaleidoscopetags" asp-action="Index">
+            Kaleidoscope Tags
+        </a>
+        <a class="menu-option" asp-controller="Connectortags" asp-action="Index">
+            Connector Tags
+        </a>
+        <a class="menu-option" asp-controller="Admin" asp-action="FileView">
+            Uploads
+        </a>
+        <a class="menu-option" asp-controller="Admin" asp-action="Profile">
+            Change Password
+        </a>
+        <a class="menu-option" asp-controller="AssemblageTags" asp-action="Index">
+            Assemblage Tags
+        </a>
+        <a class="menu-option" asp-controller="Admin" asp-action="AboutAdmin">
+            Edit Aboutpage
+        </a>
+        <a class="menu-option" asp-controller="Admin" asp-action="StartAdmin">
+            Edit Startpage
+        </a>
     </div>
 </div>

@@ -20,7 +20,6 @@ public class Program
         builder.Services.AddScoped<MolecularMosaicRepository>();
         builder.Services.AddScoped<KaleidoscopeTagRepository>();
         builder.Services.AddScoped<UserRepository>();
-        builder.Services.AddScoped<TestDataUtils>();
         builder.Services.AddScoped<PageRepository>();
         builder.Services.AddScoped<AssemblageTagRepository>();
 

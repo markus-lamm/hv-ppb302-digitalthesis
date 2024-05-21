@@ -1,22 +1,27 @@
 ﻿@model User
+@{
+    ViewData["Title"] = "Admin";
+}
 
 <head>
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
-<div class="admintable">
+<div class="admin-container">
+    <div class="profile-container">
+        <h2>Change Password for @ViewBag.Username</h2>
+        <form asp-controller="admin">
+            <input hidden asp-for="@Model.Username" value="@ViewBag.Username" />
+            <label asp-for="@Model.Password"></label>
+            <input asp-for="@Model.Password" />
 
-    <h3>Change Password for @ViewBag.Username</h3>
-
-    <form asp-controller="admin">
-        <input hidden asp-for="@Model.Username" value="@ViewBag.Username" />
-        <label asp-for="@Model.Password"></label>
-        <input asp-for="@Model.Password"/>
-
-        <button type="submit">Save</button>
-    </form>
-
-    @if (!String.IsNullOrEmpty(ViewBag.Success))
-    {
-        <p>@ViewBag.Success</p>
-    }
+            <div class="form-btn-container">
+                <a class="form-return-btn" asp-controller="Admin" asp-action="Index">Return</a>
+                <button class="form-submit-btn" type="submit">Save</button>
+            </div>
+        </form>
+        @if (!String.IsNullOrEmpty(ViewBag.Success))
+        {
+            <p>@ViewBag.Success</p>
+        }
+    </div>
 </div>

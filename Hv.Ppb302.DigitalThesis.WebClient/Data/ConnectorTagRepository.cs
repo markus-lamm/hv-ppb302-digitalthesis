@@ -99,24 +99,4 @@ public class ConnectorTagRepository : IRepository<ConnectorTag>
             throw new Exception("Internal Server Error");
         }
     }
-
-    public void DeleteAllByName(string name)
-    {
-        try
-        {
-            var existingConnectorTags = _dbContext.ConnectorTags
-                .Where(g => g.Name!.Contains(name))
-                .ToList();
-            if (existingConnectorTags.Count == 0)
-            {
-                return;
-            }
-            _dbContext.ConnectorTags.RemoveRange(existingConnectorTags);
-            _dbContext.SaveChanges();
-        }
-        catch (Exception)
-        {
-            throw new Exception("Internal Server Error");
-        }
-    }
 }

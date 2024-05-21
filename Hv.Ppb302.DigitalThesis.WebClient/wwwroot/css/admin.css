@@ -1,12 +1,196 @@
-﻿.admincontainer {
+﻿body {
+    background-image: url(../images/background/image.png);
+    background-size: cover;
+    background-attachment: fixed;
+}
+
+.admin-container {
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100vw;
-    background-image: url(../images/background/image.png);
-    background-size: cover;
 }
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.options-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.menu-option {
+    background-color: white;
+    border: 3px solid #28398a;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: calc(50% - 5rem);
+    height: 10vh;
+    margin: 0.5rem;
+    font-size: 1.5rem;
+    text-decoration: none;
+}
+
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 1rem;
+    border: 3px solid #28398a;
+}
+
+.admin-form-large {
+    display: flex;
+    margin-top: 20rem;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    padding: 1rem;
+    border: 3px solid #28398a;
+}
+
+.form-table-row {
+    background-color: #ccc;
+}
+
+.form-btn-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.form-return-btn {
+    background-color: #28398a;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    margin: 1rem;
+    font-size: 1.5rem;
+    width: 10rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    text-decoration: none;
+}
+
+    .form-return-btn:hover {
+        background-color: #1a2e6c;
+    }
+
+.form-submit-btn {
+    background-color: #28398a;
+    color: white;
+    border: none;
+    padding: 0.5rem;
+    margin: 1rem;
+    font-size: 1.5rem;
+    width: 10rem;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+    .form-submit-btn:hover {
+        background-color: #1a2e6c;
+    }
+
+.fileview-container {
+    padding: 3rem;
+    padding-top: 10vh;
+}
+
+.file-container {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+}
+
+.file-card {
+    width: var(--cardWidth);
+    height: var(--cardHeight);
+    border: 2px solid #28398a;
+    margin-top: var(--cardMargin);
+    margin-right: var(--cardMargin);
+    background: #fff;
+    box-sizing: border-box;
+    position: relative;
+}
+
+    .file-card img {
+        height: 100%;
+        width: 100%;
+    }
+
+.file-options {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.file-options-btns {
+    display: flex;
+    flex-direction: row;
+    padding: 0.5rem;
+}
+
+.file-card-title {
+    text-align: center;
+    font-size: 1rem;
+    margin-top: 0.5rem;
+    background-color: white;
+    border: 2px solid #ccc;
+    margin: 0.5rem;
+}
+
+.file-heading {
+    display: flex;
+    align-items: center;
+}
+
+.file-upload {
+    background-color: white;
+    border: 3px solid #ccc;
+    padding: 1rem;
+    width: 25%;
+    margin: 0.5rem;
+    margin-top: 1.5rem;
+}
+
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border: 3px solid #28398a;
+    width: 50%;
+    height: 30%;
+}
+
+#editortest {
+    height: 60vh;
+}
+
+.editor-layout {
+    width: 80vw;
+}
+
+
+
+
+
+
 .admintables {
     background-image: url(../images/background/image.png);
     background-size: cover;
@@ -17,9 +201,7 @@
     padding-top: 15vh;
     overflow-x: hidden;
 }
-body {
-    overflow-x: hidden;
-}
+
 .admintable {
     display: flex;
     flex-direction: column;
@@ -28,75 +210,22 @@ body {
     padding-top: 15vh;
     overflow-x: hidden;
 }
+
 .createform{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 }
-.editor-layout {
-    width:70vw;
-
-}
-#editortest {
-    height: 40rem;
-}
 
 td {
     max-width: 50vw
 }
-.fileview {
-    display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-}
 
-.card-body img{
-    height: 80%;
-    width: 100%;
-}
 :root {
     --cardWidth: 240px;
     --cardHeight: 280px;
     --cardMargin: 16px;
-}
-
-.card {
-    width: var(--cardWidth);
-    height: var(--cardHeight);
-    margin: var(--cardMargin);
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    background: #fff;
-    box-sizing: border-box;
-}
-
-.card-title{
-    text-align: center;
-}
-
-.containerss {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    background-color: #1E3A60;
-    padding: 20px;
-    border: 2px solid #9B7FB4;
-}
-
-.box {
-    background-color: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 20px;
-    margin: 10px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: calc(50% - 40px);
-    height: 150px;
-    box-sizing: border-box;
 }
 
 .box img {
