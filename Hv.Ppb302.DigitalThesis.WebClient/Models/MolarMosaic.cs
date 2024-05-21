@@ -8,7 +8,8 @@ public class MolarMosaic
     public List<ConnectorTag>? ConnectorTags { get; set; } = [];
     public List<string>? Becomings { get; set; } = [];
     public List<KaleidoscopeTag>? KaleidoscopeTags { get; set; } = [];
+    public Guid? AssemblageTagId { get; set; }
+    public AssemblageTag? AssemblageTag { get; set; }
     public string? PdfFilePath { get; set; }
-    public bool? HasAudio { get; set; }
     public string? AudioFilePath { get; set; }
 }

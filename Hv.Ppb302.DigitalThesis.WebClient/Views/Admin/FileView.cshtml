@@ -1,25 +1,28 @@
 ﻿@model List<FileViewViewModel>
-@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
+    ViewData["Title"] = "Admin";
 }
+
 <head>
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
-<div class="admincontainers">
-    <div class="admintable">
-        <a href="/admin/fileupload">
-            <p>klicka för att ladda upp fil</p>
-        </a>
-    </div>
-
-    <div class="fileview">
-
-        @foreach (var item in Model)
-        {
-            <div class="card">
-                <div class="card-body">
+<div class="admin-container">
+    <div class="fileview-container">
+        <div class="file-heading">
+            <a class="form-return-btn" asp-controller="Admin" asp-action="Index">Return</a>
+            <div class="file-upload">
+                @using (Html.BeginForm("FileUpload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+                {
+                    <label for="files" class="btn">Choose a file</label>
+                    <input type="file" name="file" id="files" />
+                    <input type="submit" value="FileUpload" />
+                }
+            </div>
+        </div>
+        <div class="file-container">
+            @foreach (var item in Model)
+            {
+                <div class="file-card">
                     @switch (item.Category)
                     {
                         case MimeDetective.Storage.Category.Document:
@@ -34,13 +37,19 @@
                         default:
                             break;
                     }
-                    <input id="fileurl" hidden data-tags="@item.FileUrl"/>
-                    <h5 class="card-title">@item.File</h5>
-                    <button onclick="copyFunction()">Kopiera Länk</button>
-
-                    <!-- Add more details or buttons as needed -->
+                    <input id="fileurl" hidden data-tags="@item.FileUrl" />
+                    <div class="file-options">
+                        <div class="file-options-btns">
+                            <button onclick="copyFunction()">Copy Link</button>
+                            <form method="post" asp-action="FileView" asp-controller="Admin">
+                                <input type="hidden" name="FileName" value="@item.File" />
+                                <button type="submit">Delete</button>
+                            </form>
+                        </div>
+                        <div class="file-card-title">@item.File</div>
+                    </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     </div>
 </div>

@@ -84,8 +84,8 @@
 }
 
 .smallCircle {
-    width: 5rem;
-    height: 5rem;
+    width: 6rem;
+    height: 6rem;
     border-radius: 50%;
     position: absolute;
     transition: 1.8s ease;
@@ -123,8 +123,8 @@
         }
 
 .mosaic-highlight-effect {
-    width: 7rem;
-    height: 7rem;
+    width: 10rem;
+    height: 10rem;
     transition: 1.8s ease;
     -webkit-filter: drop-shadow(0 0 5px #222);
     filter: drop-shadow(0 0 5px #222);
