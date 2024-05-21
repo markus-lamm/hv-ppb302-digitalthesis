@@ -28,7 +28,7 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
-        return View();
+        return View(_pageRepository.GetByName("Start"));
     }
 
     public IActionResult About()
