@@ -2,60 +2,72 @@
 @{
     var viewModel = Model;
     ViewData["Title"] = viewModel.Title;
+    string fileName = System.IO.Path.GetFileName(Model.PdfFilePath)!;
 }
 
 <head>
     <link rel="stylesheet" href="~/css/detail.css" asp-append-version="true" />
 </head>
 <div class="detail-container">
-
-    <div id="kolumn1">
-        <p class="title">@viewModel.Title</p>
-        <p class="tags">Connectors:</p>
+    <div class="info-container">
+        <p class="info-title">@viewModel.Title</p>
+        <p class="tags-title">Assemblage:</p>
+        @if (viewModel.AssemblageTag == null)
+        {
+            <p><em class="tags-content">No Assemblage</em></p>
+        }
+        else
+        {
+            <p><em class="tags-content">@Model.AssemblageTag</em></p>
+        }
+        <p class="tags-title">Connectors:</p>
         @if (viewModel.ConnectorTags.Count == 0)
         {
-            <p class="tags">No connectors</p>
+            <p><em class="tags-content">No connectors</em></p>
         }
         else
         {
             foreach (var tag in viewModel.ConnectorTags)
             {
-                <p class="tags">@tag.Name</p>
+                <p><em class="tags-content">@tag.Name</em></p>
             }
         }
-        <p class="tags">Becomings:</p>
+        <p class="tags-title">Becomings:</p>
         @if (viewModel.Becomings.Count == 0)
         {
-            <p class="tags">No becomings</p>
+            <p><em class="tags-content">No becomings</em></p>
         }
         else
         {
             foreach (var tag in viewModel.Becomings)
             {
-                <p class="tags">@tag</p>
+                <p><em class="tags-content">@tag</em></p>
             }
         }
-        <div class="music-controls">
-            <img class="pdf_icon" src="~/images/icons/favicon.ico"  />
-            <img class="play_icon" src="~/images/icons/play_icon.png" />
-            <audio id="audio-player" src="https://files.musopen.org/recordings/6699358c-9a7b-4dc3-a3b9-331a532d1004.mp3?filename=The+Magic+Flute,+K.+620+-+Overture.mp3&amp;preview"></audio>
+        <div class="content-options">
+            @if (!String.IsNullOrWhiteSpace(@Model.PdfFilePath))
+            {
+                <div class="content-options-btn">
+                    <a id="saveBtn" data-tags="@Model.PdfFilePath">
+                        <img class="pdf_icon" src="~/images/icons/favicon.ico" />
+                    </a>
+                </div>
+            }
+            @if (!String.IsNullOrWhiteSpace(@Model.AudioFilePath))
+            {
+                <div class="content-options-btn">
+                    <img id="audio-icon" class="play_icon" src="~/images/icons/play_icon.png" />
+                    <audio id="audio-player" src="@Model.AudioFilePath"></audio>
+                </div>
+            }
         </div>
     </div>
-            
-    <div id="kolumn2">
-        <div class="column3_container">
-            <div id="kolumn3">
-                <p class="sections">Section A</p>
-                <p class="sections">Section 2</p>
-                <p class="sections">Section 3</p>
-                <p class="sections">Section 3.4</p>
-            </div>
-            <div class="text" id="text1">
-                <h1>@viewModel.Title</h1>
-                <p>
-                    @Html.Raw(viewModel.Content)
-                </p>
-            </div>
+    <div class="content-container">
+        <div class="text" id="editor">
+            <p>
+                @Html.Raw(viewModel.Content)
+            </p>
         </div>
     </div>
 </div>
+<script src="~/js/detail.js" asp-append-version="true"></script>

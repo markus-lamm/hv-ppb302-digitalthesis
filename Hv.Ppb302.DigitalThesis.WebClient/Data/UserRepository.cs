@@ -1,5 +1,4 @@
 ﻿using Hv.Ppb302.DigitalThesis.WebClient.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
@@ -14,50 +13,92 @@ public class UserRepository : IRepository<User>
 
     public User? Get(Guid id)
     {
-        return _dbContext.Users.FirstOrDefault(g => g.Id == id);
+        try
+        {
+            return _dbContext.Users.FirstOrDefault(g => g.Id == id);
+        }
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 
     public User? GetByCredentials(string username, string password)
     {
-        return _dbContext.Users.FirstOrDefault(g => g.Username == username && g.Password == password);
+        try
+        {
+            return _dbContext.Users.FirstOrDefault(g => g.Username == username && g.Password == password);
+        }
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 
     public List<User>? GetAll()
     {
-        return _dbContext.Users.ToList();
+        try
+        {
+            return _dbContext.Users.ToList();
+        }
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 
     public void Create(User user)
     {
-        var existingUser = _dbContext.Users.FirstOrDefault(m => m.Username == user.Username);
-        if (existingUser != null)
+        try
         {
-            throw new Exception("A user with the same username already exists");
+            var existingUser = _dbContext.Users.FirstOrDefault(m => m.Username == user.Username);
+            if (existingUser != null)
+            {
+                throw new Exception("A user with the same username already exists");
+            }
+            _dbContext.Users.Add(user);
+            _dbContext.SaveChanges();
         }
-        _dbContext.Users.Add(user);
-        _dbContext.SaveChanges();
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 
     public void Update(User user)
     {
-        var existingUser = _dbContext.Users.Find(user.Id);
-        if (existingUser == null)
+        try
         {
-            throw new Exception("The user does not exist");
+            var existingUser = _dbContext.Users.FirstOrDefault( m => m.Username == user.Username);
+            if (existingUser == null)
+            {
+                throw new Exception("The user does not exist");
+            }
+            existingUser.Username = user.Username;
+            existingUser.Password = user.Password;
+            _dbContext.SaveChanges();
         }
-        existingUser.Username = user.Username;
-        existingUser.Password = user.Password;
-        _dbContext.SaveChanges();
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 
     public void Delete(Guid id)
     {
-        var existingUser = _dbContext.Users.Find(id);
-        if (existingUser == null)
+        try
         {
-            throw new Exception("The molecular mosaic does not exist");
+            var existingUser = _dbContext.Users.Find(id);
+            if (existingUser == null)
+            {
+                throw new Exception("The user does not exist");
+            }
+            _dbContext.Users.Remove(existingUser);
+            _dbContext.SaveChanges();
         }
-        _dbContext.Users.Remove(existingUser);
-        _dbContext.SaveChanges();
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 }

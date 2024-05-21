@@ -22,21 +22,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("ConnectorTagGeoTag", b =>
-                {
-                    b.Property<Guid>("ConnectorTagsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("GeoTagsId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("ConnectorTagsId", "GeoTagsId");
-
-                    b.HasIndex("GeoTagsId");
-
-                    b.ToTable("ConnectorTagGeoTag");
-                });
-
             modelBuilder.Entity("ConnectorTagMolarMosaic", b =>
                 {
                     b.Property<Guid>("ConnectorTagsId")
@@ -67,6 +52,20 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.ToTable("ConnectorTagMolecularMosaic");
                 });
 
+            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.AssemblageTag", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("AssemblageTags");
+                });
+
             modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.ConnectorTag", b =>
                 {
                     b.Property<Guid>("Id")
@@ -90,15 +89,11 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.Property<string>("AudioFilePath")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Becomings")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<Guid?>("ConnectorTagId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("HasAudio")
-                        .HasColumnType("bit");
 
                     b.Property<string>("PdfFilePath")
                         .HasColumnType("nvarchar(max)");
@@ -107,6 +102,8 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ConnectorTagId");
 
                     b.ToTable("GeoTags");
                 });
@@ -131,18 +128,17 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("AssemblageTagId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("AudioFilePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Becomings")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("HasAudio")
-                        .HasColumnType("bit");
 
                     b.Property<string>("PdfFilePath")
                         .HasColumnType("nvarchar(max)");
@@ -151,6 +147,8 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AssemblageTagId");
 
                     b.ToTable("MolarMosaics");
                 });
@@ -161,18 +159,17 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("AssemblageTagId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("AudioFilePath")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Becomings")
-                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool?>("HasAudio")
-                        .HasColumnType("bit");
 
                     b.Property<string>("PdfFilePath")
                         .HasColumnType("nvarchar(max)");
@@ -182,7 +179,26 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AssemblageTagId");
+
                     b.ToTable("MolecularMosaics");
+                });
+
+            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.Page", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Content")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Pages");
                 });
 
             modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.User", b =>
@@ -232,21 +248,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.ToTable("KaleidoscopeTagMolecularMosaic");
                 });
 
-            modelBuilder.Entity("ConnectorTagGeoTag", b =>
-                {
-                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.ConnectorTag", null)
-                        .WithMany()
-                        .HasForeignKey("ConnectorTagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.GeoTag", null)
-                        .WithMany()
-                        .HasForeignKey("GeoTagsId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("ConnectorTagMolarMosaic", b =>
                 {
                     b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.ConnectorTag", null)
@@ -277,6 +278,31 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.GeoTag", b =>
+                {
+                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.ConnectorTag", null)
+                        .WithMany("GeoTags")
+                        .HasForeignKey("ConnectorTagId");
+                });
+
+            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.MolarMosaic", b =>
+                {
+                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.AssemblageTag", "AssemblageTag")
+                        .WithMany("MolarMosaics")
+                        .HasForeignKey("AssemblageTagId");
+
+                    b.Navigation("AssemblageTag");
+                });
+
+            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.MolecularMosaic", b =>
+                {
+                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.AssemblageTag", "AssemblageTag")
+                        .WithMany("MolecularMosaics")
+                        .HasForeignKey("AssemblageTagId");
+
+                    b.Navigation("AssemblageTag");
+                });
+
             modelBuilder.Entity("KaleidoscopeTagMolarMosaic", b =>
                 {
                     b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.KaleidoscopeTag", null)
@@ -305,6 +331,18 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                         .HasForeignKey("MolecularMosaicsId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.AssemblageTag", b =>
+                {
+                    b.Navigation("MolarMosaics");
+
+                    b.Navigation("MolecularMosaics");
+                });
+
+            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.ConnectorTag", b =>
+                {
+                    b.Navigation("GeoTags");
                 });
 #pragma warning restore 612, 618
         }

@@ -32,18 +32,38 @@
     });
 });
 
-// Dictionary to store the tags for each connector and a seperate value
-var connectorTagsDictionary = {};
+// Dictionary to store the tags for each assemblage and a separate value
+var assemblageTagsDictionary = {};
 
-function assignConnectorTags(tag) {
-    // If the connectorTag is not already assigned, assign a random value between 1 and 3
-    if (!connectorTagsDictionary[tag]) {
-        var randomValue = Math.floor(Math.random() * 361);
-        connectorTagsDictionary[tag] = randomValue;
+function getLeastSimilarValue(existingValues, count = 5) {
+    let candidates = [];
+    for (let i = 0; i < count; i++) {
+        let randomValue = Math.floor(Math.random() * 361);
+        // Check if the new value is sufficiently different from all existing ones
+        let isUnique = true;
+        for (let value of existingValues) {
+            if (Math.abs(randomValue - value) <= 20) { // Threshold of 20 degrees for similarity
+                isUnique = false;
+                break;
+            }
+        }
+        if (isUnique) {
+            candidates.push(randomValue);
+        }
     }
-    return connectorTagsDictionary[tag];
+    // Return the first candidate that passes the uniqueness check
+    return candidates[0];
 }
 
+function assignAssemblageTags(tag) {
+    // If the assemblage is not already assigned, assign a random value
+    if (!assemblageTagsDictionary[tag]) {
+        // Generate multiple random values and select the least similar one
+        var randomValue = getLeastSimilarValue(Object.values(assemblageTagsDictionary));
+        assemblageTagsDictionary[tag] = randomValue;
+    }
+    return assemblageTagsDictionary[tag];
+}
 
 // Add event listeners to radio buttons
 document.querySelectorAll('.custom-radio').forEach(function (radio) {
@@ -53,7 +73,7 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
         images.forEach(function (image) {
             var tags = image.getAttribute('data-tags').split(':');
             var kaleidoscopeTags = tags[0].split(',');
-            var connectorTags = tags[1].split(',');
+            var assemblageTag = tags[1].split(',');
 
             // Reset the hue value
             image.style.filter = 'hue-rotate(0deg)';
@@ -61,8 +81,8 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
             if (selectedTag === 'Assemblages') {
                 image.style.opacity = 1;
                 image.classList.remove('mosaic-highlight-effect');
-                connectorTags.forEach(function (tag) {
-                    var randomValue = assignConnectorTags(tag);
+                assemblageTag.forEach(function (tag) {
+                    var randomValue = assignAssemblageTags(tag);
                     image.style.filter = 'hue-rotate(' + randomValue + 'deg)';
                 });
             }
@@ -76,7 +96,7 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
                     image.style.opacity = 1;
                     image.classList.add('mosaic-highlight-effect');
                 } else {
-                    image.style.opacity = 0.5;
+                    image.style.opacity = 0.4;
                     image.classList.remove('mosaic-highlight-effect');
                 }
             }
@@ -84,7 +104,7 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
                 image.style.opacity = 1; // Set full opacity for matching tags
                 image.classList.add('mosaic-highlight-effect'); // Add the highlight effect class
             } else {
-                image.style.opacity = 0.5; // Set lower opacity for non-matching tags
+                image.style.opacity = 0.4; // Set lower opacity for non-matching tags
                 image.classList.remove('mosaic-highlight-effect'); // Remove the highlight effect class
             }
         });

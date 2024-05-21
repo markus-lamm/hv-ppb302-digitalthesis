@@ -1,6 +1,6 @@
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.FileProviders;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient;
 
@@ -20,8 +20,19 @@ public class Program
         builder.Services.AddScoped<MolecularMosaicRepository>();
         builder.Services.AddScoped<KaleidoscopeTagRepository>();
         builder.Services.AddScoped<UserRepository>();
-        builder.Services.AddScoped<TestDataUtils>();
+        builder.Services.AddScoped<PageRepository>();
+        builder.Services.AddScoped<AssemblageTagRepository>();
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddDefaultPolicy(
+                policy =>
+                {
+                    policy.AllowAnyOrigin()
+                    .AllowAnyMethod()
+                    .AllowAnyHeader();
+                });
+        });
         // Add services to the container.
         builder.Services.AddControllersWithViews();
 
@@ -32,7 +43,14 @@ public class Program
             options.Cookie.IsEssential = true;
         });
 
+
         var app = builder.Build();
+
+        var uploadsDirectory = Path.Combine(@"C:\Uploads");
+        if (!Directory.Exists(uploadsDirectory))
+        {
+            Directory.CreateDirectory(uploadsDirectory);
+        }
 
         // Configure the HTTP request pipeline.
         if (!app.Environment.IsDevelopment())
@@ -49,6 +67,12 @@ public class Program
 
         app.UseSession();
 
+        app.UseStaticFiles(new StaticFileOptions
+        {
+            FileProvider = new PhysicalFileProvider(
+           Path.Combine(@"C:\Uploads")),
+            RequestPath = "/StaticFiles"
+        });
         app.MapControllers();
         app.MapControllerRoute(
             name: "default",

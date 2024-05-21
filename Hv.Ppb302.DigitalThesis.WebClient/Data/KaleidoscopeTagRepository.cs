@@ -14,33 +14,56 @@ public class KaleidoscopeTagRepository : IRepository<KaleidoscopeTag>
 
     public KaleidoscopeTag? Get(Guid id)
     {
-        return _dbContext.KaleidoscopeTags
-            .Include(g => g.MolarMosaics)
-            .Include(g => g.MolecularMosaics)
-            .FirstOrDefault(g => g.Id == id);
+        try
+        {
+            return _dbContext.KaleidoscopeTags
+                .Include(g => g.MolarMosaics)
+                .Include(g => g.MolecularMosaics)
+                .FirstOrDefault(g => g.Id == id);
+        }
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 
     public List<KaleidoscopeTag>? GetAll()
     {
-        return _dbContext.KaleidoscopeTags
-            .Include(g => g.MolarMosaics)
-            .Include(g => g.MolecularMosaics)
-            .ToList();
+        try
+        {
+            return _dbContext.KaleidoscopeTags
+                .Include(g => g.MolarMosaics)
+                .Include(g => g.MolecularMosaics)
+                .ToList();
+        }
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 
     public void Create(KaleidoscopeTag kaleidoscopeTag)
     {
-        var existingKaleidoscopeTag = _dbContext.ConnectorTags.FirstOrDefault(g => g.Name == kaleidoscopeTag.Name);
-        if (existingKaleidoscopeTag != null)
+        try
         {
-            throw new Exception("A kaleidoscope tag with the same name already exists");
+            var existingKaleidoscopeTag = _dbContext.ConnectorTags.FirstOrDefault(g => g.Name == kaleidoscopeTag.Name);
+            if (existingKaleidoscopeTag != null)
+            {
+                throw new Exception("A kaleidoscope tag with the same name already exists");
+            }
+            _dbContext.KaleidoscopeTags.Add(kaleidoscopeTag);
+            _dbContext.SaveChanges();
         }
-        _dbContext.KaleidoscopeTags.Add(kaleidoscopeTag);
-        _dbContext.SaveChanges();
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 
     public void Update(KaleidoscopeTag kaleidoscopeTag)
     {
+        try
+        {
         var existingKaleidoscopeTag = _dbContext.ConnectorTags.Find(kaleidoscopeTag.Id);
         if (existingKaleidoscopeTag == null)
         {
@@ -50,29 +73,28 @@ public class KaleidoscopeTagRepository : IRepository<KaleidoscopeTag>
         existingKaleidoscopeTag.MolarMosaics = kaleidoscopeTag.MolarMosaics;
         existingKaleidoscopeTag.MolecularMosaics = kaleidoscopeTag.MolecularMosaics;
         _dbContext.SaveChanges();
+        }
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
     }
 
     public void Delete(Guid id)
     {
-        var existingKaleidoscopeTag = _dbContext.KaleidoscopeTags.Find(id);
-        if (existingKaleidoscopeTag == null)
+        try
         {
-            throw new Exception("The kaleidoscope tag does not exist");
+            var existingKaleidoscopeTag = _dbContext.KaleidoscopeTags.Find(id);
+            if (existingKaleidoscopeTag == null)
+            {
+                throw new Exception("The kaleidoscope tag does not exist");
+            }
+            _dbContext.KaleidoscopeTags.Remove(existingKaleidoscopeTag);
+            _dbContext.SaveChanges();
         }
-        _dbContext.KaleidoscopeTags.Remove(existingKaleidoscopeTag);
-        _dbContext.SaveChanges();
-    }
-
-    public void DeleteAllByName(string name)
-    {
-        var existingKaleidoscopeTags = _dbContext.KaleidoscopeTags
-            .Where(g => g.Name!.Contains(name))
-            .ToList();
-        if (existingKaleidoscopeTags.Count == 0)
+        catch (Exception)
         {
-            return;
+            throw new Exception("Internal Server Error");
         }
-        _dbContext.KaleidoscopeTags.RemoveRange(existingKaleidoscopeTags);
-        _dbContext.SaveChanges();
     }
 }

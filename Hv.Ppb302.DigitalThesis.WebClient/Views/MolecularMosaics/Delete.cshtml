@@ -1,0 +1,21 @@
+﻿@model Hv.Ppb302.DigitalThesis.WebClient.Models.MolecularMosaic
+@{
+    ViewData["Title"] = "Delete";
+}
+<head>
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+</head>
+<div class="admin-container flex-column">
+    <div class="admin-form">
+        <h1>Delete</h1>
+        <h3>Are you sure you want to delete this?</h3>
+        <h2>@Html.DisplayFor(model => model.Title)</h2>
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="Id" />
+            <div class="form-btn-container">
+                <a class="form-return-btn" asp-action="Index">Return</a>
+                <button class="form-submit-btn" type="submit">Delete</button>
+            </div>
+        </form>
+    </div>
+</div>
