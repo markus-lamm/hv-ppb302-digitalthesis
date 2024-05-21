@@ -1,32 +1,30 @@
 ﻿@model Hv.Ppb302.DigitalThesis.WebClient.Models.ConnectorTag
-
 @{
     ViewData["Title"] = "Create";
 }
 <head>
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
-<div class="admintable">
-    <h1>Create</h1>
-    <h4>ConnectorTag</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <form asp-action="Create">
-                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <div class="form-group">
-                    <label asp-for="Name" class="control-label"></label>
-                    <input asp-for="Name" class="form-control" />
-                    <span asp-validation-for="Name" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="submit" value="Create" class="btn btn-primary" />
-                </div>
-            </form>
+<div class="admin-container flex-column">
+    <div class="admin-form">
+        <h2>ConnectorTag</h2>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label asp-for="Name" class="control-label"></label>
+                        <input asp-for="Name" class="form-control" />
+                        <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-btn-container">
+                        <a class="form-return-btn" asp-action="Index">Return</a>
+                        <button class="form-submit-btn" type="submit">Save</button>
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-    <div>
-        <a asp-action="Index">Back to List</a>
     </div>
 </div>
 @section Scripts {
