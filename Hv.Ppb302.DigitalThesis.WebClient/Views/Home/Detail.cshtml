@@ -47,16 +47,16 @@
         <div class="content-options">
             @if (!String.IsNullOrWhiteSpace(@Model.PdfFilePath))
             {
-                <div class="content-options-btn">
-                    <a id="saveBtn" data-tags="@Model.PdfFilePath">
+                <div id="saveBtn" data-tags="@Model.PdfFilePath" class="content-options-btn">
+                    <a>
                         <img class="pdf_icon" src="~/images/icons/favicon.ico" />
                     </a>
                 </div>
             }
             @if (!String.IsNullOrWhiteSpace(@Model.AudioFilePath))
             {
-                <div class="content-options-btn">
-                    <img id="audio-icon" class="play_icon" src="~/images/icons/play_icon.png" />
+                <div id="audio-icon" class="content-options-btn">
+                    <img class="play_icon" src="~/images/icons/play_icon.png" />
                     <audio id="audio-player" src="@Model.AudioFilePath"></audio>
                 </div>
             }
