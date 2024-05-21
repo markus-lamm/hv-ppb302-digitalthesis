@@ -97,24 +97,4 @@ public class KaleidoscopeTagRepository : IRepository<KaleidoscopeTag>
             throw new Exception("Internal Server Error");
         }
     }
-
-    public void DeleteAllByName(string name)
-    {
-        try
-        {
-            var existingKaleidoscopeTags = _dbContext.KaleidoscopeTags
-                .Where(g => g.Name!.Contains(name))
-                .ToList();
-            if (existingKaleidoscopeTags.Count == 0)
-            {
-                return;
-            }
-            _dbContext.KaleidoscopeTags.RemoveRange(existingKaleidoscopeTags);
-            _dbContext.SaveChanges();
-        }
-        catch (Exception)
-        {
-            throw new Exception("Internal Server Error");
-        }
-    }
 }

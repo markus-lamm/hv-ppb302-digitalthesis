@@ -92,26 +92,4 @@ public class GeoTagRepository : IRepository<GeoTag>
             throw new Exception("Internal Server Error");
         }
     }
-
-    public void DeleteAllByTitle(string title)
-    {
-        try
-        {
-            var existingGeoTags = _dbContext.GeoTags
-                .Where(g => g.Title!.Contains(title))
-                .ToList();
-
-            if (existingGeoTags.Count == 0)
-            {
-                return;
-            }
-
-            _dbContext.GeoTags.RemoveRange(existingGeoTags);
-            _dbContext.SaveChanges();
-        }
-        catch (Exception)
-        {
-            throw new Exception("Internal Server Error");
-        }
-    }
 }

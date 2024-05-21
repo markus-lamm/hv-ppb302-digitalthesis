@@ -97,24 +97,4 @@ public class AssemblageTagRepository : IRepository<AssemblageTag>
             throw new Exception("Internal Server Error");
         }
     }
-
-    public void DeleteAllByName(string name)
-    {
-        try
-        {
-            var existingAssemblageTag = _dbContext.AssemblageTags
-                .Where(g => g.Name!.Contains(name))
-                .ToList();
-            if (existingAssemblageTag.Count == 0)
-            {
-                return;
-            }
-            _dbContext.AssemblageTags.RemoveRange(existingAssemblageTag);
-            _dbContext.SaveChanges();
-        }
-        catch (Exception)
-        {
-            throw new Exception("Internal Server Error");
-        }
-    }
 }
