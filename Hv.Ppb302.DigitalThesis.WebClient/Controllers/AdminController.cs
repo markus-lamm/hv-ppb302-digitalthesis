@@ -138,7 +138,7 @@ public class AdminController : Controller
     public IActionResult Logout()
     {
         RemoveAuthentication();
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("GeoTags", "Home");
     }
 
     public IActionResult AddAuthentication(string username, string password)
