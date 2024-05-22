@@ -16,6 +16,7 @@
 .mosaic-content {
     display: flex;
     flex-direction: column;
+    font-size: 2.5rem;
 }
 
 .mosaic a {
@@ -29,7 +30,6 @@ a:hover img {
 }
 
     .mosaic a div {
-        font-size: 2.5rem;
         color: white;
         opacity: 0;
         visibility: hidden;
@@ -58,7 +58,7 @@ a:hover img {
 }
 
 .mosaic-becoming {
-    font-size: 1.5rem;
+    font-size: 2rem;
 }
 
 .sidebarLine {
