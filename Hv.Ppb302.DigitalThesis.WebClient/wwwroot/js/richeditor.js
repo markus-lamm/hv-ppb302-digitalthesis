@@ -86,14 +86,10 @@ if (input) {
 
 
 
-function copyFunction() {
+function copyFunction(fileurl) {
     // Get the text field
-    var copyText = document.getElementById("fileurl");
 
-    var selectedTag = copyText.getAttribute('data-tags'); // For mobile devices
-
-    // Copy the text inside the text field
-    navigator.clipboard.writeText(selectedTag);
+    navigator.clipboard.writeText(fileurl);
 
 }
 
