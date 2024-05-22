@@ -109,12 +109,12 @@ if (playButton) {
         if (audioPlayer.paused) {
             // If paused, play the audio
             audioPlayer.play();
-            audioImage.src = "/images/icons/stop_icon.png"
+            audioImage.src = "https://informatik13.ei.hv.se/DigitalThesis/images/icons/stop_icon.png"
         } else {
             // If playing, pause the audio
             audioPlayer.pause();
             audioPlayer.currentTime = 0;
-            audioImage.src = "/images/icons/play_icon.png"
+            audioImage.src = "https://informatik13.ei.hv.se/DigitalThesis/images/icons/play_icon.png"
         }
     });
 }
