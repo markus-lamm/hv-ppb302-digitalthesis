@@ -101,16 +101,20 @@ const playButton = document.getElementById('audio-icon');
 
 if (playButton) {
     const audioPlayer = document.getElementById('audio-player');
+    const audioImage = document.getElementById('audio-img');
+
     // Add click event listener to the button
     playButton.addEventListener('click', function () {
         // Check if audio is currently playing
         if (audioPlayer.paused) {
             // If paused, play the audio
             audioPlayer.play();
+            audioImage.src = "/images/icons/stop_icon.png"
         } else {
             // If playing, pause the audio
             audioPlayer.pause();
             audioPlayer.currentTime = 0;
+            audioImage.src = "/images/icons/play_icon.png"
         }
     });
 }
