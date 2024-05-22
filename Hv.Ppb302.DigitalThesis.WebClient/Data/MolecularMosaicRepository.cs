@@ -19,6 +19,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
             return _dbContext.MolecularMosaics
                 .Include(g => g.ConnectorTags)
                 .Include(m => m.KaleidoscopeTags)
+                .Include(q => q.AssemblageTag)
                 .FirstOrDefault(g => g.Id == id);
         }
         catch (Exception)

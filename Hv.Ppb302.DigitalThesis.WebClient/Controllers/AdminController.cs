@@ -35,6 +35,7 @@ public class AdminController : Controller
         return View();
     }
 
+    [DisableRequestSizeLimit]
     [HttpPost]
     public async Task<IActionResult> FileUpload(IFormFile file)
     {
