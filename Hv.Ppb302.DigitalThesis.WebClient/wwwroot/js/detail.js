@@ -1,32 +1,19 @@
 ﻿document.addEventListener('DOMContentLoaded', function () {
-    // Select all content-options-btn elements
-    const buttons = document.querySelectorAll('.content-options-btn');
+    const audioPlayer = document.getElementById('audio-player');
+    audioPlayer.addEventListener('click', function (event) {
+        event.preventDefault();
+        const audioImg = document.getElementById('audio-img');
+        console.log("test");
 
-    buttons.forEach(button => {
-        button.addEventListener('click', function (event) {
-            // Prevent the default action to stop the browser from navigating away
-            event.preventDefault();
-
-            // Determine which button was clicked
-            //const isPdfButton = event.target.querySelector('.pdf_icon');
-            const isAudioButton = event.target.querySelector('#audio-icon');
-
-            //if (isPdfButton) {
-            //    // Trigger the download of the PDF file
-            //    window.location.href = event.target.dataset.tags;
-            //}
-            if (isAudioButton) {
-                // Play the audio
-                const audioPlayer = document.getElementById('audio-player');
-                if (audioPlayer.paused) {
-                    audioPlayer.play();
-                }
-                else {
-                    audioPlayer.pause();
-                    // Reset the audio player to the beginning
-                    audioPlayer.currentTime = 0;
-                }
-            }
-        });
+        if (audioPlayer.paused) {
+            audioPlayer.play();
+            audioImg.src = '/images/icons/stop_icon.png';
+            console.log(audioImg.src);
+        } else {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            audioImg.src = '/images/icons/play_icon.png';
+            console.log(audioImg.src);
+        }
     });
 });
