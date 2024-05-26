@@ -1,4 +1,9 @@
-﻿let currentStep = 0;
+﻿
+document.addEventListener('DOMContentLoaded', () => {
+    showStep(currentStep);
+});
+
+let currentStep = 0;
 
 function showStep(step) {
     const overlayBoxes = document.querySelectorAll('.overlay-box');
@@ -30,10 +35,8 @@ function showStep(step) {
     } else {
         elementLogo.style.zIndex = 1000;
     }
-    
 
     const geotagIDs = ["image-container1", "image-container2", "image-container3", "image-container9"];
-
     if (geotagIDs) {
         geotagIDs.forEach(id => {
             const element = document.getElementById(id);
@@ -46,14 +49,13 @@ function showStep(step) {
             }
         });
     }
- 
 
     const yellowMosaicIDs = ["yellow-mosaic1", "yellow-mosaic2", "yellow-mosaic3"];
     if (yellowMosaicIDs) {
         yellowMosaicIDs.forEach(id => {
             const element = document.getElementById(id); 3
             if (element) {
-                if (currentStep === 3) {
+                if (currentStep === 3 || currentStep === 6) {
                     element.style.zIndex = 1001;
                 } else {
                     element.style.zIndex = 1000;
@@ -67,7 +69,7 @@ function showStep(step) {
         blueMosaicIDs.forEach(id => {
             const element = document.getElementById(id);
             if (element) {
-                if (currentStep === 4) {
+                if (currentStep === 4 || currentStep === 6) {
                     element.style.zIndex = 1001;
                 } else {
                     element.style.zIndex = 1000;
@@ -76,11 +78,9 @@ function showStep(step) {
         });
     }
 
-
     const element = document.getElementById("image-container8");
     const whiteImage = document.getElementById("geotag-white");
     const blackImage = document.getElementById("geotag-black");
-
     if (element && whiteImage && blackImage) {
         if (currentStep === 5) {
             element.style.zIndex = 1001;
@@ -108,8 +108,3 @@ function prevStep() {
         showStep(currentStep);
     }
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    showStep(currentStep);
-});
-
