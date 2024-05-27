@@ -34,13 +34,15 @@
                         case MimeDetective.Storage.Category.Audio:
                             <img src="~/images/audio.png" />
                             break;
+                        case MimeDetective.Storage.Category.Compressed:
+                            <img src="~/images/video.png" />
+                            break;
                         default:
                             break;
                     }
-                    <input id="fileurl" hidden data-tags="@item.FileUrl" />
                     <div class="file-options">
                         <div class="file-options-btns">
-                            <button onclick="copyFunction()">Copy Link</button>
+                            <button onclick="copyFunction('@(item.FileUrl)')">Copy Link</button>
                             <form method="post" asp-action="FileView" asp-controller="Admin">
                                 <input type="hidden" name="FileName" value="@item.File" />
                                 <button type="submit">Delete</button>

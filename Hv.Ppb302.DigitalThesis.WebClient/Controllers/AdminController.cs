@@ -35,6 +35,7 @@ public class AdminController : Controller
         return View();
     }
 
+    [DisableRequestSizeLimit]
     [HttpPost]
     public async Task<IActionResult> FileUpload(IFormFile file)
     {
@@ -138,7 +139,7 @@ public class AdminController : Controller
     public IActionResult Logout()
     {
         RemoveAuthentication();
-        return RedirectToAction("Index", "Home");
+        return RedirectToAction("GeoTags", "Home");
     }
 
     public IActionResult AddAuthentication(string username, string password)

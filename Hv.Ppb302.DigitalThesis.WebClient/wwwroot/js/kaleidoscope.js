@@ -170,14 +170,22 @@ if (bigImage) {
                         restart = true;
                     }
                 });
+                if (restart) {
+                    if (bufferZone != 0) {
+                        bufferZone = bufferZone - 5;
+                    }
+                    restart = false;
+                    placeSmallCircles();
+                }
             }
 
             // Initial placement of small circles
             placeSmallCircles();
-            if (restart) {
-                var bufferZone = 0;
-                placeSmallCircles();
-            }
+            //if (restart) {
+            //    var bufferZone = 0;
+            //    restart = false;
+            //    placeSmallCircles();
+            //}
         };
     });
 }

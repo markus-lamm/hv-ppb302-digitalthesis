@@ -46,7 +46,7 @@ public class KaleidoscopeTagRepository : IRepository<KaleidoscopeTag>
     {
         try
         {
-            var existingKaleidoscopeTag = _dbContext.ConnectorTags.FirstOrDefault(g => g.Name == kaleidoscopeTag.Name);
+            var existingKaleidoscopeTag = _dbContext.KaleidoscopeTags.FirstOrDefault(g => g.Name == kaleidoscopeTag.Name);
             if (existingKaleidoscopeTag != null)
             {
                 throw new Exception("A kaleidoscope tag with the same name already exists");
@@ -64,7 +64,7 @@ public class KaleidoscopeTagRepository : IRepository<KaleidoscopeTag>
     {
         try
         {
-        var existingKaleidoscopeTag = _dbContext.ConnectorTags.Find(kaleidoscopeTag.Id);
+        var existingKaleidoscopeTag = _dbContext.KaleidoscopeTags.Find(kaleidoscopeTag.Id);
         if (existingKaleidoscopeTag == null)
         {
             throw new Exception("The kaleidoscope tag does not exist");

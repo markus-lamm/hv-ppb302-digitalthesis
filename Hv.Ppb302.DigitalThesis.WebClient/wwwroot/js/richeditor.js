@@ -86,14 +86,10 @@ if (input) {
 
 
 
-function copyFunction() {
+function copyFunction(fileurl) {
     // Get the text field
-    var copyText = document.getElementById("fileurl");
 
-    var selectedTag = copyText.getAttribute('data-tags'); // For mobile devices
-
-    // Copy the text inside the text field
-    navigator.clipboard.writeText(selectedTag);
+    navigator.clipboard.writeText(fileurl);
 
 }
 
@@ -101,16 +97,20 @@ const playButton = document.getElementById('audio-icon');
 
 if (playButton) {
     const audioPlayer = document.getElementById('audio-player');
+    const audioImage = document.getElementById('audio-img');
+
     // Add click event listener to the button
     playButton.addEventListener('click', function () {
         // Check if audio is currently playing
         if (audioPlayer.paused) {
             // If paused, play the audio
             audioPlayer.play();
+            audioImage.src = "https://informatik13.ei.hv.se/DigitalThesis/images/icons/stop_icon.png"
         } else {
             // If playing, pause the audio
             audioPlayer.pause();
             audioPlayer.currentTime = 0;
+            audioImage.src = "https://informatik13.ei.hv.se/DigitalThesis/images/icons/play_icon.png"
         }
     });
 }

@@ -12,37 +12,37 @@
     <div class="info-container">
         <p class="info-title">@viewModel.Title</p>
         <p class="tags-title">Assemblage:</p>
-        @if (viewModel.AssemblageTag == null)
+        @if (viewModel.AssemblageTag != null)
         {
-            <p><em class="tags-content">No Assemblage</em></p>
+            <p><em class="tags-content">@viewModel.AssemblageTag.Name</em></p>
         }
         else
         {
-            <p><em class="tags-content">@Model.AssemblageTag</em></p>
+            <br />
         }
         <p class="tags-title">Connectors:</p>
-        @if (viewModel.ConnectorTags.Count == 0)
-        {
-            <p><em class="tags-content">No connectors</em></p>
-        }
-        else
+        @if (viewModel.ConnectorTags.Count != 0)
         {
             foreach (var tag in viewModel.ConnectorTags)
             {
                 <p><em class="tags-content">@tag.Name</em></p>
             }
         }
-        <p class="tags-title">Becomings:</p>
-        @if (viewModel.Becomings.Count == 0)
-        {
-            <p><em class="tags-content">No becomings</em></p>
-        }
         else
+        {
+            <br />
+        }
+        <p class="tags-title">Becomings:</p>
+        @if (viewModel.Becomings.Count != 0)
         {
             foreach (var tag in viewModel.Becomings)
             {
                 <p><em class="tags-content">@tag</em></p>
             }
+        }
+        else
+        {
+            <br />
         }
         <div class="content-options">
             @if (!String.IsNullOrWhiteSpace(@Model.PdfFilePath))
@@ -56,7 +56,7 @@
             @if (!String.IsNullOrWhiteSpace(@Model.AudioFilePath))
             {
                 <div id="audio-icon" class="content-options-btn">
-                    <img class="play_icon" src="~/images/icons/play_icon.png" />
+                    <img class="play_icon" id="audio-img" src="~/images/icons/play_icon.png" />
                     <audio id="audio-player" src="@Model.AudioFilePath"></audio>
                 </div>
             }
