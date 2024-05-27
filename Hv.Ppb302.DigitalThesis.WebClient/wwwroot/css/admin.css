@@ -11,7 +11,8 @@
     align-items: center;
     width: 100vw;
     position: relative;
-    padding-top: 10%;
+    padding-bottom: 10vh;
+    padding-top: 20vh;
 }
 
 .flex-column {
@@ -104,6 +105,8 @@
 
 .fileview-container {
     padding: 3rem;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .file-container {
@@ -185,31 +188,6 @@
 
 .editor-layout {
     width: 80vw;
-}
-
-
-
-
-
-
-.admintables {
-    background-image: url(../images/background/image.png);
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 15vh;
-    overflow-x: hidden;
-}
-
-.admintable {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 15vh;
-    overflow-x: hidden;
 }
 
 .createform{
