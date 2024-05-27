@@ -15,6 +15,6 @@
     });
 
     audioPlayer.addEventListener('ended', function () {
-        audioImg.src = '/images/icons/play_icon.png';
+        audioImg.src = 'https://informatik13.ei.hv.se/digitalthesis/images/icons/play_icon.png';
     });
 });
