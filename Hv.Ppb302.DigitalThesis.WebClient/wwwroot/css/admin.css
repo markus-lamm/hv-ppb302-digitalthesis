@@ -5,11 +5,14 @@
 }
 
 .admin-container {
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100vw;
+    position: relative;
+    padding-bottom: 10vh;
+    padding-top: 20vh;
 }
 
 .flex-column {
@@ -49,7 +52,6 @@
 
 .admin-form-large {
     display: flex;
-    margin-top: 20rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -103,7 +105,8 @@
 
 .fileview-container {
     padding: 3rem;
-    margin-top: 25rem;
+    padding-top: 0;
+    padding-bottom: 0;
 }
 
 .file-container {
@@ -156,6 +159,7 @@
 .file-heading {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .file-upload {
@@ -184,31 +188,6 @@
 
 .editor-layout {
     width: 80vw;
-}
-
-
-
-
-
-
-.admintables {
-    background-image: url(../images/background/image.png);
-    background-size: cover;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 15vh;
-    overflow-x: hidden;
-}
-
-.admintable {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding-top: 15vh;
-    overflow-x: hidden;
 }
 
 .createform{
