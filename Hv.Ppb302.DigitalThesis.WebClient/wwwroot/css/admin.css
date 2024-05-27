@@ -5,11 +5,13 @@
 }
 
 .admin-container {
-    height: 100vh;
+    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     width: 100vw;
+    position: relative;
+    padding-top: 10%;
 }
 
 .flex-column {
@@ -49,7 +51,6 @@
 
 .admin-form-large {
     display: flex;
-    margin-top: 20rem;
     flex-direction: column;
     justify-content: center;
     align-items: center;
@@ -103,7 +104,6 @@
 
 .fileview-container {
     padding: 3rem;
-    margin-top: 25rem;
 }
 
 .file-container {
@@ -156,6 +156,7 @@
 .file-heading {
     display: flex;
     align-items: center;
+    justify-content: center;
 }
 
 .file-upload {
