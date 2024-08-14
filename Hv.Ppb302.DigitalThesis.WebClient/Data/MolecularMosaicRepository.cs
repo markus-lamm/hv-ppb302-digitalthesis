@@ -79,6 +79,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
             existingMolecularMosaic.ConnectorTags = molecularMosaic.ConnectorTags;
             existingMolecularMosaic.KaleidoscopeTags = molecularMosaic.KaleidoscopeTags;
             existingMolecularMosaic.AssemblageTagId = molecularMosaic.AssemblageTagId;
+            existingMolecularMosaic.IsVisible = molecularMosaic.IsVisible;
             _dbContext.SaveChanges();
         }
         catch (Exception)

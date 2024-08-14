@@ -87,7 +87,8 @@ public class HomeController : Controller
                 AudioFilePath = model.AudioFilePath,
                 ConnectorTags = [],
                 Becomings = [],
-                AssemblageTag = null
+                AssemblageTag = null,
+                IsVisible = model.IsVisible
             };
             if (model != null)
             {
