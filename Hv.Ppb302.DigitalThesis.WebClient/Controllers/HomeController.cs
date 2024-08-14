@@ -28,6 +28,11 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        return View();
+    }
+
+    public IActionResult Intro()
+    {
         return View(_pageRepository.GetByName("Start"));
     }
 
@@ -76,7 +81,7 @@ public class HomeController : Controller
 
         return NotFound();
 
-        static DetailViewModel BuildViewModel(dynamic model)
+        DetailViewModel BuildViewModel(dynamic model)
         {
             var viewModel = new DetailViewModel
             {
@@ -87,7 +92,8 @@ public class HomeController : Controller
                 AudioFilePath = model.AudioFilePath,
                 ConnectorTags = [],
                 Becomings = [],
-                AssemblageTag = null
+                IsVisible = model.IsVisible,
+                ObjectType = objectType,
             };
             if (model != null)
             {
@@ -101,12 +107,6 @@ public class HomeController : Controller
                 if (propertyInfo != null)
                 {
                     viewModel.Becomings = (List<string>)propertyInfo.GetValue(model);
-                }
-
-                propertyInfo = model.GetType().GetProperty("AssemblageTag");
-                if (propertyInfo != null)
-                {
-                    viewModel.AssemblageTag = (AssemblageTag)propertyInfo.GetValue(model);
                 }
             }
 

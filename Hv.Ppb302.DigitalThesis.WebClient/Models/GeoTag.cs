@@ -7,4 +7,5 @@ public class GeoTag
     public string? Content { get; set; }
     public string? PdfFilePath { get; set; }
     public string? AudioFilePath { get; set; }
+    public bool? IsVisible { get; set; }
 }

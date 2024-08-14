@@ -58,7 +58,7 @@ public class GeoTagsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(Guid id, [Bind("Id,Title,Content,PdfFilePath,AudioFilePath")] GeoTag geoTag)
+    public IActionResult Edit(Guid id, [Bind("Id,Title,Content,PdfFilePath,AudioFilePath,IsVisible")] GeoTag geoTag)
     {
         if (!CheckAuthentication())
         {
