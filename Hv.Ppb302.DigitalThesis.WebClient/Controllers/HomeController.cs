@@ -28,6 +28,11 @@ public class HomeController : Controller
 
     public IActionResult Index()
     {
+        return View();
+    }
+
+    public IActionResult Intro()
+    {
         return View(_pageRepository.GetByName("Start"));
     }
 

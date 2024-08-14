@@ -5,25 +5,18 @@
 <head>
     <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
 </head>
-<div class="content-container">
-    <div class="logo-container">
-        <a asp-action="Geotags">
-            <img class="logo-img" src="~/images/logo.png" alt="logo" />
-        </a>
-        <a class="logo-btn" asp-action="Geotags">Explore</a>
-    </div>
-    <div class="text-container">
-        @if (!String.IsNullOrEmpty(Model.Content) && Model.Content.Trim().ToString() != "<p><br></p>")
-        {
-            <div class="text" id="editor">
-                @Html.Raw(Model.Content)
-            </div>
-        }
-        else
-        {
-            <p>
-                Start content is empty
-            </p>
-        }
+<div class="background-container">
+    <div class="content-container">
+        <div class="geotag-container">
+            <a asp-action="Intro">
+                <img src="~/images/icons/geotag-black.svg" class="geotag-img" />
+                <div class="geotag-text">ENTER</div>
+            </a>
+        </div>
+        <div class="text-container">
+            <div class="text-author">Mona Tynkkinen</div>
+            <div class="text-title">fragile mosaics of <br> teacher becoming</div>
+            <div class="text-subtitle">kaleido-scoping futures of difference</div>
+        </div>
     </div>
 </div>
