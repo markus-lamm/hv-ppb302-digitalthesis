@@ -13,38 +13,32 @@
     {
         <div class="info-container">
             <p class="info-title">@viewModel.Title</p>
-            <p class="tags-title">Assemblage:</p>
-            @if (viewModel.AssemblageTag != null)
+            @if (viewModel.ObjectType != "geotag")
             {
-                <p><em class="tags-content">@viewModel.AssemblageTag.Name</em></p>
-            }
-            else
-            {
-                <br />
-            }
-            <p class="tags-title">Connectors:</p>
-            @if (viewModel.ConnectorTags.Count != 0)
-            {
-                foreach (var tag in viewModel.ConnectorTags)
+                <p class="tags-title">Connectors:</p>
+                @if (viewModel.ConnectorTags.Count != 0)
                 {
-                    <p><em class="tags-content">@tag.Name</em></p>
+                    foreach (var tag in viewModel.ConnectorTags)
+                    {
+                        <p><em class="tags-content">@tag.Name</em></p>
+                    }
                 }
-            }
-            else
-            {
-                <br />
-            }
-            <p class="tags-title">Becomings:</p>
-            @if (viewModel.Becomings.Count != 0)
-            {
-                foreach (var tag in viewModel.Becomings)
+                else
                 {
-                    <p><em class="tags-content">@tag</em></p>
+                    <br />
                 }
-            }
-            else
-            {
-                <br />
+                <p class="tags-title">Becomings:</p>
+                @if (viewModel.Becomings.Count != 0)
+                {
+                    foreach (var tag in viewModel.Becomings)
+                    {
+                        <p><em class="tags-content">@tag</em></p>
+                    }
+                }
+                else
+                {
+                    <br />
+                }
             }
             <div class="content-options">
                 @if (!String.IsNullOrWhiteSpace(@Model.PdfFilePath))
