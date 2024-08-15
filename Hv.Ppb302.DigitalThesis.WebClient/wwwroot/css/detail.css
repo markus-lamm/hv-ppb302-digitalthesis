@@ -47,6 +47,18 @@
     overflow-y: auto;
 }
 
+.navmenu {
+
+}
+
+.navmenu-title {
+    font-weight: bold;
+}
+
+.navmenu-subtitle {
+    font-style: italic;
+}
+
 .content-container {
     display: flex;
     padding: 0;
