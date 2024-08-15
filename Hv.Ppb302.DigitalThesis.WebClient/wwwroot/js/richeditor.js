@@ -1,68 +1,37 @@
 ﻿
 var editorDiv = document.getElementById('editor');
 if (editorDiv) {
-    const quill = new Quill('#editor', {
-        theme: 'bubble',
+    var editor = new Jodit('#editor', {
+        autofocus: true,
+        toolbar: false,
+        readonly: true,
+        "showCharsCounter": false,
+        "showWordsCounter": false,
+        "showXPathInStatusbar": false,
+        className: 'previeweditor',
+        height: '100%',
+        width: '100%',
+        "allowResizeY": false
     });
-    quill.enable(false);
 }
-
-
-const FontAttributor = Quill.import('attributors/class/font');
-FontAttributor.whitelist = [
-    'lora'
-];
-Quill.register(FontAttributor, true);
-
-const toolbarOptions = [
-    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-    ['blockquote', 'code-block'],
-    ['link', 'image', 'video', 'formula'],
-
-    [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }],
-    [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
-    [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
-    [{ 'direction': 'rtl' }],                         // text direction
-
-    [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-    [{ 'font': [] }],
-    [{ 'align': [] }],
-
-    ['clean']                                         // remove formatting button
-];
-
 
 var editorDiv2 = document.getElementById('editortest');
 if (editorDiv2) {
-    const quilleditor = new Quill('#editortest', {
-        theme: 'snow',
-        modules: {
-            syntax: true,
-            toolbar: toolbarOptions,
-            imageResize: {
-                displaySize: true
-            }
-        }
+    var editor = new Jodit('#editortest', {
+        autofocus: true,
+        "defaultFontSizePoints": "pt",
+        "minHeight": 900,
+        "maxHeight": 900,
+        "uploader": {
+            "insertImageAsBase64URI": true
+        },
     });
-    function getAndDisplayHTML() {
-        var htmlContent = quilleditor.root.innerHTML;
-        document.getElementById('htmlOutput').innerText = htmlContent;
-    }
 
     let inputElement = document.getElementById('hiddeninput')
-    quilleditor.on('text-change', function () {
-        // sets the value of the hidden input to
-        // the editor content in Delta format
-        inputElement.value = quilleditor.root.innerHTML;
+    editor.events.on('change', e => {
 
-        // you can alternatively use
-        // inputElement.value = quill.root.innerHTML
-        // if you want the data as HTML
-    });
+        inputElement.value = editor.getEditorValue();
+    })
 }
 
 var input = document.getElementById('Becomings')
