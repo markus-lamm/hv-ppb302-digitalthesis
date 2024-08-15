@@ -12,6 +12,8 @@ function showStep(step) {
     overlayBoxes.forEach(box => box.style.display = 'none');
     steps.forEach(s => s.classList.remove('active'));
 
+    const cancelButton = document.querySelector('.cancel-btn');
+
     if (step < overlayBoxes.length) {
         overlayBoxes[step].style.display = 'block';
         steps[step].classList.add('active');
@@ -19,6 +21,7 @@ function showStep(step) {
         const buttonContainer = document.querySelector('.button-container');
         const activeBox = overlayBoxes[step];
         activeBox.appendChild(buttonContainer);
+        activeBox.appendChild(cancelButton);
 
         document.querySelector('.back-button').disabled = step === 0;
         document.querySelector('.next-button').disabled = step === overlayBoxes.length;
@@ -26,6 +29,12 @@ function showStep(step) {
         if (document.getElementById('tutorial-overlay')) {
             document.getElementById('tutorial-overlay').style.display = "none";
         }
+    }
+
+    if (cancelButton) {
+        cancelButton.addEventListener('click', () => {
+            document.getElementById('tutorial-overlay').style.display = "none";
+        });
     }
 
     const elementLogo = document.getElementById("navbar");
