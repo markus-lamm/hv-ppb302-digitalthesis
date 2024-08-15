@@ -225,6 +225,17 @@ a:hover img {
         background-color: #007bff;
     }
 
+.cancel-btn {
+    position: absolute;
+    top: 10%;
+    right: 5%;
+    padding: 0.5vw;
+}
+
+    .cancel-btn:hover {
+        cursor: pointer;
+    }
+
 .image-text {
     font-size: 1.3vw;
     font-weight: bold;
