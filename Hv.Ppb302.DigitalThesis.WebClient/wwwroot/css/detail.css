@@ -48,7 +48,15 @@
 }
 
 .navmenu {
+    display: flex;
+    flex-direction: column;
+}
 
+.navmenu-title,
+.navmenu-subtitle {
+    text-decoration: none;
+    color: black;
+    font-size: 0.9vw;
 }
 
 .navmenu-title {
@@ -59,9 +67,16 @@
     font-style: italic;
 }
 
+.navmenu-title:hover,
+.navmenu-subtitle:hover {
+    color: blue;
+}
+
 .content-container {
     display: flex;
-    padding: 0;
+    flex-direction: column;
+    padding-left: 2rem;
+    padding-right: 2rem;
     flex-grow: 1;
     background: #fcf9ee;
     border: 1px solid #ccc;

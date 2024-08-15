@@ -32,18 +32,25 @@ setTimeout(function () {
     // Function to recursively collect headings in order
     function collectHeadings(element) {
         if (element.tagName === 'H1' || element.tagName === 'H2') {
-            headingList.push({ tag: element.tagName.toLowerCase(), text: element.textContent });
+            const id = `heading-${headingList.length}`;
+            element.id = id;
+            headingList.push({ tag: element.tagName.toLowerCase(), text: element.textContent, id: id });
         }
         Array.from(element.children).forEach(child => collectHeadings(child));
     }
-
-    // Start collecting headings from the body of the document
     collectHeadings(doc.body);
+
+    // Render the parsed HTML content into a container on the page
+    const contentContainer = document.getElementById('content-container');
+    if (contentContainer) {
+        contentContainer.innerHTML = doc.body.innerHTML;
+    }
 
     const navmenu = document.getElementById('navmenu');
     if (navmenu) {
         for (let i = 0; i < headingList.length; i++) {
-            const navmenuItem = document.createElement('div');
+            const navmenuItem = document.createElement('a');
+            navmenuItem.href = `#${headingList[i].id}`;
             if (headingList[i].tag === 'h1') {
                 navmenuItem.className = 'navmenu-title';
             } else if (headingList[i].tag === 'h2') {
