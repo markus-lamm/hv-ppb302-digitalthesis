@@ -51,6 +51,7 @@ setTimeout(function () {
         for (let i = 0; i < headingList.length; i++) {
             const navmenuItem = document.createElement('a');
             navmenuItem.href = `#${headingList[i].id}`;
+            navmenuItem.id = `nav-${headingList[i].id}`;
             if (headingList[i].tag === 'h1') {
                 navmenuItem.className = 'navmenu-title';
             } else if (headingList[i].tag === 'h2') {
@@ -60,4 +61,31 @@ setTimeout(function () {
             navmenu.appendChild(navmenuItem);
         }
     }
+
+    // Highlight the current section in the navmenu
+    const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.1
+    };
+
+    const observerCallback = (entries) => {
+        entries.forEach(entry => {
+            const navItem = document.getElementById(`nav-${entry.target.id}`);
+            if (entry.isIntersecting) {
+                navItem.classList.add('active');
+            } else {
+                navItem.classList.remove('active');
+            }
+        });
+    };
+
+    const observer = new IntersectionObserver(observerCallback, observerOptions);
+
+    headingList.forEach(heading => {
+        const target = document.getElementById(heading.id);
+        if (target) {
+            observer.observe(target);
+        }
+    });
 }, 100);
