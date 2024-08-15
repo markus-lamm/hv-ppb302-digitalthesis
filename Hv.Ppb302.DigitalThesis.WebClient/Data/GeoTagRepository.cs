@@ -67,6 +67,7 @@ public class GeoTagRepository : IRepository<GeoTag>
             existingGeoTag.Content = geoTag.Content;
             existingGeoTag.PdfFilePath = geoTag.PdfFilePath;
             existingGeoTag.AudioFilePath = geoTag.AudioFilePath;
+            existingGeoTag.IsVisible = geoTag.IsVisible;
             _dbContext.SaveChanges();
         }
         catch (Exception)

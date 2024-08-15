@@ -1,53 +1,57 @@
 ﻿@model List<GeoTag> 
 @{
     ViewData["Title"] = "Geotags";
-    var geoTagDictionary = Model.ToDictionary(g => g.Title, g => g);
     bool showTutorial = ViewBag.ShowTutorial;
+    var geoTagDictionary = Model.ToDictionary(g => g.Id, g => g);
+    string? GetGeoTagTitle(Guid Id)
+    {
+        return geoTagDictionary.ContainsKey(Id) ? geoTagDictionary[Id].Title : "Unknown Title";
+    }
 }
 <head>
    <link rel="stylesheet" href="~/css/geotags.css" asp-append-version="true" />
 </head>
 <div class="background-geotags">
-    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Problems"].Id, objectType = "geotag" })">
+    <a href="@Url.Action("Detail", "Home", new {id = "fd12eabc-dfb1-4580-ba7d-a9ef866b6c99", objectType = "geotag" })">
         <div id="image-container1">
-           <p class="image-text">Problems</p>
-           <img src="~/images/geotags/geotag-black.png" />
+            <div class="image-text">@GetGeoTagTitle(new Guid("fd12eabc-dfb1-4580-ba7d-a9ef866b6c99"))</div>
+            <img src="~/images/icons/geotag-black.svg" class="geotag" />
         </div>
     </a>
-    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["A Solution"].Id, objectType = "geotag" })">
+    <a href="@Url.Action("Detail", "Home", new {id = "158e036c-e8f5-4948-a83f-de0bc6875198", objectType = "geotag" })">
         <div id="image-container2">
-           <p class="image-text">A Solution</p>
-           <img src="~/images/geotags/geotag-black.png" />
+            <div class="image-text">@GetGeoTagTitle(new Guid("158e036c-e8f5-4948-a83f-de0bc6875198"))</div>
+            <img src="~/images/icons/geotag-black.svg" class="geotag" />
         </div>
     </a>
-    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Ignore This"].Id, objectType = "geotag" })">
+    <a href="@Url.Action("Detail", "Home", new {id = "7a590b9d-8fca-4bcc-b72f-722ff041e91a", objectType = "geotag" })">
         <div id="image-container3">
-           <img src="~/images/geotags/geotag-black.png" />
-           <p class="image-text">Ignore This</p>
+            <img src="~/images/icons/geotag-black.svg" class="geotag" />
+            <div class="image-text">@GetGeoTagTitle(new Guid("7a590b9d-8fca-4bcc-b72f-722ff041e91a"))</div>
         </div>
     </a>
-    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Deleuzian Ontology in Education"].Id, objectType = "geotag" })">
+    <a href="@Url.Action("Detail", "Home", new {id = "79d82f63-692e-4f18-9796-6ca685c3c8b4", objectType = "geotag" })">
         <div id="image-container4">
-           <img src="~/images/geotags/geotag-white.png" />
-           <p class="image-text">Deleuzian Ontology <br/> in Education</p>
+            <img src="~/images/icons/geotag-white.png" class="geotag" />
+            <div class="image-text">@GetGeoTagTitle(new Guid("79d82f63-692e-4f18-9796-6ca685c3c8b4"))</div>
         </div>
     </a>
-    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["An Inquiry-Machine"].Id, objectType = "geotag" })">
+    <a href="@Url.Action("Detail", "Home", new {id = "e45771fe-431d-42ee-868e-db6aa83f42ba", objectType = "geotag" })">
         <div id="image-container5">
-           <img src="~/images/geotags/geotag-white.png" />
-           <p class="image-text">An Inquiry-Machine</p>
+            <img src="~/images/icons/geotag-white.png" class="geotag" />
+            <div class="image-text">@GetGeoTagTitle(new Guid("e45771fe-431d-42ee-868e-db6aa83f42ba"))</div>
         </div>
     </a>
-    <a href="@Url.Action("Detail", "Home", new {id = geoTagDictionary["Aim...ish"].Id, objectType = "geotag" })">
+    <a href="@Url.Action("Detail", "Home", new {id = "c3eab4be-a4ff-45df-98a3-0127988ab3ba", objectType = "geotag" })">
         <div id="image-container9">
-           <p class="image-text">Aim...ish</p>
-           <img src="~/images/geotags/geotag-black.png" />
+            <div class="image-text">@GetGeoTagTitle(new Guid("c3eab4be-a4ff-45df-98a3-0127988ab3ba"))</div>
+            <img src="~/images/icons/geotag-black.svg" class="geotag" />
         </div>
     </a>
     <a href="@Url.Action("MolarMosaics", "Home")">
         <div id="image-container6">
-           <img src="~/images/geotags/geotag-white.png" />
-           <p class="image-text">Molar Mosaics</p>
+            <img src="~/images/icons/geotag-white.png" class="geotag" />
+            <div class="image-text">Molar Mosaics</div>
         </div>
         <img id="yellow-mosaic1" src="~/images/mosaics/mosaic-yellow-1.png" />
         <img id="yellow-mosaic2" src="~/images/mosaics/mosaic-yellow-1.png" />
@@ -55,8 +59,8 @@
     </a>
     <a href="@Url.Action("MolecularMosaics", "Home")">
         <div id="image-container7">
-           <img src="~/images/geotags/geotag-white.png"/>
-           <p class="image-text">Molecular Mosaics</p>
+            <img src="~/images/icons/geotag-white.png" class="geotag" />
+            <div class="image-text">Molecular Mosaics</div>
         </div>
         <img id="blue-mosaic1" src="~/images/mosaics/mosaic-blue-6.png" />
         <img id="blue-mosaic2" src="~/images/mosaics/mosaic-blue-6.png" />
@@ -66,9 +70,8 @@
     </a>
     <a href="@Url.Action("Kaleidoscoping", "Home")">
         <div id="image-container8">
-           <img id="geotag-white" src="~/images/geotags/geotag-white.png" />
-           <img id="geotag-black" src="~/images/geotags/geotag-black.png" style="display: none;" />
-           <p class="image-text">Kaleido-scoping</p>
+            <img src="~/images/icons/geotag-white.png" class="geotag" />
+            <div class="image-text">Kaleido-scoping</div>
         </div>
     </a>
     <div class="overlay" id="tutorial-overlay" style="display: @(showTutorial ? "" : "none");">

@@ -3,11 +3,24 @@
     width: 100vw;
     height: 100vh;
     position: fixed;
-    background-image: url(../images/background/background2.jpg);
+    background-image: url(../images/background/blue-white-1.jpg);
     background-size: 100% 100%;
     background-position: center;
     justify-content: center;
     align-items: center;
+}
+
+.visibility-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color:white;
+    padding: 3vh;
+    font-size: 2vh;
 }
 
 .info-container,

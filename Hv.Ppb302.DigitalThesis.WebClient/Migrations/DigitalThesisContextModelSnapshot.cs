@@ -17,7 +17,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -95,6 +95,9 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("IsVisible")
+                        .HasColumnType("bit");
+
                     b.Property<string>("PdfFilePath")
                         .HasColumnType("nvarchar(max)");
 
@@ -140,6 +143,9 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("IsVisible")
+                        .HasColumnType("bit");
+
                     b.Property<string>("PdfFilePath")
                         .HasColumnType("nvarchar(max)");
 
@@ -170,6 +176,9 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
 
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool?>("IsVisible")
+                        .HasColumnType("bit");
 
                     b.Property<string>("PdfFilePath")
                         .HasColumnType("nvarchar(max)");

@@ -266,3 +266,8 @@ body {
         .music-controls .fa-play.clicked {
             transform: translateY(2px);
         }
+
+.geotag {
+    height: 6vw;
+    min-height: 5rem;
+}

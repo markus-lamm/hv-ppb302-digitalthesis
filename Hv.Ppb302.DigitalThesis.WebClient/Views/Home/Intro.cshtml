@@ -1,0 +1,29 @@
+﻿@model Page
+@{
+    ViewData["Title"] = "Beginning";
+}
+<head>
+    <link rel="stylesheet" href="~/css/intro.css" asp-append-version="true" />
+</head>
+<div class="content-container">
+    <div class="logo-container">
+        <a asp-action="Geotags">
+            <img class="logo-img" src="~/images/logo.png" alt="logo" />
+        </a>
+        <a class="logo-btn" asp-action="Geotags">Explore</a>
+    </div>
+    <div class="text-container">
+        @if (!String.IsNullOrEmpty(Model.Content) && Model.Content.Trim().ToString() != "<p><br></p>")
+        {
+            <div class="text" id="editor">
+                @Html.Raw(Model.Content)
+            </div>
+        }
+        else
+        {
+            <p>
+                Start content is empty
+            </p>
+        }
+    </div>
+</div>
