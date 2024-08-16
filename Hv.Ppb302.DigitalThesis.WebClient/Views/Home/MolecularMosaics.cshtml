@@ -31,7 +31,7 @@
 </div>
 
 <div id="mySidebar" class="sidebar">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48" opacity="0.7"> <path d="M0 976 400 576l-400-400-56 57 343 343-343 343 56 57Z" /></svg></a>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><img src="~/images/icons/arrow-black-reverse.svg" /></a>
     <h3 class="sidebarLine">Connectors</h3>
     <ul class="tagList">
         @foreach (var tag in Model.ConnectorTags!)
@@ -51,7 +51,7 @@
 </div>
 
 <div id="main">
-    <button class="openbtn" onclick="openNav()"><svg xmlns="http://www.w3.org/2000/svg" height="48" viewBox="0 96 960 960" width="48" opacity="0.7"><path d="M400 976 0 576l400-400 56 57-343 343 343 343-56 57Z" /></svg></button>
+    <button class="openbtn" onclick="openNav()"><img src="~/images/icons/arrow-black.svg" /></button>
 </div>
 @section Scripts {
     <script src="~/js/mosaics.js" asp-append-version="true"></script>

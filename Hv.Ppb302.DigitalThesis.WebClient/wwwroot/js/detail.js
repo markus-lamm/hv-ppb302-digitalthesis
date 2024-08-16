@@ -6,16 +6,16 @@
         event.preventDefault();
         if (audioPlayer.paused) {
             audioPlayer.play();
-            audioImg.src = '/images/icons/stop_icon.png';
+            audioImg.src = '/images/icons/stop.png';
         } else {
             audioPlayer.pause();
             audioPlayer.currentTime = 0;
-            audioImg.src = '/images/icons/play_icon.png';
+            audioImg.src = '/images/icons/play.png';
         }
     });
 
     audioPlayer.addEventListener('ended', function () {
-        audioImg.src = 'https://informatik13.ei.hv.se/digitalthesis/images/icons/play_icon.png';
+        audioImg.src = 'https://informatik13.ei.hv.se/digitalthesis/images/icons/play.png';
     });
 });
 
