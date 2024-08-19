@@ -230,3 +230,26 @@ checkboxes.forEach((checkbox) => {
         });
     });
 });
+
+//Check cookies and apply css
+document.addEventListener('DOMContentLoaded', function () {
+    const visitedMosaics = getCookie('digital-thesis-mosaics');
+    if (visitedMosaics) {
+        const decodedMosaics = decodeURIComponent(visitedMosaics);
+        const visitedList = JSON.parse(decodedMosaics);
+        visitedList.forEach(id => {
+            const element = document.getElementById(`mosaic-${id}`);
+            if (element) {
+                element.classList.add('visited');
+            } else {
+                console.log("Element not found for ID:", id);
+            }
+        });
+    }
+});
+
+function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+}

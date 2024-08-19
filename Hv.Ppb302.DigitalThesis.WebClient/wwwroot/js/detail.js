@@ -1,4 +1,5 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
+﻿//Audioplayer
+document.addEventListener('DOMContentLoaded', function () {
     const audioPlayer = document.getElementById('audio-player');
     const audioImg = document.getElementById('audio-img');
 
@@ -19,7 +20,8 @@
     });
 });
 
-setTimeout(function () {
+//Navigationmenu
+document.addEventListener('DOMContentLoaded', function () {
     const joditHTML = editor.getEditorValue();
 
     // Parse the HTML string to create a DOM structure
@@ -88,4 +90,4 @@ setTimeout(function () {
             observer.observe(target);
         }
     });
-}, 100);
+});

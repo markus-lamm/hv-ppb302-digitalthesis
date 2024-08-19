@@ -11,7 +11,7 @@
     <div class="mosaic-float">
         @foreach(var mosaic in Model.MolarMosaics!)
         {
-            <div class="mosaic" data-tags="@string.Join(',', mosaic.ConnectorTags!.Select(tag => tag.Name))">
+            <div class="mosaic" id="mosaic-@mosaic.Id" data-tags="@string.Join(',', mosaic.ConnectorTags!.Select(tag => tag.Name))">
                 <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id, objectType = "molarmosaic" })">
                     <img class="mosaicImg" src="~/images/mosaics/mosaic-yellow-1.png" />
                     <div class="mosaic-content">

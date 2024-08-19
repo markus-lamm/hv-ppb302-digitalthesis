@@ -1,3 +1,4 @@
+using System.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -64,6 +65,7 @@ public class HomeController : Controller
             var molarMosaics = _molarMosaicRepo.Get(objectId);
             if (molarMosaics != null)
             {
+                CreateMosaicCookie(objectId);
                 return View(BuildViewModel(molarMosaics));
             }
         }
@@ -72,21 +74,13 @@ public class HomeController : Controller
             var molecularMosaics = _molecularMosaicRepo.Get(objectId);
             if (molecularMosaics != null)
             {
+                CreateMosaicCookie(objectId);
                 return View(BuildViewModel(molecularMosaics));
             }
         }
         else
         {
             throw new Exception("Invalid object type");
-        }
-
-        if (objectType is "molecularmosaic" or "molarmosaic")
-        {
-            var visitedList = ReadCookie("digital-thesis-mosaics");
-            if (visitedList?.Count > 0)
-            {
-
-            }
         }
 
         return NotFound();
@@ -169,6 +163,17 @@ public class HomeController : Controller
                 KaleidoscopeTags = kaleidoscopeTags.ToList(),
             };
         }
+    }
+
+    public void CreateMosaicCookie(Guid objectId)
+    {
+        var visitedMosaicsList = ReadCookie("digital-thesis-mosaics");
+        visitedMosaicsList ??= new List<string>(); // If cookie is null, create a new list
+        if (!visitedMosaicsList.Contains(objectId.ToString()))
+        {
+            visitedMosaicsList.Add(objectId.ToString());
+        }
+        CreateCookie("digital-thesis-mosaics", visitedMosaicsList, 30);
     }
 
     public void CreateCookie(string key, List<string> values, int? expirationTime)
