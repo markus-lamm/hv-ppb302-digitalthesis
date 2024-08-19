@@ -14,7 +14,7 @@
         @foreach(var mosaic in Model.MolecularMosaics!)
         {
             var randomBlueMosaicImg = mosaicImages[random.Next(mosaicImages.Length)];
-            <div class="mosaic" data-tags="@string.Join(',', mosaic.ConnectorTags!.Select(tag => tag.Name))">
+            <div class="mosaic" id="mosaic-@mosaic.Id" data-tags="@string.Join(',', mosaic.ConnectorTags!.Select(tag => tag.Name))">
                 <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id, objectType = "molecularmosaic" })">
                     <img class="mosaicImg" src="@Url.Content(randomBlueMosaicImg)" />
                     <div class="mosaic-content">
