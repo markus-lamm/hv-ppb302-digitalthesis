@@ -7,15 +7,15 @@
 <head>
     <link rel="stylesheet" href="~/css/kaleidoscoping.css" asp-append-version="true" />
 </head>
-<div class="kaleid-container">
-    <div class="roulette" id="biggi">
-        <div class="rouletteimage">
-            <img src="~/images/background/kaleidoscope-1.png" id="bigImage" />
+<div class="content-container">
+    <div class="kaleidoscope-container" id="kaleidoscope-container-item">
+        <div class="kaleidoscope-image">
+            <img src="~/images/background/kaleidoscope-1.png" id="kaleidoscope-image-item" />
             @foreach (var molarMosaic in Model.MolarMosaics!)
             {
                 var randomBlueMosaicImg = mosaicImages[random.Next(mosaicImages.Length)];
                 <a href="@Url.Action("Detail", "Home", new {id = molarMosaic.Id, objectType = "molarmosaic" })">
-                    <img src="@Url.Content(randomBlueMosaicImg)" class="smallCircle"
+                    <img src="@Url.Content(randomBlueMosaicImg)" class="mosaic"
                          data-tags="@string.Join(',', molarMosaic.KaleidoscopeTags!.Select(tag => tag.Name)):@string.Join(':', molarMosaic.AssemblageTagId)" />
                 </a>
             }
@@ -23,7 +23,7 @@
             {
                 var randomBlueMosaicImg = mosaicImages[random.Next(mosaicImages.Length)];
                 <a href="@Url.Action("Detail", "Home", new {id = molecularMosaic.Id, objectType = "molecularmosaic" })">
-                    <img src="@Url.Content(randomBlueMosaicImg)" class="smallCircle"
+                    <img src="@Url.Content(randomBlueMosaicImg)" class="mosaic"
                          data-tags="@string.Join(',', molecularMosaic.KaleidoscopeTags!.Select(tag => tag.Name)):@string.Join(':', molecularMosaic.AssemblageTagId)" />
                 </a>
             }
