@@ -1,6 +1,7 @@
 ﻿@model List<FileViewViewModel>
 @{
     ViewData["Title"] = "Admin";
+    var itemIndex = 0;
 }
 
 <head>
@@ -13,45 +14,97 @@
             <div class="file-upload">
                 @using (Html.BeginForm("FileUpload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
                 {
-                    <label for="files" class="btn">Choose a file</label>
-                    <input type="file" name="file" id="files" />
-                    <input type="submit" value="FileUpload" />
+                    <div>
+                        <label for="files" class="btn">Choose a file</label>
+                        <input required type="file" name="file" id="files" />
+                    </div>
+                    <div class="file-upload-seconddiv">
+                        <div class="switchdiv">
+                            <label for="IsMaterial">Materials</label>
+                            <label class="switch">
+                                <input name="IsMaterial" id="switchinput" type="checkbox" value="true">
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+                        <input class="form-return-btn" type="submit" value="Upload file" />
+                    </div>
                 }
             </div>
+            <form id="saveMaterialsForm" method="post" asp-action="UpdateMaterials" asp-controller="Admin">
+                <input type="hidden" name="materialsData" id="materialsData">
+            </form>
+            <button onclick="saveMaterialStatus()" class="form-return-btn" asp-controller="Admin" asp-action="Index">Save</button>
         </div>
         <div class="file-container">
             @foreach (var item in Model)
             {
-                <div class="file-card">
-                    @switch (item.Category)
-                    {
-                        case MimeDetective.Storage.Category.Document:
-                            <img src="~/images/pdf.png" />
-                            break;
-                        case MimeDetective.Storage.Category.Video:
-                            <img src="~/images/video.png" />
-                            break;
-                        case MimeDetective.Storage.Category.Audio:
-                            <img src="~/images/audio.png" />
-                            break;
-                        case MimeDetective.Storage.Category.Compressed:
-                            <img src="~/images/video.png" />
-                            break;
-                        default:
-                            break;
-                    }
-                    <div class="file-options">
-                        <div class="file-options-btns">
-                            <button onclick="copyFunction('@(item.FileUrl)')">Copy Link</button>
-                            <form method="post" asp-action="FileView" asp-controller="Admin">
-                                <input type="hidden" name="FileName" value="@item.File" />
-                                <button type="submit">Delete</button>
-                            </form>
+                <div class="files-container">
+                    <div class="file-card">
+                        @switch (item.Category)
+                        {
+                            case MimeDetective.Storage.Category.Document:
+                                <img src="~/images/pdf.png" />
+                                break;
+                            case MimeDetective.Storage.Category.Video:
+                                <img src="~/images/video.png" />
+                                break;
+                            case MimeDetective.Storage.Category.Audio:
+                                <img src="~/images/audio.png" />
+                                break;
+                            case MimeDetective.Storage.Category.Compressed:
+                                <img src="~/images/video.png" />
+                                break;
+                            default:
+                                <img src="~/images/audio.png" />
+                                break;
+                        }
+                        <div class="file-options">
+                            <div class="file-options-btns">
+                                <button onclick="copyFunction('@(item.FileUrl)')">Copy Link</button>
+                                <form method="post" asp-action="DeleteFile" asp-controller="Admin">
+                                    <input type="hidden" name="FileName" value="@item.Name" />
+                                    <button type="submit">Delete</button>
+                                </form>
+                            </div>
+                            <div class="file-card-title">@item.Name</div>
                         </div>
-                        <div class="file-card-title">@item.File</div>
+                        
+                    </div>
+                    <div class="material-container">
+                        <label class="switch">
+                            <input type="checkbox"
+                                   id="switchinput-@itemIndex"
+                                   value="true"
+                                   data-index="@itemIndex"
+                                   data-name="@item.Name"
+                                   onchange="updateMaterialStatus(this)"
+                            @(item.IsMaterial ?? false ? "checked" : "") />
+                            <span class="slider round"></span>
+                        </label>
+                        <label for="switchinput-@itemIndex">Materials</label>
                     </div>
                 </div>
+                itemIndex++;
             }
         </div>
     </div>
 </div>
+
+<script>
+    // Object to store the status of materials
+    var materialsStatus = {};
+
+    function updateMaterialStatus(checkbox) {
+        var index = checkbox.getAttribute('data-index');
+        var name = checkbox.getAttribute('data-name');
+        materialsStatus[name] = checkbox.checked;
+    }
+
+    function saveMaterialStatus() {
+        // Convert the materialsStatus object to a JSON string and set it in the hidden input
+        document.getElementById('materialsData').value = JSON.stringify(materialsStatus);
+
+        // Submit the hidden form
+        document.getElementById('saveMaterialsForm').submit();
+    }
+</script>

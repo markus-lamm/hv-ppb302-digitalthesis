@@ -19,7 +19,8 @@ Jodit.defaultOptions.controls.footnoteButton = {
             }),
             new UIButton(editor, {
                 text: 'Insert Footnote',
-                status: 'primary'
+                status: 'primary',
+                variant: 'primary'
             }).onAction(() => {
                 form.submit();
             })

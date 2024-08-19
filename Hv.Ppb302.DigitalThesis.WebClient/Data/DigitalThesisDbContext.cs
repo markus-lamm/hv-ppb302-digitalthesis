@@ -15,4 +15,5 @@ public class DigitalThesisDbContext : DbContext
     public DbSet<User> Users { get; set; }
     public DbSet<AssemblageTag> AssemblageTags { get; set; }
     public DbSet<Page> Pages { get; set; }
+    public DbSet<Upload> Uploads { get; set; }
 }
