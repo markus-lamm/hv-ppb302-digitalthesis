@@ -1,8 +1,10 @@
+using System.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
 using Microsoft.AspNetCore.Mvc;
 using MimeDetective;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
@@ -72,6 +74,7 @@ public class HomeController : Controller
             var molarMosaics = _molarMosaicRepo.Get(objectId);
             if (molarMosaics != null)
             {
+                CreateMosaicCookie(objectId);
                 return View(BuildViewModel(molarMosaics));
             }
         }
@@ -80,6 +83,7 @@ public class HomeController : Controller
             var molecularMosaics = _molecularMosaicRepo.Get(objectId);
             if (molecularMosaics != null)
             {
+                CreateMosaicCookie(objectId);
                 return View(BuildViewModel(molecularMosaics));
             }
         }
@@ -168,6 +172,33 @@ public class HomeController : Controller
                 KaleidoscopeTags = kaleidoscopeTags.ToList(),
             };
         }
+    }
+
+    public void CreateMosaicCookie(Guid objectId)
+    {
+        var visitedMosaicsList = ReadCookie("digital-thesis-mosaics");
+        visitedMosaicsList ??= new List<string>(); // If cookie is null, create a new list
+        if (!visitedMosaicsList.Contains(objectId.ToString()))
+        {
+            visitedMosaicsList.Add(objectId.ToString());
+        }
+        CreateCookie("digital-thesis-mosaics", visitedMosaicsList, 30);
+    }
+
+    public void CreateCookie(string key, List<string> values, int? expirationTime)
+    {
+        var jsonSerializer = JsonSerializer.Serialize(values);
+        var cookieOptions = new CookieOptions
+        {
+            Expires = DateTime.Now.AddDays(expirationTime ?? 30)
+        };
+        Response.Cookies.Append(key, jsonSerializer, cookieOptions);
+    }
+
+    public List<string>? ReadCookie(string key)
+    {
+        var cookieValue = Request.Cookies[key];
+        return cookieValue != null ? JsonSerializer.Deserialize<List<string>>(cookieValue) : new List<string>();
     }
 
     public List<FileViewViewModel> GetAllMaterialFiles()

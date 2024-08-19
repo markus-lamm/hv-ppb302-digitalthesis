@@ -38,7 +38,7 @@
     .geotag-container a {
         text-decoration: none;
         color: inherit;
-        transition: transform 0.3s ease-in-out;
+        transition: transform 0.8s;
     }
 
     .geotag-container a:hover {

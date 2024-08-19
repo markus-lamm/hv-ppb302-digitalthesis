@@ -1,4 +1,5 @@
-﻿document.addEventListener('DOMContentLoaded', function () {
+﻿//Audioplayer
+document.addEventListener('DOMContentLoaded', function () {
     const audioPlayer = document.getElementById('audio-player');
     const audioImg = document.getElementById('audio-img');
 
@@ -6,20 +7,21 @@
         event.preventDefault();
         if (audioPlayer.paused) {
             audioPlayer.play();
-            audioImg.src = '/images/icons/stop_icon.png';
+            audioImg.src = '/images/icons/stop.png';
         } else {
             audioPlayer.pause();
             audioPlayer.currentTime = 0;
-            audioImg.src = '/images/icons/play_icon.png';
+            audioImg.src = '/images/icons/play.png';
         }
     });
 
     audioPlayer.addEventListener('ended', function () {
-        audioImg.src = 'https://informatik13.ei.hv.se/digitalthesis/images/icons/play_icon.png';
+        audioImg.src = 'https://informatik13.ei.hv.se/digitalthesis/images/icons/play.png';
     });
 });
 
-setTimeout(function () {
+//Navigationmenu
+document.addEventListener('DOMContentLoaded', function () {
     const joditHTML = editor.getEditorValue();
 
     // Parse the HTML string to create a DOM structure
@@ -88,4 +90,4 @@ setTimeout(function () {
             observer.observe(target);
         }
     });
-}, 100);
+});

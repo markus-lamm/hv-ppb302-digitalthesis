@@ -1,7 +1,7 @@
 ﻿const { UIForm, UIInput, UIButton } = Jodit.modules;
 
 Jodit.defaultOptions.controls.footnoteButton = {
-    iconURL: "/images/superscript.png", // Example icon
+    iconURL: "/images/icons/superscript.png",
     popup: function (editor, current, control, close) {
         const form = new UIForm(editor, [
             new UIInput(editor, {
@@ -160,12 +160,12 @@ if (playButton) {
         if (audioPlayer.paused) {
             // If paused, play the audio
             audioPlayer.play();
-            audioImage.src = "https://informatik13.ei.hv.se/DigitalThesis/images/icons/stop_icon.png"
+            audioImage.src = "https://informatik13.ei.hv.se/DigitalThesis/images/icons/stop.png"
         } else {
             // If playing, pause the audio
             audioPlayer.pause();
             audioPlayer.currentTime = 0;
-            audioImage.src = "https://informatik13.ei.hv.se/DigitalThesis/images/icons/play_icon.png"
+            audioImage.src = "https://informatik13.ei.hv.se/DigitalThesis/images/icons/play.png"
         }
     });
 }

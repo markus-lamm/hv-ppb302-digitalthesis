@@ -9,10 +9,13 @@
 }
 
 .content-container {
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
     display: flex;
     flex-direction: row;
-    height: 100vh;
-    width: 100vw;
+    justify-content: space-around;
     overflow: hidden;
 }
 
@@ -25,40 +28,45 @@
 }
 
 .logo-img {
-    width: 50vh;
-    transition: transform 0.5s;
+    width: 40vw;
+    min-width: 30rem;
+    max-width: 60rem;
+    transition: transform 0.8s;
 }
 
 .logo-img:hover {
-    transform: scale(1.2);
+    transform: scale(1.1);
 }
-
-.logo-btn {
-    margin-top: 5vh;
-    color: white;
-    height: 10vh;
-    width: 15vw;
-    background-color: rgba(123, 141, 163, 1);
-    text-decoration: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 4vh;
-}
-
-    .logo-btn:hover {
-        background-color: rgba(123, 141, 163, 0.8);
-    }
 
 .text-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 80vw;
-    height: 96vh;
     background-color: rgba(255, 255, 255, 0.8);
     padding-left: 2vw;
     padding-right: 2vw;
     padding-top: 2vh;
-    padding-bottom: 2vh;
+    padding-bottom: 5vh;
+}
+
+.link-btn {
+    color: black;
+    height: 5vh;
+    width: 15vw;
+    min-width: 30rem;
+    background-color: #ADBACD;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    margin-top: 2rem;
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.link-btn:hover {
+    background-color: rgba(123, 141, 163, 0.8);
 }

@@ -63,6 +63,10 @@ a:hover img {
     max-width: 30rem;
 }
 
+.visited {
+    filter: grayscale(1000%);
+}
+
 .sidebarLine {
     padding-top: 3rem;
     padding-bottom: 1rem;
