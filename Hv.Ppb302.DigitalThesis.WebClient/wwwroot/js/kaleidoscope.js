@@ -1,21 +1,88 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
     const radios = document.querySelectorAll('.custom-radio');
+    const kaleidoscopeClockwise = document.getElementById('test-item-1');
+    const kaleidoscopeCounterClockwise = document.getElementById('test-item-2');
     var kaleidoscopeContainerItem = document.getElementById('kaleidoscope-container-item');
     var mosaics = document.querySelectorAll('.mosaic');
+
+    //test item
+    var kaleidoscopeImageItem = document.getElementById('kaleidoscope-image-item');
 
     radios.forEach(radio => {
         radio.addEventListener('change', function () {
             // Get the current rotation value (if any)
-            const currentRotation = parseInt(kaleidoscopeContainerItem.style.transform.replace('rotate(', '').replace('deg)', ''), 10) || 0;
+            const currentRotation = parseInt(kaleidoscopeClockwise.style.transform.replace('rotate(', '').replace('deg)', ''), 10) || 0;
             const currentRotationsm = parseInt(mosaics[0].style.transform.replace('rotate(', '').replace('deg)', ''), 10) || 0;
             // Add 90 degrees to the current rotation
             const newRotation = currentRotation + 90;
             const newRotationsm = currentRotationsm + 90;
             // Apply the new rotation
             mosaics.forEach((mosaic, index) => {
-                mosaic.style.transform = `rotate(${newRotationsm}deg)`;
+                const randomRotation = Math.floor(Math.random() * 180) - 90; // Random rotation between -90 and 90 degrees
+                mosaic.style.transform = `rotate(${randomRotation}deg)`;
             });
-            kaleidoscopeContainerItem.style.transform = `rotate(${newRotation}deg)`;
+            // change the hue-saturation of the mosaics to make them more visually distinct from the kaleidoscope background
+
+            //test
+            const kaleidoscopeContainer = document.getElementById('kaleidoscope-container-item');
+            const kaleirotate = Math.floor(Math.random() * 180) - 90; // Random rotation between -90 and 90 degrees
+            kaleidoscopeContainer.style.transform = `rotate(${kaleirotate}deg)`;
+
+
+            //test
+            //const mosaicsContainer = document.getElementById('kaleidoscope-image-item');
+            //let mosaicsContainerRotation = Math.floor(Math.random() * 180) - 90;
+            //mosaicsContainer.style.transform = `rotate(${mosaicsContainerRotation}deg)`;
+
+            const kaleidoscopetest3 = document.getElementById('test-item-3');
+            //const kaleidoscopetest4 = document.getElementById('test-item-4');
+            //const kaleidoscopetest5 = document.getElementById('test-item-5');
+            const kaleidoscopetest6 = document.getElementById('test-item-6');
+            const kaleidoscopetest7 = document.getElementById('test-item-7');
+            //const kaleidoscopetest8 = document.getElementById('test-item-8');
+            const kaleidoscopetest9 = document.getElementById('test-item-9');
+            //const kaleidoscopetest10 = document.getElementById('test-item-10');
+            //const kaleidoscopetest11 = document.getElementById('test-item-11');
+            const kaleidoscopetest12 = document.getElementById('test-item-12');
+
+            const elementsToRotate = [
+                kaleidoscopeClockwise,
+                kaleidoscopetest3,
+                //kaleidoscopetest5,
+                kaleidoscopetest7,
+                kaleidoscopetest9,
+                //kaleidoscopetest11
+            ];
+
+            const elementsToRotateInverted = [
+                kaleidoscopeCounterClockwise,
+                //kaleidoscopetest4,
+                kaleidoscopetest6,
+                //kaleidoscopetest8,
+                //kaleidoscopetest10,
+                kaleidoscopetest12
+            ];
+
+            elementsToRotate.forEach(element => {
+                let rotation = newRotation + Math.floor(Math.random() * 90);
+                element.style.transform = `rotate(${rotation}deg)`;
+                element.style.opacity = 0.5;
+            });
+
+            // Randomly select one element to have an opacity of 1
+            const randomIndex = Math.floor(Math.random() * elementsToRotate.length);
+            elementsToRotate[randomIndex].style.opacity = 1;
+
+            elementsToRotateInverted.forEach(element => {
+                let rotation = newRotation + Math.floor(Math.random() * 90);
+                rotation = rotation * -1;
+                element.style.transform = `rotate(${rotation}deg)`;
+                element.style.opacity = 0.5;
+            });
+
+            // Randomly select one element to have an opacity of 1
+            const randomIndexInverted = Math.floor(Math.random() * elementsToRotateInverted.length);
+            elementsToRotateInverted[randomIndexInverted].style.opacity = 1;
 
             const imagefilter = ["kaleidoscope-filter-1", "kaleidoscope-filter-2", "kaleidoscope-filter-3", "kaleidoscope-filter-4"]
 
@@ -111,12 +178,11 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
     });
 });
 
+//Placing the mosaics within the kaleidoscope
 var kaleidoscopeImageItem = document.getElementById('kaleidoscope-image-item');
 if (kaleidoscopeImageItem) {
     document.addEventListener("DOMContentLoaded", function () {
         window.onload = function () {
-            var kaleidoscopeContainer = document.querySelector('.kaleidoscope-container');
-            var kaleidoscopeImage = document.querySelector('.kaleidoscope-image');
             var kaleidoscopeImageItem = document.getElementById('kaleidoscope-image-item');
             var mosaics = document.querySelectorAll('.mosaic');
 

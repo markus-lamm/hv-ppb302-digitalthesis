@@ -1,6 +1,6 @@
 ﻿.content-container {
     overflow: hidden !important;
-    background-image: url(../images/background/white-1.png);
+    background-image: url(../images/backgrounds/white-1.png);
     background-size: cover;
     height: 100%;
     width: 100vw;
@@ -69,7 +69,7 @@
     width: 100%;
     height: 100vh;
     padding-top: 15vh;
-    transition: transform 1.5s ease-in-out;
+    transition: transform 3s ease-in-out;
 }
 
 .kaleidoscope-image {
@@ -77,9 +77,36 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    height: 30vw;
+    width: 30vw;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 3s ease;
+}
+
+.kaleidoscope-image-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 30vw;
+    width: 30vw;
+    opacity: 0.5;
+    transition: 3s ease;
+}
+
+.kaleidoscope-test {
+    opacity: 0.5;
+    transition: 3s ease;
+}
+
+.mosaics-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 3s ease;
 }
 
 .mosaic {
@@ -87,7 +114,7 @@
     height: 6rem;
     border-radius: 50%;
     position: absolute;
-    transition: 1.8s ease;
+    transition: 3s ease;
 }
 
 .kaleidoscope-filter-1 {
@@ -105,10 +132,10 @@
     filter: none;
 }
 
-#kaleidoscope-image-item {
+/*#kaleidoscope-image-item {
     height: 40rem;
     width: 40rem;
-}
+}*/
 
 .tagList {
     list-style: none;
