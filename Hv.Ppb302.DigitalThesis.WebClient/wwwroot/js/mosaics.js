@@ -232,7 +232,7 @@ checkboxes.forEach((checkbox) => {
 });
 
 //Check cookies and apply css
-document.addEventListener('DOMContentLoaded', function () {
+function applyVisitedMosaics() {
     const visitedMosaics = getCookie('digital-thesis-mosaics');
     if (visitedMosaics) {
         const decodedMosaics = decodeURIComponent(visitedMosaics);
@@ -246,10 +246,22 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
     }
-});
+}
 
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
     if (parts.length === 2) return parts.pop().split(';').shift();
 }
+
+// Ensure the script runs on initial load
+document.addEventListener('DOMContentLoaded', function () {
+    applyVisitedMosaics();
+});
+
+// Ensure the script runs when the user navigates back to the page
+window.addEventListener('pageshow', function (event) {
+    if (event.persisted) {
+        applyVisitedMosaics();
+    }
+});
