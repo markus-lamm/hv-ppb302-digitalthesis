@@ -2,6 +2,7 @@ using System.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
 using Microsoft.AspNetCore.Mvc;
+using MimeDetective;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -14,18 +15,21 @@ public class HomeController : Controller
     private readonly MolecularMosaicRepository _molecularMosaicRepo;
     private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
     private readonly PageRepository _pageRepository;
+    private readonly UploadRepository _uploadRepository;
 
     public HomeController(GeoTagRepository geoTagRepo, 
         MolarMosaicRepository molarMosaicRepo, 
         MolecularMosaicRepository molecularMosaicRepo,
         KaleidoscopeTagRepository kaleidoscopeTagRepo,
-        PageRepository pageRepo)
+        PageRepository pageRepo,
+        UploadRepository uploadRepository)
     {
         _geoTagRepo = geoTagRepo;
         _molarMosaicRepo = molarMosaicRepo;
         _molecularMosaicRepo = molecularMosaicRepo;
         _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
         _pageRepository = pageRepo;
+        _uploadRepository = uploadRepository;
     }
 
     public IActionResult Index()
@@ -47,6 +51,11 @@ public class HomeController : Controller
     {
         ViewBag.ShowTutorial = showTutorial;
         return View(_geoTagRepo.GetAll());
+    }
+
+    public IActionResult Materials()
+    {
+        return View(GetAllMaterialFiles());
     }
 
     [Route("Home/Detail/{objectId:Guid}")]
@@ -191,6 +200,45 @@ public class HomeController : Controller
         var cookieValue = Request.Cookies[key];
         return cookieValue != null ? JsonSerializer.Deserialize<List<string>>(cookieValue) : new List<string>();
     }
+
+    public List<FileViewViewModel> GetAllMaterialFiles()
+    {
+        var Inspector = new ContentInspectorBuilder()
+        {
+            Definitions = MimeDetective.Definitions.Default.All()
+        }.Build();
+
+        var path = Path.Combine(@"C:\Uploads");
+        var files = Directory.GetFiles(path)
+                             .Select(path => Path.GetFileName(path))
+                             .ToList();
+
+        var uploadsList = _uploadRepository.GetAllMaterials();
+        List<FileViewViewModel> fileViewModels = [];
+        foreach (var file in files)
+        {
+            var isMaterialFile = uploadsList?.FirstOrDefault(m => m.Name == file);
+
+            if (isMaterialFile != null)
+            {
+                var Results = Inspector.Inspect(Path.Combine(@"C:\Uploads", file));
+                var fileType = Results.FirstOrDefault()!.Definition.File.Categories.FirstOrDefault();
+                var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
+                var upload = uploadsList?.FirstOrDefault(u => u.Name == file);
+
+                fileViewModels.Add(new FileViewViewModel
+                {
+                    Category = fileType,
+                    Name = file,
+                    FileUrl = fileUrl,
+                    IsMaterial = upload?.IsMaterial
+                });
+            }
+
+        }
+        return fileViewModels;
+    }
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

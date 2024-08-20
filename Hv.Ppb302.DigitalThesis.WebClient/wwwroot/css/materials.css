@@ -1,0 +1,71 @@
+﻿body {
+    background-image: url(../images/background/white-1.png);
+    background-size: cover;
+    background-attachment: fixed;
+    height: auto;
+}
+
+.matpdffiles {
+    display: flex;
+    margin-inline: 10vw;
+    padding-bottom: 10vh;
+    padding-top: 25vh;
+}
+.matpdfcontainer {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    gap: 3rem;
+}
+
+.matpdfcard {
+ 
+    display: flex;
+    height: 8vw;
+    width: 100%;
+    background: white;
+    border-radius: 10px;
+    align-items: center;
+}
+
+.matpdfimg{
+
+    height: 5vw;
+    margin-inline: 4rem
+}
+
+.matcontentcontainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex: 1;
+    min-width: 0; /* Ensures the container shrinks properly */
+    overflow: hidden;
+    padding-right: 5rem;
+    gap:3rem;
+}
+
+.matcontentcontainer h2 {
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: normal; /* Allows text to wrap */
+    -webkit-line-clamp: 2; /* Limits the text to two lines */
+    margin: 0;
+    flex: 1;
+    min-width: 0;
+}
+
+
+.matdownimg {
+    height: 2vw;
+
+}
+
+.downcontainer {
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
