@@ -1,0 +1,38 @@
+﻿@model List<FileViewViewModel>
+@{
+    ViewData["Title"] = "Materials";
+}
+
+
+<head>
+    <link rel="stylesheet" href="~/css/materials.css" asp-append-version="true" />
+</head>
+
+<div class="matpdffiles">
+    @if (Model is not null)
+    {
+        foreach (var file in Model)
+        {
+            <div class="matpdfcontainer">
+                <div class="matpdfcard">
+                    <img class="matpdfimg" src="~/images/pdf.png" />
+                    <div class="matcontentcontainer">
+                        <h2>@file.Name</h2>
+                        <a target="_blank" class="downcontainer" href="@file.FileUrl">
+                            <img class="matdownimg" src="~/images/downloads.png" />
+                            <h4>Download</h4>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h1>För närvarande finns det inga materials här!</h1>
+    }
+
+    
+
+
+</div>

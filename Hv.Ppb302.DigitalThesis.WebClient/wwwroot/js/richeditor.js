@@ -19,7 +19,8 @@ Jodit.defaultOptions.controls.footnoteButton = {
             }),
             new UIButton(editor, {
                 text: 'Insert Footnote',
-                status: 'primary'
+                status: 'primary',
+                variant: 'primary'
             }).onAction(() => {
                 form.submit();
             })
@@ -86,7 +87,6 @@ Jodit.defaultOptions.controls.footnoteButton = {
 var editorDiv = document.getElementById('editor');
 if (editorDiv) {
     var editor = new Jodit('#editor', {
-        autofocus: true,
         toolbar: false,
         readonly: true,
         "showCharsCounter": false,
