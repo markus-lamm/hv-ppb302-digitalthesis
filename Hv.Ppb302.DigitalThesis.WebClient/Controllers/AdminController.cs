@@ -143,18 +143,6 @@ public class AdminController : Controller
         return View(page);
     }
 
-    public IActionResult StartAdmin()
-    {
-        return View(_pageRepo.GetByName("Start"));
-    }
-
-    [HttpPost]
-    public IActionResult StartAdmin(Page page)
-    {
-        _pageRepo.Update(page);
-        return View(page);
-    }
-
     public IActionResult Login()
     {
         if (TempData["LoginError"] != null)
