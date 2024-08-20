@@ -1,14 +1,14 @@
 ﻿const { UIForm, UIInput, UIButton } = Jodit.modules;
 
 Jodit.defaultOptions.controls.footnoteButton = {
-    iconURL: "/images/icons/superscript.png",
+    iconURL: "https://informatik13.ei.hv.se/DigitalThesis/images/icons/superscript.png",
     popup: function (editor, current, control, close) {
         const form = new UIForm(editor, [
             new UIInput(editor, {
                 name: 'linkText',
                 placeholder: 'Enter link text...',
                 autofocus: true,
-                label: 'Text:',
+                label: 'Text: *',
                 required: true
             }),
             new UIInput(editor, {
@@ -40,7 +40,7 @@ Jodit.defaultOptions.controls.footnoteButton = {
                 const linkURL = LinkUrlElement.state.value || '';
                 let footnoteText = linkText;
 
-                const existingFootnotes = editor.editor.querySelectorAll('a[href^="#ftn"]');
+                const existingFootnotes = editor.editor.querySelectorAll('a[href^="#_ftnref"]');
                 const footnoteNumber = existingFootnotes.length + 1;
 
 
@@ -51,7 +51,7 @@ Jodit.defaultOptions.controls.footnoteButton = {
                 const footnoteId = `ftn${footnoteNumber}`;
                 const footnoteRefId = `_ftnref${footnoteNumber}`;
 
-                const footnoteMarker = `<a href="#${footnoteId}" name="${footnoteRefId}" title=""><span class="MsoFootnoteReference" style="vertical-align: super;"><span style="font-size: 15px; line-height: 107%; font-family: Aptos, sans-serif;">[${footnoteNumber}]</span></span></a>&nbsp;`;
+                const footnoteMarker = `<a href="#${footnoteId}" name="${footnoteRefId}" title=""><span class="MsoFootnoteReference" style="vertical-align: super;"><span style="font-size: 15px; line-height: 107%; font-family: Aptos, sans-serif; vertical-align: super;">${footnoteNumber}</span></span></a>&nbsp;`;
 
                 const footnoteContent = `
                         <div id="${footnoteId}">
