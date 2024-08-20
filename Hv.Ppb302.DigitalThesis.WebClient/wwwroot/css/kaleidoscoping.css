@@ -1,6 +1,6 @@
-﻿.kaleid-container {
+﻿.content-container {
     overflow: hidden !important;
-    background-image: url(../images/background/white-1.png);
+    background-image: url(../images/backgrounds/white-1.png);
     background-size: cover;
     height: 100%;
     width: 100vw;
@@ -64,50 +64,78 @@
     justify-self: center;
 }
 
-.roulette {
+.kaleidoscope-container {
     position: relative;
     width: 100%;
     height: 100vh;
     padding-top: 15vh;
-    transition: transform 1.5s ease-in-out;
+    transition: transform 3s ease-in-out;
 }
 
-.rouletteimage {
+.kaleidoscope-image {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    height: 30vw;
+    width: 30vw;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 3s ease;
 }
 
-.smallCircle {
+.kaleidoscope-image-item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    height: 30vw;
+    width: 30vw;
+    opacity: 0.5;
+    transition: 3s ease;
+}
+
+.kaleidoscope-test {
+    opacity: 0.5;
+    transition: 3s ease;
+}
+
+.mosaics-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: 3s ease;
+}
+
+.mosaic {
     width: 6rem;
     height: 6rem;
     border-radius: 50%;
     position: absolute;
-    transition: 1.8s ease;
+    transition: 3s ease;
 }
 
-.filterbigimage {
+.kaleidoscope-filter-1 {
     filter: brightness(110%) saturate(90%) hue-rotate(195deg);
 }
 
-.filterbigimage2 {
+.kaleidoscope-filter-2 {
     filter: brightness(110%) saturate(110%) hue-rotate(50deg);
 }
 
-.filterbigimage3 {
+.kaleidoscope-filter-3 {
     filter: brightness(110%) saturate(50%) hue-rotate(145deg);
 }
-.filterbigimage4 {
+.kaleidoscope-filter-4 {
     filter: none;
 }
-#bigImage {
+
+/*#kaleidoscope-image-item {
     height: 40rem;
     width: 40rem;
-}
+}*/
 
 .tagList {
     list-style: none;

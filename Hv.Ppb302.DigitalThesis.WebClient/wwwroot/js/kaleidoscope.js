@@ -1,33 +1,100 @@
 ﻿document.addEventListener("DOMContentLoaded", function () {
     const radios = document.querySelectorAll('.custom-radio');
-    var bigImage = document.getElementById('biggi');
-    var smallCircles = document.querySelectorAll('.smallCircle');
+    const kaleidoscopeClockwise = document.getElementById('test-item-1');
+    const kaleidoscopeCounterClockwise = document.getElementById('test-item-2');
+    var kaleidoscopeContainerItem = document.getElementById('kaleidoscope-container-item');
+    var mosaics = document.querySelectorAll('.mosaic');
+
+    //test item
+    var kaleidoscopeImageItem = document.getElementById('kaleidoscope-image-item');
 
     radios.forEach(radio => {
         radio.addEventListener('change', function () {
             // Get the current rotation value (if any)
-            const currentRotation = parseInt(bigImage.style.transform.replace('rotate(', '').replace('deg)', ''), 10) || 0;
-            const currentRotationsm = parseInt(smallCircles[0].style.transform.replace('rotate(', '').replace('deg)', ''), 10) || 0;
+            const currentRotation = parseInt(kaleidoscopeClockwise.style.transform.replace('rotate(', '').replace('deg)', ''), 10) || 0;
+            const currentRotationsm = parseInt(mosaics[0].style.transform.replace('rotate(', '').replace('deg)', ''), 10) || 0;
             // Add 90 degrees to the current rotation
             const newRotation = currentRotation + 90;
             const newRotationsm = currentRotationsm + 90;
             // Apply the new rotation
-            smallCircles.forEach((smallCircle, index) => {
-                smallCircle.style.transform = `rotate(${newRotationsm}deg)`;
+            mosaics.forEach((mosaic, index) => {
+                const randomRotation = Math.floor(Math.random() * 180) - 90; // Random rotation between -90 and 90 degrees
+                mosaic.style.transform = `rotate(${randomRotation}deg)`;
             });
-            bigImage.style.transform = `rotate(${newRotation}deg)`;
+            // change the hue-saturation of the mosaics to make them more visually distinct from the kaleidoscope background
 
-            const imagefilter = ["filterbigimage", "filterbigimage2", "filterbigimage3", "filterbigimage4"]
+            //test
+            const kaleidoscopeContainer = document.getElementById('kaleidoscope-container-item');
+            const kaleirotate = Math.floor(Math.random() * 180) - 90; // Random rotation between -90 and 90 degrees
+            kaleidoscopeContainer.style.transform = `rotate(${kaleirotate}deg)`;
 
-            const appliedFilter = Array.from(bigImage.classList).find(className => imagefilter.includes(className));
+
+            //test
+            //const mosaicsContainer = document.getElementById('kaleidoscope-image-item');
+            //let mosaicsContainerRotation = Math.floor(Math.random() * 180) - 90;
+            //mosaicsContainer.style.transform = `rotate(${mosaicsContainerRotation}deg)`;
+
+            const kaleidoscopetest3 = document.getElementById('test-item-3');
+            //const kaleidoscopetest4 = document.getElementById('test-item-4');
+            //const kaleidoscopetest5 = document.getElementById('test-item-5');
+            const kaleidoscopetest6 = document.getElementById('test-item-6');
+            const kaleidoscopetest7 = document.getElementById('test-item-7');
+            //const kaleidoscopetest8 = document.getElementById('test-item-8');
+            const kaleidoscopetest9 = document.getElementById('test-item-9');
+            //const kaleidoscopetest10 = document.getElementById('test-item-10');
+            //const kaleidoscopetest11 = document.getElementById('test-item-11');
+            const kaleidoscopetest12 = document.getElementById('test-item-12');
+
+            const elementsToRotate = [
+                kaleidoscopeClockwise,
+                kaleidoscopetest3,
+                //kaleidoscopetest5,
+                kaleidoscopetest7,
+                kaleidoscopetest9,
+                //kaleidoscopetest11
+            ];
+
+            const elementsToRotateInverted = [
+                kaleidoscopeCounterClockwise,
+                //kaleidoscopetest4,
+                kaleidoscopetest6,
+                //kaleidoscopetest8,
+                //kaleidoscopetest10,
+                kaleidoscopetest12
+            ];
+
+            elementsToRotate.forEach(element => {
+                let rotation = newRotation + Math.floor(Math.random() * 90);
+                element.style.transform = `rotate(${rotation}deg)`;
+                element.style.opacity = 0.5;
+            });
+
+            // Randomly select one element to have an opacity of 1
+            const randomIndex = Math.floor(Math.random() * elementsToRotate.length);
+            elementsToRotate[randomIndex].style.opacity = 1;
+
+            elementsToRotateInverted.forEach(element => {
+                let rotation = newRotation + Math.floor(Math.random() * 90);
+                rotation = rotation * -1;
+                element.style.transform = `rotate(${rotation}deg)`;
+                element.style.opacity = 0.5;
+            });
+
+            // Randomly select one element to have an opacity of 1
+            const randomIndexInverted = Math.floor(Math.random() * elementsToRotateInverted.length);
+            elementsToRotateInverted[randomIndexInverted].style.opacity = 1;
+
+            const imagefilter = ["kaleidoscope-filter-1", "kaleidoscope-filter-2", "kaleidoscope-filter-3", "kaleidoscope-filter-4"]
+
+            const appliedFilter = Array.from(kaleidoscopeContainerItem.classList).find(className => imagefilter.includes(className));
 
             const availableFilters = imagefilter.filter(className => className !== appliedFilter);
 
             const randomFilter = availableFilters[Math.floor(Math.random() * availableFilters.length)];
 
-            bigImage.classList.remove(...imagefilter);
+            kaleidoscopeContainerItem.classList.remove(...imagefilter);
 
-            bigImage.classList.add(randomFilter);
+            kaleidoscopeContainerItem.classList.add(randomFilter);
         });
     });
 });
@@ -69,7 +136,7 @@ function assignAssemblageTags(tag) {
 document.querySelectorAll('.custom-radio').forEach(function (radio) {
     radio.addEventListener('change', function () {
         var selectedTag = this.getAttribute('data-tag');
-        var images = document.querySelectorAll('.smallCircle');
+        var images = document.querySelectorAll('.mosaic');
         images.forEach(function (image) {
             var tags = image.getAttribute('data-tags').split(':');
             var kaleidoscopeTags = tags[0].split(',');
@@ -111,44 +178,43 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
     });
 });
 
-var bigImage = document.getElementById('bigImage');
-if (bigImage) {
+//Placing the mosaics within the kaleidoscope
+var kaleidoscopeImageItem = document.getElementById('kaleidoscope-image-item');
+if (kaleidoscopeImageItem) {
     document.addEventListener("DOMContentLoaded", function () {
         window.onload = function () {
-            var roulette = document.querySelector('.roulette');
-            var rouletteimage = document.querySelector('.rouletteimage');
-            var bigImage = document.getElementById('bigImage');
-            var smallCircles = document.querySelectorAll('.smallCircle');
+            var kaleidoscopeImageItem = document.getElementById('kaleidoscope-image-item');
+            var mosaics = document.querySelectorAll('.mosaic');
 
-            var bigImageWidth = bigImage.offsetWidth;
-            var bigImageHeight = bigImage.offsetHeight;
+            var kaleidoscopeImageItemWidth = kaleidoscopeImageItem.offsetWidth;
+            var kaleidoscopeImageItemHeight = kaleidoscopeImageItem.offsetHeight;
 
             var maxAttempts = 100; // Maximum number of attempts to find a valid position
-            var minRadius = 20; // Minimum radius for small circles
+            var minRadius = 20; // Minimum radius for mosaics
             var bufferZone = 20; // Buffer zone to ensure circles do not touch
             var restart;
 
-            // Function to place small circles
-            function placeSmallCircles() {
+            // Function to place mosaics
+            function placeMosaics() {
                 var occupiedPositions = []; // Array to store occupied positions
 
-                smallCircles.forEach(function (smallCircle) {
+                mosaics.forEach(function (mosaics) {
                     var isValidPosition = false;
                     var attempts = 0;
-                    var smallCircleRadius = smallCircle.offsetWidth / 2;
+                    var mosaicRadius = mosaics.offsetWidth / 2;
 
                     while (!isValidPosition && attempts < maxAttempts) {
-                        // Generate random position for small circle within the bounds of the larger circle
-                        var maxDistance = Math.min(bigImageWidth, bigImageHeight) / 2 - smallCircleRadius;
+                        // Generate random position for mosaic within the bounds of the kaleidoscope background
+                        var maxDistance = Math.min(kaleidoscopeImageItemWidth, kaleidoscopeImageItemHeight) / 2 - mosaicRadius;
                         var randomDistance = Math.random() * maxDistance;
                         var randomAngle = Math.random() * 2 * Math.PI;
                         var randomX = Math.cos(randomAngle) * randomDistance;
                         var randomY = Math.sin(randomAngle) * randomDistance;
 
-                        // Check if the new position collides with any existing small circle
+                        // Check if the new position collides with any existing mosaic
                         var collides = occupiedPositions.some(function (position) {
                             var distance = Math.sqrt(Math.pow(randomX - position.x, 2) + Math.pow(randomY - position.y, 2));
-                            return distance < smallCircleRadius + minRadius + bufferZone; // Include buffer zone
+                            return distance < mosaicRadius + minRadius + bufferZone; // Include buffer zone
                         });
 
                         // If collision detected, reset position and try again; otherwise, mark position as valid
@@ -164,8 +230,8 @@ if (bigImage) {
 
                     // Set position of the small circle
                     if (isValidPosition) {
-                        smallCircle.style.top = bigImageHeight / 2 + randomY - smallCircleRadius + 'px';
-                        smallCircle.style.left = bigImageWidth / 2 + randomX - smallCircleRadius + 'px';
+                        mosaics.style.top = kaleidoscopeImageItemHeight / 2 + randomY - mosaicRadius + 'px';
+                        mosaics.style.left = kaleidoscopeImageItemWidth / 2 + randomX - mosaicRadius + 'px';
                     } else {
                         restart = true;
                     }
@@ -175,12 +241,12 @@ if (bigImage) {
                         bufferZone = bufferZone - 5;
                     }
                     restart = false;
-                    placeSmallCircles();
+                    placeMosaics();
                 }
             }
 
-            // Initial placement of small circles
-            placeSmallCircles();
+            // Initial placement of mosaics
+            placeMosaics();
             //if (restart) {
             //    var bufferZone = 0;
             //    restart = false;
