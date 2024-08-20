@@ -39,7 +39,7 @@ public class HomeController : Controller
 
     public IActionResult Intro()
     {
-        return View(_pageRepository.GetByName("Start"));
+        return View();
     }
 
     public IActionResult About()

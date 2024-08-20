@@ -72,16 +72,21 @@
     transition: transform 3s ease-in-out;
 }
 
-.kaleidoscope-image {
+.kaleidoscope-image-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 30vw;
-    width: 30vw;
+    height: 40vw;
+    width: 40vw;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 3s ease;
+}
+
+.kaleidoscope-image-object {
+    opacity: 0.5;
     transition: 3s ease;
 }
 
@@ -90,13 +95,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 30vw;
-    width: 30vw;
-    opacity: 0.5;
-    transition: 3s ease;
-}
-
-.kaleidoscope-test {
+    height: 40vw;
+    width: 40vw;
     opacity: 0.5;
     transition: 3s ease;
 }
@@ -110,8 +110,8 @@
 }
 
 .mosaic {
-    width: 6rem;
-    height: 6rem;
+    width: 6vw;
+    height: 6vw;
     border-radius: 50%;
     position: absolute;
     transition: 3s ease;
@@ -131,11 +131,6 @@
 .kaleidoscope-filter-4 {
     filter: none;
 }
-
-/*#kaleidoscope-image-item {
-    height: 40rem;
-    width: 40rem;
-}*/
 
 .tagList {
     list-style: none;
