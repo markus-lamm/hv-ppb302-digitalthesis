@@ -7,7 +7,8 @@ public class DetailViewModel
     public string? Content { get; set; }
     public List<ConnectorTag> ConnectorTags { get; set; } = [];
     public List<string> Becomings { get; set; } = [];
-    public AssemblageTag? AssemblageTag { get; set; }
     public string? PdfFilePath { get; set; }
     public string? AudioFilePath { get; set; }
+    public bool? IsVisible { get; set; }
+    public string? ObjectType { get; set; }
 }

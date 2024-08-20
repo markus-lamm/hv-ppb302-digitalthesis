@@ -1,68 +1,123 @@
-﻿
+﻿const { UIForm, UIInput, UIButton } = Jodit.modules;
+
+Jodit.defaultOptions.controls.footnoteButton = {
+    iconURL: "/images/icons/superscript.png",
+    popup: function (editor, current, control, close) {
+        const form = new UIForm(editor, [
+            new UIInput(editor, {
+                name: 'linkText',
+                placeholder: 'Enter link text...',
+                autofocus: true,
+                label: 'Text:',
+                required: true
+            }),
+            new UIInput(editor, {
+                name: 'linkURL',
+                placeholder: 'Enter link URL...',
+                autofocus: false,
+                label: 'URL:'
+            }),
+            new UIButton(editor, {
+                text: 'Insert Footnote',
+                status: 'primary',
+                variant: 'primary'
+            }).onAction(() => {
+                form.submit();
+            })
+        ]).onSubmit(() => {
+
+            // Attempt to retrieve the input element from form.elements
+            const LinkTextElement = form.elements.find(
+                element => element.state && element.state.name === 'linkText'
+            );
+            const LinkUrlElement = form.elements.find(
+                element => element.state && element.state.name === 'linkURL'
+            );
+
+            if (LinkTextElement && LinkUrlElement) {
+                // Safely access the value
+                const linkText = LinkTextElement.state.value || '';
+                const linkURL = LinkUrlElement.state.value || '';
+                let footnoteText = linkText;
+
+                const existingFootnotes = editor.editor.querySelectorAll('a[href^="#ftn"]');
+                const footnoteNumber = existingFootnotes.length + 1;
+
+
+                if (linkURL) {
+                    footnoteText = `<strong><a href="${linkURL}" target="_blank" title="${linkText}">${linkText}</a></strong>`;
+                }
+
+                const footnoteId = `ftn${footnoteNumber}`;
+                const footnoteRefId = `_ftnref${footnoteNumber}`;
+
+                const footnoteMarker = `<a href="#${footnoteId}" name="${footnoteRefId}" title=""><span class="MsoFootnoteReference" style="vertical-align: super;"><span style="font-size: 15px; line-height: 107%; font-family: Aptos, sans-serif;">[${footnoteNumber}]</span></span></a>&nbsp;`;
+
+                const footnoteContent = `
+                        <div id="${footnoteId}">
+                            <p class="MsoFootnoteText" style="margin: 0px; font-size: 13px; font-family: Aptos, sans-serif;">
+                                <a href="#${footnoteRefId}" name="${footnoteId}" title="">
+                                    <span class="MsoFootnoteReference" style="vertical-align: super;">
+                                        <span style="font-size: 13px; line-height: 107%; font-family: Aptos, sans-serif;">[${footnoteNumber}]</span>
+                                    </span></a>&nbsp;&nbsp;&nbsp;${footnoteText}
+                            </p>
+                        </div>`;
+
+                // Insert marker at cursor position
+                editor.selection.insertHTML(footnoteMarker);
+
+                // Insert the separator line if it's the first footnote
+                if (footnoteNumber === 1) {
+                    editor.value += `<br clear="all"><hr id="footnote-separator" align="left" size="1" width="33%">`;
+                }
+
+                // Append footnote content to the end
+                editor.value += footnoteContent;
+            } else {
+                console.error('Footnote input field not found or state is undefined.');
+            }
+        })
+
+        return form;
+    },
+    tooltip: "Insert Footnote"
+};
+
+
 var editorDiv = document.getElementById('editor');
 if (editorDiv) {
-    const quill = new Quill('#editor', {
-        theme: 'bubble',
+    var editor = new Jodit('#editor', {
+        autofocus: true,
+        toolbar: false,
+        readonly: true,
+        "showCharsCounter": false,
+        "showWordsCounter": false,
+        "showXPathInStatusbar": false,
+        className: 'previeweditor',
+        height: '100%',
+        width: '100%',
+        "allowResizeY": false
     });
-    quill.enable(false);
 }
-
-
-const FontAttributor = Quill.import('attributors/class/font');
-FontAttributor.whitelist = [
-    'lora'
-];
-Quill.register(FontAttributor, true);
-
-const toolbarOptions = [
-    ['bold', 'italic', 'underline', 'strike'],        // toggled buttons
-    ['blockquote', 'code-block'],
-    ['link', 'image', 'video', 'formula'],
-
-    [{ 'header': 1 }, { 'header': 2 }],               // custom button values
-    [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'list': 'check' }],
-    [{ 'script': 'sub' }, { 'script': 'super' }],      // superscript/subscript
-    [{ 'indent': '-1' }, { 'indent': '+1' }],          // outdent/indent
-    [{ 'direction': 'rtl' }],                         // text direction
-
-    [{ 'size': ['small', false, 'large', 'huge'] }],  // custom dropdown
-    [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-
-    [{ 'color': [] }, { 'background': [] }],          // dropdown with defaults from theme
-    [{ 'font': [] }],
-    [{ 'align': [] }],
-
-    ['clean']                                         // remove formatting button
-];
-
 
 var editorDiv2 = document.getElementById('editortest');
 if (editorDiv2) {
-    const quilleditor = new Quill('#editortest', {
-        theme: 'snow',
-        modules: {
-            syntax: true,
-            toolbar: toolbarOptions,
-            imageResize: {
-                displaySize: true
-            }
-        }
+    var editor = new Jodit('#editortest', {
+        autofocus: true,
+        "defaultFontSizePoints": "pt",
+        "minHeight": 900,
+        "maxHeight": 900,
+        "uploader": {
+            "insertImageAsBase64URI": true
+        },
+        buttons: [...Jodit.defaultOptions.buttons, 'footnoteButton']
     });
-    function getAndDisplayHTML() {
-        var htmlContent = quilleditor.root.innerHTML;
-        document.getElementById('htmlOutput').innerText = htmlContent;
-    }
 
     let inputElement = document.getElementById('hiddeninput')
-    quilleditor.on('text-change', function () {
-        // sets the value of the hidden input to
-        // the editor content in Delta format
-        inputElement.value = quilleditor.root.innerHTML;
+    editor.events.on('change', e => {
 
-        // you can alternatively use
-        // inputElement.value = quill.root.innerHTML
-        // if you want the data as HTML
-    });
+        inputElement.value = editor.getEditorValue();
+    })
 }
 
 var input = document.getElementById('Becomings')
@@ -105,12 +160,12 @@ if (playButton) {
         if (audioPlayer.paused) {
             // If paused, play the audio
             audioPlayer.play();
-            audioImage.src = "https://informatik13.ei.hv.se/DigitalThesis/images/icons/stop_icon.png"
+            audioImage.src = "https://informatik13.ei.hv.se/DigitalThesis/images/icons/stop.png"
         } else {
             // If playing, pause the audio
             audioPlayer.pause();
             audioPlayer.currentTime = 0;
-            audioImage.src = "https://informatik13.ei.hv.se/DigitalThesis/images/icons/play_icon.png"
+            audioImage.src = "https://informatik13.ei.hv.se/DigitalThesis/images/icons/play.png"
         }
     });
 }

@@ -58,6 +58,14 @@
                         <span asp-validation-for="AudioFilePath" class="text-danger"></span>
                     </div>
                     <div class="form-group">
+                        <label asp-for="IsVisible" class="control-label"></label>
+                        <div>
+                            <input type="radio" asp-for="IsVisible" value="true" /> Visible
+                            <input type="radio" asp-for="IsVisible" value="false" /> Not Visible
+                        </div>
+                        <span asp-validation-for="IsVisible" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
                         <label asp-for="Content" class="control-label"></label>
                         <input type="hidden" id="hiddeninput" asp-for="Content" class="form-control" />
                         <div class="editor-layout">

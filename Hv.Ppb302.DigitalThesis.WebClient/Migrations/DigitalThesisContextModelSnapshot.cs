@@ -17,7 +17,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "8.0.4")
+                .HasAnnotation("ProductVersion", "8.0.5")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
@@ -95,6 +95,9 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("IsVisible")
+                        .HasColumnType("bit");
+
                     b.Property<string>("PdfFilePath")
                         .HasColumnType("nvarchar(max)");
 
@@ -140,6 +143,9 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("IsVisible")
+                        .HasColumnType("bit");
+
                     b.Property<string>("PdfFilePath")
                         .HasColumnType("nvarchar(max)");
 
@@ -171,6 +177,9 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool?>("IsVisible")
+                        .HasColumnType("bit");
+
                     b.Property<string>("PdfFilePath")
                         .HasColumnType("nvarchar(max)");
 
@@ -199,6 +208,23 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Pages");
+                });
+
+            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.Upload", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool?>("IsMaterial")
+                        .HasColumnType("bit");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Uploads");
                 });
 
             modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.User", b =>

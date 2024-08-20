@@ -26,6 +26,9 @@
                     <th>
                         HasAudio
                     </th>
+                    <th>
+                        IsVisible
+                    </th>
                     <th></th>
                 </tr>
             </thead>
@@ -53,6 +56,16 @@
                             @if (item.AudioFilePath != null)
                             {
                                 <div>Yes</div> 
+                            }
+                            else
+                            {
+                                <div>No</div>
+                            }
+                        </td>
+                        <td>
+                            @if (item.IsVisible == true)
+                            {
+                                <div>Yes</div>
                             }
                             else
                             {

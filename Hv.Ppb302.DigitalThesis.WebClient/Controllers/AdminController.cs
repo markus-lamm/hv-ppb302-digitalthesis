@@ -3,6 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using MimeDetective;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
+using Newtonsoft.Json;
+using System.Linq;
+using Microsoft.IdentityModel.Tokens;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
@@ -10,11 +13,14 @@ public class AdminController : Controller
 {
     private readonly UserRepository _userRepo;
     private readonly PageRepository _pageRepo;
+    private readonly UploadRepository _uploadRepo;
+    
 
-    public AdminController(UserRepository userRepo, PageRepository pageRepo)
+    public AdminController(UserRepository userRepo, PageRepository pageRepo, UploadRepository uploadRepository)
     {
         _userRepo = userRepo;
         _pageRepo = pageRepo;
+        _uploadRepo = uploadRepository;
     }
 
     public IActionResult Index()
@@ -37,17 +43,19 @@ public class AdminController : Controller
 
     [DisableRequestSizeLimit]
     [HttpPost]
-    public async Task<IActionResult> FileUpload(IFormFile file)
+    public async Task<IActionResult> FileUpload(IFormFile file, Upload viewmodel)
     {
         if (file != null)
         {
             var fileName = Path.GetFileName(file.FileName);
+            viewmodel.Name = fileName;
             var path = Path.Combine(@"C:\Uploads", fileName); // Specify the absolute path
 
             using (var stream = System.IO.File.Create(path))
             {
                 await file.CopyToAsync(stream);
             }
+            _uploadRepo.Create(viewmodel);
         }
         return View("FileView", GetAllFiles());
     }
@@ -63,15 +71,36 @@ public class AdminController : Controller
     }
 
     [HttpPost]
-    public IActionResult FileView(string FileName)
+    public IActionResult DeleteFile(string FileName)
     {
         var path = Path.Combine(@"C:\Uploads", FileName);
         FileInfo file = new(path);
-        if (file.Exists) // Check if file exists  
+        if (file.Exists) 
         {
             file.Delete();
+            _uploadRepo.Delete(FileName);
         }
         return View("FileView", GetAllFiles());
+    }
+
+    [HttpPost]
+    public IActionResult UpdateMaterials(string materialsData)
+    {
+
+        var materialsStatus = JsonConvert.DeserializeObject<Dictionary<string, bool>>(materialsData);
+        if (materialsStatus?.Count != 0)
+        {
+            var uploadsToUpdate = (from entry in materialsStatus
+                                   select new Upload
+                                   {
+                                       Name = entry.Key,
+                                       IsMaterial = entry.Value
+                                   }).ToList();
+
+            _uploadRepo.Update(uploadsToUpdate);
+        }
+
+        return RedirectToAction("FileView", GetAllFiles());
     }
 
     public IActionResult Profile()
@@ -178,18 +207,21 @@ public class AdminController : Controller
                              .Select(path => Path.GetFileName(path))
                              .ToList();
 
+        var uploadsList = _uploadRepo.GetAll();
         List<FileViewViewModel> fileViewModels = [];
         foreach (var file in files)
         {
             var Results = Inspector.Inspect(Path.Combine(@"C:\Uploads", file));
             var fileType = Results.FirstOrDefault()!.Definition.File.Categories.FirstOrDefault();
             var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
+            var upload = uploadsList?.FirstOrDefault(u => u.Name == file);
 
             fileViewModels.Add(new FileViewViewModel
             {
                 Category = fileType,
-                File = file,
-                FileUrl = fileUrl
+                Name = file,
+                FileUrl = fileUrl,
+                IsMaterial = upload?.IsMaterial
             });
         }
         return fileViewModels;

@@ -12,6 +12,14 @@ html {
     }
 }
 
+.previeweditor {
+    border-color: transparent !important;
+    background: transparent !important;
+}
+.previeweditor div {
+    background: transparent !important;
+}
+
 body {
     font-family: 'Inconsolata';
     margin: 0px;
@@ -35,19 +43,19 @@ body {
     margin-left: 30px;
 }
 
-    .nav-list li a {
-        font-family: 'Inconsolata';
-        text-decoration: none;
-        font-size: 1.5rem;
-        color: black;
-        opacity: 0.6;
-    }
+.nav-list li a {
+    font-family: 'Inconsolata';
+    text-decoration: none;
+    font-size: 1.5rem;
+    color: black;
+    opacity: 0.6;
+}
 
-        .nav-list li a:hover {
-            transition: 0.3s ease;
-            opacity: 1;
-            text-shadow: white 1px 0 10px;
-        }
+    .nav-list li a:hover {
+        transition: 0.3s ease;
+        opacity: 1;
+        text-shadow: white 1px 0 10px;
+    }
 
 .logo {
     margin-top: 20px;
@@ -258,3 +266,8 @@ body {
         .music-controls .fa-play.clicked {
             transform: translateY(2px);
         }
+
+.geotag {
+    height: 6vw;
+    min-height: 5rem;
+}

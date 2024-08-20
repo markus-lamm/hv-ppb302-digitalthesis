@@ -1,7 +1,6 @@
-﻿
-.kaleid-container {
+﻿.kaleid-container {
     overflow: hidden !important;
-    background-image: url(../images/background/image.png);
+    background-image: url(../images/background/white-1.png);
     background-size: cover;
     height: 100%;
     width: 100vw;

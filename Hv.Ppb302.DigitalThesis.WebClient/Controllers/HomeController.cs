@@ -1,7 +1,10 @@
+using System.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
 using Microsoft.AspNetCore.Mvc;
+using MimeDetective;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
@@ -12,21 +15,29 @@ public class HomeController : Controller
     private readonly MolecularMosaicRepository _molecularMosaicRepo;
     private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
     private readonly PageRepository _pageRepository;
+    private readonly UploadRepository _uploadRepository;
 
     public HomeController(GeoTagRepository geoTagRepo, 
         MolarMosaicRepository molarMosaicRepo, 
         MolecularMosaicRepository molecularMosaicRepo,
         KaleidoscopeTagRepository kaleidoscopeTagRepo,
-        PageRepository pageRepo)
+        PageRepository pageRepo,
+        UploadRepository uploadRepository)
     {
         _geoTagRepo = geoTagRepo;
         _molarMosaicRepo = molarMosaicRepo;
         _molecularMosaicRepo = molecularMosaicRepo;
         _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
         _pageRepository = pageRepo;
+        _uploadRepository = uploadRepository;
     }
 
     public IActionResult Index()
+    {
+        return View();
+    }
+
+    public IActionResult Intro()
     {
         return View(_pageRepository.GetByName("Start"));
     }
@@ -40,6 +51,11 @@ public class HomeController : Controller
     {
         ViewBag.ShowTutorial = showTutorial;
         return View(_geoTagRepo.GetAll());
+    }
+
+    public IActionResult Materials()
+    {
+        return View(GetAllMaterialFiles());
     }
 
     [Route("Home/Detail/{objectId:Guid}")]
@@ -58,6 +74,7 @@ public class HomeController : Controller
             var molarMosaics = _molarMosaicRepo.Get(objectId);
             if (molarMosaics != null)
             {
+                CreateMosaicCookie(objectId);
                 return View(BuildViewModel(molarMosaics));
             }
         }
@@ -66,6 +83,7 @@ public class HomeController : Controller
             var molecularMosaics = _molecularMosaicRepo.Get(objectId);
             if (molecularMosaics != null)
             {
+                CreateMosaicCookie(objectId);
                 return View(BuildViewModel(molecularMosaics));
             }
         }
@@ -76,7 +94,7 @@ public class HomeController : Controller
 
         return NotFound();
 
-        static DetailViewModel BuildViewModel(dynamic model)
+        DetailViewModel BuildViewModel(dynamic model)
         {
             var viewModel = new DetailViewModel
             {
@@ -87,7 +105,8 @@ public class HomeController : Controller
                 AudioFilePath = model.AudioFilePath,
                 ConnectorTags = [],
                 Becomings = [],
-                AssemblageTag = null
+                IsVisible = model.IsVisible,
+                ObjectType = objectType,
             };
             if (model != null)
             {
@@ -101,12 +120,6 @@ public class HomeController : Controller
                 if (propertyInfo != null)
                 {
                     viewModel.Becomings = (List<string>)propertyInfo.GetValue(model);
-                }
-
-                propertyInfo = model.GetType().GetProperty("AssemblageTag");
-                if (propertyInfo != null)
-                {
-                    viewModel.AssemblageTag = (AssemblageTag)propertyInfo.GetValue(model);
                 }
             }
 
@@ -160,6 +173,72 @@ public class HomeController : Controller
             };
         }
     }
+
+    public void CreateMosaicCookie(Guid objectId)
+    {
+        var visitedMosaicsList = ReadCookie("digital-thesis-mosaics");
+        visitedMosaicsList ??= new List<string>(); // If cookie is null, create a new list
+        if (!visitedMosaicsList.Contains(objectId.ToString()))
+        {
+            visitedMosaicsList.Add(objectId.ToString());
+        }
+        CreateCookie("digital-thesis-mosaics", visitedMosaicsList, 30);
+    }
+
+    public void CreateCookie(string key, List<string> values, int? expirationTime)
+    {
+        var jsonSerializer = JsonSerializer.Serialize(values);
+        var cookieOptions = new CookieOptions
+        {
+            Expires = DateTime.Now.AddDays(expirationTime ?? 30)
+        };
+        Response.Cookies.Append(key, jsonSerializer, cookieOptions);
+    }
+
+    public List<string>? ReadCookie(string key)
+    {
+        var cookieValue = Request.Cookies[key];
+        return cookieValue != null ? JsonSerializer.Deserialize<List<string>>(cookieValue) : new List<string>();
+    }
+
+    public List<FileViewViewModel> GetAllMaterialFiles()
+    {
+        var Inspector = new ContentInspectorBuilder()
+        {
+            Definitions = MimeDetective.Definitions.Default.All()
+        }.Build();
+
+        var path = Path.Combine(@"C:\Uploads");
+        var files = Directory.GetFiles(path)
+                             .Select(path => Path.GetFileName(path))
+                             .ToList();
+
+        var uploadsList = _uploadRepository.GetAllMaterials();
+        List<FileViewViewModel> fileViewModels = [];
+        foreach (var file in files)
+        {
+            var isMaterialFile = uploadsList?.FirstOrDefault(m => m.Name == file);
+
+            if (isMaterialFile != null)
+            {
+                var Results = Inspector.Inspect(Path.Combine(@"C:\Uploads", file));
+                var fileType = Results.FirstOrDefault()!.Definition.File.Categories.FirstOrDefault();
+                var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
+                var upload = uploadsList?.FirstOrDefault(u => u.Name == file);
+
+                fileViewModels.Add(new FileViewViewModel
+                {
+                    Category = fileType,
+                    Name = file,
+                    FileUrl = fileUrl,
+                    IsMaterial = upload?.IsMaterial
+                });
+            }
+
+        }
+        return fileViewModels;
+    }
+
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()
