@@ -12,33 +12,42 @@
     @if (viewModel.IsVisible == true)
     {
         <div class="info-container">
+            <div class="info-container-title">Table of Contents</div>
             <div class="navmenu" id="navmenu"></div>
             @if (viewModel.ObjectType != "geotag")
             {
-                <p class="tags-title">Connectors:</p>
-                @if (viewModel.ConnectorTags.Count != 0)
-                {
-                    foreach (var tag in viewModel.ConnectorTags)
+                <div class="info-container-title">Connectors</div>
+                <div class="tag-container">
+                    @if (viewModel.ConnectorTags.Count != 0)
                     {
-                        <p><em class="tags-content">@tag.Name</em></p>
+                        <div class="tag-container">
+
+                        </div>
+                        foreach (var tag in viewModel.ConnectorTags)
+                        {
+                            <div class="tag-object">@tag.Name</div>
+                        }
                     }
-                }
-                else
-                {
-                    <br />
-                }
-                <p class="tags-title">Becomings:</p>
-                @if (viewModel.Becomings.Count != 0)
-                {
-                    foreach (var tag in viewModel.Becomings)
+                    else
                     {
-                        <p><em class="tags-content">@tag</em></p>
+                        <br/>
                     }
-                }
-                else
-                {
-                    <br />
-                }
+                </div>
+                <div class="info-container-title">Becomings</div>
+                <div class="tag-container">
+                    @if (viewModel.Becomings.Count != 0)
+                    {
+
+                        foreach (var tag in viewModel.Becomings)
+                        {
+                            <div class="tag-object">@tag</div>
+                        }
+                    }
+                    else
+                    {
+                        <br/>
+                    }
+                </div>
             }
         </div>
         <div class="content-container" id="content-container">
