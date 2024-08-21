@@ -58,3 +58,8 @@ body {
         transition: 0.6s ease;
         opacity: 1;
     }
+
+/* used in javascript to hide elements */
+.hide {
+    display: none;
+}
