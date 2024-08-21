@@ -12,7 +12,7 @@
     @if (viewModel.IsVisible == true)
     {
         <div class="info-container">
-            <p class="info-title">@viewModel.Title</p>
+            <div class="navmenu" id="navmenu"></div>
             @if (viewModel.ObjectType != "geotag")
             {
                 <p class="tags-title">Connectors:</p>
@@ -40,30 +40,31 @@
                     <br />
                 }
             }
+        </div>
+        <div class="content-container" id="content-container">
             <div class="content-options">
-                @if (!String.IsNullOrWhiteSpace(@Model.PdfFilePath))
-                {
-                    <div id="saveBtn" data-tags="@Model.PdfFilePath" class="content-options-btn">
-                        <a>
-                            <img class="pdf_icon" src="~/images/icons/pdf-download.png" />
-                        </a>
-                    </div>
-                }
                 @if (!String.IsNullOrWhiteSpace(@Model.AudioFilePath))
                 {
                     <div id="audio-icon" class="content-options-btn">
-                        <img class="play_icon" id="audio-img" src="~/images/icons/play.png" />
+                        <img class="play-icon" id="audio-img" src="~/images/icons/play-button-black.png"/>
                         <audio id="audio-player" src="@Model.AudioFilePath"></audio>
                     </div>
                 }
+                @if (!String.IsNullOrWhiteSpace(@Model.PdfFilePath))
+                {
+                    <div id="pdf-download-btn" data-tags="@Model.PdfFilePath" class="content-options-btn">
+                        <a>
+                            <img class="pdf-icon" src="~/images/icons/pdf-download-black.png"/>
+                        </a>
+                    </div>
+                }
             </div>
-            <div class="navmenu" id="navmenu"></div>
-        </div>
-        <div class="content-container" id="content-container">
-            <div class="text" id="editor">
-                <p>
-                    @Html.Raw(viewModel.Content)
-                </p>
+            <div id="editor-container">
+                <div class="text" id="editor">
+                    <p>
+                        @Html.Raw(viewModel.Content)
+                    </p>
+                </div>
             </div>
         </div>
     }
