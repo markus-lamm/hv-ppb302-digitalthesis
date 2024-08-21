@@ -82,6 +82,10 @@ public class MolarMosaicsController : Controller
 
         molarMosaic.ConnectorTags ??= [];
         molarMosaic.KaleidoscopeTags ??= [];
+        if (molarMosaic.Becomings.Count == 1 && molarMosaic.Becomings[0] is null )
+        {
+            molarMosaic.Becomings = [];
+        }
 
         if (!string.IsNullOrEmpty(becomings))
         {
@@ -177,6 +181,10 @@ public class MolarMosaicsController : Controller
             return NotFound();
         }
 
+        if (molarMosaic.Becomings.Count == 1 && molarMosaic.Becomings[0] is null)
+        {
+            molarMosaic.Becomings = [];
+        }
         if (molarMosaic.Becomings != null && molarMosaic.Becomings.Count > 0 && !string.IsNullOrEmpty(molarMosaic.Becomings[0]?.Trim()))
         {
             molarMosaic.Becomings ??= [];
