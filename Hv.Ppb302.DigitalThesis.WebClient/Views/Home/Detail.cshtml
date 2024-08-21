@@ -17,37 +17,26 @@
             @if (viewModel.ObjectType != "geotag")
             {
                 <div class="info-container-title">Connectors</div>
-                <div class="tag-container">
-                    @if (viewModel.ConnectorTags.Count != 0)
-                    {
-                        <div class="tag-container">
-
-                        </div>
-                        foreach (var tag in viewModel.ConnectorTags)
+                @if (viewModel.ConnectorTags.Count != 0)
+                {
+                    <div class="tag-container">
+                        @foreach (var tag in viewModel.ConnectorTags)
                         {
                             <div class="tag-object">@tag.Name</div>
                         }
-                    }
-                    else
-                    {
-                        <br/>
-                    }
-                </div>
+                    </div>
+                }
                 <div class="info-container-title">Becomings</div>
-                <div class="tag-container">
-                    @if (viewModel.Becomings.Count != 0)
-                    {
-
-                        foreach (var tag in viewModel.Becomings)
+                @if (viewModel.Becomings.Count != 0)
+                {
+                    <div>@viewModel.Becomings.Count</div>
+                    <div class="tag-container">
+                        @foreach (var tag in viewModel.Becomings)
                         {
                             <div class="tag-object">@tag</div>
                         }
-                    }
-                    else
-                    {
-                        <br/>
-                    }
-                </div>
+                    </div>
+                }
             }
         </div>
         <div class="content-container" id="content-container">
