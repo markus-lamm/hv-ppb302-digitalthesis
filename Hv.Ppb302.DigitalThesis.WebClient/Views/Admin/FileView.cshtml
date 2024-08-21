@@ -3,10 +3,10 @@
     ViewData["Title"] = "Admin";
     var itemIndex = 0;
 }
-
 <head>
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
+<div class="background-container"></div>
 <div class="admin-container">
     <div class="fileview-container">
         <div class="file-heading">
@@ -55,7 +55,7 @@
                                 <img src="~/images/icons/video.png" />
                                 break;
                             default:
-                                <img src="~/images/icons/audio.png" />
+                                <img src="~/images/icons/unknown.png" />
                                 break;
                         }
                         <div class="file-options">
@@ -89,22 +89,4 @@
         </div>
     </div>
 </div>
-
-<script>
-    // Object to store the status of materials
-    var materialsStatus = {};
-
-    function updateMaterialStatus(checkbox) {
-        var index = checkbox.getAttribute('data-index');
-        var name = checkbox.getAttribute('data-name');
-        materialsStatus[name] = checkbox.checked;
-    }
-
-    function saveMaterialStatus() {
-        // Convert the materialsStatus object to a JSON string and set it in the hidden input
-        document.getElementById('materialsData').value = JSON.stringify(materialsStatus);
-
-        // Submit the hidden form
-        document.getElementById('saveMaterialsForm').submit();
-    }
-</script>
+<script src="~/js/admin.js"></script>

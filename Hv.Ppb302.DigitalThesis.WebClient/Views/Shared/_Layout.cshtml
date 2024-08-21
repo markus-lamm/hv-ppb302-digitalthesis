@@ -19,17 +19,16 @@
     @Html.Raw("<link href='https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css' rel='stylesheet' type='text/css' />")
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lib/jodit/jodit.css" />
-    <script src="~/lib/jodit/jodit.js"></script>
 </head>
 <body>
     <header>
         <nav class="navbar" id="navbar">
-            <a asp-controller="Home" asp-action="Geotags"><img class="logo" src="~/images/logo.png" alt="Logotype of Mona Tynkkinen"/></a>
+            <a asp-controller="Home" asp-action="Geotags"><img class="nav-logo" src="~/images/logo.png" alt="Logotype of Mona Tynkkinen"/></a>
             <ul class="nav-list">
                 @if (username != null)
                 {
                     <li class="nav-item">
-                        <a class="nav-link nav-link-ltr" asp-controller="Admin" asp-action="Index">Admin</a>
+                        <a class="nav-link" asp-controller="Admin" asp-action="Index">Admin</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-controller="Admin" asp-action="Logout">Log out</a>
@@ -38,33 +37,27 @@
                 else
                 {
                     <li class="nav-item">
-                        <a class="nav-link nav-link-ltr" asp-controller="Admin" asp-action="Login">Log in</a>
+                        <a class="nav-link" asp-controller="Admin" asp-action="Login">Log in</a>
                     </li>
                 }
                 <li>
-                    <a class="nav-link nav-link-ltr" asp-controller="Home" asp-action="About">About</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="About">About</a>
                 </li>
                 <li>
-                    <a class="nav-link nav-link-ltr" asp-controller="Home" asp-action="Geotags" asp-route-showTutorial="true">Tutorial</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="Geotags" asp-route-showTutorial="true">Tutorial</a>
                 </li>
                 <li>
-                    <a class="nav-link nav-link-ltr" asp-controller="Home" asp-action="Materials" >Materials</a>
+                    <a class="nav-link" asp-controller="Home" asp-action="Materials" >Materials</a>
                 </li>
             </ul>
         </nav>
     </header>
-
-    <div class="container">
-        <main role="main">
-            @RenderBody()
-        </main>
-    </div>
-
-    <footer class="footer"></footer>
+    <main role="main">
+        @RenderBody()
+    </main>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/js/kaleidoscope.js" asp-append-version="true"></script>
+    <script src="~/lib/jodit/jodit.js"></script>
     <script src="~/js/richeditor.js"></script>
-    <script src="~/js/geotags.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

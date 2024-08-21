@@ -9,11 +9,9 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-
         builder.Services.AddDbContext<DigitalThesisDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServerConnection")),
             ServiceLifetime.Scoped);
-
         builder.Services.AddScoped<GeoTagRepository>();
         builder.Services.AddScoped<ConnectorTagRepository>();
         builder.Services.AddScoped<MolarMosaicRepository>();
@@ -36,14 +34,12 @@ public class Program
         });
         // Add services to the container.
         builder.Services.AddControllersWithViews();
-
         builder.Services.AddSession(options =>
         {
             options.IdleTimeout = TimeSpan.FromMinutes(30);
             options.Cookie.HttpOnly = true;
             options.Cookie.IsEssential = true;
         });
-
 
         var app = builder.Build();
 
@@ -59,15 +55,10 @@ public class Program
             app.UseExceptionHandler("/Home/Error");
         }
         app.UseStaticFiles();
-
         app.UseRouting();
-
         app.UseAuthentication();
-
         app.UseAuthorization();
-
         app.UseSession();
-
         app.UseStaticFiles(new StaticFileOptions
         {
             FileProvider = new PhysicalFileProvider(

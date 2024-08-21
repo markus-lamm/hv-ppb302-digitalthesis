@@ -22,22 +22,6 @@ public class AssemblageTagsController : Controller
         return View(_assemblageTagRepo.GetAll());
     }
 
-    public IActionResult Details(Guid id)
-    {
-        if (!CheckAuthentication())
-        {
-            return RedirectToAction("Login", "Admin");
-        }
-
-        var assemblageTag = _assemblageTagRepo.Get(id);
-        if (assemblageTag == null)
-        {
-            return NotFound();
-        }
-
-        return View(assemblageTag);
-    }
-
     public IActionResult Create()
     {
         if (!CheckAuthentication())
@@ -137,8 +121,6 @@ public class AssemblageTagsController : Controller
 
         return RedirectToAction(nameof(Index));
     }
-
-    private bool AssemblageTagExists(Guid id) => _assemblageTagRepo.Get(id) != null;
 
     public bool CheckAuthentication()
     {

@@ -24,22 +24,6 @@ public class GeoTagsController : Controller
         return View(_geoTagRepo.GetAll());
     }
 
-    public IActionResult Details(Guid id)
-    {
-        if (!CheckAuthentication())
-        {
-            return RedirectToAction("Login", "Admin");
-        }
-
-        var geoTag = _geoTagRepo.Get(id);
-        if (geoTag == null)
-        {
-            return NotFound();
-        }
-
-        return View(geoTag);
-    }
-
     public IActionResult Edit(Guid id)
     {
         if (!CheckAuthentication())
@@ -77,8 +61,6 @@ public class GeoTagsController : Controller
 
         return RedirectToAction(nameof(Index));
     }
-
-    private bool GeoTagExists(Guid id) => _geoTagRepo.Get(id) != null;
 
     public bool CheckAuthentication()
     {

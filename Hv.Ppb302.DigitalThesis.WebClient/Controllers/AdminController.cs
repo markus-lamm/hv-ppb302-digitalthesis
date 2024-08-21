@@ -1,11 +1,8 @@
-﻿using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using MimeDetective;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
 using Newtonsoft.Json;
-using System.Linq;
-using Microsoft.IdentityModel.Tokens;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
@@ -24,15 +21,6 @@ public class AdminController : Controller
     }
 
     public IActionResult Index()
-    {
-        if (!CheckAuthentication())
-        {
-            return RedirectToAction("Login", "Admin");
-        }
-        return View();
-    }
-
-    public IActionResult FileUpload()
     {
         if (!CheckAuthentication())
         {

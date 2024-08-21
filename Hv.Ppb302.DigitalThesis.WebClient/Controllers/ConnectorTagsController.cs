@@ -22,22 +22,6 @@ public class ConnectorTagsController : Controller
         return View(_connectorTagRepo.GetAll());
     }
 
-    public IActionResult Details(Guid id)
-    {
-        if (!CheckAuthentication())
-        {
-            return RedirectToAction("Login", "Admin");
-        }
-
-        var connectorTag = _connectorTagRepo.Get(id);
-        if (connectorTag == null)
-        {
-            return NotFound();
-        }
-
-        return View(connectorTag);
-    }
-
     public IActionResult Create()
     {
         if (!CheckAuthentication())
@@ -137,8 +121,6 @@ public class ConnectorTagsController : Controller
 
         return RedirectToAction(nameof(Index));
     }
-
-    private bool ConnectorTagExists(Guid id) => _connectorTagRepo.Get(id) != null;
 
     public bool CheckAuthentication()
     {
