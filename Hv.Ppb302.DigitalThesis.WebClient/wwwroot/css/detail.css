@@ -1,11 +1,20 @@
-﻿.detail-container {
+﻿.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../images/backgrounds/blue-white-1.jpg');
+    background-size: 100% 100%;
+    background-position: center;
+    z-index: -1;
+}
+
+.detail-container {
     z-index: 0;
     width: 100vw;
     height: 100vh;
     position: fixed;
-    background-image: url(../images/backgrounds/blue-white-1.jpg);
-    background-size: 100% 100%;
-    background-position: center;
     justify-content: center;
     align-items: center;
 }
@@ -47,6 +56,16 @@
     overflow-y: auto;
 }
 
+.info-container-title {
+    font-size: 1.3rem;
+    margin-bottom: 0.5rem;
+    margin-top: 1.5rem;
+    padding-inline: 1rem;
+    padding-block: 0.2rem;
+    background-image: url(../images/backgrounds/logo-zoom.png);
+    color: white;
+}
+
 .navmenu {
     display: flex;
     flex-direction: column;
@@ -61,7 +80,6 @@
 .navmenu-subtitle {
     text-decoration: none;
     color: black;
-    font-size: 0.9vw;
     padding: 0.2rem;
 }
 
@@ -77,6 +95,17 @@
     .navmenu-subtitle:hover {
         color: #2B579A;
     }
+
+.tag-container {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tag-object {
+    background-color: #D9D9D9;
+    padding: 0.5rem;
+    margin: 0.2rem;
+}
 
 .content-container {
     display: flex;
@@ -96,23 +125,11 @@
     flex-grow: 1;
 }
 
-.info-title {
-    font-size: 1.5rem;
-    font-weight: bold;
-}
-
-.tags-title {
-    font-size: 1.3rem;
-}
-
-.tags-content {
-    font-size: 1.1rem;
-}
-
 .content-options {
     display: flex;
+    position: fixed;
     justify-content: space-between;
-    padding: 0.5rem;
+    align-self: flex-end;
 }
 
 .content-options-btn {
@@ -121,17 +138,18 @@
     align-items: center;
     width: 100%;
     padding: 0.5rem;
+    padding-inline: 2rem;
     margin: 0.5rem;
     background-color: #ccc;
     border: 3px solid #ccc;
 }
 
-.content-options-btn:hover {
-    cursor: pointer;
-    background: #f0f0f0;
-}
+    .content-options-btn:hover {
+        cursor: pointer;
+        background: #f0f0f0;
+    }
 
-.pdf_icon, 
-.play_icon {
+.pdf-icon, 
+.play-icon {
     height: 2rem;
 }

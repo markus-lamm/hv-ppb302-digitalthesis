@@ -2,9 +2,9 @@
 
 @{
     ViewData["Title"] = "Edit";
-    var KaleidoscopeTags = ViewData["Kaleidoscope"] as List<SelectListItem>;
+    var kaleidoscopeTags = ViewData["Kaleidoscope"] as List<SelectListItem>;
     var assemblageTags = ViewData["AssemblageTags"] as SelectList;
-    var ConnectorTags = ViewData["Connectors"] as List<SelectListItem>;
+    var connectorTags = ViewData["Connectors"] as List<SelectListItem>;
 }
 <head>
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
@@ -34,7 +34,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="ConnectorTags" class="control-label"></label>
-                        @foreach (var item in ConnectorTags!)
+                        @foreach (var item in connectorTags!)
                         {
                             <input type="checkbox" class="form-check-input" id="@item.Value" name="ConnectorTags" value="@item.Value" @(item.Selected ? "checked=\"checked\"" : "") />
                             <label class="form-check-label" for="@item.Value">@item.Text</label>
@@ -42,7 +42,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="KaleidoscopeTags" class="control-label"></label>
-                        @foreach (var item in KaleidoscopeTags!)
+                        @foreach (var item in kaleidoscopeTags!)
                         {
                             <input type="checkbox" class="form-check-input" id="@item.Value" name="KaleidoscopeTags" value="@item.Value" @(item.Selected ? "checked=\"checked\"" : "") />
                             <label class="form-check-label" for="@item.Value">@item.Text</label>

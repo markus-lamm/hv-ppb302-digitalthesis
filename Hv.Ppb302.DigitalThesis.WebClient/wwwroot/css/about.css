@@ -1,7 +1,17 @@
-﻿.about-container {
+﻿.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('../images/backgrounds/white-1.png');
+    background-size: 100% 100%;
+    background-position: center;
+    z-index: -1;
+}
+
+.about-container {
     overflow: hidden !important;
-    background-image: url(../images/backgrounds/white-1.png);
-    background-size: cover;
     display: flex;
     height: 100vh;
     position: relative;

@@ -1,4 +1,3 @@
-using System.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -238,7 +237,6 @@ public class HomeController : Controller
         }
         return fileViewModels;
     }
-
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
     public IActionResult Error()

@@ -34,22 +34,6 @@ public class MolecularMosaicsController : Controller
         return View(_molecularMosaicRepo.GetAll());
     }
 
-    public IActionResult Details(Guid id)
-    {
-        if (!CheckAuthentication())
-        {
-            return RedirectToAction("Login", "Admin");
-        }
-
-        var molecularMosaic = _molecularMosaicRepo.Get(id);
-        if (molecularMosaic == null)
-        {
-            return NotFound();
-        }
-
-        return View(molecularMosaic);
-    }
-
     public IActionResult Create()
     {
         if (!CheckAuthentication())
@@ -269,8 +253,6 @@ public class MolecularMosaicsController : Controller
 
         return RedirectToAction(nameof(Index));
     }
-
-    private bool MolecularMosaicExists(Guid id) => _molecularMosaicRepo.Get(id) != null;
 
     public bool CheckAuthentication()
     {
