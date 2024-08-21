@@ -111,8 +111,9 @@
 
 .content-options {
     display: flex;
+    position: fixed;
     justify-content: space-between;
-    padding: 0.5rem;
+    align-self: flex-end;
 }
 
 .content-options-btn {
@@ -121,17 +122,18 @@
     align-items: center;
     width: 100%;
     padding: 0.5rem;
+    padding-inline: 2rem;
     margin: 0.5rem;
     background-color: #ccc;
     border: 3px solid #ccc;
 }
 
-.content-options-btn:hover {
-    cursor: pointer;
-    background: #f0f0f0;
-}
+    .content-options-btn:hover {
+        cursor: pointer;
+        background: #f0f0f0;
+    }
 
-.pdf_icon, 
-.play_icon {
+.pdf-icon, 
+.play-icon {
     height: 2rem;
 }

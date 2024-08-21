@@ -1,29 +1,79 @@
-﻿//Audioplayer
-document.addEventListener('DOMContentLoaded', function () {
+﻿// Audioplayer
+const audioButton = document.getElementById('audio-icon');
+if (audioButton) {
     const audioPlayer = document.getElementById('audio-player');
-    const audioImg = document.getElementById('audio-img');
+    const audioImage = document.getElementById('audio-img');
 
-    if (audioPlayer) {
-        audioPlayer.addEventListener('click', function (event) {
-            event.preventDefault();
-            if (audioPlayer.paused) {
-                audioPlayer.play();
-                audioImg.src = '/images/icons/stop.png';
-            } else {
-                audioPlayer.pause();
-                audioPlayer.currentTime = 0;
-                audioImg.src = '/images/icons/play.png';
+    // Add click event listener to the button
+    audioButton.addEventListener('click', function () {
+        // Check if audio is currently playing
+        if (audioPlayer.paused) {
+            // If paused, play the audio
+            audioPlayer.play();
+            audioButton.style.backgroundImage = "url('/images/backgrounds/logo-zoom.png')";
+            audioImage.src = "/images/icons/stop-button-white.png";
+        } else {
+            // If playing, pause the audio and reset the time to 0
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0;
+            audioButton.style.backgroundImage = "";
+            audioImage.src = "/images/icons/play-button-black.png";
+        }
+    });
+}
+
+// PDF download
+const pdfDownload = document.getElementById('pdf-download-btn');
+if (pdfDownload) {
+    document.getElementById('pdf-download-btn').addEventListener('click', async function () {
+        // URL of the PDF to be downloaded
+
+        var selectedTag = this.getAttribute('data-tags');
+
+        const pdfUrl = selectedTag;  // Replace with your actual file URL
+
+        try {
+            // Check if the browser supports the File System Access API
+            if (!window.showSaveFilePicker) {
+                alert('showSaveFilePicker API is not supported in this browser.');
+                return;
             }
-        });
 
-        audioPlayer.addEventListener('ended', function () {
-            audioImg.src = 'https://informatik13.ei.hv.se/digitalthesis/images/icons/play.png';
-        });
-    }
+            // Fetch the PDF file from the URL
+            const response = await fetch(pdfUrl);
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const pdfBlob = await response.blob();
 
-});
+            // Open the save file picker
+            const fileHandle = await window.showSaveFilePicker({
+                suggestedName: 'downloaded.pdf', // Default file name
+                types: [
+                    {
+                        description: 'PDF Files',
+                        accept: {
+                            'application/pdf': ['.pdf'],
+                        },
+                    },
+                ],
+            });
 
-//Navigationmenu
+            // Create a writable stream to the file
+            const writableStream = await fileHandle.createWritable();
+
+            // Write the PDF blob to the file
+            await writableStream.write(pdfBlob);
+
+            // Close the file and save the changes
+            await writableStream.close();
+        } catch (error) {
+            console.error('Error saving file:', error);
+        }
+    });
+}
+
+// Navigationmenu
 document.addEventListener('DOMContentLoaded', function () {
     const joditHTML = editor.getEditorValue();
 
@@ -46,9 +96,9 @@ document.addEventListener('DOMContentLoaded', function () {
     collectHeadings(doc.body);
 
     // Render the parsed HTML content into a container on the page
-    const contentContainer = document.getElementById('content-container');
-    if (contentContainer) {
-        contentContainer.innerHTML = doc.body.innerHTML;
+    const editorContainer = document.getElementById('editor-container');
+    if (editorContainer) {
+        editorContainer.innerHTML = doc.body.innerHTML;
     }
 
     const navmenu = document.getElementById('navmenu');
