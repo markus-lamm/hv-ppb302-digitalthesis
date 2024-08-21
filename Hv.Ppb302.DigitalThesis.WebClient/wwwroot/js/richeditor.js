@@ -1,7 +1,34 @@
-﻿const TabsWidget = Jodit.modules.TabsWidget;
-console.log(TabsWidget)
+﻿const { UIForm, UIInput, UIButton, UITextArea } = Jodit.modules;
 
-const { UIForm, UIInput, UIButton, UITextArea } = Jodit.modules;
+Jodit.defaultOptions.controls.videonopause = {
+    icon: 'video',
+    popup: (editor, current, control, close) => {
+        videoNoPauseform = new UIForm(editor, [
+            new UIInput(editor, {
+                name: 'videoNoPauseUrl',
+                placeholder: 'Enter video URL...',
+                autofocus: false,
+                label: 'Video URL:'
+            }),
+            new UIButton(editor, {
+                text: 'Insert no pause video',
+                status: 'primary',
+                variant: 'primary'
+            }).onAction(() => {
+                form.submit();
+            })
+        ]), closePopWindow = () => {
+            editor.s.focus();
+            editor.s.restore();
+            close.__closePopup();
+        };
+
+
+        videoNoPauseform.onSubmit(() => { })
+        return videoNoPauseform;
+    },
+    tooltip: "Insert No pausable video"
+}
 
 Jodit.defaultOptions.controls.video = {
     popup: (editor, current, control, close) => {
@@ -17,39 +44,26 @@ Jodit.defaultOptions.controls.video = {
                 status: 'primary',
                 variant: 'primary'
             }).onAction(() => {
-                form.submit();
+                videoform.submit();
             })
-        ]), videoNoPauseform = new UIForm(editor, [
-            new UIInput(editor, {
-                name: 'videoNoPauseUrl',
-                placeholder: 'Enter video URL...',
-                autofocus: false,
-                label: 'Video URL:'
-            }),
-            new UIButton(editor, {
-                text: 'Insert no pause video',
-                status: 'primary',
-                variant: 'primary'
-            }).onAction(() => {
-                form.submit();
-            })
-        ]), tabs = [];
+        ]), closePopWindow = () => {
+            editor.s.focus();
+            editor.s.restore();
+            close.__closePopup();
+        };
 
-        tabs.push({
-            icon: 'link',
-            name: 'Link',
-            content: videoform.container
-        }, {
-            icon: 'source',
-            name: 'Code',
-            content: videoNoPauseform.container
-        });
-        console.log(Jodit.modules);
+        videoform.onSubmit((data) => {
+            const iframetag = `<iframe src="${data.videoUrl}" title="description" width="304px" height="154px" data-control="true"></iframe>`;
 
-        const newtab = editor.Tabs(editor, tabs);
-        return newtab;
-    }
+            editor.selection.insertHTML(iframetag);
+            closePopWindow();
+        })
+
+        return videoform;
+    },
+    tooltip: "Insert normal video"
 };
+
 Jodit.defaultOptions.controls.footnoteButton = {
     iconURL: "https://informatik13.ei.hv.se/DigitalThesis/images/icons/superscript.png",
     popup: function (editor, current, control, close) {
@@ -80,7 +94,7 @@ Jodit.defaultOptions.controls.footnoteButton = {
             close.__closePopup();
         };
 
-        form.onSubmit(close => {
+        form.onSubmit(() => {
             // Attempt to retrieve the input element from form.elements
             const LinkTextElement = form.elements.find(
                 element => element.state && element.state.name === 'linkText'
@@ -165,7 +179,7 @@ if (editorDiv2) {
         "uploader": {
             "insertImageAsBase64URI": true
         },
-        buttons: [...Jodit.defaultOptions.buttons, 'footnoteButton'],
+        buttons: [...Jodit.defaultOptions.buttons, 'footnoteButton', 'videonopause'],
         
     });
 
@@ -175,6 +189,28 @@ if (editorDiv2) {
         inputElement.value = editor.getEditorValue();
     })
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Select all video elements with data-control="true"
+    var iframes = document.querySelectorAll('iframe[data-control="true"]');
+
+        iframes.forEach((iframe) => {
+            iframe.onload = function () {
+                var video = iframe.contentWindow.document.querySelector("video");
+
+                if (video) {
+                    video.addEventListener('pause', function () {
+                        video.currentTime = 0;  // Reset video to the beginning
+                        console.log("here")
+                    });
+                } else {
+                    console.error("No video element found inside the iframe.");
+                }
+            };
+        })
+    
+
+});
 
 var input = document.getElementById('Becomings')
 if (input) {
