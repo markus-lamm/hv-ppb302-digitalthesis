@@ -1,7 +1,7 @@
 ﻿const { UIForm, UIInput, UIButton, UITextArea } = Jodit.modules;
 
 Jodit.defaultOptions.controls.videonopause = {
-    icon: 'video',
+    iconURL: '/images/icons/replay.png',
     popup: (editor, current, control, close) => {
         videoNoPauseform = new UIForm(editor, [
             new UIInput(editor, {
@@ -15,7 +15,7 @@ Jodit.defaultOptions.controls.videonopause = {
                 status: 'primary',
                 variant: 'primary'
             }).onAction(() => {
-                form.submit();
+                videoNoPauseform.submit();
             })
         ]), closePopWindow = () => {
             editor.s.focus();
@@ -24,7 +24,11 @@ Jodit.defaultOptions.controls.videonopause = {
         };
 
 
-        videoNoPauseform.onSubmit(() => { })
+        videoNoPauseform.onSubmit((data) => {
+            const iframetag = `<video id="videoIframe" src="${data.videoNoPauseUrl}" title="description" width="304px" height="154px" controls data-control="true"></video>`;
+            editor.selection.insertHTML(iframetag);
+            closePopWindow();
+        })
         return videoNoPauseform;
     },
     tooltip: "Insert No pausable video"
@@ -53,8 +57,7 @@ Jodit.defaultOptions.controls.video = {
         };
 
         videoform.onSubmit((data) => {
-            const iframetag = `<iframe src="${data.videoUrl}" title="description" width="304px" height="154px" data-control="true"></iframe>`;
-
+            const iframetag = `<iframe id="videoIframe" src="${data.videoUrl}" title="description" width="304px" height="154px"></iframe>`;
             editor.selection.insertHTML(iframetag);
             closePopWindow();
         })
@@ -190,25 +193,12 @@ if (editorDiv2) {
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    // Select all video elements with data-control="true"
-    var iframes = document.querySelectorAll('iframe[data-control="true"]');
-
-        iframes.forEach((iframe) => {
-            iframe.onload = function () {
-                var video = iframe.contentWindow.document.querySelector("video");
-
-                if (video) {
-                    video.addEventListener('pause', function () {
-                        video.currentTime = 0;  // Reset video to the beginning
-                        console.log("here")
-                    });
-                } else {
-                    console.error("No video element found inside the iframe.");
-                }
-            };
-        })
-    
-
+    var videos = document.querySelectorAll('video[data-control="true"]');
+    videos.forEach(function (video) {
+        video.addEventListener('pause', function () {
+            video.currentTime = 0;
+        });
+    });
 });
 
 var input = document.getElementById('Becomings')
@@ -220,14 +210,15 @@ if (input) {
     })
     var selectedTag = input.getAttribute('data-tags');
 
-    input.value = '';
     // Convert the string of tags into an array
-    var tagsArray = selectedTag.split(',');
+    if (selectedTag) {
+        var tagsArray = selectedTag.split(',');
+        tagsArray.forEach(function (tag) {
+            // Get the value of each tag
+            tagify.addTags([tag.trim()]);
+        });
+    }
 
-    tagsArray.forEach(function (tag) {
-        // Get the value of each tag
-        tagify.addTags([tag.trim()]);
-    });
 }
 
 function copyFunction(fileurl) {

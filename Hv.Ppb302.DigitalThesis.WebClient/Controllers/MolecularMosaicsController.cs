@@ -82,7 +82,10 @@ public class MolecularMosaicsController : Controller
 
         molecularMosaic.ConnectorTags ??= [];
         molecularMosaic.KaleidoscopeTags ??= [];
-
+        if (molecularMosaic.Becomings.Count == 1 && molecularMosaic.Becomings[0] is null)
+        {
+            molecularMosaic.Becomings = [];
+        }
         if (!string.IsNullOrEmpty(becomings))
         {
             molecularMosaic.Becomings ??= [];
@@ -176,7 +179,10 @@ public class MolecularMosaicsController : Controller
         {
             return NotFound();
         }
-
+        if (molecularMosaic.Becomings.Count == 1 && molecularMosaic.Becomings[0] is null)
+        {
+            molecularMosaic.Becomings = [];
+        }
         if (molecularMosaic.Becomings != null && molecularMosaic.Becomings.Count > 0 && !string.IsNullOrEmpty(molecularMosaic.Becomings[0]?.Trim()))
         {
             molecularMosaic.Becomings ??= [];
