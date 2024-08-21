@@ -23,4 +23,8 @@
     <PackageReference Include="Mime-Detective" Version="24.5.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\images\pages\" />
+  </ItemGroup>
+
 </Project>
