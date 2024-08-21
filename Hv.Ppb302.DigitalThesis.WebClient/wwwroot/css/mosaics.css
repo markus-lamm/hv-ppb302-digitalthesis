@@ -155,3 +155,109 @@ a:hover img {
         color: white;
         cursor: pointer;
     }
+
+.sidebar {
+    height: 95%;
+    bottom: 2px;
+    width: 0;
+    position: absolute;
+    background: rgba(213, 208, 198, 0.7);
+    z-index: 4;
+    right: 0;
+    overflow-x: hidden;
+    padding-top: 60px;
+    transition: 0.5s;
+}
+
+    .sidebar .calOption {
+        padding: 8px 8px 8px 32px;
+        font-weight: 100;
+        cursor: pointer;
+        border: none;
+        text-decoration: none;
+        font-size: 25px;
+        color: black;
+        display: block;
+        background: none;
+        transition: 0.3s;
+    }
+
+        .sidebar .calOption:hover {
+            -webkit-filter: drop-shadow(0px 0px 8px #222);
+            filter: drop-shadow(0px 0px 8px #222);
+        }
+
+.calClear {
+    border: 1px solid white;
+    margin-left: 30px;
+    background-color: transparent;
+    font-weight: lighter;
+    color: white;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+    .calClear:hover {
+        -webkit-filter: drop-shadow(0px 0px 8px #222);
+        filter: drop-shadow(0px 0px 8px #222);
+    }
+
+.sidebar .closebtn {
+    font-size: 50px;
+    cursor: pointer;
+    background: none;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    position: absolute;
+    top: 90%;
+    left: 0;
+}
+
+.sidebarLine {
+    border-bottom: 1px solid white;
+}
+
+.sidebar h3 {
+    text-align: center;
+}
+
+.openbtn {
+    font-size: 50px;
+    cursor: pointer;
+    background: none;
+    color: rgba(124, 124, 124, 1);
+    padding: 10px 15px;
+    border: none;
+    position: absolute;
+    top: 90%;
+    right: 0;
+}
+
+#main {
+    transition: margin-left 0.5s;
+    padding: 20px;
+}
+
+@media screen and (max-height: 450px) {
+    .sidebar {
+        padding-top: 15px;
+    }
+
+        .sidebar .calOption {
+            font-size: 18px;
+        }
+
+    .section-a {
+        padding-top: 15px;
+    }
+
+    .heading-1 {
+        /* Ge extra marginal eller padding om det behövs för heading-1 */
+        padding-top: 50px; /* Detta är ett exempel. Justera enligt ditt behov */
+    }
+}
+
+.sidebar .openbtn {
+    display: none;
+}

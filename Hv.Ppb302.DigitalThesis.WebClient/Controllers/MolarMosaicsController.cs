@@ -34,22 +34,6 @@ public class MolarMosaicsController : Controller
         return View(_molarMosaicRepo.GetAll());
     }
 
-    public IActionResult Details(Guid id)
-    {
-        if (!CheckAuthentication())
-        {
-            return RedirectToAction("Login", "Admin");
-        }
-
-        var molarMosaic = _molarMosaicRepo.Get(id);
-        if (molarMosaic == null)
-        {
-            return NotFound();
-        }
-
-        return View(molarMosaic);
-    }
-
     public IActionResult Create()
     {
         if (!CheckAuthentication())
@@ -269,8 +253,6 @@ public class MolarMosaicsController : Controller
 
         return RedirectToAction(nameof(Index));
     }
-
-    private bool MolarMosaicExists(Guid id) => _molarMosaicRepo.Get(id) != null;
 
     public bool CheckAuthentication()
     {

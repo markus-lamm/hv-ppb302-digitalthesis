@@ -4,10 +4,10 @@
     ViewData["Title"] = viewModel.Title;
     string fileName = System.IO.Path.GetFileName(Model.PdfFilePath)!;
 }
-
 <head>
     <link rel="stylesheet" href="~/css/detail.css" asp-append-version="true" />
 </head>
+<div class="background-container"></div>
 <div class="detail-container">
     @if (viewModel.IsVisible == true)
     {

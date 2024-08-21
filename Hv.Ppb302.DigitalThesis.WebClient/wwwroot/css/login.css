@@ -78,3 +78,14 @@
     margin-right: auto;
     margin-left: auto;
 }
+
+.heading {
+    font-size: 0.8rem;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.heading p {
+    margin-right: auto;
+    margin-left: auto;
+}

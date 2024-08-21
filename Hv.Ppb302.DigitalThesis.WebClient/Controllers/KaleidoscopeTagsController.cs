@@ -22,22 +22,6 @@ public class KaleidoscopeTagsController : Controller
         return View(_kaleidoscopeTagRepo.GetAll());
     }
 
-    public IActionResult Details(Guid id)
-    {
-        if (!CheckAuthentication())
-        {
-            return RedirectToAction("Login", "Admin");
-        }
-
-        var kaleidoscopeTag = _kaleidoscopeTagRepo.Get(id);
-        if (kaleidoscopeTag == null)
-        {
-            return NotFound();
-        }
-
-        return View(kaleidoscopeTag);
-    }
-
     public IActionResult Edit(Guid id)
     {
         if (!CheckAuthentication())
@@ -75,8 +59,6 @@ public class KaleidoscopeTagsController : Controller
 
         return RedirectToAction(nameof(Index));
     }
-
-    private bool KaleidoscopeTagExists(Guid id) => _kaleidoscopeTagRepo.Get(id) != null;
 
     public bool CheckAuthentication()
     {

@@ -4,11 +4,9 @@
     var mosaicImages = Enumerable.Range(1, 14).Select(i => $"~/images/mosaics/mosaic-blue-{i}.png").ToArray();
     var random = new Random();
 }
-
 <head>
     <link rel="stylesheet" href="~/css/mosaics.css" asp-append-version="true" />
 </head>
-
 <div class="mosaic-container">
     <div class="mosaic-float">
         @foreach(var mosaic in Model.MolecularMosaics!)
@@ -29,7 +27,6 @@
         }
     </div>
 </div>
-
 <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><img src="~/images/icons/arrow-black-reverse.svg" /></a>
     <h3 class="sidebarLine">Connectors</h3>
@@ -49,10 +46,7 @@
     <h3 class="sidebarLine">Becomings</h3>
     <div class="becomings-btn" id="becomings-btn">Show Becomings</div>
 </div>
-
 <div id="main">
     <button class="openbtn" onclick="openNav()"><img src="~/images/icons/arrow-black.svg" /></button>
 </div>
-@section Scripts {
-    <script src="~/js/mosaics.js" asp-append-version="true"></script>
-}
+<script src="~/js/mosaics.js" asp-append-version="true"></script>
