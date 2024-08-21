@@ -1,14 +1,78 @@
-﻿const { UIForm, UIInput, UIButton } = Jodit.modules;
+﻿const { UIForm, UIInput, UIButton, UITextArea } = Jodit.modules;
+
+Jodit.defaultOptions.controls.videonopause = {
+    icon: 'video',
+    popup: (editor, current, control, close) => {
+        videoNoPauseform = new UIForm(editor, [
+            new UIInput(editor, {
+                name: 'videoNoPauseUrl',
+                placeholder: 'Enter video URL...',
+                autofocus: false,
+                label: 'Video URL:'
+            }),
+            new UIButton(editor, {
+                text: 'Insert no pause video',
+                status: 'primary',
+                variant: 'primary'
+            }).onAction(() => {
+                form.submit();
+            })
+        ]), closePopWindow = () => {
+            editor.s.focus();
+            editor.s.restore();
+            close.__closePopup();
+        };
+
+
+        videoNoPauseform.onSubmit(() => { })
+        return videoNoPauseform;
+    },
+    tooltip: "Insert No pausable video"
+}
+
+Jodit.defaultOptions.controls.video = {
+    popup: (editor, current, control, close) => {
+        const videoform = new UIForm(editor, [
+            new UIInput(editor, {
+                name: 'videoUrl',
+                placeholder: 'Enter video URL...',
+                autofocus: false,
+                label: 'Video URL:'
+            }),
+            new UIButton(editor, {
+                text: 'Insert Video',
+                status: 'primary',
+                variant: 'primary'
+            }).onAction(() => {
+                videoform.submit();
+            })
+        ]), closePopWindow = () => {
+            editor.s.focus();
+            editor.s.restore();
+            close.__closePopup();
+        };
+
+        videoform.onSubmit((data) => {
+            const iframetag = `<iframe src="${data.videoUrl}" title="description" width="304px" height="154px" data-control="true"></iframe>`;
+
+            editor.selection.insertHTML(iframetag);
+            closePopWindow();
+        })
+
+        return videoform;
+    },
+    tooltip: "Insert normal video"
+};
 
 Jodit.defaultOptions.controls.footnoteButton = {
-    iconURL: "/images/icons/superscript.png",
+    iconURL: "https://informatik13.ei.hv.se/DigitalThesis/images/icons/superscript.png",
     popup: function (editor, current, control, close) {
         const form = new UIForm(editor, [
-            new UIInput(editor, {
+            new UITextArea(editor, {
                 name: 'linkText',
                 placeholder: 'Enter link text...',
                 autofocus: true,
-                label: 'Text:',
+                label: 'Text: *',
                 required: true
             }),
             new UIInput(editor, {
@@ -24,8 +88,13 @@ Jodit.defaultOptions.controls.footnoteButton = {
             }).onAction(() => {
                 form.submit();
             })
-        ]).onSubmit(() => {
+        ]), closePopWindow = () => {
+            editor.s.focus();
+            editor.s.restore();
+            close.__closePopup();
+        };
 
+        form.onSubmit(() => {
             // Attempt to retrieve the input element from form.elements
             const LinkTextElement = form.elements.find(
                 element => element.state && element.state.name === 'linkText'
@@ -40,7 +109,7 @@ Jodit.defaultOptions.controls.footnoteButton = {
                 const linkURL = LinkUrlElement.state.value || '';
                 let footnoteText = linkText;
 
-                const existingFootnotes = editor.editor.querySelectorAll('a[href^="#ftn"]');
+                const existingFootnotes = editor.editor.querySelectorAll('a[href^="#_ftnref"]');
                 const footnoteNumber = existingFootnotes.length + 1;
 
 
@@ -51,7 +120,7 @@ Jodit.defaultOptions.controls.footnoteButton = {
                 const footnoteId = `ftn${footnoteNumber}`;
                 const footnoteRefId = `_ftnref${footnoteNumber}`;
 
-                const footnoteMarker = `<a href="#${footnoteId}" name="${footnoteRefId}" title=""><span class="MsoFootnoteReference" style="vertical-align: super;"><span style="font-size: 15px; line-height: 107%; font-family: Aptos, sans-serif;">[${footnoteNumber}]</span></span></a>&nbsp;`;
+                const footnoteMarker = `<a href="#${footnoteId}" name="${footnoteRefId}" title=""><span class="MsoFootnoteReference" style="vertical-align: super;"><span style="font-size: 15px; line-height: 107%; font-family: Aptos, sans-serif; vertical-align: super;">${footnoteNumber}</span></span></a>&nbsp;`;
 
                 const footnoteContent = `
                         <div id="${footnoteId}">
@@ -73,11 +142,12 @@ Jodit.defaultOptions.controls.footnoteButton = {
 
                 // Append footnote content to the end
                 editor.value += footnoteContent;
+                
             } else {
                 console.error('Footnote input field not found or state is undefined.');
             }
+            closePopWindow();
         })
-
         return form;
     },
     tooltip: "Insert Footnote"
@@ -108,7 +178,8 @@ if (editorDiv2) {
         "uploader": {
             "insertImageAsBase64URI": true
         },
-        buttons: [...Jodit.defaultOptions.buttons, 'footnoteButton']
+        buttons: [...Jodit.defaultOptions.buttons, 'footnoteButton', 'videonopause'],
+        
     });
 
     let inputElement = document.getElementById('hiddeninput')
@@ -117,6 +188,28 @@ if (editorDiv2) {
         inputElement.value = editor.getEditorValue();
     })
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    // Select all video elements with data-control="true"
+    var iframes = document.querySelectorAll('iframe[data-control="true"]');
+
+        iframes.forEach((iframe) => {
+            iframe.onload = function () {
+                var video = iframe.contentWindow.document.querySelector("video");
+
+                if (video) {
+                    video.addEventListener('pause', function () {
+                        video.currentTime = 0;  // Reset video to the beginning
+                        console.log("here")
+                    });
+                } else {
+                    console.error("No video element found inside the iframe.");
+                }
+            };
+        })
+    
+
+});
 
 var input = document.getElementById('Becomings')
 if (input) {
