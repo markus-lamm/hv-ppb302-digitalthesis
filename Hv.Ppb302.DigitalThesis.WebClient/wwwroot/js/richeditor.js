@@ -1,10 +1,60 @@
-﻿const { UIForm, UIInput, UIButton } = Jodit.modules;
+﻿const TabsWidget = Jodit.modules.TabsWidget;
+console.log(TabsWidget)
 
+const { UIForm, UIInput, UIButton, UITextArea } = Jodit.modules;
+
+Jodit.defaultOptions.controls.video = {
+    popup: (editor, current, control, close) => {
+        const videoform = new UIForm(editor, [
+            new UIInput(editor, {
+                name: 'videoUrl',
+                placeholder: 'Enter video URL...',
+                autofocus: false,
+                label: 'Video URL:'
+            }),
+            new UIButton(editor, {
+                text: 'Insert Video',
+                status: 'primary',
+                variant: 'primary'
+            }).onAction(() => {
+                form.submit();
+            })
+        ]), videoNoPauseform = new UIForm(editor, [
+            new UIInput(editor, {
+                name: 'videoNoPauseUrl',
+                placeholder: 'Enter video URL...',
+                autofocus: false,
+                label: 'Video URL:'
+            }),
+            new UIButton(editor, {
+                text: 'Insert no pause video',
+                status: 'primary',
+                variant: 'primary'
+            }).onAction(() => {
+                form.submit();
+            })
+        ]), tabs = [];
+
+        tabs.push({
+            icon: 'link',
+            name: 'Link',
+            content: videoform.container
+        }, {
+            icon: 'source',
+            name: 'Code',
+            content: videoNoPauseform.container
+        });
+        console.log(Jodit.modules);
+
+        const newtab = editor.Tabs(editor, tabs);
+        return newtab;
+    }
+};
 Jodit.defaultOptions.controls.footnoteButton = {
     iconURL: "https://informatik13.ei.hv.se/DigitalThesis/images/icons/superscript.png",
     popup: function (editor, current, control, close) {
         const form = new UIForm(editor, [
-            new UIInput(editor, {
+            new UITextArea(editor, {
                 name: 'linkText',
                 placeholder: 'Enter link text...',
                 autofocus: true,
@@ -24,8 +74,13 @@ Jodit.defaultOptions.controls.footnoteButton = {
             }).onAction(() => {
                 form.submit();
             })
-        ]).onSubmit(() => {
+        ]), closePopWindow = () => {
+            editor.s.focus();
+            editor.s.restore();
+            close.__closePopup();
+        };
 
+        form.onSubmit(close => {
             // Attempt to retrieve the input element from form.elements
             const LinkTextElement = form.elements.find(
                 element => element.state && element.state.name === 'linkText'
@@ -73,11 +128,12 @@ Jodit.defaultOptions.controls.footnoteButton = {
 
                 // Append footnote content to the end
                 editor.value += footnoteContent;
+                
             } else {
                 console.error('Footnote input field not found or state is undefined.');
             }
+            closePopWindow();
         })
-
         return form;
     },
     tooltip: "Insert Footnote"
@@ -109,7 +165,8 @@ if (editorDiv2) {
         "uploader": {
             "insertImageAsBase64URI": true
         },
-        buttons: [...Jodit.defaultOptions.buttons, 'footnoteButton']
+        buttons: [...Jodit.defaultOptions.buttons, 'footnoteButton'],
+        
     });
 
     let inputElement = document.getElementById('hiddeninput')
