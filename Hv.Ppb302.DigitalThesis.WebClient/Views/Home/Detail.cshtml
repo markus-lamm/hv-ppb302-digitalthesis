@@ -2,16 +2,16 @@
 @{
     var viewModel = Model;
     ViewData["Title"] = viewModel.Title;
-    string fileName = System.IO.Path.GetFileName(Model.PdfFilePath)!;
+    var fileName = System.IO.Path.GetFileName(Model.PdfFilePath)!;
 }
 <head>
     <link rel="stylesheet" href="~/css/detail.css" asp-append-version="true" />
 </head>
-<div class="background-container"></div>
-<div class="detail-container">
+<div class="background-container background-image"></div>
+<div class="main-container">
     @if (viewModel.IsVisible == true)
     {
-        <div class="info-container">
+        <div class="info-container" id="info-container">
             <div class="info-container-title">Table of Contents</div>
             <div class="navmenu" id="navmenu"></div>
             @if (viewModel.ObjectType != "geotag")
@@ -29,7 +29,6 @@
                 <div class="info-container-title">Becomings</div>
                 @if (viewModel.Becomings.Count != 0)
                 {
-                    <div>@viewModel.Becomings.Count</div>
                     <div class="tag-container">
                         @foreach (var tag in viewModel.Becomings)
                         {
@@ -39,18 +38,21 @@
                 }
             }
         </div>
-        <div class="content-container" id="content-container">
-            <div class="content-options">
+        <div class="info-minimize-btn" id="info-minimize-btn">
+            <img class="info-minimize-img" id="info-minimize-img" src="~/images/icons/arrow-black.svg" />
+        </div>
+        <div class="text-container">
+            <div class="text-options">
                 @if (!String.IsNullOrWhiteSpace(@Model.AudioFilePath))
                 {
-                    <div id="audio-icon" class="content-options-btn">
+                    <div id="audio-icon" class="text-options-btn">
                         <img class="play-icon" id="audio-img" src="~/images/icons/play-button-black.png"/>
                         <audio id="audio-player" src="@Model.AudioFilePath"></audio>
                     </div>
                 }
                 @if (!String.IsNullOrWhiteSpace(@Model.PdfFilePath))
                 {
-                    <div id="pdf-download-btn" data-tags="@Model.PdfFilePath" class="content-options-btn">
+                    <div id="pdf-download-btn" data-tags="@Model.PdfFilePath" class="text-options-btn">
                         <a>
                             <img class="pdf-icon" src="~/images/icons/pdf-download-black.png"/>
                         </a>

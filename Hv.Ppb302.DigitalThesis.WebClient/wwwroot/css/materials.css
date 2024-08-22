@@ -1,13 +1,5 @@
-﻿.background-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+﻿.background-image {
     background-image: url('../images/backgrounds/white-1.png');
-    background-size: 100% 100%;
-    background-position: center;
-    z-index: -1;
 }
 
 .matpdffiles {

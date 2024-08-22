@@ -1,13 +1,5 @@
-﻿.background-container {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+﻿.background-image {
     background-image: url('../images/backgrounds/blue-white-1.jpg');
-    background-size: 100% 100%;
-    background-position: center;
-    z-index: -1;
 }
 
 .navbar {
@@ -16,15 +8,13 @@
 
 .content-container {
     display: flex;
-    flex-direction: row;
     justify-content: space-around;
     height: 100vh;
     width: 100vw;
-    overflow: hidden;
     background-color: rgba(200, 200, 200, 0.4);
 }
 
-.geotag-container {
+.logo-container {
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -33,17 +23,17 @@
     text-align: center;
 }
 
-    .geotag-container a {
+    .logo-container a {
         text-decoration: none;
         color: inherit;
         transition: transform 0.8s;
     }
 
-    .geotag-container a:hover {
+    .logo-container a:hover {
         transform: scale(1.1);
     }
 
-.geotag-img {
+.logo-img {
     height: 20vw;
 }
 
