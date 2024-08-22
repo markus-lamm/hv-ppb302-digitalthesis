@@ -59,6 +59,28 @@ body {
         opacity: 1;
     }
 
+/* Generic background container for all pages */
+.background-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-size: 100% 100%;
+    background-position: center;
+    z-index: -1;
+}
+
+/* Generic main container for all pages */
+.main-container {
+    z-index: 0;
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    display: flex;
+    overflow: hidden;
+}
+
 /* used in javascript to hide elements */
 .hide {
     display: none;

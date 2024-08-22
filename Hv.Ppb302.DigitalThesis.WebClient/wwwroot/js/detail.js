@@ -144,3 +144,21 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     });
 });
+
+const infoMinimizeBtn = document.getElementById('info-minimize-btn');
+
+infoMinimizeBtn.addEventListener('click', function () {
+    const infoContainer = document.getElementById('info-container');
+    if (infoContainer) {
+        infoContainer.classList.toggle('minimized');
+    }
+
+    const infoMinimizeImg = document.getElementById('info-minimize-img');
+    if (infoMinimizeImg) {
+        if (infoContainer.classList.contains('minimized')) {
+            infoMinimizeImg.src = '/images/icons/arrow-black-reverse.svg'; // Change to expand icon
+        } else {
+            infoMinimizeImg.src = '/images/icons/arrow-black.svg'; // Change to minimize icon
+        }
+    }
+});
