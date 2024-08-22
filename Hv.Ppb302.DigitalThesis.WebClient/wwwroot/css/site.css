@@ -81,7 +81,18 @@ body {
     overflow: hidden;
 }
 
-/* used in javascript to hide elements */
+/* Global classes */
 .hide {
     display: none;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
