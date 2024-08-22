@@ -45,7 +45,7 @@ function showStep(step) {
         elementLogo.style.zIndex = 1000;
     }
 
-    const geotagIDs = ["image-container1", "image-container2", "image-container3", "image-container9"];
+    const geotagIDs = ["link-geotag-1", "link-geotag-2", "link-geotag-3", "link-geotag-6"];
     if (geotagIDs) {
         geotagIDs.forEach(id => {
             const element = document.getElementById(id);
@@ -87,7 +87,7 @@ function showStep(step) {
         });
     }
 
-    const element = document.getElementById("image-container8");
+    const element = document.getElementById("link-kaleidoscope");
     const whiteImage = document.getElementById("geotag-white");
     const blackImage = document.getElementById("geotag-black");
     if (element && whiteImage && blackImage) {
