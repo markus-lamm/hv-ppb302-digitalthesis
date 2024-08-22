@@ -34,7 +34,6 @@
 .about-text,
 .about-logo {
     position: relative;
-    z-index: 1; /* Ensures these elements appear above the background */
 }
 
 .about-text {

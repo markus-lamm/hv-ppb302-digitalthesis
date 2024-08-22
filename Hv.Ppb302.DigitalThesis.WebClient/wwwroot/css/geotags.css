@@ -2,6 +2,17 @@
     background-image: url('../images/backgrounds/blue-white-1.jpg');
 }
 
+.geotag {
+    height: 6vw;
+    min-height: 5rem;
+}
+
+.image-text {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+}
+
 #link-geotag-1 {
     color: black;
     position: absolute;
@@ -67,7 +78,6 @@
 }
 
 #link-kaleidoscope {
-    z-index: 2;
     color: white;
     text-align: center;
     position: absolute;
@@ -81,7 +91,7 @@ a:hover img {
     cursor: pointer;
 }
 
-#blue-mosaic1 {
+#mosaic-blue-1 {
     width: 8.75rem;
     height: auto;
     position: absolute;
@@ -89,7 +99,7 @@ a:hover img {
     right: 17%;
 }
 
-#blue-mosaic2 {
+#mosaic-blue-2 {
     width: 8.75rem;
     height: auto;
     position: absolute;
@@ -97,7 +107,7 @@ a:hover img {
     right: 22%;
 }
 
-#blue-mosaic3 {
+#mosaic-blue-3 {
     width: 8.75rem;
     height: auto;
     position: absolute;
@@ -105,7 +115,7 @@ a:hover img {
     right: 23%;
 }
 
-#blue-mosaic4 {
+#mosaic-blue-4 {
     width: 8.75rem;
     height: auto;
     position: absolute;
@@ -113,7 +123,7 @@ a:hover img {
     right: 21%;
 }
 
-#blue-mosaic5 {
+#mosaic-blue-5 {
     width: 8.75rem;
     height: auto;
     position: absolute;
@@ -121,7 +131,7 @@ a:hover img {
     right: 18%;
 }
 
-#yellow-mosaic1 {
+#mosaic-yellow-1 {
     width: 8.75rem;
     height: auto;
     position: absolute;
@@ -129,7 +139,7 @@ a:hover img {
     right: 37%;
 }
 
-#yellow-mosaic2 {
+#mosaic-yellow-2 {
     width: 8.75rem;
     height: auto;
     position: absolute;
@@ -137,7 +147,7 @@ a:hover img {
     right: 37%;
 }
 
-#yellow-mosaic3 {
+#mosaic-yellow-3 {
     width: 8.75rem;
     height: auto;
     position: absolute;
@@ -145,116 +155,92 @@ a:hover img {
     right: 33%;
 }
 
-
-.button-container {
-    display: flex;
-    justify-content: space-between;
-    margin-top: auto; 
-    align-self: stretch; 
-    margin-bottom: 1.25rem; 
-}
-
-.back-button:hover,
-.next-button:hover {
-    background-color: #0056b3;
-}
-
-
-.back-button:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-
-.back-button,
-.next-button {
-    padding: 0.625rem 1.25rem;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-.overlay-box {
-    background: #fff;
-    padding: 1.25rem;
-    border-radius: 0.313rem;
-    bottom: 2rem;
-    right: 2rem;
-    position: fixed;
-    max-width: 20%;
-    min-height: auto; 
-}
-
-.overlay {
+.tutorial-overlay {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(255, 255, 255, 0.7);
-    z-index: 1000;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.tutorial-box {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 1rem;
+    border-radius: 5px;
+    transition: 0.5s ease;
+    width: 30rem;
 }
 
-.step-bar {
+.tutorial-text {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
+    margin-right: 3rem;
 }
 
-.step {
-    width: 1.25rem;
-    height: 1.25rem;
-    margin: 0 0.313rem;
-    background-color: #ccc;
-    border-radius: 50%;
+.tutorial-btns {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
 }
 
-    .step.active {
-        background-color: #007bff;
-    }
+.tutorial-prev-btn {
+    background-color: #D9D9D9;
+    padding: 0.5rem;
+    cursor: pointer;
+    margin-right: 2rem;
+}
 
-.cancel-btn {
+
+.tutorial-next-btn {
+    background-color: #D9D9D9;
+    padding: 0.5rem;
+    cursor: pointer;
+    margin-left: 2rem;
+}
+
+.tutorial-exit-btn {
+    background-color: #D9D9D9;
+    padding: 0.5rem;
     position: absolute;
     top: 10%;
     right: 5%;
-    padding: 0.5vw;
+    cursor: pointer;
 }
 
-    .cancel-btn:hover {
-        cursor: pointer;
+    .tutorial-prev-btn:hover,
+    .tutorial-next-btn:hover,
+    .tutorial-exit-btn:hover {
+        background-color: #f0f0f0;
     }
 
-.image-text {
-    font-size: 1.3vw;
-    font-weight: bold;
-    text-align: center;
-}
 
-@media (max-width: 1500px) {
-    .image-text {
-        font-size: 1.5rem;
-    }
-}
-
-.overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+.tutorial-step-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 9999;
+    gap: 0.5rem;
 }
 
-.geotag {
-    height: 6vw;
-    min-height: 5rem;
+.tutorial-prev-step {
+    background-color: cornflowerblue;
+    width: 1rem;
+    height: 1rem;
+}
+
+.tutorial-current-step {
+    background-color: #D9D9D9;
+    padding: 0.5rem;
+}
+
+.tutorial-next-step {
+    background-color: cornflowerblue;
+    width: 1rem;
+    height: 1rem;
 }

@@ -25,9 +25,8 @@ body {
     display: flex;
     align-items: center; /* Centers items vertically */
     justify-content: flex-start; /* Aligns items to the start (left) */
-    width: 100%; /* Span the full width */
     position: absolute; /* If you need it to be out of the flow of the document */
-    z-index: 2; /* Ensures it sits above the background */
+    z-index: 1; /* Ensures it sits above the background */
     margin-left: 2rem;
     margin-top: 1rem;
  }
@@ -73,7 +72,6 @@ body {
 
 /* Generic main container for all pages */
 .main-container {
-    z-index: 0;
     width: 100vw;
     height: 100vh;
     position: fixed;
