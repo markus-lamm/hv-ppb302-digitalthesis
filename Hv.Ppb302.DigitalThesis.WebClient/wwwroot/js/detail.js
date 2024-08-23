@@ -176,9 +176,9 @@ infoMinimizeBtn.addEventListener('click', function () {
     const infoMinimizeImg = document.getElementById('info-minimize-img');
     if (infoMinimizeImg) {
         if (infoContainer.classList.contains('minimized')) {
-            infoMinimizeImg.src = '/images/icons/arrow-black-reverse.svg'; // Change to expand icon
+            infoMinimizeImg.src = '/images/icons/arrow-right.png'; // Change to expand icon
         } else {
-            infoMinimizeImg.src = '/images/icons/arrow-black.svg'; // Change to minimize icon
+            infoMinimizeImg.src = '/images/icons/arrow-left.png'; // Change to minimize icon
         }
     }
 });
