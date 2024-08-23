@@ -131,7 +131,36 @@
         background: #f0f0f0;
     }
 
-.pdf-icon, 
+.text-reset-btn {
+    display: flex;
+    position: fixed;
+    bottom: -10%;
+    right: 5%;
+    padding: 0.5rem;
+    padding-bottom: 0;
+    background-color: #ccc;
+    border: 3px solid #ccc;
+    transition: bottom 0.5s ease;
+}
+
+    .text-reset-btn.visible {
+        bottom: 5%;
+    }
+
+    .text-reset-btn.hidden {
+        bottom: -10%;
+    }
+
+    .text-reset-btn:hover {
+        cursor: pointer;
+        background: #f0f0f0;
+    }
+
+.text-reset-img {
+    transform: rotate(90deg);
+}
+
+.pdf-icon,
 .play-icon {
     height: 2rem;
 }

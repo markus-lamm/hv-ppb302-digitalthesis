@@ -73,6 +73,26 @@ if (pdfDownload) {
     });
 }
 
+//Text reset
+document.addEventListener('DOMContentLoaded', function () {
+    var textContainer = document.querySelector('.text-container');
+    var textResetBtn = document.getElementById('text-reset-btn');
+
+    textContainer.addEventListener('scroll', function () {
+        if (textContainer.scrollTop > 0) {
+            textResetBtn.classList.remove('hidden');
+            textResetBtn.classList.add('visible');
+        } else {
+            textResetBtn.classList.remove('visible');
+            textResetBtn.classList.add('hidden');
+        }
+    });
+
+    textResetBtn.addEventListener('click', function () {
+        textContainer.scrollTop = 0;
+    });
+});
+
 // Navigationmenu
 document.addEventListener('DOMContentLoaded', function () {
     const joditHTML = editor.getEditorValue();
