@@ -1,4 +1,25 @@
-﻿// Mosaics placements within the kaleidoscope
+﻿// Mouseover mosaic name
+document.addEventListener("DOMContentLoaded", function () {
+    const mosaicNameAnchor = document.getElementById('mosaic-name');
+    const mosaics = document.querySelectorAll('.mosaic');
+
+    mosaics.forEach(mosaic => {
+        mosaic.addEventListener('mouseover', function () {
+            const mosaicName = mosaic.getAttribute('data-name');
+            mosaicNameAnchor.innerText = mosaicName;
+            let rect = mosaic.getBoundingClientRect();
+            mosaicNameAnchor.style.display = 'flex';
+            mosaicNameAnchor.style.position = 'absolute';
+            mosaicNameAnchor.style.top = `${rect.top + window.scrollY}px`;
+            mosaicNameAnchor.style.left = `${rect.left + window.scrollX}px`;
+        });
+        mosaic.addEventListener('mouseout', function () {
+            mosaicNameAnchor.style.display = 'none';
+        });
+    });
+});
+
+// Mosaics placements within the kaleidoscope
 document.addEventListener("DOMContentLoaded", function () {
     window.onload = function () {
         const kaleidoscopeImageContainer = document.getElementById('kaleidoscope-image-container');
