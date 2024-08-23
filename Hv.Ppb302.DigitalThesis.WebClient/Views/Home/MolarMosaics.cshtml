@@ -26,7 +26,7 @@
     </div>
 </div>
 <div id="mySidebar" class="sidebar">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><img src="~/images/icons/arrow-black-reverse.svg" /></a>
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><img class="sidebar-btn-img" src="~/images/icons/arrow-right.png" /></a>
     <h3 class="sidebarLine">Connectors</h3>
     <ul class="tagList">
         @foreach (var tag in Model.ConnectorTags!)
@@ -45,6 +45,6 @@
     <div class="becomings-btn" id="becomings-btn">Show Becomings</div>
 </div>
 <div id="main">
-    <button class="openbtn" onclick="openNav()"><img src="~/images/icons/arrow-black.svg" /></button>
+    <button class="openbtn" onclick="openNav()"><img class="sidebar-btn-img" src="~/images/icons/arrow-left.png" /></button>
 </div>
 <script src="~/js/mosaics.js" asp-append-version="true"></script>
