@@ -115,9 +115,8 @@
 }
 
 .mosaic {
-    width: 6vw;
-    height: 6vw;
-    border-radius: 50%;
+    width: 5vw;
+    height: 5vw;
     position: absolute;
     transition: 3s ease;
 }
@@ -141,17 +140,17 @@
     list-style: none;
 }
 
-    .tagList li {
-        margin-bottom: 15px;
-    }
+.tagList li {
+    margin-bottom: 15px;
+}
 
-        .tagList li input {
-            text-align: center;
-        }
+.tagList li input {
+    text-align: center;
+}
 
 .mosaic-highlight-effect {
-    width: 10rem;
-    height: 10rem;
+    width: 8rem;
+    height: 8rem;
     transition: 1.8s ease;
     -webkit-filter: drop-shadow(0 0 5px #222);
     filter: drop-shadow(0 0 5px #222);
