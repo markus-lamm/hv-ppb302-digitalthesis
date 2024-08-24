@@ -19,12 +19,34 @@ mosaics.forEach(mosaic => {
 
 function updateMosaicEventListeners(addListeners = true) {
     mosaics.forEach(mosaic => {
+        const mosaicContent = mosaic.querySelector('.mosaic-content');
+        const floatcontainer = document.querySelector('.mosaic-float');
+
         if (addListeners) {
-            mosaic.addEventListener('mouseover', pauseMosaic);
-            mosaic.addEventListener('mouseout', resumeMosaic);
+            mosaic.classList.add('mosaic-position');
+            mosaicContent.classList.remove('active');
+            container.style.overflow = 'hidden';
+            container.style.position = 'fixed';
+            mosaic.addEventListener('mouseenter', pauseMosaic);
+            mosaic.addEventListener('mouseleave', resumeMosaic);
+            floatcontainer.style.marginInline = '0';
         } else {
-            mosaic.removeEventListener('mouseover', pauseMosaic);
-            mosaic.removeEventListener('mouseout', resumeMosaic);
+            mosaic.removeEventListener('mouseenter', pauseMosaic);
+            mosaic.removeEventListener('mouseleave', resumeMosaic);
+            mosaic.addEventListener('mouseenter', (event) => {
+                toggleMosaicText(true);
+                event.currentTarget.style.zIndex = '100';
+            });
+
+            mosaic.addEventListener('mouseleave', (event) => {
+                toggleMosaicText(false);
+                event.currentTarget.style.zIndex = '0';
+            });
+            floatcontainer.style.marginInline = '10rem';
+            mosaicContent.classList.add('active');
+            container.style.overflow = 'unset';
+            container.style.position = 'unset';
+            mosaic.classList.remove('mosaic-position');
         }
     });
 }
@@ -86,38 +108,8 @@ becomingsBtn.addEventListener('click', () => {
         mosaic.classList.toggle('paused', isBecomingsBtnTriggered);
     });
 
-    toggleMosaicText(isBecomingsBtnTriggered);
 
 });
-
-
-function rearrangeMosaics() {
-    // Define the number of columns and rows for the grid
-    const columns = 5; // Adjust based on your design
-    const rows = Math.ceil(mosaics.length / columns);
-
-    // Calculate the width and height of each mosaic
-    const mosaicWidth = window.innerWidth / columns;
-    const mosaicHeight = window.innerHeight / rows * 0.8;
-
-    // Define padding or margin values
-    const topPadding = 150; // Adjust this value as needed
-    const leftPadding = 20; // Adjust this value as needed
-
-    // Rearrange the mosaics
-    mosaics.forEach((mosaic, index) => {
-        const column = index % columns;
-        const row = Math.floor(index / columns);
-
-        // Calculate the position for the mosaic with padding
-        const left = column * mosaicWidth + leftPadding;
-        const top = row * mosaicHeight + topPadding;
-        mosaic.style.position = "unset";
-        // Apply the position
-        mosaic.style.left = `${left}px`;
-        mosaic.style.top = `${top}px`;
-    });
-}
 
 //FILTER
 function openNav() {
@@ -169,7 +161,8 @@ function applyVisitedMosaics() {
         const decodedMosaics = decodeURIComponent(visitedMosaics);
         const visitedList = JSON.parse(decodedMosaics);
         visitedList.forEach(id => {
-            const element = document.getElementById(`mosaic-${id}`);
+            const elementen = document.getElementById(`mosaic-${id}`);
+            const element = elementen.querySelector('.mosaicImg');
             if (element) {
                 element.classList.add('visited');
             } else {

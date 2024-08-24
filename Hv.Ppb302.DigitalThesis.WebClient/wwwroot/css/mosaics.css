@@ -1,23 +1,49 @@
 ﻿.background-image {
     background-image: url('../images/backgrounds/blue-white-1.jpg');
 }
-
+main{
+    height: 100%;
+}
 .mosaic-container {
-    height: 100vh;
+    height: 100%;
     width: 100vw;
-    position: absolute;
+    position: fixed;
+    overflow: hidden;
 }
 
-.mosaic {
+.mosaic-position {
     position: absolute;
 }
 
 .mosaic-content {
-    display: flex;
-    flex-direction: column;
-    font-size: 2.3rem;
-    max-width: 30rem;
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    transform: translateX(-15%);
+    font-size: 1.8rem;
+    max-width: 30rem !important;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
 }
+.mosaic-content.active {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.8rem;
+    max-width: 30rem !important;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    word-break: break-word; /* Ensures long words break within the content box */
+    white-space: normal; /* Allows the text to wrap to the next line */
+    overflow-wrap: break-word;
+}
+
 
 .mosaic a {
     text-decoration: none;
@@ -33,14 +59,16 @@ a:hover img {
         color: white;
         opacity: 0;
         visibility: hidden;
+        display: none;
     }
 
 .mosaic a:hover div {
     transition: 0.3s ease;
     opacity: 1;
     visibility: visible;
-    -webkit-filter: drop-shadow(0 0 5px #222);
-    filter: drop-shadow(0 0 5px #222);
+    display: block;
+    -webkit-filter: drop-shadow(0 10 15px #222);
+    filter: drop-shadow(0 0 15px #222);
 }
 
 .mosaic-becomingsbtn-effect {
@@ -58,7 +86,7 @@ a:hover img {
 }
 
 .mosaic-becoming {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     max-width: 30rem;
 }
 
@@ -264,5 +292,9 @@ a:hover img {
     position: relative;
     padding-top: 15vh;
     display: flex;
+    flex-wrap: wrap;
     gap: 7rem;
+    justify-content: center;
+    align-items: center;
 }
+

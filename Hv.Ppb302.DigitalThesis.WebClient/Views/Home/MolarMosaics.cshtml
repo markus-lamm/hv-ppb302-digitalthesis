@@ -10,11 +10,11 @@
     <div class="mosaic-float">
         @foreach(var mosaic in Model.MolarMosaics!)
         {
-            <div class="mosaic" id="mosaic-@mosaic.Id" data-tags="@string.Join(',', mosaic.ConnectorTags!.Select(tag => tag.Name))">
+            <div class="mosaic mosaic-position" id="mosaic-@mosaic.Id" data-tags="@string.Join(',', mosaic.ConnectorTags!.Select(tag => tag.Name))">
                 <a href="@Url.Action("Detail", "Home", new {id = mosaic.Id, objectType = "molarmosaic" })">
                     <img class="mosaicImg" src="~/images/mosaics/mosaic-yellow-1.png" />
                     <div class="mosaic-content">
-                        <div>@mosaic.Title</div>
+                        <div><h3>@mosaic.Title</h3></div>
                         @foreach (var becoming in mosaic.Becomings!)
                         {
                             <div class="mosaic-becoming">@becoming</div>
@@ -27,6 +27,8 @@
 </div>
 <div id="mySidebar" class="sidebar">
     <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><img src="~/images/icons/arrow-black-reverse.svg" /></a>
+    <h3 class="sidebarLine">Becomings</h3>
+    <div class="becomings-btn" id="becomings-btn">Show Becomings</div>
     <h3 class="sidebarLine">Connectors</h3>
     <ul class="tagList">
         @foreach (var tag in Model.ConnectorTags!)
@@ -41,8 +43,6 @@
             </li>
         }
     </ul>
-    <h3 class="sidebarLine">Becomings</h3>
-    <div class="becomings-btn" id="becomings-btn">Show Becomings</div>
 </div>
 <div id="main">
     <button class="openbtn" onclick="openNav()"><img src="~/images/icons/arrow-black.svg" /></button>
