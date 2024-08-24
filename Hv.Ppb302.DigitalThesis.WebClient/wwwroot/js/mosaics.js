@@ -98,9 +98,10 @@ if (!isInitialUpdateTriggered) {
 }
 
 // BecomingButton click event listener
-becomingsBtn.addEventListener('click', () => {
+becomingsBtn.addEventListener('change', () => {
+    const becomingsText = becomingsBtn.querySelector('.becomings-text');
     isBecomingsBtnTriggered = !isBecomingsBtnTriggered;
-    becomingsBtn.textContent = isBecomingsBtnTriggered ? 'Hide Becomings' : 'Show Becomings';
+    //becomingsText.textContent = isBecomingsBtnTriggered ? 'Hide Becomings' : 'Show Becomings';
 
     updateMosaicEventListeners(!isBecomingsBtnTriggered);
 
