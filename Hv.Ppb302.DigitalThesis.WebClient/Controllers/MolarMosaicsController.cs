@@ -34,22 +34,6 @@ public class MolarMosaicsController : Controller
         return View(_molarMosaicRepo.GetAll());
     }
 
-    public IActionResult Details(Guid id)
-    {
-        if (!CheckAuthentication())
-        {
-            return RedirectToAction("Login", "Admin");
-        }
-
-        var molarMosaic = _molarMosaicRepo.Get(id);
-        if (molarMosaic == null)
-        {
-            return NotFound();
-        }
-
-        return View(molarMosaic);
-    }
-
     public IActionResult Create()
     {
         if (!CheckAuthentication())
@@ -98,6 +82,10 @@ public class MolarMosaicsController : Controller
 
         molarMosaic.ConnectorTags ??= [];
         molarMosaic.KaleidoscopeTags ??= [];
+        if (molarMosaic.Becomings.Count == 1 && molarMosaic.Becomings[0] is null )
+        {
+            molarMosaic.Becomings = [];
+        }
 
         if (!string.IsNullOrEmpty(becomings))
         {
@@ -193,6 +181,10 @@ public class MolarMosaicsController : Controller
             return NotFound();
         }
 
+        if (molarMosaic.Becomings.Count == 1 && molarMosaic.Becomings[0] is null)
+        {
+            molarMosaic.Becomings = [];
+        }
         if (molarMosaic.Becomings != null && molarMosaic.Becomings.Count > 0 && !string.IsNullOrEmpty(molarMosaic.Becomings[0]?.Trim()))
         {
             molarMosaic.Becomings ??= [];
@@ -269,8 +261,6 @@ public class MolarMosaicsController : Controller
 
         return RedirectToAction(nameof(Index));
     }
-
-    private bool MolarMosaicExists(Guid id) => _molarMosaicRepo.Get(id) != null;
 
     public bool CheckAuthentication()
     {

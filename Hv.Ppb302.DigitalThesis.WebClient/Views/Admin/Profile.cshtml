@@ -2,11 +2,11 @@
 @{
     ViewData["Title"] = "Admin";
 }
-
 <head>
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
-<div class="admin-container">
+<div class="background-container background-image"></div>
+<div class="main-container flex-center">
     <div class="profile-container">
         <h2>Change Password for @ViewBag.Username</h2>
         <form asp-controller="admin">

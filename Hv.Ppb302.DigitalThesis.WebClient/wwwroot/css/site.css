@@ -1,9 +1,9 @@
-@import url('https://fonts.googleapis.com/css2?family=Catamaran:wght@600&family=Darker+Grotesque&family=Libre+Baskerville:wght@700&family=Montserrat:wght@100&family=Nunito&family=Poppins&family=Source+Code+Pro&display=swap');
-
 html {
-    position: relative;
-    min-height: 100%;
-    font-size: 14px;
+    box-sizing: border-box; /* Ensures padding and border are included in the element's total width and height */
+    width: 100%; /* Ensures the html element spans the full width */
+    height: 100%; /* Ensures the html element spans the full height */
+    font-size: 14px; /* Base font size */
+    scroll-behavior: smooth; /* Smooth scrolling for anchor links */
 }
 
 @media (min-width: 768px) {
@@ -12,262 +12,85 @@ html {
     }
 }
 
-.previeweditor {
-    border-color: transparent !important;
-    background: transparent !important;
-}
-.previeweditor div {
-    background: transparent !important;
-}
-
 body {
-    font-family: 'Inconsolata';
-    margin: 0px;
-    width: 100vw;
-    height: auto;
-    overflow-x: hidden;
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+    font-family: 'Inconsolata', monospace; /* Default font family */
+    width: 100vw; /* Full viewport width */
+    min-height: 100vh; /* Ensure body spans at least the full viewport height */
+    overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
 .navbar {
     display: flex;
     align-items: center; /* Centers items vertically */
     justify-content: flex-start; /* Aligns items to the start (left) */
-    width: 100%; /* Span the full width */
     position: absolute; /* If you need it to be out of the flow of the document */
-    z-index: 2; /* Ensures it sits above the background */
+    z-index: 1; /* Ensures it sits above the background */
+    margin-left: 2rem;
+    margin-top: 1rem;
  }
+
+.nav-logo {
+    height: 8rem;
+    transition: transform 0.8s;
+}
+
+    .nav-logo:hover {
+        transform: scale(1.1);
+    }
 
 .nav-list li {
     list-style-type: none;
     display: inline-block;
-    margin-left: 30px;
+    margin-left: 2rem;
 }
 
-.nav-list li a {
-    font-family: 'Inconsolata';
-    text-decoration: none;
-    font-size: 1.5rem;
-    color: black;
-    opacity: 0.6;
-}
+    .nav-list li a {
+        text-decoration: none;
+        font-size: 1.5rem;
+        color: black;
+        opacity: 0.6;
+    }
 
     .nav-list li a:hover {
-        transition: 0.3s ease;
+        transition: 0.6s ease;
         opacity: 1;
-        text-shadow: white 1px 0 10px;
     }
 
-.logo {
-    margin-top: 20px;
-    width: 130px;
-    height: auto;
-    margin-left: 30px;
-}
-
-    .logo:hover {
-        transform: scale(1.2);
-        transition: 0.5s ease;
-        cursor: pointer;
-    }
-
-.sidebar {
-    font-family: 'Inconsolata';
-    color: black;
-    height: 95%;
-    bottom: 2px;
-    width: 0;
-    position: absolute;
-    background: rgba(213, 208, 198, 0.7);
-    z-index: 4;
-    right: 0;
-    overflow-x: hidden;
-    padding-top: 60px;
-    transition: 0.5s;
-}
-
-    .sidebar .calOption {
-        padding: 8px 8px 8px 32px;
-        font-weight: 100;
-        cursor: pointer;
-        border: none;
-        text-decoration: none;
-        font-size: 25px;
-        color: black;
-        display: block;
-        background: none;
-        transition: 0.3s;
-    }
-
-        .sidebar .calOption:hover {
-            -webkit-filter: drop-shadow(0px 0px 8px #222);
-            filter: drop-shadow(0px 0px 8px #222);
-        }
-
-.calClear {
-    border: 1px solid white;
-    margin-left: 30px;
-    background-color: transparent;
-    font-weight: lighter;
-    color: white;
-    font-size: 1rem;
-    transition: 0.3s;
-}
-
-    .calClear:hover {
-        -webkit-filter: drop-shadow(0px 0px 8px #222);
-        filter: drop-shadow(0px 0px 8px #222);
-    }
-
-.sidebar .closebtn {
-    font-size: 50px;
-    cursor: pointer;
-    background: none;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    position: absolute;
-    top: 90%;
-    left: 0;
-}
-
-.sidebarLine {
-    border-bottom: 1px solid white;
-}
-
-.sidebar h3 {
-    text-align: center;
-}
-
-.openbtn {
-    font-size: 50px;
-    cursor: pointer;
-    background: none;
-    color: rgba(124, 124, 124, 1);
-    padding: 10px 15px;
-    border: none;
-    position: absolute;
-    top: 90%;
-    right: 0;
-}
-
-#main {
-    transition: margin-left 0.5s;
-    padding: 20px;
-}
-
-@media screen and (max-height: 450px) {
-    .sidebar {
-        padding-top: 15px;
-    }
-
-        .sidebar .calOption {
-            font-size: 18px;
-        }
-
-    .section-a {
-        padding-top: 15px;
-    }
-
-    .heading-1 {
-        /* Ge extra marginal eller padding om det behövs för heading-1 */
-        padding-top: 50px; /* Detta är ett exempel. Justera enligt ditt behov */
-    }
-}
-   
-.sidebar .openbtn {
-    display: none;
-}
-
-.overlay {
+/* Generic background container for all pages */
+.background-container {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    width: 100vw;
+    height: 100vh;
+    background-size: 100% 100%;
+    background-position: center;
+    z-index: -1;
+}
+
+/* Generic main container for all pages */
+.main-container {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 9999;
+    overflow: hidden;
 }
 
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    cursor: pointer;
-    font-size: 1.5rem;
-    font-weight: bold;
-    color: #000;
-}
-
-.heading {
-    font-size: 0.8rem;
-    margin-right: auto;
-    margin-left: auto;
-}
-
-    .heading p {
-        margin-right: auto;
-        margin-left: auto;
-    }
-
-.flex-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}
-
-.flex-item {
-    flex-basis: 300px;
-    flex-grow: 1;
-    margin: 10px;
-    margin-top: 300px;
-}
-
-.box-link {
-    width: 100%;
-    height: 300px;
-    background-color: #e0e0e0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    text-decoration: none;
-    color: #333;
-    font-size: 18px;
-}
-
-.hidden {
-    transition: 0.3s ease-in-out;
-    opacity: 0.3;
-}
-
+/* Global classes */
 .hide {
-    transition: 0.5s ease-in-out;
-    opacity: 0;
+    display: none;
 }
 
-.music-controls {
-    margin-top: 20px; /* Utrymme över ikonerna */
-    position: relative;
-    display: inline-block;
+.flex-column {
+    display: flex;
+    flex-direction: column;
 }
 
-    .music-controls i {
-        font-size: 24px; /* Storlek på ikonerna */
-        margin-right: 10px; /* Utrymme mellan ikonerna */
-    }
-
-    .music-controls .fa-play {
-        cursor: pointer;
-    }
-
-        .music-controls .fa-play.clicked {
-            transform: translateY(2px);
-        }
-
-.geotag {
-    height: 6vw;
-    min-height: 5rem;
+.flex-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

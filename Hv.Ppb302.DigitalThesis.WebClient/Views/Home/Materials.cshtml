@@ -2,24 +2,22 @@
 @{
     ViewData["Title"] = "Materials";
 }
-
-
 <head>
     <link rel="stylesheet" href="~/css/materials.css" asp-append-version="true" />
 </head>
-
+<div class="background-container background-image"></div>
 <div class="matpdffiles">
-    @if (Model is not null)
+    @if (Model.Count != 0)
     {
         foreach (var file in Model)
         {
             <div class="matpdfcontainer">
                 <div class="matpdfcard">
-                    <img class="matpdfimg" src="~/images/pdf.png" />
+                    <img class="matpdfimg" src="~/images/icons/pdf.png" />
                     <div class="matcontentcontainer">
                         <h2>@file.Name</h2>
                         <a target="_blank" class="downcontainer" href="@file.FileUrl">
-                            <img class="matdownimg" src="~/images/downloads.png" />
+                            <img class="matdownimg" src="~/images/icons/download.png" />
                             <h4>Download</h4>
                         </a>
                     </div>
@@ -29,10 +27,6 @@
     }
     else
     {
-        <h1>För närvarande finns det inga materials här!</h1>
+        <div class="info-box">There are no materials here yet</div>
     }
-
-    
-
-
 </div>

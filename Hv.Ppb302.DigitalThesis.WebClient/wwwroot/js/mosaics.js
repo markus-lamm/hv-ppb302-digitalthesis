@@ -1,105 +1,79 @@
-﻿// FILE-SCOPE VARIABLES
-// Get the mosaic container
-const container = document.querySelector('.mosaic-container');
-
-// Get all mosaic elements
-const mosaics = Array.from(container.querySelectorAll('.mosaic'));
-
-// Create an array to store the direction of each mosaic
-const directions = [];
-
-// Define a speed factor (smaller values will make the animation slower)
-const speedFactor = 0.5;
-
-// Get all checkboxes
+﻿// Get all checkboxes
 const checkboxes = Array.from(document.querySelectorAll('.filter-checkbox input[type="checkbox"]'));
-
-// Select the button that will pause the mosaics
+const container = document.querySelector('.mosaic-container');
+const mosaics = Array.from(container.querySelectorAll('.mosaic'));
+const directions = mosaics.map(() => ({
+    x: (Math.random() > 0.5 ? 1 : -1) + Math.random() * 0.4,
+    y: (Math.random() > 0.5 ? 1 : -1) + Math.random() * 0.4,
+}));
+const speedFactor = 0.5;
 const becomingsBtn = document.getElementById('becomings-btn');
 let isBecomingsBtnTriggered = false;
 let isInitialUpdateTriggered = false;
 
-//MOSAICS
-
-// Set the initial position and direction of each mosaic
-mosaics.forEach((mosaic) => {
-    // Set the initial position of the mosaic
+// INITIAL SETUP
+mosaics.forEach(mosaic => {
     mosaic.style.left = `${Math.random() * 80}vw`;
     mosaic.style.top = `${Math.random() * 80}vh`;
-
-    // Set the initial direction of the mosaic
-    directions.push({
-        x: (Math.random() > 0.5 ? 1 : -1) + Math.random() * 0.5 - 0.1,
-        y: (Math.random() > 0.5 ? 1 : -1) + Math.random() * 0.5 - 0.1
-    });
 });
 
-function updateMosaicEventListeners() {
-    mosaics.forEach((mosaic) => {
-        // Remove existing event listeners
-        mosaic.removeEventListener('mouseover', pauseMosaic);
-        mosaic.removeEventListener('mouseout', resumeMosaic);
+function updateMosaicEventListeners(addListeners = true) {
+    mosaics.forEach(mosaic => {
+        const mosaicContent = mosaic.querySelector('.mosaic-content');
+        const floatcontainer = document.querySelector('.mosaic-float');
 
-        // Add or remove event listeners based on the state of isBecomingsBtnTriggered
-        if (!isBecomingsBtnTriggered) {
-            mosaic.addEventListener('mouseover', pauseMosaic);
-            mosaic.addEventListener('mouseout', resumeMosaic);
-        }
-
-        // Toggle the hover effect class based on the state of isBecomingsBtnTriggered
-        if (isBecomingsBtnTriggered) {
-            mosaic.classList.add('mosaic-becomingsbtn-effect');
-            // Ensure the text within the mosaic is also made visible
-            const textElements = mosaic.querySelectorAll('.mosaic a div');
-            textElements.forEach(textElement => {
-                textElement.style.opacity = '1';
-                textElement.style.visibility = 'visible';
-            });
+        if (addListeners) {
+            mosaic.classList.add('mosaic-position');
+            mosaicContent.classList.remove('active');
+            container.style.overflow = 'hidden';
+            container.style.position = 'fixed';
+            mosaic.addEventListener('mouseenter', pauseMosaic);
+            mosaic.addEventListener('mouseleave', resumeMosaic);
+            floatcontainer.style.marginInline = '0';
         } else {
-            mosaic.classList.remove('mosaic-becomingsbtn-effect');
-            // Ensure the text within the mosaic is hidden
-            const textElements = mosaic.querySelectorAll('.mosaic a div');
-            textElements.forEach(textElement => {
-                textElement.style.opacity = '0';
-                textElement.style.visibility = 'hidden';
+            mosaic.removeEventListener('mouseenter', pauseMosaic);
+            mosaic.removeEventListener('mouseleave', resumeMosaic);
+            mosaic.addEventListener('mouseenter', (event) => {
+                toggleMosaicText(true);
+                event.currentTarget.style.zIndex = '100';
             });
+
+            mosaic.addEventListener('mouseleave', (event) => {
+                toggleMosaicText(false);
+                event.currentTarget.style.zIndex = '0';
+            });
+            floatcontainer.style.marginInline = '10rem';
+            mosaicContent.classList.add('active');
+            container.style.overflow = 'unset';
+            container.style.position = 'unset';
+            mosaic.classList.remove('mosaic-position');
         }
     });
 }
 
 function pauseMosaic() {
     this.classList.add('paused');
-    // Ensure the text within the mosaic is made visible
-    const textElements = this.querySelectorAll('.mosaic a div');
-    textElements.forEach(textElement => {
-        textElement.style.opacity = '1';
-        textElement.style.visibility = 'visible';
-    });
+    toggleMosaicText(true);
 }
 
 function resumeMosaic() {
     this.classList.remove('paused');
-    // Ensure the text within the mosaic is hidden if the button is not pressed
-    if (!isBecomingsBtnTriggered) {
-        const textElements = this.querySelectorAll('.mosaic a div');
-        textElements.forEach(textElement => {
-            textElement.style.opacity = '0';
-            textElement.style.visibility = 'hidden';
-        });
-    }
+    toggleMosaicText(false);
+}
+
+function toggleMosaicText(show) {
+    document.querySelectorAll('.mosaic a div').forEach(textElement => {
+        textElement.style.opacity = show ? '1' : '0';
+        textElement.style.display = show ? 'block' : 'none';
+    });
 }
 
 function update() {
     mosaics.forEach((mosaic, index) => {
-        // Skip this mosaic if it's paused
-        if (mosaic.classList.contains('paused')) {
-            return;
-        }
+        if (mosaic.classList.contains('paused')) return;
 
-        // Get current position
         const rect = mosaic.getBoundingClientRect();
 
-        // Check if the mosaic hit an edge and update direction
         if (rect.left < 0 || rect.right > window.innerWidth) {
             directions[index].x *= -1;
         }
@@ -107,12 +81,10 @@ function update() {
             directions[index].y *= -1;
         }
 
-        // Update position
         mosaic.style.left = `${rect.left + directions[index].x * speedFactor}px`;
         mosaic.style.top = `${rect.top + directions[index].y * speedFactor}px`;
     });
 
-    // Call update again on the next frame
     requestAnimationFrame(update);
 }
 
@@ -125,68 +97,20 @@ if (!isInitialUpdateTriggered) {
     updateMosaicEventListeners();
 }
 
-// Add a click event listener to the button
-becomingsBtn.addEventListener('click', function () {
-    // Invert bool status of becomingsBtnTriggered
+// BecomingButton click event listener
+becomingsBtn.addEventListener('change', () => {
+    const becomingsText = becomingsBtn.querySelector('.becomings-text');
     isBecomingsBtnTriggered = !isBecomingsBtnTriggered;
+    //becomingsText.textContent = isBecomingsBtnTriggered ? 'Hide Becomings' : 'Show Becomings';
 
-    // Update the button text based on the new state
-    if (isBecomingsBtnTriggered) {
-        becomingsBtn.innerHTML = 'Hide Becomings';
-    }
-    else {
-        becomingsBtn.innerHTML = 'Show Becomings';
-    }
+    updateMosaicEventListeners(!isBecomingsBtnTriggered);
 
-    // Update mosaic event listeners based on the new state
-    updateMosaicEventListeners();
-
-    if (isBecomingsBtnTriggered) {
-        rearrangeMosaics();
-    }
-
-    // Pause all mosaics by adding the 'paused' class to each mosaic
     mosaics.forEach(mosaic => {
-        mosaic.classList.add('paused');
+        mosaic.classList.toggle('paused', isBecomingsBtnTriggered);
     });
 
-    if (this.classList.contains('resume')) {
-        mosaics.forEach(mosaic => {
-            mosaic.classList.remove('paused');
-        });
-        this.classList.remove('resume');
-    } else {
-        this.classList.add('resume');
-    }
+
 });
-
-function rearrangeMosaics() {
-    // Define the number of columns and rows for the grid
-    const columns = 5; // Adjust based on your design
-    const rows = Math.ceil(mosaics.length / columns);
-
-    // Calculate the width and height of each mosaic
-    const mosaicWidth = window.innerWidth / columns;
-    const mosaicHeight = window.innerHeight / rows * 0.8;
-
-    // Define padding or margin values
-    const topPadding = 150; // Adjust this value as needed
-    const leftPadding = 20; // Adjust this value as needed
-
-    // Rearrange the mosaics
-    mosaics.forEach((mosaic, index) => {
-        const column = index % columns;
-        const row = Math.floor(index / columns);
-
-        // Calculate the position for the mosaic with padding
-        const left = column * mosaicWidth + leftPadding;
-        const top = row * mosaicHeight + topPadding;
-
-        // Apply the position
-        mosaic.style.left = `${left}px`;
-        mosaic.style.top = `${top}px`;
-    });
-}
 
 //FILTER
 function openNav() {
@@ -209,6 +133,7 @@ window.onload = function () {
     checkboxes.forEach((checkbox) => {
         checkbox.checked = false;
     });
+    becomingsBtn.checked = false;
 };
 
 // Add a click event listener to each checkbox
@@ -238,7 +163,8 @@ function applyVisitedMosaics() {
         const decodedMosaics = decodeURIComponent(visitedMosaics);
         const visitedList = JSON.parse(decodedMosaics);
         visitedList.forEach(id => {
-            const element = document.getElementById(`mosaic-${id}`);
+            const elementen = document.getElementById(`mosaic-${id}`);
+            const element = elementen.querySelector('.mosaicImg');
             if (element) {
                 element.classList.add('visited');
             } else {

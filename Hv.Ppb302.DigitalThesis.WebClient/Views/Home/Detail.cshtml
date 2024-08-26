@@ -2,74 +2,78 @@
 @{
     var viewModel = Model;
     ViewData["Title"] = viewModel.Title;
-    string fileName = System.IO.Path.GetFileName(Model.PdfFilePath)!;
+    var fileName = System.IO.Path.GetFileName(Model.PdfFilePath)!;
 }
-
 <head>
     <link rel="stylesheet" href="~/css/detail.css" asp-append-version="true" />
 </head>
-<div class="detail-container">
+<div class="background-container background-image"></div>
+<div class="main-container">
     @if (viewModel.IsVisible == true)
     {
-        <div class="info-container">
-            <p class="info-title">@viewModel.Title</p>
+        <div class="info-container" id="info-container">
+            <div class="info-container-title">Table of Contents</div>
+            <div class="navmenu" id="navmenu"></div>
             @if (viewModel.ObjectType != "geotag")
             {
-                <p class="tags-title">Connectors:</p>
+                <div class="info-container-title">Connectors</div>
                 @if (viewModel.ConnectorTags.Count != 0)
                 {
-                    foreach (var tag in viewModel.ConnectorTags)
-                    {
-                        <p><em class="tags-content">@tag.Name</em></p>
-                    }
-                }
-                else
-                {
-                    <br />
-                }
-                <p class="tags-title">Becomings:</p>
-                @if (viewModel.Becomings.Count != 0)
-                {
-                    foreach (var tag in viewModel.Becomings)
-                    {
-                        <p><em class="tags-content">@tag</em></p>
-                    }
-                }
-                else
-                {
-                    <br />
-                }
-            }
-            <div class="content-options">
-                @if (!String.IsNullOrWhiteSpace(@Model.PdfFilePath))
-                {
-                    <div id="saveBtn" data-tags="@Model.PdfFilePath" class="content-options-btn">
-                        <a>
-                            <img class="pdf_icon" src="~/images/icons/pdf-download.png" />
-                        </a>
+                    <div class="tag-container">
+                        @foreach (var tag in viewModel.ConnectorTags)
+                        {
+                            <div class="tag-object">@tag.Name</div>
+                        }
                     </div>
                 }
+                <div class="info-container-title">Becomings</div>
+                @if (viewModel.Becomings.Count != 0)
+                {
+                    <div class="tag-container">
+                        @foreach (var tag in viewModel.Becomings)
+                        {
+                            <div class="tag-object">@tag</div>
+                        }
+                    </div>
+                }
+            }
+        </div>
+        <div class="info-minimize-btn" id="info-minimize-btn">
+            <img class="info-minimize-img" id="info-minimize-img" src="~/images/icons/arrow-left.png" />
+        </div>
+        <div class="text-container">
+            <div class="text-options">
                 @if (!String.IsNullOrWhiteSpace(@Model.AudioFilePath))
                 {
-                    <div id="audio-icon" class="content-options-btn">
-                        <img class="play_icon" id="audio-img" src="~/images/icons/play.png" />
+                    <div id="audio-icon" class="text-options-btn">
+                        <img class="play-icon" id="audio-img" src="~/images/icons/play-button-black.png"/>
                         <audio id="audio-player" src="@Model.AudioFilePath"></audio>
                     </div>
                 }
+                @if (!String.IsNullOrWhiteSpace(@Model.PdfFilePath))
+                {
+                    <div id="pdf-download-btn" data-tags="@Model.PdfFilePath" class="text-options-btn">
+                        <a>
+                            <img class="pdf-icon" src="~/images/icons/pdf-download-black.png"/>
+                        </a>
+                    </div>
+                }
             </div>
-            <div class="navmenu" id="navmenu"></div>
-        </div>
-        <div class="content-container" id="content-container">
-            <div class="text" id="editor">
-                <p>
-                    @Html.Raw(viewModel.Content)
-                </p>
+            <div class="text-reset-btn" id="text-reset-btn">
+                <img class="text-reset-img" src="~/images/icons/arrow-left.png" />
+            </div>
+            <div id="editor-container">
+                <div class="text" id="editor">
+                    <p>
+                        @Html.Raw(viewModel.Content)
+                    </p>
+                </div>
             </div>
         </div>
     }
     else
     {
-        <div class="visibility-container">This content is not visible to the public</div>
+        <div class="visibility-container">This content is not yet public</div>
     }
 </div>
 <script src="~/js/detail.js" asp-append-version="true"></script>

@@ -1,7 +1,9 @@
-﻿.about-container {
+﻿.background-image {
+    background-image: url('../images/backgrounds/white-1.png');
+}
+
+.about-container {
     overflow: hidden !important;
-    background-image: url(../images/backgrounds/white-1.png);
-    background-size: cover;
     display: flex;
     height: 100vh;
     position: relative;
@@ -32,7 +34,6 @@
 .about-text,
 .about-logo {
     position: relative;
-    z-index: 1; /* Ensures these elements appear above the background */
 }
 
 .about-text {

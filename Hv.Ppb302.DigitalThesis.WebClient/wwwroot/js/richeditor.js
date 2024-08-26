@@ -1,14 +1,81 @@
-﻿const { UIForm, UIInput, UIButton } = Jodit.modules;
+﻿const { UIForm, UIInput, UIButton, UITextArea } = Jodit.modules;
+
+Jodit.defaultOptions.controls.videonopause = {
+    iconURL: '/images/icons/replay.png',
+    popup: (editor, current, control, close) => {
+        videoNoPauseform = new UIForm(editor, [
+            new UIInput(editor, {
+                name: 'videoNoPauseUrl',
+                placeholder: 'Enter video URL...',
+                autofocus: false,
+                label: 'Video URL:'
+            }),
+            new UIButton(editor, {
+                text: 'Insert no pause video',
+                status: 'primary',
+                variant: 'primary'
+            }).onAction(() => {
+                videoNoPauseform.submit();
+            })
+        ]), closePopWindow = () => {
+            editor.s.focus();
+            editor.s.restore();
+            close.__closePopup();
+        };
+
+
+        videoNoPauseform.onSubmit((data) => {
+            const iframetag = `<video id="videoIframe" src="${data.videoNoPauseUrl}" title="description" width="304px" height="154px" controls data-control="true"></video>`;
+            editor.selection.insertHTML(iframetag);
+            closePopWindow();
+        })
+        return videoNoPauseform;
+    },
+    tooltip: "Insert No pausable video"
+}
+
+Jodit.defaultOptions.controls.video = {
+    popup: (editor, current, control, close) => {
+        const videoform = new UIForm(editor, [
+            new UIInput(editor, {
+                name: 'videoUrl',
+                placeholder: 'Enter video URL...',
+                autofocus: false,
+                label: 'Video URL:'
+            }),
+            new UIButton(editor, {
+                text: 'Insert Video',
+                status: 'primary',
+                variant: 'primary'
+            }).onAction(() => {
+                videoform.submit();
+            })
+        ]), closePopWindow = () => {
+            editor.s.focus();
+            editor.s.restore();
+            close.__closePopup();
+        };
+
+        videoform.onSubmit((data) => {
+            const iframetag = `<iframe id="videoIframe" src="${data.videoUrl}" title="description" width="304px" height="154px"></iframe>`;
+            editor.selection.insertHTML(iframetag);
+            closePopWindow();
+        })
+
+        return videoform;
+    },
+    tooltip: "Insert normal video"
+};
 
 Jodit.defaultOptions.controls.footnoteButton = {
-    iconURL: "/images/icons/superscript.png",
+    iconURL: "https://informatik13.ei.hv.se/DigitalThesis/images/icons/superscript.png",
     popup: function (editor, current, control, close) {
         const form = new UIForm(editor, [
-            new UIInput(editor, {
+            new UITextArea(editor, {
                 name: 'linkText',
                 placeholder: 'Enter link text...',
                 autofocus: true,
-                label: 'Text:',
+                label: 'Text: *',
                 required: true
             }),
             new UIInput(editor, {
@@ -24,8 +91,13 @@ Jodit.defaultOptions.controls.footnoteButton = {
             }).onAction(() => {
                 form.submit();
             })
-        ]).onSubmit(() => {
+        ]), closePopWindow = () => {
+            editor.s.focus();
+            editor.s.restore();
+            close.__closePopup();
+        };
 
+        form.onSubmit(() => {
             // Attempt to retrieve the input element from form.elements
             const LinkTextElement = form.elements.find(
                 element => element.state && element.state.name === 'linkText'
@@ -40,7 +112,7 @@ Jodit.defaultOptions.controls.footnoteButton = {
                 const linkURL = LinkUrlElement.state.value || '';
                 let footnoteText = linkText;
 
-                const existingFootnotes = editor.editor.querySelectorAll('a[href^="#ftn"]');
+                const existingFootnotes = editor.editor.querySelectorAll('a[href^="#_ftnref"]');
                 const footnoteNumber = existingFootnotes.length + 1;
 
 
@@ -51,7 +123,7 @@ Jodit.defaultOptions.controls.footnoteButton = {
                 const footnoteId = `ftn${footnoteNumber}`;
                 const footnoteRefId = `_ftnref${footnoteNumber}`;
 
-                const footnoteMarker = `<a href="#${footnoteId}" name="${footnoteRefId}" title=""><span class="MsoFootnoteReference" style="vertical-align: super;"><span style="font-size: 15px; line-height: 107%; font-family: Aptos, sans-serif;">[${footnoteNumber}]</span></span></a>&nbsp;`;
+                const footnoteMarker = `<a href="#${footnoteId}" name="${footnoteRefId}" title=""><span class="MsoFootnoteReference" style="vertical-align: super;"><span style="font-size: 15px; line-height: 107%; font-family: Aptos, sans-serif; vertical-align: super;">${footnoteNumber}</span></span></a>&nbsp;`;
 
                 const footnoteContent = `
                         <div id="${footnoteId}">
@@ -73,16 +145,16 @@ Jodit.defaultOptions.controls.footnoteButton = {
 
                 // Append footnote content to the end
                 editor.value += footnoteContent;
+                
             } else {
                 console.error('Footnote input field not found or state is undefined.');
             }
+            closePopWindow();
         })
-
         return form;
     },
     tooltip: "Insert Footnote"
 };
-
 
 var editorDiv = document.getElementById('editor');
 if (editorDiv) {
@@ -99,6 +171,21 @@ if (editorDiv) {
     });
 }
 
+document.addEventListener("DOMContentLoaded", function (event) {
+    var editorDivss = document.getElementById('editor-container');
+   
+    if (editorDivss) {
+        const images = editorDivss.querySelectorAll('img');
+
+        mediumZoom(images, {
+            margin: 24,
+            background: '#365f9390',
+            scrollOffset: 0,
+        });
+    }
+
+});
+
 var editorDiv2 = document.getElementById('editortest');
 if (editorDiv2) {
     var editor = new Jodit('#editortest', {
@@ -109,7 +196,8 @@ if (editorDiv2) {
         "uploader": {
             "insertImageAsBase64URI": true
         },
-        buttons: [...Jodit.defaultOptions.buttons, 'footnoteButton']
+        buttons: [...Jodit.defaultOptions.buttons, 'footnoteButton', 'videonopause'],
+        
     });
 
     let inputElement = document.getElementById('hiddeninput')
@@ -118,6 +206,15 @@ if (editorDiv2) {
         inputElement.value = editor.getEditorValue();
     })
 }
+
+document.addEventListener('DOMContentLoaded', function () {
+    var videos = document.querySelectorAll('video[data-control="true"]');
+    videos.forEach(function (video) {
+        video.addEventListener('pause', function () {
+            video.currentTime = 0;
+        });
+    });
+});
 
 var input = document.getElementById('Becomings')
 if (input) {
@@ -128,96 +225,18 @@ if (input) {
     })
     var selectedTag = input.getAttribute('data-tags');
 
-    input.value = '';
     // Convert the string of tags into an array
-    var tagsArray = selectedTag.split(',');
+    if (selectedTag) {
+        var tagsArray = selectedTag.split(',');
+        tagsArray.forEach(function (tag) {
+            // Get the value of each tag
+            tagify.addTags([tag.trim()]);
+        });
+    }
 
-    tagsArray.forEach(function (tag) {
-        // Get the value of each tag
-        tagify.addTags([tag.trim()]);
-    });
 }
-
-
 
 function copyFunction(fileurl) {
     // Get the text field
-
     navigator.clipboard.writeText(fileurl);
-
 }
-
-const playButton = document.getElementById('audio-icon');
-
-if (playButton) {
-    const audioPlayer = document.getElementById('audio-player');
-    const audioImage = document.getElementById('audio-img');
-
-    // Add click event listener to the button
-    playButton.addEventListener('click', function () {
-        // Check if audio is currently playing
-        if (audioPlayer.paused) {
-            // If paused, play the audio
-            audioPlayer.play();
-            audioImage.src = "https://informatik13.ei.hv.se/DigitalThesis/images/icons/stop.png"
-        } else {
-            // If playing, pause the audio
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0;
-            audioImage.src = "https://informatik13.ei.hv.se/DigitalThesis/images/icons/play.png"
-        }
-    });
-}
-
-
-const savebtns = document.getElementById('saveBtn');
-
-if (savebtns) {
-    document.getElementById('saveBtn').addEventListener('click', async function () {
-        // URL of the PDF to be downloaded
-
-        var selectedTag = this.getAttribute('data-tags');
-
-        const pdfUrl = selectedTag;  // Replace with your actual file URL
-
-        try {
-            // Check if the browser supports the File System Access API
-            if (!window.showSaveFilePicker) {
-                alert('showSaveFilePicker API is not supported in this browser.');
-                return;
-            }
-
-            // Fetch the PDF file from the URL
-            const response = await fetch(pdfUrl);
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            const pdfBlob = await response.blob();
-
-            // Open the save file picker
-            const fileHandle = await window.showSaveFilePicker({
-                suggestedName: 'downloaded.pdf', // Default file name
-                types: [
-                    {
-                        description: 'PDF Files',
-                        accept: {
-                            'application/pdf': ['.pdf'],
-                        },
-                    },
-                ],
-            });
-
-            // Create a writable stream to the file
-            const writableStream = await fileHandle.createWritable();
-
-            // Write the PDF blob to the file
-            await writableStream.write(pdfBlob);
-
-            // Close the file and save the changes
-            await writableStream.close();
-        } catch (error) {
-            console.error('Error saving file:', error);
-        }
-    });
-}
-

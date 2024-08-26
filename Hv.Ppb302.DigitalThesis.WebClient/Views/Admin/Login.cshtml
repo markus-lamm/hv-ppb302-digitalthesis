@@ -1,36 +1,32 @@
 ﻿@{
     ViewData["Title"] = "Login";
 }
-
 <head>
-    <link rel="stylesheet" href="~/css/login.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
-
-<body>
-    <div class="login-container">
-        <div class="login-section">
-            <div class="heading">
-                <h2>Welcome</h2>
-                <p>Log in to manage the system</p>
-            </div>
-            <form class="login-form" method="post" asp-action="AddAuthentication" asp-controller="Admin">
-                <div class="input">
-                    <label for="username">Username</label>
-                    <input type="text" id="username" name="username" autocomplete="off" required />
-                </div>
-                <div class="input">
-                    <label for="password">Password</label>
-                    <input type="password" id="password" name="password" autocomplete="off" required />
-                </div>
-                @if (ViewBag.Error != null)
-                {
-                    <div class="login-error">@ViewBag.Error</div>
-                }
-                <div class="button input">
-                    <button type="submit">Log in</button>
-                </div>
-            </form>
+<div class="background-container background-image"></div>
+<div class="main-container flex-center">
+    <div class="login-section">
+        <div class="heading">
+            <h2>Welcome</h2>
+            <p>Log in to manage the system</p>
         </div>
+        <form class="login-form" method="post" asp-action="AddAuthentication" asp-controller="Admin">
+            <div class="input">
+                <label for="username">Username</label>
+                <input type="text" id="username" name="username" autocomplete="off" required/>
+            </div>
+            <div class="input">
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" autocomplete="off" required/>
+            </div>
+            @if (ViewBag.Error != null)
+            {
+                <div class="login-error">@ViewBag.Error</div>
+            }
+            <div class="button input">
+                <button type="submit">Log in</button>
+            </div>
+        </form>
     </div>
-</body>
+</div>

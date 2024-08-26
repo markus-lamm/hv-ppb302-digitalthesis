@@ -5,70 +5,71 @@
 <head>
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
-<div class="admin-container flex-column">
+<div class="background-container background-image"></div>
+<div class="main-container flex-center flex-column">
     <div class="admin-form">
         <div class="form-btn-container">
             <a class="form-return-btn" asp-controller="Admin" asp-action="Index">Return</a>
         </div>
         <table class="table">
             <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Title)
-                    </th>
-                    <th>
-                        HasPdf
-                    </th>
-                    <th>
-                        HasAudio
-                    </th>
-                    <th>
-                        IsVisible
-                    </th>
-                    <th></th>
-                </tr>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Title)
+                </th>
+                <th>
+                    HasPdf
+                </th>
+                <th>
+                    HasAudio
+                </th>
+                <th>
+                    IsVisible
+                </th>
+                <th></th>
+            </tr>
             </thead>
             <tbody>
-                @foreach (var item in Model) {
-                    <tr class="form-table-row">
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Title)
-                        </td>
-                        <td>
-                            @if (item.PdfFilePath != null)
-                            {
-                                <div>Yes</div>
-                            }
-                            else
-                            {
-                                <div>No</div>
-                            }
-                        </td>
-                        <td>
-                            @if (item.AudioFilePath != null)
-                            {
-                                <div>Yes</div>
-                            }
-                            else
-                            {
-                                <div>No</div>
-                            }
-                        </td>
-                        <td>
-                            @if (item.IsVisible == true)
-                            {
-                                <div>Yes</div>
-                            }
-                            else
-                            {
-                                <div>No</div>
-                            }
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                        </td>
-                    </tr>
-                }
+            @foreach (var item in Model) {
+                <tr class="form-table-row">
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @if (item.PdfFilePath != null)
+                        {
+                            <div>Yes</div>
+                        }
+                        else
+                        {
+                            <div>No</div>
+                        }
+                    </td>
+                    <td>
+                        @if (item.AudioFilePath != null)
+                        {
+                            <div>Yes</div>
+                        }
+                        else
+                        {
+                            <div>No</div>
+                        }
+                    </td>
+                    <td>
+                        @if (item.IsVisible == true)
+                        {
+                            <div>Yes</div>
+                        }
+                        else
+                        {
+                            <div>No</div>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                    </td>
+                </tr>
+            }
             </tbody>
         </table>
     </div>

@@ -1,119 +1,137 @@
-﻿
-document.addEventListener('DOMContentLoaded', () => {
-    showStep(currentStep);
-});
+﻿document.addEventListener('DOMContentLoaded', () => {
+    const tutorialOverlay = document.getElementById('tutorial-overlay');
+    const tutorialBox = document.getElementById('tutorial-box');
+    const tutorialText = document.getElementById('tutorial-text');
+    const tutorialPrevBtn = document.getElementById('tutorial-prev-btn');
+    const tutorialNextBtn = document.getElementById('tutorial-next-btn');
+    const tutorialExitBtn = document.getElementById('tutorial-exit-btn');
+    const tutorialStepContainer = document.getElementById('tutorial-step-container');
+    const navbar = document.getElementById('navbar');
+    const geotags = ["link-geotag-1", "link-geotag-2", "link-geotag-3", "link-geotag-4", "link-geotag-5", "link-geotag-6"];
+    const molarMosaics = ["mosaic-yellow-1", "mosaic-yellow-2", "mosaic-yellow-3"];
+    const molecularMosaics = ["mosaic-blue-1", "mosaic-blue-2", "mosaic-blue-3", "mosaic-blue-4", "mosaic-blue-5"];
+    const kaleidoscope = document.getElementById('link-kaleidoscope');
+    let currentStep = 1;
 
-let currentStep = 0;
+    const steps = [
+        "Welcome to Fragile Mosaics of Teacher Becoming tutorial!",
+        "When you want to come back to the map view, click on the Teacher Becoming-logo in the top left corner.",
+        "To explore the various texts, click on any of the geotags.",
+        "Set Molar Mosaics free and begin exploring them.",
+        "Set Molecular Mosaics free and begin exploring them.",
+        "Experience a one of a kind Kaleido-scoping mechanism.",
+        "On the respective Mosaics pages, you will find an expandable filter menu in the bottom right corner."
+    ];
 
-function showStep(step) {
-    const overlayBoxes = document.querySelectorAll('.overlay-box');
-    const steps = document.querySelectorAll('.step');
+    steps.forEach((step, index) => {
+        const stepElement = document.createElement('div');
+        stepElement.classList.add('tutorial-step');
+        stepElement.id = `tutorial-step-${index + 1}`;
+        stepElement.textContent = index + 1;
+        tutorialStepContainer.appendChild(stepElement);
+    });
 
-    overlayBoxes.forEach(box => box.style.display = 'none');
-    steps.forEach(s => s.classList.remove('active'));
+    showStep();
 
-    const cancelButton = document.querySelector('.cancel-btn');
-
-    if (step < overlayBoxes.length) {
-        overlayBoxes[step].style.display = 'block';
-        steps[step].classList.add('active');
-
-        const buttonContainer = document.querySelector('.button-container');
-        const activeBox = overlayBoxes[step];
-        activeBox.appendChild(buttonContainer);
-        activeBox.appendChild(cancelButton);
-
-        document.querySelector('.back-button').disabled = step === 0;
-        document.querySelector('.next-button').disabled = step === overlayBoxes.length;
-    } else {
-        if (document.getElementById('tutorial-overlay')) {
-            document.getElementById('tutorial-overlay').style.display = "none";
-        }
-    }
-
-    if (cancelButton) {
-        cancelButton.addEventListener('click', () => {
-            document.getElementById('tutorial-overlay').style.display = "none";
-        });
-    }
-
-    const elementLogo = document.getElementById("navbar");
-    if (currentStep === 1) {
-        elementLogo.style.zIndex = 1001
-
-    } else {
-        elementLogo.style.zIndex = 1000;
-    }
-
-    const geotagIDs = ["image-container1", "image-container2", "image-container3", "image-container9"];
-    if (geotagIDs) {
-        geotagIDs.forEach(id => {
-            const element = document.getElementById(id);
-            if (element) {
-                if (currentStep === 2) {
-                    element.style.zIndex = 1001;
-                } else {
-                    element.style.zIndex = 1000;
-                }
-            }
-        });
-    }
-
-    const yellowMosaicIDs = ["yellow-mosaic1", "yellow-mosaic2", "yellow-mosaic3"];
-    if (yellowMosaicIDs) {
-        yellowMosaicIDs.forEach(id => {
-            const element = document.getElementById(id); 3
-            if (element) {
-                if (currentStep === 3 || currentStep === 6) {
-                    element.style.zIndex = 1001;
-                } else {
-                    element.style.zIndex = 1000;
-                }
-            }
-        });
-    }
-
-    const blueMosaicIDs = ["blue-mosaic1", "blue-mosaic2", "blue-mosaic3", "blue-mosaic4", "blue-mosaic5"];
-    if (blueMosaicIDs) {
-        blueMosaicIDs.forEach(id => {
-            const element = document.getElementById(id);
-            if (element) {
-                if (currentStep === 4 || currentStep === 6) {
-                    element.style.zIndex = 1001;
-                } else {
-                    element.style.zIndex = 1000;
-                }
-            }
-        });
-    }
-
-    const element = document.getElementById("image-container8");
-    const whiteImage = document.getElementById("geotag-white");
-    const blackImage = document.getElementById("geotag-black");
-    if (element && whiteImage && blackImage) {
-        if (currentStep === 5) {
-            element.style.zIndex = 1001;
-            whiteImage.style.display = 'none';
-            blackImage.style.display = '';
+    tutorialPrevBtn.addEventListener('click', function () {
+        if (currentStep > 1) {
+            currentStep--;
+            showStep();
         } else {
-            element.style.zIndex = 1000;
-            blackImage.style.display = 'none';
-            whiteImage.style.display = '';
+            tutorialOverlay.style.display = "none";
+        }
+    });
+
+    tutorialNextBtn.addEventListener('click', function () {
+        if (currentStep < steps.length) {
+            currentStep++;
+            showStep();
+        } else {
+            tutorialOverlay.style.display = "none";
+        }
+    });
+
+    tutorialExitBtn.addEventListener('click', function () {
+        tutorialOverlay.style.display = "none";
+    });
+
+    function showStep() {
+        tutorialText.innerText = steps[currentStep - 1];
+        highlightCurrentStep();
+
+        switch (currentStep) {
+            case 1:
+                tutorialPrevBtn.innerText = "Exit";
+                tutorialBox.style.top = "50%";
+                tutorialBox.style.left = "50%";
+                navbar.style.zIndex = "1";
+                break;
+            case 2:
+                tutorialPrevBtn.innerText = "Previous";
+                tutorialBox.style.top = "40%";
+                tutorialBox.style.left = "30%";
+                navbar.style.zIndex = "10";
+                applyZindexToArray(geotags, "0");
+                break;
+            case 3:
+                tutorialBox.style.top = "40%";
+                tutorialBox.style.left = "70%";
+                navbar.style.zIndex = "1";
+                applyZindexToArray(geotags, "10");
+                applyZindexToArray(molarMosaics, "0");
+                break;
+            case 4:
+                tutorialBox.style.top = "60%";
+                tutorialBox.style.left = "30%";
+                applyZindexToArray(geotags, "0");
+                applyZindexToArray(molarMosaics, "10");
+                applyZindexToArray(molecularMosaics, "0");
+                break;
+            case 5:
+                tutorialBox.style.top = "60%";
+                tutorialBox.style.left = "40%";
+                applyZindexToArray(molecularMosaics, "10");
+                applyZindexToArray(molarMosaics, "0");
+                kaleidoscope.style.zIndex = "0";
+                break;
+            case 6:
+                tutorialNextBtn.innerText = "Next"
+                tutorialBox.style.top = "40%";
+                tutorialBox.style.left = "50%";
+                kaleidoscope.style.zIndex = "10";
+                applyZindexToArray(molecularMosaics, "0");
+                applyZindexToArray(molarMosaics, "0");
+                break;
+            case 7:
+                tutorialNextBtn.innerText = "Exit"
+                tutorialBox.style.top = "50%";
+                tutorialBox.style.left = "30%";
+                applyZindexToArray(molecularMosaics, "10");
+                applyZindexToArray(molarMosaics, "10");
+                kaleidoscope.style.zIndex = "0";
+                break;
+            default:
+                tutorialOverlay.style.display = "none";
+                break;
         }
     }
 
-}
-
-function nextStep() {
-    if (currentStep < document.querySelectorAll('.overlay-box').length) {
-        currentStep++;
-        showStep(currentStep);
+    function highlightCurrentStep() {
+        document.querySelectorAll('.tutorial-step').forEach((stepElement, index) => {
+            if (index === currentStep - 1) {
+                stepElement.classList.add('active');
+            } else {
+                stepElement.classList.remove('active');
+            }
+        });
     }
-}
 
-function prevStep() {
-    if (currentStep > 0) {
-        currentStep--;
-        showStep(currentStep);
+    function applyZindexToArray(array, zValue) {
+        array.forEach(id => {
+            let element = document.getElementById(id);
+            if (element) {
+                element.style.zIndex = zValue;
+            }
+        });
     }
-}
+});

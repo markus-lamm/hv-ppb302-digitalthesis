@@ -1,15 +1,22 @@
-﻿.content-container {
-    overflow: hidden !important;
-    background-image: url(../images/backgrounds/white-1.png);
-    background-size: cover;
-    height: 100%;
-    width: 100vw;
-    display: flex !important;
-    flex-direction: row;
-    justify-content: space-between;
-    padding-bottom: 10vh;
-    max-height: 90vh;
+﻿.background-image {
+    background-image: url('../images/backgrounds/white-1.png');
 }
+
+.mosaic-name {
+    position: absolute;
+    background-color: black;
+    opacity: 0.8;
+    padding: 1rem;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    display: none;
+    border-radius: 2px;
+    font-size: 1.5rem;
+    color:white;
+}
+
 .tagmenu {
     display: flex;
     flex-direction: column;
@@ -36,7 +43,7 @@
     display: flex;
     align-items: center;
 }
-/* Custom radio button */
+
 .custom-radio {
     appearance: none;
     -webkit-appearance: none;
@@ -50,13 +57,11 @@
     transition: border-color 0.3s;
 }
 
-/* When radio button is checked */
 .custom-radio:checked {
     border-color: #000;
-    background-color: #000; /* Change color to black */
+    background-color: #000;
 }
 
-/* Label style */
 .custom-radio-label {
     display: inline-block;
     cursor: pointer;
@@ -72,16 +77,21 @@
     transition: transform 3s ease-in-out;
 }
 
-.kaleidoscope-image {
+.kaleidoscope-image-container {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 30vw;
-    width: 30vw;
+    height: 35vw;
+    width: 35vw;
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: 3s ease;
+}
+
+.kaleidoscope-image-object {
+    opacity: 0.5;
     transition: 3s ease;
 }
 
@@ -90,13 +100,8 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    height: 30vw;
-    width: 30vw;
-    opacity: 0.5;
-    transition: 3s ease;
-}
-
-.kaleidoscope-test {
+    height: 35vw;
+    width: 35vw;
     opacity: 0.5;
     transition: 3s ease;
 }
@@ -110,9 +115,8 @@
 }
 
 .mosaic {
-    width: 6rem;
-    height: 6rem;
-    border-radius: 50%;
+    width: 5vw;
+    height: 5vw;
     position: absolute;
     transition: 3s ease;
 }
@@ -132,26 +136,21 @@
     filter: none;
 }
 
-/*#kaleidoscope-image-item {
-    height: 40rem;
-    width: 40rem;
-}*/
-
 .tagList {
     list-style: none;
 }
 
-    .tagList li {
-        margin-bottom: 15px;
-    }
+.tagList li {
+    margin-bottom: 15px;
+}
 
-        .tagList li input {
-            text-align: center;
-        }
+.tagList li input {
+    text-align: center;
+}
 
 .mosaic-highlight-effect {
-    width: 10rem;
-    height: 10rem;
+    width: 8rem;
+    height: 8rem;
     transition: 1.8s ease;
     -webkit-filter: drop-shadow(0 0 5px #222);
     filter: drop-shadow(0 0 5px #222);

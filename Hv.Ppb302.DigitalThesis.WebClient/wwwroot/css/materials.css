@@ -1,8 +1,5 @@
-﻿body {
-    background-image: url(../images/background/white-1.png);
-    background-size: cover;
-    background-attachment: fixed;
-    height: auto;
+﻿.background-image {
+    background-image: url('../images/backgrounds/white-1.png');
 }
 
 .matpdffiles {
@@ -11,6 +8,7 @@
     padding-bottom: 10vh;
     padding-top: 25vh;
 }
+
 .matpdfcontainer {
     display: flex;
     flex-direction: column;
@@ -19,7 +17,6 @@
 }
 
 .matpdfcard {
- 
     display: flex;
     height: 8vw;
     width: 100%;
@@ -29,7 +26,6 @@
 }
 
 .matpdfimg{
-
     height: 5vw;
     margin-inline: 4rem
 }
@@ -39,7 +35,7 @@
     justify-content: space-between;
     align-items: center;
     flex: 1;
-    min-width: 0; /* Ensures the container shrinks properly */
+    min-width: 0;
     overflow: hidden;
     padding-right: 5rem;
     gap:3rem;
@@ -50,22 +46,33 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
-    white-space: normal; /* Allows text to wrap */
-    -webkit-line-clamp: 2; /* Limits the text to two lines */
+    white-space: normal;
+    -webkit-line-clamp: 2;
     margin: 0;
     flex: 1;
     min-width: 0;
 }
 
-
 .matdownimg {
     height: 2vw;
-
 }
 
 .downcontainer {
-
     display: flex;
     align-items: center;
     gap: 0.5rem;
+}
+
+.info-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    padding: 2rem;
+    font-size: 1.5rem;
+    border-radius: 2px;
 }

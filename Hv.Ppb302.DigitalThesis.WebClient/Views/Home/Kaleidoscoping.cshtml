@@ -7,56 +7,59 @@
 <head>
     <link rel="stylesheet" href="~/css/kaleidoscoping.css" asp-append-version="true" />
 </head>
-<div class="content-container">
-    <div class="kaleidoscope-container" id="kaleidoscope-container-item">
-        <div class="kaleidoscope-image" id="kaleidoscope-image-item">
-            <div class="kaleidoscope-test" id="test-item-1">
-                <img class="kaleidoscope-image-item" src="~/images/kaleidoscopes/kaleidoscope-1.png" />
+<div class="background-container background-image"></div>
+<div class="main-container">
+    <div class="mosaic-name" id="mosaic-name"></div>
+    <div class="kaleidoscope-container" id="kaleidoscope-container">
+        <div class="kaleidoscope-image-container" id="kaleidoscope-image-container">
+            <div class="kaleidoscope-image-object" id="kaleidoscope-image-object-1">
+                <img class="kaleidoscope-image-item" src="~/images/kaleidoscopes/kaleidoscope-1.png"/>
             </div>
-            <div class="kaleidoscope-test" id="test-item-2">
-                <img class="kaleidoscope-image-item" src="~/images/kaleidoscopes/kaleidoscope-2.png" />
+            <div class="kaleidoscope-image-object" id="kaleidoscope-image-object-2">
+                <img class="kaleidoscope-image-item" src="~/images/kaleidoscopes/kaleidoscope-2.png"/>
             </div>
-            <div class="kaleidoscope-test" id="test-item-3">
-                <img class="kaleidoscope-image-item" src="~/images/kaleidoscopes/kaleidoscope-3.png" />
+            <div class="kaleidoscope-image-object" id="kaleidoscope-image-object-3">
+                <img class="kaleidoscope-image-item" src="~/images/kaleidoscopes/kaleidoscope-3.png"/>
             </div>
-            <div class="kaleidoscope-test" id="test-item-6">
-                <img class="kaleidoscope-image-item" src="~/images/kaleidoscopes/kaleidoscope-4.png" />
+            <div class="kaleidoscope-image-object" id="kaleidoscope-image-object-4">
+                <img class="kaleidoscope-image-item" src="~/images/kaleidoscopes/kaleidoscope-4.png"/>
             </div>
-            <div class="kaleidoscope-test" id="test-item-7">
-                <img class="kaleidoscope-image-item" src="~/images/kaleidoscopes/kaleidoscope-5.png" />
+            <div class="kaleidoscope-image-object" id="kaleidoscope-image-object-5">
+                <img class="kaleidoscope-image-item" src="~/images/kaleidoscopes/kaleidoscope-5.png"/>
             </div>
-            <div class="kaleidoscope-test" id="test-item-9">
-                <img class="kaleidoscope-image-item" src="~/images/kaleidoscopes/kaleidoscope-6.png" />
+            <div class="kaleidoscope-image-object" id="kaleidoscope-image-object-6">
+                <img class="kaleidoscope-image-item" src="~/images/kaleidoscopes/kaleidoscope-6.png"/>
             </div>
-            <div class="kaleidoscope-test" id="test-item-12">
-                <img class="kaleidoscope-image-item" src="~/images/kaleidoscopes/kaleidoscope-7.png" />
+            <div class="kaleidoscope-image-object" id="kaleidoscope-image-object-7">
+                <img class="kaleidoscope-image-item" src="~/images/kaleidoscopes/kaleidoscope-7.png"/>
             </div>
             @foreach (var molarMosaic in Model.MolarMosaics!)
             {
                 var randomBlueMosaicImg = mosaicImages[random.Next(mosaicImages.Length)];
-                <a href="@Url.Action("Detail", "Home", new {id = molarMosaic.Id, objectType = "molarmosaic" })">
+                <a href="@Url.Action("Detail", "Home", new { id = molarMosaic.Id, objectType = "molarmosaic" })">
                     <img src="@Url.Content(randomBlueMosaicImg)" class="mosaic"
-                         data-tags="@string.Join(',', molarMosaic.KaleidoscopeTags!.Select(tag => tag.Name)):@string.Join(':', molarMosaic.AssemblageTagId)" />
+                         data-name="@molarMosaic.Title"
+                         data-tags="@string.Join(',', molarMosaic.KaleidoscopeTags!.Select(tag => tag.Name)):@string.Join(':', molarMosaic.AssemblageTagId)"/>
                 </a>
             }
             @foreach (var molecularMosaic in Model.MolecularMosaics!)
             {
                 var randomBlueMosaicImg = mosaicImages[random.Next(mosaicImages.Length)];
-                <a href="@Url.Action("Detail", "Home", new {id = molecularMosaic.Id, objectType = "molecularmosaic" })">
+                <a href="@Url.Action("Detail", "Home", new { id = molecularMosaic.Id, objectType = "molecularmosaic" })">
                     <img src="@Url.Content(randomBlueMosaicImg)" class="mosaic"
-                         data-tags="@string.Join(',', molecularMosaic.KaleidoscopeTags!.Select(tag => tag.Name)):@string.Join(':', molecularMosaic.AssemblageTagId)" />
+                         data-name="@molecularMosaic.Title"
+                         data-tags="@string.Join(',', molecularMosaic.KaleidoscopeTags!.Select(tag => tag.Name)):@string.Join(':', molecularMosaic.AssemblageTagId)"/>
                 </a>
             }
         </div>
     </div>
-
     <div class="tagmenu">
         <h2 class="tagmenu-title">Kaleido-scoping</h2>
-        <hr />
+        <hr/>
         <ul class="tagList">
             @foreach (var tag in Model.KaleidoscopeTags!)
             {
-                if(tag.Name != "Experiment" && tag.Name != "Assemblages")
+                if (tag.Name != "Experiment" && tag.Name != "Assemblages")
                 {
                     <li>
                         <div class="tag-kaleiitem">
@@ -93,3 +96,4 @@
         </ul>
     </div>
 </div>
+<script src="~/js/kaleidoscope.js" asp-append-version="true"></script>
