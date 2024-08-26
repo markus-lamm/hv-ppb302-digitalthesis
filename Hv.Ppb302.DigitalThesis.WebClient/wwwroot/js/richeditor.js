@@ -171,6 +171,21 @@ if (editorDiv) {
     });
 }
 
+document.addEventListener("DOMContentLoaded", function (event) {
+    var editorDivss = document.getElementById('editor-container');
+   
+    if (editorDivss) {
+        const images = editorDivss.querySelectorAll('img');
+
+        mediumZoom(images, {
+            margin: 24,
+            background: '#365f9390',
+            scrollOffset: 0,
+        });
+    }
+
+});
+
 var editorDiv2 = document.getElementById('editortest');
 if (editorDiv2) {
     var editor = new Jodit('#editortest', {

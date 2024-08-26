@@ -1,23 +1,50 @@
 ﻿.background-image {
     background-image: url('../images/backgrounds/blue-white-1.jpg');
 }
-
+main{
+    height: 100%;
+}
 .mosaic-container {
-    height: 100vh;
+    height: 100%;
     width: 100vw;
-    position: absolute;
+    position: fixed;
+    overflow: hidden;
 }
 
-.mosaic {
+.mosaic-position {
     position: absolute;
 }
 
 .mosaic-content {
-    display: flex;
-    flex-direction: column;
-    font-size: 2.3rem;
-    max-width: 30rem;
+    position: fixed;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    transform: translateX(-15%);
+    font-size: 1.8rem;
+    max-width: 30rem !important;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+
 }
+.mosaic-content.active {
+    position: absolute;
+    background: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    font-size: 1.8rem;
+    max-width: 30rem !important;
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    word-break: break-word; /* Ensures long words break within the content box */
+    white-space: normal; /* Allows the text to wrap to the next line */
+    overflow-wrap: break-word;
+}
+
 
 .mosaic a {
     text-decoration: none;
@@ -33,14 +60,16 @@ a:hover img {
         color: white;
         opacity: 0;
         visibility: hidden;
+        display: none;
     }
 
 .mosaic a:hover div {
     transition: 0.3s ease;
     opacity: 1;
     visibility: visible;
-    -webkit-filter: drop-shadow(0 0 5px #222);
-    filter: drop-shadow(0 0 5px #222);
+    display: block;
+    -webkit-filter: drop-shadow(0 10 15px #222);
+    filter: drop-shadow(0 0 15px #222);
 }
 
 .mosaic-becomingsbtn-effect {
@@ -58,7 +87,7 @@ a:hover img {
 }
 
 .mosaic-becoming {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     max-width: 30rem;
 }
 
@@ -141,19 +170,14 @@ a:hover img {
     display: flex;
     justify-content: center;
     align-items: center;
-    border: 1px solid #343a3f;
+    gap: 1rem;
     margin-left: 3rem;
     margin-right: 3rem;
     padding: 1rem;
-    background-image: linear-gradient(90deg, #4E6B98, #7B8DA3);
-    color: white;
+    color: black;
 }
 
-    .becomings-btn:hover {
-        background-image: linear-gradient(90deg, #7B8DA3, #4E6B98);
-        color: white;
-        cursor: pointer;
-    }
+
 
 .sidebar {
     height: 95%;
@@ -264,7 +288,86 @@ a:hover img {
     position: relative;
     padding-top: 15vh;
     display: flex;
+    flex-wrap: wrap;
     gap: 7rem;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.switch-becoming {
+    position: relative;
+    display: inline-block;
+    width: 60px;
+    height: 34px;
+}
+
+    .switch-becoming input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+.slider-becoming {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: .4s;
+    transition: .4s;
+    border-width: thin;
+    border-color: #44484c;
+    border-radius: 34px;
+    border-style: solid;
+}
+
+    .slider-becoming:before {
+        position: absolute;
+        content: "";
+        height: 26px;
+        width: 26px;
+        left: 4px;
+        bottom: 4px;
+        top: 3px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+input:checked + .slider-becoming {
+    background-color: #4A4949;
+}
+
+input:focus + .slider-becoming {
+    box-shadow: 0 0 1px #4A4949;
+}
+
+input:checked + .slider-becoming:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider-becoming.round {
+    border-radius: 34px;
+}
+
+    .slider-becoming.round:before {
+        border-radius: 50%;
+    }
+}
+
+.sidebar-btn-img {
+    width: 2rem;
+}
+.mosaic-content div h3{
+    padding-block: 0;
+    margin-top: 0;
+    margin-bottom:0.5rem;
 }
 
 .sidebar-btn-img {
