@@ -4,7 +4,8 @@
 
 .mosaic-name {
     position: absolute;
-    background-color: #D9D9D9;
+    background-color: black;
+    opacity: 0.8;
     padding: 1rem;
     top: 50%;
     left: 50%;
@@ -12,6 +13,8 @@
     z-index: 3;
     display: none;
     border-radius: 2px;
+    font-size: 1.5rem;
+    color:white;
 }
 
 .tagmenu {
@@ -40,7 +43,7 @@
     display: flex;
     align-items: center;
 }
-/* Custom radio button */
+
 .custom-radio {
     appearance: none;
     -webkit-appearance: none;
@@ -54,13 +57,11 @@
     transition: border-color 0.3s;
 }
 
-/* When radio button is checked */
 .custom-radio:checked {
     border-color: #000;
-    background-color: #000; /* Change color to black */
+    background-color: #000;
 }
 
-/* Label style */
 .custom-radio-label {
     display: inline-block;
     cursor: pointer;

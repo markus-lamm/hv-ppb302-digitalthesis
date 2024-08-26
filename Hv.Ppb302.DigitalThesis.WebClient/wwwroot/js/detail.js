@@ -89,7 +89,10 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     textResetBtn.addEventListener('click', function () {
-        textContainer.scrollTop = 0;
+        textContainer.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     });
 });
 
