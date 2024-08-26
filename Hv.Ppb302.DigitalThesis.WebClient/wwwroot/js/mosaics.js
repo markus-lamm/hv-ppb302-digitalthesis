@@ -164,10 +164,13 @@ function applyVisitedMosaics() {
         const visitedList = JSON.parse(decodedMosaics);
         visitedList.forEach(id => {
             const elementen = document.getElementById(`mosaic-${id}`);
-            const element = elementen.querySelector('.mosaicImg');
-            if (element) {
-                element.classList.add('visited');
-            } else {
+            if (elementen) {
+                const element = elementen.querySelector('.mosaicImg');
+                if (element) {
+                    element.classList.add('visited');
+                } 
+            }
+            else {
                 console.log("Element not found for ID:", id);
             }
         });
