@@ -133,6 +133,7 @@ window.onload = function () {
     checkboxes.forEach((checkbox) => {
         checkbox.checked = false;
     });
+    becomingsBtn.checked = false;
 };
 
 // Add a click event listener to each checkbox
