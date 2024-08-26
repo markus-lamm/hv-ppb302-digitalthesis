@@ -73,6 +73,26 @@ if (pdfDownload) {
     });
 }
 
+//Text reset
+document.addEventListener('DOMContentLoaded', function () {
+    var textContainer = document.querySelector('.text-container');
+    var textResetBtn = document.getElementById('text-reset-btn');
+
+    textContainer.addEventListener('scroll', function () {
+        if (textContainer.scrollTop > 0) {
+            textResetBtn.classList.remove('hidden');
+            textResetBtn.classList.add('visible');
+        } else {
+            textResetBtn.classList.remove('visible');
+            textResetBtn.classList.add('hidden');
+        }
+    });
+
+    textResetBtn.addEventListener('click', function () {
+        textContainer.scrollTop = 0;
+    });
+});
+
 // Navigationmenu
 document.addEventListener('DOMContentLoaded', function () {
     const joditHTML = editor.getEditorValue();
@@ -156,9 +176,9 @@ infoMinimizeBtn.addEventListener('click', function () {
     const infoMinimizeImg = document.getElementById('info-minimize-img');
     if (infoMinimizeImg) {
         if (infoContainer.classList.contains('minimized')) {
-            infoMinimizeImg.src = '/images/icons/arrow-black-reverse.svg'; // Change to expand icon
+            infoMinimizeImg.src = '/images/icons/arrow-right.png'; // Change to expand icon
         } else {
-            infoMinimizeImg.src = '/images/icons/arrow-black.svg'; // Change to minimize icon
+            infoMinimizeImg.src = '/images/icons/arrow-left.png'; // Change to minimize icon
         }
     }
 });

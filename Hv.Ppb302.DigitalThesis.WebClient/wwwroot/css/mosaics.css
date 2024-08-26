@@ -359,3 +359,8 @@ input:checked + .slider-becoming:before {
     .slider-becoming.round:before {
         border-radius: 50%;
     }
+}
+
+.sidebar-btn-img {
+    width: 2rem;
+}

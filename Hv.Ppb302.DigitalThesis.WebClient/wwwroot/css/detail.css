@@ -75,7 +75,6 @@
     align-items: center;
     padding: 0.2rem;
     height: fit-content;
-    padding-left: 1rem;
     margin-top: 10rem;
     margin-inline: 1rem;
     background-color: #ccc;
@@ -131,7 +130,36 @@
         background: #f0f0f0;
     }
 
-.pdf-icon, 
+.text-reset-btn {
+    display: flex;
+    position: fixed;
+    bottom: -10%;
+    right: 5%;
+    padding: 0.5rem;
+    background-color: #ccc;
+    border: 3px solid #ccc;
+    transition: bottom 0.5s ease;
+}
+
+    .text-reset-btn.visible {
+        bottom: 5%;
+    }
+
+    .text-reset-btn.hidden {
+        bottom: -10%;
+    }
+
+    .text-reset-btn:hover {
+        cursor: pointer;
+        background: #f0f0f0;
+    }
+
+.text-reset-img {
+    transform: rotate(90deg);
+    width: 2rem;
+}
+
+.pdf-icon,
 .play-icon {
     height: 2rem;
 }
