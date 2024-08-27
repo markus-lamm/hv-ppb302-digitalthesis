@@ -4,8 +4,9 @@
 
 .mosaic-name {
     position: absolute;
-    background-color: black;
-    opacity: 0.8;
+    background-color: rgba(213, 208, 198);
+    opacity: 0.9;
+    border: solid black 1px;
     padding: 1rem;
     top: 50%;
     left: 50%;
@@ -14,7 +15,7 @@
     display: none;
     border-radius: 2px;
     font-size: 1.5rem;
-    color:white;
+    color: black;
 }
 
 .tagmenu {
