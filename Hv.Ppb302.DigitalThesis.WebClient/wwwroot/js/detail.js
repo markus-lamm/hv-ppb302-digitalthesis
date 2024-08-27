@@ -168,20 +168,20 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
-const infoMinimizeBtn = document.getElementById('info-minimize-btn');
-
-infoMinimizeBtn.addEventListener('click', function () {
-    const infoContainer = document.getElementById('info-container');
-    if (infoContainer) {
-        infoContainer.classList.toggle('minimized');
-    }
-
+// Info sidebar minimize
+document.addEventListener('DOMContentLoaded', function () {
+    const infoMinimizeBtn = document.getElementById('info-minimize-btn');
     const infoMinimizeImg = document.getElementById('info-minimize-img');
-    if (infoMinimizeImg) {
-        if (infoContainer.classList.contains('minimized')) {
-            infoMinimizeImg.src = '/images/icons/arrow-right.png'; // Change to expand icon
-        } else {
-            infoMinimizeImg.src = '/images/icons/arrow-left.png'; // Change to minimize icon
+    let isRotated = false;
+
+    infoMinimizeBtn.addEventListener('click', function () {
+        const infoContainer = document.getElementById('info-container');
+
+        if (infoContainer) {
+            infoContainer.classList.toggle('minimized');
         }
-    }
+
+        isRotated = !isRotated;
+        infoMinimizeImg.style.transform = isRotated ? 'rotate(180deg)' : 'rotate(0deg)';
+    });
 });
