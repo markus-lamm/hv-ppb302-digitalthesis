@@ -62,50 +62,36 @@
         switch (currentStep) {
             case 1:
                 tutorialPrevBtn.innerText = "Exit";
-                tutorialBox.style.top = "50%";
-                tutorialBox.style.left = "50%";
                 navbar.style.zIndex = "1";
                 break;
             case 2:
                 tutorialPrevBtn.innerText = "Previous";
-                tutorialBox.style.top = "40%";
-                tutorialBox.style.left = "30%";
                 navbar.style.zIndex = "10";
                 applyZindexToArray(geotags, "0");
                 break;
             case 3:
-                tutorialBox.style.top = "40%";
-                tutorialBox.style.left = "70%";
                 navbar.style.zIndex = "1";
                 applyZindexToArray(geotags, "10");
                 applyZindexToArray(molarMosaics, "0");
                 break;
             case 4:
-                tutorialBox.style.top = "60%";
-                tutorialBox.style.left = "30%";
                 applyZindexToArray(geotags, "0");
                 applyZindexToArray(molarMosaics, "10");
                 applyZindexToArray(molecularMosaics, "0");
                 break;
             case 5:
-                tutorialBox.style.top = "60%";
-                tutorialBox.style.left = "40%";
                 applyZindexToArray(molecularMosaics, "10");
                 applyZindexToArray(molarMosaics, "0");
                 kaleidoscope.style.zIndex = "0";
                 break;
             case 6:
                 tutorialNextBtn.innerText = "Next"
-                tutorialBox.style.top = "40%";
-                tutorialBox.style.left = "50%";
                 kaleidoscope.style.zIndex = "10";
                 applyZindexToArray(molecularMosaics, "0");
                 applyZindexToArray(molarMosaics, "0");
                 break;
             case 7:
                 tutorialNextBtn.innerText = "Exit"
-                tutorialBox.style.top = "50%";
-                tutorialBox.style.left = "30%";
                 applyZindexToArray(molecularMosaics, "10");
                 applyZindexToArray(molarMosaics, "10");
                 kaleidoscope.style.zIndex = "0";

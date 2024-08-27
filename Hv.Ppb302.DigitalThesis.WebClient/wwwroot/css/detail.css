@@ -40,7 +40,7 @@
 .navmenu-subtitle {
     text-decoration: none;
     color: black;
-    padding: 0.2rem;
+    padding: 0.3rem;
 }
 
 .navmenu-title {
@@ -68,6 +68,11 @@
     border-radius: 2px;
 }
 
+.pdf-btn-container {
+    display: flex;
+    margin-top: 1rem;
+}
+
 .info-minimize-btn {
     display: flex;
     justify-content: center;
@@ -89,6 +94,7 @@
 
 .info-minimize-img {
     width: 2rem;
+    opacity: 0.6;
 }
 
 .text-container {
@@ -178,6 +184,7 @@
 .text-reset-img {
     transform: rotate(90deg);
     width: 2rem;
+    opacity: 0.6;
 }
 
 .visibility-container {

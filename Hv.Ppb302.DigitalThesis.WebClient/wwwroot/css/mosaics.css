@@ -372,4 +372,5 @@ input:checked + .slider-becoming:before {
 
 .sidebar-btn-img {
     width: 2rem;
+    opacity: 0.6;
 }
