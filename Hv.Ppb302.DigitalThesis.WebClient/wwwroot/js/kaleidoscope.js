@@ -119,7 +119,9 @@ document.addEventListener("DOMContentLoaded", function () {
 // Radio buttons for kaleidoscope filters
 document.querySelectorAll('.custom-radio').forEach(function (radio) {
     radio.addEventListener('change', function () {
-        let selectedTag = this.getAttribute('data-tag');
+        let dataTags = this.getAttribute('data-tag').split(':');
+        let selectedTagName = dataTags[0];
+        let selectedTagId = dataTags[1];
         const images = document.querySelectorAll('.mosaic');
         images.forEach(function (image) {
             let tags = image.getAttribute('data-tags').split(':');
@@ -129,7 +131,7 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
             // Reset the hue value
             image.style.filter = 'hue-rotate(0deg)';
 
-            if (selectedTag === 'Assemblages') {
+            if (selectedTagId === 'f2d2a02b-73bb-42e4-8774-2102ef9c3102' /*Assemblages*/) {
                 image.style.opacity = 1;
                 image.classList.remove('mosaic-highlight-effect');
                 assemblageTag.forEach(function (tag) {
@@ -137,7 +139,7 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
                     image.style.filter = 'hue-rotate(' + randomValue + 'deg)';
                 });
             }
-            else if (selectedTag === 'Experiment') {
+            else if (selectedTagId === '1ac2b7b1-c3bf-4fc3-a5fb-37c88eeb1e97' /*Experiment*/) {
                 // Create a random value between 1 and 3
                 let randomValue = 3;
                 let random = Math.floor(Math.random() * randomValue) + 1;
@@ -151,7 +153,7 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
                     image.classList.remove('mosaic-highlight-effect');
                 }
             }
-            else if (kaleidoscopeTags.includes(selectedTag)) {
+            else if (kaleidoscopeTags.includes(selectedTagName)) {
                 image.style.opacity = 1; // Set full opacity for matching tags
                 image.classList.add('mosaic-highlight-effect'); // Add the highlight effect class
             } else {

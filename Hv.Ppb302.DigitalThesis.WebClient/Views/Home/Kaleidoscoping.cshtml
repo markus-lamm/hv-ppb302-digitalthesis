@@ -59,11 +59,12 @@
         <ul class="tagList">
             @foreach (var tag in Model.KaleidoscopeTags!)
             {
-                if (tag.Name != "Experiment" && tag.Name != "Assemblages")
+                if (tag.Id.ToString() != "1ac2b7b1-c3bf-4fc3-a5fb-37c88eeb1e97" @* Experiment *@
+            && tag.Id.ToString() != "f2d2a02b-73bb-42e4-8774-2102ef9c3102" @* Assemblages *@)
                 {
                     <li>
                         <div class="tag-kaleiitem">
-                            <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name" class="custom-radio">
+                            <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name:@tag.Id" class="custom-radio">
                             <label for="tag_@tag.Name" class="custom-radio-label">@tag.Name</label>
                         </div>
                     </li>
@@ -71,11 +72,11 @@
             }
             @foreach (var tag in Model.KaleidoscopeTags!)
             {
-                if (tag.Name == "Assemblages")
+                if (tag.Id.ToString() == "f2d2a02b-73bb-42e4-8774-2102ef9c3102" @* Assemblages *@)
                 {
                     <li>
                         <div class="tag-kaleiitem">
-                            <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name" class="custom-radio">
+                            <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name:@tag.Id" class="custom-radio">
                             <label for="tag_@tag.Name" class="custom-radio-label">@tag.Name</label>
                         </div>
                     </li>
@@ -83,11 +84,11 @@
             }
             @foreach (var tag in Model.KaleidoscopeTags!)
             {
-                if (tag.Name == "Experiment")
+                if (tag.Id.ToString() == "1ac2b7b1-c3bf-4fc3-a5fb-37c88eeb1e97" @* Experiment *@)
                 {
                     <li>
                         <div class="tag-kaleiitem">
-                            <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name" class="custom-radio">
+                            <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name:@tag.Id" class="custom-radio">
                             <label for="tag_@tag.Name" class="custom-radio-label">@tag.Name</label>
                         </div>
                     </li>
