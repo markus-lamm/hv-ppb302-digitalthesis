@@ -2,22 +2,25 @@
 const audioButton = document.getElementById('audio-icon');
 if (audioButton) {
     const audioPlayer = document.getElementById('audio-player');
-    const audioImage = document.getElementById('audio-img');
+    const audioImagePlay = document.getElementById('audio-img-play');
+    const audioImageStop = document.getElementById('audio-img-stop');
 
     // Add click event listener to the button
     audioButton.addEventListener('click', function () {
         // Check if audio is currently playing
+        audioButton.classList.toggle("audio-icon-bckg-active")
+
         if (audioPlayer.paused) {
             // If paused, play the audio
             audioPlayer.play();
-            audioButton.style.backgroundImage = "url('/images/backgrounds/logo-zoom.png')";
-            audioImage.src = "/images/icons/stop-button-white.png";
+            audioImagePlay.style.display = "none";
+            audioImageStop.style.display = "flex";
         } else {
             // If playing, pause the audio and reset the time to 0
             audioPlayer.pause();
             audioPlayer.currentTime = 0;
-            audioButton.style.backgroundImage = "";
-            audioImage.src = "/images/icons/play-button-black.png";
+            audioImagePlay.style.display = "flex";
+            audioImageStop.style.display = "none";
         }
     });
 }
@@ -27,9 +30,7 @@ const pdfDownload = document.getElementById('pdf-download-btn');
 if (pdfDownload) {
     document.getElementById('pdf-download-btn').addEventListener('click', async function () {
         // URL of the PDF to be downloaded
-
         var selectedTag = this.getAttribute('data-tags');
-
         const pdfUrl = selectedTag;  // Replace with your actual file URL
 
         try {
