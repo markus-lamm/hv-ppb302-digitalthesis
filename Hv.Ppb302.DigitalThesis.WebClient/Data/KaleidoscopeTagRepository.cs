@@ -72,6 +72,7 @@ public class KaleidoscopeTagRepository : IRepository<KaleidoscopeTag>
         existingKaleidoscopeTag.Name = kaleidoscopeTag.Name;
         existingKaleidoscopeTag.MolarMosaics = kaleidoscopeTag.MolarMosaics;
         existingKaleidoscopeTag.MolecularMosaics = kaleidoscopeTag.MolecularMosaics;
+        existingKaleidoscopeTag.Content = kaleidoscopeTag.Content;
         _dbContext.SaveChanges();
         }
         catch (Exception)

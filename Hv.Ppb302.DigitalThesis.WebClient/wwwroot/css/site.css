@@ -94,3 +94,12 @@ body {
     justify-content: center;
     align-items: center;
 }
+
+.previeweditor {
+    border-color: transparent !important;
+    background: transparent !important;
+}
+
+.previeweditor div {
+    background: transparent !important;
+}
