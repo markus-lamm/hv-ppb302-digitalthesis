@@ -6,4 +6,5 @@ public class KaleidoscopeTag
     public string? Name { get; set; }
     public List<MolecularMosaic> MolecularMosaics { get; set; } = [];
     public List<MolarMosaic> MolarMosaics { get; set; } = [];
+    public string? Content { get; set; }
 }

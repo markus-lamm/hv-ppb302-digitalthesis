@@ -167,7 +167,7 @@ if (editorDiv) {
         className: 'previeweditor',
         height: '100%',
         width: '100%',
-        "allowResizeY": false
+        "allowResizeY": false,
     });
 }
 

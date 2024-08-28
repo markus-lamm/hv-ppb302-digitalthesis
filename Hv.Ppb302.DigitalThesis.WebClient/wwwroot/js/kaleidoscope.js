@@ -1,14 +1,42 @@
-﻿// Mouseover mosaic name
+﻿// Get the modal
+var modal = document.getElementById("myModal");
+var btn = document.getElementById("kaleidoscope-openmodal");
+var span = document.getElementsByClassName("kaleidoscope-closemodal")[0];
+btn.onclick = function () {
+    modal.style.display = "block";
+}
+
+// When the user clicks on <span> (x), close the modal
+span.onclick = function () {
+    modal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}
+
+// Mouseover mosaic name
 document.addEventListener("DOMContentLoaded", function () {
     const mosaicNameAnchor = document.getElementById('mosaic-name');
+    const mosaicbecomingAnchor = document.getElementById('mosaic-becoming');
     const mosaics = document.querySelectorAll('.mosaic');
 
     mosaics.forEach(mosaic => {
         mosaic.addEventListener('mouseover', function () {
             const mosaicName = mosaic.getAttribute('data-name');
-            mosaicNameAnchor.innerText = mosaicName;
+            const mosaicBecoming = mosaic.getAttribute('data-becomings').split(',');
+
+            mosaicNameAnchor.innerHTML = `<h3>${mosaicName}</h3>`;
+            mosaicNameAnchor.innerHTML += mosaicBecoming.join('<br>');
+
+            //console.log(mosaicbecomingAnchor)
+            //mosaicNameAnchor.innerText = mosaicName;
             let rect = mosaic.getBoundingClientRect();
             mosaicNameAnchor.style.display = 'flex';
+            mosaicNameAnchor.style.flexDirection = 'column';
             mosaicNameAnchor.style.position = 'absolute';
             mosaicNameAnchor.style.top = `${rect.top + window.scrollY}px`;
             mosaicNameAnchor.style.left = `${rect.left + window.scrollX}px`;
@@ -119,9 +147,12 @@ document.addEventListener("DOMContentLoaded", function () {
 // Radio buttons for kaleidoscope filters
 document.querySelectorAll('.custom-radio').forEach(function (radio) {
     radio.addEventListener('change', function () {
+        btn.style.display = 'block';
         let dataTags = this.getAttribute('data-tag').split(':');
         let selectedTagName = dataTags[0];
         let selectedTagId = dataTags[1];
+        let selectedTagContent = this.getAttribute('data-content');
+        editor.value = selectedTagContent;
         const images = document.querySelectorAll('.mosaic');
         images.forEach(function (image) {
             let tags = image.getAttribute('data-tags').split(':');
@@ -130,6 +161,8 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
 
             // Reset the hue value
             image.style.filter = 'hue-rotate(0deg)';
+            //reset the pointeevent value
+            image.style.pointerEvents = 'auto'; 
 
             if (selectedTagId === 'f2d2a02b-73bb-42e4-8774-2102ef9c3102' /*Assemblages*/) {
                 image.style.opacity = 1;
@@ -149,6 +182,7 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
                     image.style.opacity = 1;
                     image.classList.add('mosaic-highlight-effect');
                 } else {
+                    image.style.pointerEvents = 'none'; 
                     image.style.opacity = 0.4;
                     image.classList.remove('mosaic-highlight-effect');
                 }
@@ -157,6 +191,7 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
                 image.style.opacity = 1; // Set full opacity for matching tags
                 image.classList.add('mosaic-highlight-effect'); // Add the highlight effect class
             } else {
+                image.style.pointerEvents = 'none'; 
                 image.style.opacity = 0.4; // Set lower opacity for non-matching tags
                 image.classList.remove('mosaic-highlight-effect'); // Remove the highlight effect class
             }
