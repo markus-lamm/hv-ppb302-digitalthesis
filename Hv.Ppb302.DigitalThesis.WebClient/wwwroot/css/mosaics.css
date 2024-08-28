@@ -1,9 +1,7 @@
 ﻿.background-image {
     background-image: url('../images/backgrounds/blue-white-1.jpg');
 }
-main{
-    height: 100%;
-}
+
 .mosaic-container {
     height: 100%;
     width: 100vw;
