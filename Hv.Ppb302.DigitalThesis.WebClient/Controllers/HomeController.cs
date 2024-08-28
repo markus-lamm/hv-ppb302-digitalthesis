@@ -189,7 +189,9 @@ public class HomeController : Controller
         var jsonSerializer = JsonSerializer.Serialize(values);
         var cookieOptions = new CookieOptions
         {
-            Expires = DateTime.Now.AddDays(expirationTime ?? 30)
+            Expires = DateTime.Now.AddDays(expirationTime ?? 30),
+            Secure = true,
+            SameSite = SameSiteMode.Strict
         };
         Response.Cookies.Append(key, jsonSerializer, cookieOptions);
     }
