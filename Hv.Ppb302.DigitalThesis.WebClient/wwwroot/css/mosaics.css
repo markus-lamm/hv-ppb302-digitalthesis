@@ -26,6 +26,7 @@
     opacity: 0;
     border: solid black 1px;
 }
+
 .mosaic-content.active {
     position: absolute;
     color: black;
@@ -35,8 +36,8 @@
     max-width: 30rem !important;
     visibility: hidden;
     opacity: 0;
-    word-break: break-word; /* Ensures long words break within the content box */
-    white-space: normal; /* Allows the text to wrap to the next line */
+    word-break: break-word;
+    white-space: normal;
     overflow-wrap: break-word;
     border: solid black 1px;
 }
@@ -88,9 +89,80 @@ a:hover img {
     filter: grayscale(1000%);
 }
 
-.sidebarLine {
+.mosaics-sidebar {
+    display: flex;
+    height: 100%;
+    width: 25rem;
+    position: absolute;
+    right: 0;
+    top:0;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+    .mosaics-sidebar.minimize {
+        width: 0;
+    }
+
+.mosaics-sidebar-btn {
+    cursor: pointer;
+    align-self: flex-end;
+    margin-bottom: 10%;
+    transition: 0.5s;
+}
+
+    .mosaics-sidebar-btn.rotate {
+        transform: rotate(180deg);
+    }
+
+.mosaics-sidebar-container {
+    height: 100%;
+    width: 20rem;
+    position: absolute;
+    background: rgba(213, 208, 198, 0.7);
+    top: 0;
+    right: 0;
+    transition: 0.5s;
+}
+
+    .mosaics-sidebar-container.minimize {
+        width: 0;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+.mosaics-sidebar-line {
     padding-top: 3rem;
     padding-bottom: 1rem;
+    border-bottom: 1px solid white;
 }
 
 .tagList {
@@ -170,37 +242,23 @@ a:hover img {
     color: black;
 }
 
-
-
-.sidebar {
-    height: 95%;
-    bottom: 2px;
-    width: 0;
-    position: absolute;
-    background: rgba(213, 208, 198, 0.7);
-    right: 0;
-    overflow-x: hidden;
-    padding-top: 60px;
-    transition: 0.5s;
+.mosaics-sidebar .calOption {
+    padding: 8px 8px 8px 32px;
+    font-weight: 100;
+    cursor: pointer;
+    border: none;
+    text-decoration: none;
+    font-size: 25px;
+    color: black;
+    display: block;
+    background: none;
+    transition: 0.3s;
 }
 
-    .sidebar .calOption {
-        padding: 8px 8px 8px 32px;
-        font-weight: 100;
-        cursor: pointer;
-        border: none;
-        text-decoration: none;
-        font-size: 25px;
-        color: black;
-        display: block;
-        background: none;
-        transition: 0.3s;
-    }
-
-        .sidebar .calOption:hover {
-            -webkit-filter: drop-shadow(0px 0px 8px #222);
-            filter: drop-shadow(0px 0px 8px #222);
-        }
+.mosaics-sidebar .calOption:hover {
+    -webkit-filter: drop-shadow(0px 0px 8px #222);
+    filter: drop-shadow(0px 0px 8px #222);
+}
 
 .calClear {
     border: 1px solid white;
@@ -217,41 +275,8 @@ a:hover img {
         filter: drop-shadow(0px 0px 8px #222);
     }
 
-.sidebar .closebtn {
-    font-size: 50px;
-    cursor: pointer;
-    background: none;
-    color: white;
-    padding: 10px 15px;
-    border: none;
-    position: absolute;
-    top: 90%;
-    left: 0;
-}
-
-.sidebarLine {
-    border-bottom: 1px solid white;
-}
-
-.sidebar h3 {
+.mosaics-sidebar h3 {
     text-align: center;
-}
-
-.openbtn {
-    font-size: 50px;
-    cursor: pointer;
-    background: none;
-    color: rgba(124, 124, 124, 1);
-    padding: 10px 15px;
-    border: none;
-    position: absolute;
-    top: 90%;
-    right: 0;
-}
-
-#main {
-    transition: margin-left 0.5s;
-    padding: 20px;
 }
 
 @media screen and (max-height: 450px) {
@@ -271,10 +296,6 @@ a:hover img {
         /* Ge extra marginal eller padding om det behövs för heading-1 */
         padding-top: 50px; /* Detta är ett exempel. Justera enligt ditt behov */
     }
-}
-
-.sidebar .openbtn {
-    display: none;
 }
 
 .mosaic-float {

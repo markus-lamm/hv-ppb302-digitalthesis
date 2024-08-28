@@ -112,21 +112,38 @@ becomingsBtn.addEventListener('change', () => {
 
 });
 
+// Sidebar
+document.addEventListener('DOMContentLoaded', function () {
+    const sidebar = document.getElementById('mosaics-sidebar');
+    const sidebarContainer = document.getElementById('mosaics-sidebar-container');
+    const sidebarBtn = document.querySelector('.mosaics-sidebar-btn');
+    let isRotated = false;
+    let isSidebarOpen = false;
+
+    sidebarBtn.addEventListener('click', function () {
+        isRotated = !isRotated;
+        isSidebarOpen = !isSidebarOpen;
+        sidebarBtn.classList.toggle('rotate');
+        //sidebar.classList.toggle('minimize');
+        sidebarContainer.classList.toggle('minimize');
+    });
+});
+
 //FILTER
-function openNav() {
-    document.getElementById("mySidebar").style.width = "20rem";
-    document.getElementById("main").style.marginLeft = "20rem";
-    let btn = document.querySelector('.openbtn');
-    btn.classList.add('hide');
-}
+//function openNav() {
+//    document.getElementById("mySidebar").style.width = "20rem";
+//    document.getElementById("main").style.marginLeft = "20rem";
+//    let btn = document.querySelector('.openbtn');
+//    btn.classList.add('hide');
+//}
 
-function closeNav() {
-    document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
+//function closeNav() {
+//    document.getElementById("mySidebar").style.width = "0";
+//    document.getElementById("main").style.marginLeft = "0";
 
-    let btn = document.querySelector('.openbtn');
-    btn.classList.remove('hide');
-}
+//    let btn = document.querySelector('.openbtn');
+//    btn.classList.remove('hide');
+//}
 
 // Reset all checkboxes when the page loads
 window.onload = function () {
