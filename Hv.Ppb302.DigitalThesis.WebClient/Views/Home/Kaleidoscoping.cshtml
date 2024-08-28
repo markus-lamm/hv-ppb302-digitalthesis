@@ -7,6 +7,19 @@
 <head>
     <link rel="stylesheet" href="~/css/kaleidoscoping.css" asp-append-version="true" />
 </head>
+<!-- The Modal -->
+<div id="myModal" class="modal">
+    <!-- Modal content -->
+    <div class="modal-content">
+        <div class="text" id="editor">
+            <p>
+
+            </p>
+        </div>
+        <span class="kaleidoscope-closemodal">&times;</span>
+    </div>
+</div>
+
 <div class="background-container background-image"></div>
 <div class="main-container">
     <div class="mosaic-name" id="mosaic-name"></div>
@@ -39,6 +52,7 @@
                 <a href="@Url.Action("Detail", "Home", new { id = molarMosaic.Id, objectType = "molarmosaic" })">
                     <img src="@Url.Content(randomBlueMosaicImg)" class="mosaic"
                          data-name="@molarMosaic.Title"
+                         data-becomings="@if (molarMosaic.Becomings != null) { @string.Join(',', molarMosaic.Becomings) }"
                          data-tags="@string.Join(',', molarMosaic.KaleidoscopeTags!.Select(tag => tag.Name)):@string.Join(':', molarMosaic.AssemblageTagId)"/>
                 </a>
             }
@@ -48,6 +62,7 @@
                 <a href="@Url.Action("Detail", "Home", new { id = molecularMosaic.Id, objectType = "molecularmosaic" })">
                     <img src="@Url.Content(randomBlueMosaicImg)" class="mosaic"
                          data-name="@molecularMosaic.Title"
+                         data-becomings="@if (molecularMosaic.Becomings != null) { @string.Join(',', molecularMosaic.Becomings) }"
                          data-tags="@string.Join(',', molecularMosaic.KaleidoscopeTags!.Select(tag => tag.Name)):@string.Join(':', molecularMosaic.AssemblageTagId)"/>
                 </a>
             }
@@ -64,7 +79,7 @@
                 {
                     <li>
                         <div class="tag-kaleiitem">
-                            <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name:@tag.Id" class="custom-radio">
+                            <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name:@tag.Id" data-content="@tag.Content" class="custom-radio">
                             <label for="tag_@tag.Name" class="custom-radio-label">@tag.Name</label>
                         </div>
                     </li>
@@ -76,7 +91,7 @@
                 {
                     <li>
                         <div class="tag-kaleiitem">
-                            <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name:@tag.Id" class="custom-radio">
+                            <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name:@tag.Id" data-content="@tag.Content" class="custom-radio">
                             <label for="tag_@tag.Name" class="custom-radio-label">@tag.Name</label>
                         </div>
                     </li>
@@ -88,12 +103,13 @@
                 {
                     <li>
                         <div class="tag-kaleiitem">
-                            <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name:@tag.Id" class="custom-radio">
+                            <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name:@tag.Id" data-content="@tag.Content" class="custom-radio">
                             <label for="tag_@tag.Name" class="custom-radio-label">@tag.Name</label>
                         </div>
                     </li>
                 }
             }
+            <button id="kaleidoscope-openmodal">Open Modal</button>
         </ul>
     </div>
 </div>

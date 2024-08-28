@@ -40,7 +40,7 @@ public class KaleidoscopeTagsController : Controller
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(Guid id, [Bind("Id,Name")] KaleidoscopeTag kaleidoscopeTag)
+    public IActionResult Edit(Guid id, [Bind("Id,Name,Content")] KaleidoscopeTag kaleidoscopeTag)
     {
         if (!CheckAuthentication())
         {

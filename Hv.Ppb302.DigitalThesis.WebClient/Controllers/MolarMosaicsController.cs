@@ -41,6 +41,7 @@ public class MolarMosaicsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
+        var excludedIds = new[] { "f2d2a02b-73bb-42e4-8774-2102ef9c3102", "1ac2b7b1-c3bf-4fc3-a5fb-37c88eeb1e97" };
         var molarMosaicList = _molarMosaicRepo.GetAll();
         var becomingsList = molarMosaicList!.SelectMany(m => m.Becomings!).Distinct().ToList();
         var connectorTagList = _connectorTagRepo.GetAll();
@@ -54,6 +55,7 @@ public class MolarMosaicsController : Controller
             .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name })
             .ToList();
         var kaleidoscopeSelectList = kaleidoscopeTagList!
+            .Where(k => !excludedIds.Contains(k.Id.ToString()))
             .Select(k => new SelectListItem { Value = k.Id.ToString(), Text = k.Name })
             .ToList();
 
@@ -132,6 +134,7 @@ public class MolarMosaicsController : Controller
             return NotFound();
         }
 
+        var excludedIds = new[] { "f2d2a02b-73bb-42e4-8774-2102ef9c3102", "1ac2b7b1-c3bf-4fc3-a5fb-37c88eeb1e97" };
         var molarMosaicList = _molarMosaicRepo.GetAll();
         var becomingsList = molarMosaicList!.SelectMany(m => m.Becomings!).Distinct().ToList();
         var connectorTagList = _connectorTagRepo.GetAll();
@@ -145,6 +148,7 @@ public class MolarMosaicsController : Controller
             .Select(c => new SelectListItem { Value = c.Id.ToString(), Text = c.Name, Selected = molarMosaic.ConnectorTags!.Any(ct => ct.Id == c.Id) })
             .ToList();
         var kaleidoscopeSelectList = kaleidoscopeTagList!
+            .Where(k => !excludedIds.Contains(k.Id.ToString()))
             .Select(k => new SelectListItem { Value = k.Id.ToString(), Text = k.Name, Selected = molarMosaic.KaleidoscopeTags!.Any(ct => ct.Id == k.Id) })
             .ToList();
 
