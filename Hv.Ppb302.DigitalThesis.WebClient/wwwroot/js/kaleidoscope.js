@@ -130,6 +130,8 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
 
             // Reset the hue value
             image.style.filter = 'hue-rotate(0deg)';
+            //reset the pointeevent value
+            image.style.pointerEvents = 'auto'; 
 
             if (selectedTagId === 'f2d2a02b-73bb-42e4-8774-2102ef9c3102' /*Assemblages*/) {
                 image.style.opacity = 1;
@@ -149,6 +151,7 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
                     image.style.opacity = 1;
                     image.classList.add('mosaic-highlight-effect');
                 } else {
+                    image.style.pointerEvents = 'none'; 
                     image.style.opacity = 0.4;
                     image.classList.remove('mosaic-highlight-effect');
                 }
@@ -157,6 +160,7 @@ document.querySelectorAll('.custom-radio').forEach(function (radio) {
                 image.style.opacity = 1; // Set full opacity for matching tags
                 image.classList.add('mosaic-highlight-effect'); // Add the highlight effect class
             } else {
+                image.style.pointerEvents = 'none'; 
                 image.style.opacity = 0.4; // Set lower opacity for non-matching tags
                 image.classList.remove('mosaic-highlight-effect'); // Remove the highlight effect class
             }
