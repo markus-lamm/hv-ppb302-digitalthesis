@@ -37,6 +37,16 @@
                     </div>
                 }
             }
+            @if (!String.IsNullOrWhiteSpace(@Model.PdfFilePath))
+            {
+                <div class="pdf-btn-container">
+                    <div id="pdf-download-btn" data-tags="@Model.PdfFilePath" class="text-options-btn">
+                        <a>
+                            <img class="pdf-icon" src="~/images/icons/pdf-download-black.png" />
+                        </a>
+                    </div>
+                </div>
+            }
         </div>
         <div class="info-minimize-btn" id="info-minimize-btn">
             <img class="info-minimize-img" id="info-minimize-img" src="~/images/icons/arrow-left.png" />
@@ -49,14 +59,6 @@
                         <img class="play-icon" id="audio-img-play" src="~/images/icons/play-button-black.png"/>
                         <img class="stop-icon" id="audio-img-stop" src="~/images/icons/stop-button-white.png" />
                         <audio id="audio-player" src="@Model.AudioFilePath"></audio>
-                    </div>
-                }
-                @if (!String.IsNullOrWhiteSpace(@Model.PdfFilePath))
-                {
-                    <div id="pdf-download-btn" data-tags="@Model.PdfFilePath" class="text-options-btn">
-                        <a>
-                            <img class="pdf-icon" src="~/images/icons/pdf-download-black.png"/>
-                        </a>
                     </div>
                 }
             </div>

@@ -161,20 +161,18 @@
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0, 0, 0, 0.7);
 }
 
 .tutorial-box {
     display: flex;
     flex-direction: column;
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    bottom: 10%;
+    right: 5%;
     background-color: white;
     padding: 1rem;
     border-radius: 2px;
-    transition: 0.5s ease;
     width: 30rem;
 }
 
@@ -212,6 +210,9 @@
 }
 
 .tutorial-exit-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #D2D5DB;
     padding: 0.5rem;
     position: absolute;
@@ -220,6 +221,9 @@
     cursor: pointer;
     transition: 0.2s;
     border: 3px solid #D2D5DB;
+    border-radius: 100%;
+    width: 0.5rem;
+    height: 0.5rem;
 }
 
     .tutorial-prev-btn:hover,
