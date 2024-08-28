@@ -90,11 +90,30 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     textResetBtn.addEventListener('click', function () {
-        textContainer.scrollTo({
-            top: 0,
-            behavior: 'smooth'
-        });
+        smoothScrollTo(textContainer, 0, 600); // Scroll to top over 600ms
     });
+
+    function smoothScrollTo(element, target, duration) {
+        var start = element.scrollTop;
+        var change = target - start;
+        var startTime = performance.now();
+
+        function animateScroll(currentTime) {
+            var timeElapsed = currentTime - startTime;
+            var progress = Math.min(timeElapsed / duration, 1);
+            element.scrollTop = start + change * easeInOutQuad(progress);
+
+            if (progress < 1) {
+                requestAnimationFrame(animateScroll);
+            }
+        }
+
+        function easeInOutQuad(t) {
+            return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+        }
+
+        requestAnimationFrame(animateScroll);
+    }
 });
 
 // Navigationmenu
