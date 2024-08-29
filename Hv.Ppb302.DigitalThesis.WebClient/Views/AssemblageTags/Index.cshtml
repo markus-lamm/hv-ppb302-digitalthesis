@@ -6,35 +6,44 @@
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
 <div class="background-container background-image"></div>
-<div class="main-container flex-center flex-column">
-    <div class="admin-form">
-        <div class="form-btn-container">
-            <a class="form-return-btn" asp-controller="Admin" asp-action="Index">Return</a>
-            <a class="form-return-btn" asp-action="Create">Create New</a>
+<div class="main-container flex-horizontal-center">
+    <div class="admin-container">
+        <div class="admin-form">
+            <div class="form-btn-container">
+                <a class="form-main-btn" asp-controller="Admin" asp-action="Index">Return</a>
+                <a class="form-main-btn" asp-action="Create">Create</a>
+            </div>
+            <div class="form-header-container assemblagetags-color">
+                <div class="form-header-count">@Model.Count()</div>
+                <div class="form-header-name">Assemblage tags</div>
+            </div>
+            <div class="form-table-container">
+                <table class="form-table">
+                    <thead>
+                        <tr>
+                            <th class="form-table-header">
+                                @Html.DisplayNameFor(model => model.Name)
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr class="form-table-row">
+                                <td class="form-table-data">
+                                    @Html.DisplayFor(modelItem => item.Name)
+                                </td>
+                                <td class="form-table-btn edit">
+                                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                                </td>
+                                <td class="form-table-btn delete">
+                                    <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>
-                        @Html.DisplayNameFor(model => model.Name)
-                    </th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var item in Model)
-                {
-                    <tr class="form-table-row">
-                        <td>
-                            @Html.DisplayFor(modelItem => item.Name)
-                        </td>
-                        <td>
-                            <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                            <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
     </div>
 </div>
