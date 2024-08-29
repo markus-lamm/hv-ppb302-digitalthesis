@@ -3,8 +3,7 @@
 }
 
 .geotag {
-    height: 6vw;
-    min-height: 5rem;
+    height: 5.5vw;
 }
 
 .image-text {
@@ -24,7 +23,7 @@
     position: absolute;
     text-align: center;
     bottom: 60%;
-    left: 8%;
+    left: 1.5%;
 }
 
 #link-geotag-2 {
@@ -32,7 +31,7 @@
     position: absolute;
     text-align: center;
     bottom: 55%;
-    left: 13%;
+    left: 11%;
 }
 
 #link-geotag-3 {
@@ -63,16 +62,16 @@
     color: black;
     text-align: center;
     position: absolute;
-    bottom: 69%;
-    left: 22%;
+    bottom: 64%;
+    left: 23%;
 }
 
 #link-molarmosaics {
     color: white;
     text-align: center;
     position: absolute;
-    bottom: 65%;
-    left: 57%;
+    bottom: 64%;
+    left: 54%;
 }
 
 #link-molecularmosaics {
@@ -88,71 +87,95 @@
     text-align: center;
     position: absolute;
     bottom: 80%;
-    left: 82%;
+    left: 77%;
 }
 
 #mosaic-blue-1 {
-    width: 6.75rem;
+    width: 6vw;
     height: auto;
     position: absolute;
-    bottom: 32%;
+    bottom: 43%;
     right: 17%;
+
+    max-width: 15rem;
+    min-width: 5rem;
 }
 
 #mosaic-blue-2 {
-    width: 6.75rem;
+    width: 6vw;
     height: auto;
     position: absolute;
     bottom: 36%;
-    right: 22%;
+    right: 20%;
+
+    max-width: 15rem;
+    min-width: 5rem;
 }
 
 #mosaic-blue-3 {
-    width: 6.75rem;
+    width: 6vw;
     height: auto;
     position: absolute;
     bottom: 44%;
     right: 23%;
+
+    max-width: 15rem;
+    min-width: 5rem;
 }
 
 #mosaic-blue-4 {
-    width: 6.75rem;
+    width: 6vw;
     height: auto;
     position: absolute;
-    bottom: 53%;
-    right: 21%;
+    bottom: 50%;
+    right: 22%;
+
+    max-width: 15rem;
+    min-width: 5rem;
 }
 
 #mosaic-blue-5 {
-    width: 6.75rem;
+    width: 6vw;
     height: auto;
     position: absolute;
-    bottom: 43%;
+    bottom: 53%;
     right: 18%;
+
+    max-width: 15rem;
+    min-width: 5rem;
 }
 
 #mosaic-yellow-1 {
-    width: 6.75rem;
+    width: 6vw;
     height: auto;
     position: absolute;
-    bottom: 38%;
+    bottom: 44%;
     right: 37%;
+
+    max-width: 15rem;
+    min-width: 5rem;
 }
 
 #mosaic-yellow-2 {
-    width: 6.75rem;
+    width: 6vw;
     height: auto;
     position: absolute;
-    bottom: 48%;
-    right: 37%;
+    bottom: 50%;
+    right: 40%;
+
+    max-width: 15rem;
+    min-width: 5rem;
 }
 
 #mosaic-yellow-3 {
-    width: 6.75rem;
+    width: 6vw;
     height: auto;
     position: absolute;
-    bottom: 52%;
-    right: 33%;
+    bottom: 53%;
+    right: 34%;
+
+    max-width: 15rem;
+    min-width: 5rem;
 }
 
 .tutorial-overlay {
