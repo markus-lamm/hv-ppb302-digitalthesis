@@ -31,15 +31,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
             mosaicNameAnchor.innerHTML = `<h3>${mosaicName}</h3>`;
             mosaicNameAnchor.innerHTML += mosaicBecoming.join('<br>');
-
-            //console.log(mosaicbecomingAnchor)
-            //mosaicNameAnchor.innerText = mosaicName;
             let rect = mosaic.getBoundingClientRect();
             mosaicNameAnchor.style.display = 'flex';
             mosaicNameAnchor.style.flexDirection = 'column';
             mosaicNameAnchor.style.position = 'absolute';
             mosaicNameAnchor.style.top = `${rect.top + window.scrollY}px`;
-            mosaicNameAnchor.style.left = `${rect.left + window.scrollX}px`;
+            mosaicNameAnchor.style.left = `${rect.left + rect.width + window.scrollX}px`;
         });
         mosaic.addEventListener('mouseout', function () {
             mosaicNameAnchor.style.display = 'none';
