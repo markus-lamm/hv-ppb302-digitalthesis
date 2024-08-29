@@ -53,12 +53,6 @@ Jodit.defaultOptions.controls.videonopause = {
                 autofocus: false,
                 label: 'Video URL:',
                 required: true
-            }), 
-            new UIInput(editor, {
-                name: 'Height',
-                placeholder: 'Enter height for the video',
-                autofocus: false,
-                label: 'Video height: (Normal size is 304)'
             }),
             new UIInput(editor, {
                 name: 'Width',
@@ -82,7 +76,7 @@ Jodit.defaultOptions.controls.videonopause = {
 
         videoNoPauseform.onSubmit((data) => {
             const width = data.Width !== "" ? `${data.Width}px` : '304px';
-            const height = data.Height !== "" ? `${data.Height}px` : '255px';
+            const height = data.Width * 0.56;
             const iframetag = `<video id="videoIframe" src="${data.videoNoPauseUrl}" title="description" width="${width}" height="${height}" controls data-control="true"></video>`;
             editor.selection.insertHTML(iframetag);
             closePopWindow();
