@@ -92,7 +92,6 @@ a:hover img {
 .mosaics-sidebar {
     display: flex;
     height: 100%;
-    width: 25rem;
     position: absolute;
     right: 0;
     top:0;
@@ -100,14 +99,11 @@ a:hover img {
     transition: 0.5s;
 }
 
-    .mosaics-sidebar.minimize {
-        width: 0;
-    }
-
 .mosaics-sidebar-btn {
     cursor: pointer;
     align-self: flex-end;
-    margin-bottom: 10%;
+    margin-bottom: 3rem;
+    margin-right: 2rem;
     transition: 0.5s;
 }
 
@@ -117,47 +113,27 @@ a:hover img {
 
 .mosaics-sidebar-container {
     height: 100%;
-    width: 20rem;
-    position: absolute;
+    width: 0;
     background: rgba(213, 208, 198, 0.7);
     top: 0;
     right: 0;
     transition: 0.5s;
 }
 
-    .mosaics-sidebar-container.minimize {
-        width: 0;
+    .mosaics-sidebar-container.show {
+        width: 20rem;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+.becomings-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-left: 3rem;
+    margin-right: 3rem;
+    padding: 1rem;
+    color: black;
+}
 
 .mosaics-sidebar-line {
     padding-top: 3rem;
@@ -230,17 +206,6 @@ a:hover img {
         background: #50565a;
         box-shadow: 2px 1px 0 #50565a;
     }
-
-.becomings-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 1rem;
-    margin-left: 3rem;
-    margin-right: 3rem;
-    padding: 1rem;
-    color: black;
-}
 
 .mosaics-sidebar .calOption {
     padding: 8px 8px 8px 32px;
