@@ -4,17 +4,18 @@
 
 .mosaic-name {
     position: absolute;
-    background-color: rgba(213, 208, 198);
+    background-color: rgba(0, 0, 0, 0.8);
     opacity: 0.8;
-    border: solid black 1px;
     padding: 1rem;
     border-radius: 5px !important;
     z-index: 3;
     display: none;
     border-radius: 2px;
     font-size: 1.5rem;
-    color: black;
+    color: white;
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 }
+
 .mosaic-name h3 {
     margin: 0;
 }

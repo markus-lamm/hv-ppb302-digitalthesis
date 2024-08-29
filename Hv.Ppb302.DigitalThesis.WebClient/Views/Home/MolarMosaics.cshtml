@@ -25,32 +25,33 @@
         }
     </div>
 </div>
-<div id="mySidebar" class="sidebar">
-    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()"><img class="sidebar-btn-img" src="~/images/icons/arrow-right.png" /></a>
-    <h3 class="sidebarLine">Becomings</h3>
-    <div class="becomings-btn" >
-        <label class="switch-becoming" >
-            <input id="becomings-btn" type="checkbox">
-            <span class="slider-becoming round"></span>
-        </label>
-        <label class="becomings-text">Show Becomings</label>
+<div id="mosaics-sidebar" class="mosaics-sidebar">
+    <div class="mosaics-sidebar-btn" id="mosaics-sidebar-btn">
+        <img class="sidebar-btn-img" src="~/images/icons/arrow-left.png"/>
     </div>
-    <h3 class="sidebarLine">Connectors</h3>
-    <ul class="tagList">
-        @foreach (var tag in Model.ConnectorTags!)
-        {
-            <li>
-                <div class="item">
-                    <div class="filter-checkbox">
-                        <input type="checkbox" id="@tag.Name" name="check" data-tag="@tag.Name">
-                        <label for="@tag.Name">@tag.Name</label>
+    <div id="mosaics-sidebar-container" class="mosaics-sidebar-container">
+        <h3 class="mosaics-sidebar-line">Becomings</h3>
+        <div class="becomings-btn">
+            <label class="switch-becoming">
+                <input id="becomings-btn" type="checkbox">
+                <span class="slider-becoming round"></span>
+            </label>
+            <label class="becomings-text">Show Becomings</label>
+        </div>
+        <h3 class="mosaics-sidebar-line">Connectors</h3>
+        <ul class="tagList">
+            @foreach (var tag in Model.ConnectorTags!)
+            {
+                <li>
+                    <div class="item">
+                        <div class="filter-checkbox">
+                            <input type="checkbox" id="@tag.Name" name="check" data-tag="@tag.Name">
+                            <label for="@tag.Name">@tag.Name</label>
+                        </div>
                     </div>
-                </div>
-            </li>
-        }
-    </ul>
-</div>
-<div id="main">
-    <button class="openbtn" onclick="openNav()"><img class="sidebar-btn-img" src="~/images/icons/arrow-left.png" /></button>
+                </li>
+            }
+        </ul>
+    </div>
 </div>
 <script src="~/js/mosaics.js" asp-append-version="true"></script>
