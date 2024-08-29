@@ -11,6 +11,12 @@ Jodit.defaultOptions.controls.audioplay = {
                 label: 'Audio URL:',
                 required: true
             }),
+            new UIInput(editor, {
+                name: 'Width',
+                placeholder: 'Enter width for the audio player ',
+                autofocus: false,
+                label: 'Video width: (Normal size is 300)'
+            }),
             new UIButton(editor, {
                 text: 'Insert audio player',
                 status: 'primary',
@@ -25,7 +31,8 @@ Jodit.defaultOptions.controls.audioplay = {
             }; 
 
         audioForm.onSubmit(data => {
-            const audiotag = `<audio controls><source src="${data.audiourl}">Your browser does not support the audio element.</audio>`;
+            const width = data.Width !== "" ? `${data.Width}px` : '300px';
+            const audiotag = `<audio controls style="width: ${width}""><source src="${data.audiourl}">Your browser does not support the audio element.</audio>`;
             editor.selection.insertHTML(audiotag);
             closePopWindow();
 
