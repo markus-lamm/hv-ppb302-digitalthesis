@@ -112,21 +112,20 @@ becomingsBtn.addEventListener('change', () => {
 
 });
 
-//FILTER
-function openNav() {
-    document.getElementById("mySidebar").style.width = "20rem";
-    document.getElementById("main").style.marginLeft = "20rem";
-    let btn = document.querySelector('.openbtn');
-    btn.classList.add('hide');
-}
+// Sidebar show/hide
+document.addEventListener('DOMContentLoaded', function () {
+    const sidebarContainer = document.getElementById('mosaics-sidebar-container');
+    const sidebarBtn = document.querySelector('.mosaics-sidebar-btn');
+    let isRotated = false;
+    let isSidebarOpen = false;
 
-function closeNav() {
-    document.getElementById("mySidebar").style.width = "0";
-    document.getElementById("main").style.marginLeft = "0";
-
-    let btn = document.querySelector('.openbtn');
-    btn.classList.remove('hide');
-}
+    sidebarBtn.addEventListener('click', function () {
+        isRotated = !isRotated;
+        isSidebarOpen = !isSidebarOpen;
+        sidebarBtn.classList.toggle('rotate');
+        sidebarContainer.classList.toggle('show');
+    });
+});
 
 // Reset all checkboxes when the page loads
 window.onload = function () {
