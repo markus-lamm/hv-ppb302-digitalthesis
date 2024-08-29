@@ -31,9 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
             mosaicNameAnchor.innerHTML = `<h3>${mosaicName}</h3>`;
             mosaicNameAnchor.innerHTML += mosaicBecoming.join('<br>');
-
-            //console.log(mosaicbecomingAnchor)
-            //mosaicNameAnchor.innerText = mosaicName;
             let rect = mosaic.getBoundingClientRect();
             mosaicNameAnchor.style.display = 'flex';
             mosaicNameAnchor.style.flexDirection = 'column';

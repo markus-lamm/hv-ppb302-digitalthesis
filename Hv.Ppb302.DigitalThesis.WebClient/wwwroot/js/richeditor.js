@@ -8,7 +8,8 @@ Jodit.defaultOptions.controls.audioplay = {
                 name: 'audiourl',
                 placeholder: 'Enter audio URL...',
                 autofocus: false,
-                label: 'Audio URL:'
+                label: 'Audio URL:',
+                required: true
             }),
             new UIButton(editor, {
                 text: 'Insert audio player',
@@ -43,7 +44,20 @@ Jodit.defaultOptions.controls.videonopause = {
                 name: 'videoNoPauseUrl',
                 placeholder: 'Enter video URL...',
                 autofocus: false,
-                label: 'Video URL:'
+                label: 'Video URL:',
+                required: true
+            }), 
+            new UIInput(editor, {
+                name: 'Height',
+                placeholder: 'Enter height for the video',
+                autofocus: false,
+                label: 'Video height: (Normal size is 304)'
+            }),
+            new UIInput(editor, {
+                name: 'Width',
+                placeholder: 'Enter width for the video ',
+                autofocus: false,
+                label: 'Video width: (Normal size is 304)'
             }),
             new UIButton(editor, {
                 text: 'Insert no pause video',
@@ -60,7 +74,9 @@ Jodit.defaultOptions.controls.videonopause = {
 
 
         videoNoPauseform.onSubmit((data) => {
-            const iframetag = `<video id="videoIframe" src="${data.videoNoPauseUrl}" title="description" width="304px" height="154px" controls data-control="true"></video>`;
+            const width = data.Width !== "" ? `${data.Width}px` : '304px';
+            const height = data.Height !== "" ? `${data.Height}px` : '255px';
+            const iframetag = `<video id="videoIframe" src="${data.videoNoPauseUrl}" title="description" width="${width}" height="${height}" controls data-control="true"></video>`;
             editor.selection.insertHTML(iframetag);
             closePopWindow();
         })
@@ -76,7 +92,8 @@ Jodit.defaultOptions.controls.video = {
                 name: 'videoUrl',
                 placeholder: 'Enter video URL...',
                 autofocus: false,
-                label: 'Video URL:'
+                label: 'Video URL:',
+                required: true
             }),
             new UIButton(editor, {
                 text: 'Insert Video',
