@@ -1,5 +1,40 @@
 ﻿const { UIForm, UIInput, UIButton, UITextArea } = Jodit.modules;
 
+Jodit.defaultOptions.controls.audioplay = {
+    iconURL: '/images/icons/sound.png',
+    popup: (editor, current, control, close) => {
+        audioForm = new UIForm(editor, [
+            new UIInput(editor, {
+                name: 'audiourl',
+                placeholder: 'Enter audio URL...',
+                autofocus: false,
+                label: 'Audio URL:'
+            }),
+            new UIButton(editor, {
+                text: 'Insert audio player',
+                status: 'primary',
+                variant: 'primary'
+            }).onAction(() => {
+                audioForm.submit();
+            })
+        ]), closePopWindow = () => {
+            editor.s.focus();
+            editor.s.restore();
+            close.__closePopup();
+            }; 
+
+        audioForm.onSubmit(data => {
+            const audiotag = `<audio controls><source src="${data.audiourl}">Your browser does not support the audio element.</audio>`;
+            editor.selection.insertHTML(audiotag);
+            closePopWindow();
+
+        })
+        return audioForm;
+    },
+    tooltip: 'Insert audio player'
+    
+}
+
 Jodit.defaultOptions.controls.videonopause = {
     iconURL: '/images/icons/replay.png',
     popup: (editor, current, control, close) => {
@@ -196,7 +231,7 @@ if (editorDiv2) {
         "uploader": {
             "insertImageAsBase64URI": true
         },
-        buttons: [...Jodit.defaultOptions.buttons, 'footnoteButton', 'videonopause'],
+        buttons: [...Jodit.defaultOptions.buttons, 'footnoteButton', 'videonopause','audioplay'],
         
     });
 
