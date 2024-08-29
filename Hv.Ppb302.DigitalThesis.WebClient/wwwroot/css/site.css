@@ -120,6 +120,11 @@ body {
     justify-content: center;
 }
 
+.flex-row-reverse {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
 .previeweditor {
     border-color: transparent !important;
     background: transparent !important;
