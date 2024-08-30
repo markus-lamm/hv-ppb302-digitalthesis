@@ -1,4 +1,4 @@
-﻿@model IEnumerable<Hv.Ppb302.DigitalThesis.WebClient.Models.ConnectorTag>
+﻿@model IEnumerable<Hv.Ppb302.DigitalThesis.WebClient.Models.Page>
 @{
     ViewData["Title"] = "Index";
 }
@@ -11,11 +11,10 @@
         <div class="admin-form">
             <div class="form-btn-container">
                 <a class="form-main-btn" asp-controller="Admin" asp-action="Index">Return</a>
-                <a class="form-main-btn" asp-action="Create">Create</a>
             </div>
-            <div class="form-header-container connectortags-color">
+            <div class="form-header-container page-color">
                 <div class="form-header-count">@Model.Count()</div>
-                <div class="form-header-name">Connector tags</div>
+                <div class="form-header-name">Pages</div>
             </div>
             <div class="form-table-container">
                 <table class="form-table">
@@ -35,9 +34,6 @@
                             </td>
                             <td class="form-table-btn edit">
                                 <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
-                            </td>
-                                <td class="form-table-btn btn-red">
-                                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                             </td>
                         </tr>
                     }
