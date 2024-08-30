@@ -19,10 +19,24 @@
             <div class="form-table-container">
                 <form asp-action="Delete">
                     <input type="hidden" asp-for="Id" />
-                    <h2>Are you sure you want to delete this?</h2>
-                    <h3>@Html.DisplayFor(model => model.Title)</h3>
+                    <table class="form-table">
+                        <thead>
+                            <tr>
+                                <th class="form-table-header">
+                                    Are you sure you want to delete this?
+                                </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="form-table-row">
+                                <td class="form-table-data">
+                                    @Html.DisplayFor(model => model.Title)
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                     <div class="form-btn-container flex-row-reverse">
-                        <button class="form-main-btn delete" type="submit">Delete</button>
+                        <button class="form-main-btn btn-red" type="submit">Delete</button>
                     </div>
                 </form>
             </div>

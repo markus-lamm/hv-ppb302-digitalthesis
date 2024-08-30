@@ -14,6 +14,7 @@
     flex-direction: column;
     overflow: auto;
     margin-top: 10rem;
+    max-width: 80rem;
 }
 
 .input {
@@ -154,6 +155,7 @@
     border: 0;
     border-radius: 2px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+    margin-top: 0.5rem;
 }
 
 .form-header-container {
@@ -161,7 +163,7 @@
     color: white;
     border-radius: 2px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-    width: 50rem;
+    min-width: 50rem;
     height: 7rem;
     margin-bottom: 0.5rem;
 }
@@ -184,12 +186,12 @@
 .form-table-container {
     padding: 1rem;
     background-color: white;
-    margin-bottom: 0.5rem;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
 }
 
 .form-table {
     width: 100%;
+    padding-bottom: 0.5rem;
 }
 
 .form-table-header {
@@ -207,23 +209,22 @@
 }
 
 .form-table-btn {
+    background-color: #8FAECB;
     text-align: center;
     width: 4rem;
     color: white;
     font-weight: 300;
 }
 
-    .edit {
-        background-color: #8FAECB;
-    }
-
-    .delete {
+    .btn-red {
         background-color: #D97272;
     }
 
-
-
-
+.form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 0.5rem;
+}
 
 
 

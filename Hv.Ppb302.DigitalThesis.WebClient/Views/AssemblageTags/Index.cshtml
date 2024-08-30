@@ -33,10 +33,10 @@
                                 <td class="form-table-data">
                                     @Html.DisplayFor(modelItem => item.Name)
                                 </td>
-                                <td class="form-table-btn edit">
+                                <td class="form-table-btn">
                                     <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
                                 </td>
-                                <td class="form-table-btn delete">
+                                <td class="form-table-btn btn-red">
                                     <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
                                 </td>
                             </tr>
