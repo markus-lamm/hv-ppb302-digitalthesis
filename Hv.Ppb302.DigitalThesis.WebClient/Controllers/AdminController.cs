@@ -9,14 +9,12 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 public class AdminController : Controller
 {
     private readonly UserRepository _userRepo;
-    private readonly PageRepository _pageRepo;
     private readonly UploadRepository _uploadRepo;
     
 
-    public AdminController(UserRepository userRepo, PageRepository pageRepo, UploadRepository uploadRepository)
+    public AdminController(UserRepository userRepo, UploadRepository uploadRepository)
     {
         _userRepo = userRepo;
-        _pageRepo = pageRepo;
         _uploadRepo = uploadRepository;
     }
 
@@ -29,68 +27,6 @@ public class AdminController : Controller
         return View();
     }
 
-    [DisableRequestSizeLimit]
-    [HttpPost]
-    public async Task<IActionResult> FileUpload(IFormFile file, Upload viewmodel)
-    {
-        if (file != null)
-        {
-            var fileName = Path.GetFileName(file.FileName);
-            viewmodel.Name = fileName;
-            var path = Path.Combine(@"C:\Uploads", fileName); // Specify the absolute path
-
-            using (var stream = System.IO.File.Create(path))
-            {
-                await file.CopyToAsync(stream);
-            }
-            _uploadRepo.Create(viewmodel);
-        }
-        return View("FileView", GetAllFiles());
-    }
-
-    [HttpGet]
-    public IActionResult FileView()
-    {
-        if (!CheckAuthentication())
-        {
-            return RedirectToAction("Login", "Admin");
-        }
-        return View(GetAllFiles());
-    }
-
-    [HttpPost]
-    public IActionResult DeleteFile(string FileName)
-    {
-        var path = Path.Combine(@"C:\Uploads", FileName);
-        FileInfo file = new(path);
-        if (file.Exists) 
-        {
-            file.Delete();
-            _uploadRepo.Delete(FileName);
-        }
-        return View("FileView", GetAllFiles());
-    }
-
-    [HttpPost]
-    public IActionResult UpdateMaterials(string materialsData)
-    {
-
-        var materialsStatus = JsonConvert.DeserializeObject<Dictionary<string, bool>>(materialsData);
-        if (materialsStatus?.Count != 0)
-        {
-            var uploadsToUpdate = (from entry in materialsStatus
-                                   select new Upload
-                                   {
-                                       Name = entry.Key,
-                                       IsMaterial = entry.Value
-                                   }).ToList();
-
-            _uploadRepo.Update(uploadsToUpdate);
-        }
-
-        return RedirectToAction("FileView", GetAllFiles());
-    }
-
     public IActionResult Profile()
     {
         if (!CheckAuthentication())
@@ -98,37 +34,40 @@ public class AdminController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        string? username = HttpContext.Session.GetString("Username");
-        ViewBag.Username = username;
+        var username = HttpContext.Session.GetString("Username");
+        if (username == null)
+        {
+            return RedirectToAction("Login", "Admin");
+        }
 
-        return View();
+        var user = _userRepo.GetByUsername(username);
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        return View(user);
     }
 
     [HttpPost]
-    public IActionResult Profile(User user)
+    public IActionResult Profile(Guid id, [Bind("Id,Username,Password")] User user)
     {
         if (!CheckAuthentication())
         {
             return RedirectToAction("Login", "Admin");
         }
 
+        if (id != user.Id)
+        {
+            return NotFound();
+        }
+        if (!ModelState.IsValid)
+        {
+            return View(user);
+        }
         _userRepo.Update(user);
-        ViewBag.Success = "Password has been changed";
-        ViewBag.Username = user.Username;
 
-        return View();
-    }
-
-    public IActionResult AboutAdmin()
-    {
-        return View(_pageRepo.GetByName("About"));
-    }
-
-    [HttpPost]
-    public IActionResult AboutAdmin(Page page)
-    {
-        _pageRepo.Update(page);
-        return View(page);
+        return AddAuthentication(user.Username, user.Password);
     }
 
     public IActionResult Login()
@@ -169,6 +108,68 @@ public class AdminController : Controller
     public bool CheckAuthentication()
     {
         return HttpContext.Session.GetString("Username") != null;
+    }
+
+    [HttpGet]
+    public IActionResult Files()
+    {
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
+        }
+        return View(GetAllFiles());
+    }
+
+    [DisableRequestSizeLimit]
+    [HttpPost]
+    public async Task<IActionResult> FileUpload(IFormFile file, Upload viewmodel)
+    {
+        if (file != null)
+        {
+            var fileName = Path.GetFileName(file.FileName);
+            viewmodel.Name = fileName;
+            var path = Path.Combine(@"C:\Uploads", fileName); // Specify the absolute path
+
+            using (var stream = System.IO.File.Create(path))
+            {
+                await file.CopyToAsync(stream);
+            }
+            _uploadRepo.Create(viewmodel);
+        }
+        return View("FileView", GetAllFiles());
+    }
+
+        [HttpPost]
+    public IActionResult DeleteFile(string FileName)
+    {
+        var path = Path.Combine(@"C:\Uploads", FileName);
+        FileInfo file = new(path);
+        if (file.Exists) 
+        {
+            file.Delete();
+            _uploadRepo.Delete(FileName);
+        }
+        return View("FileView", GetAllFiles());
+    }
+
+    [HttpPost]
+    public IActionResult UpdateMaterials(string materialsData)
+    {
+
+        var materialsStatus = JsonConvert.DeserializeObject<Dictionary<string, bool>>(materialsData);
+        if (materialsStatus?.Count != 0)
+        {
+            var uploadsToUpdate = (from entry in materialsStatus
+                                   select new Upload
+                                   {
+                                       Name = entry.Key,
+                                       IsMaterial = entry.Value
+                                   }).ToList();
+
+            _uploadRepo.Update(uploadsToUpdate);
+        }
+
+        return RedirectToAction("FileView", GetAllFiles());
     }
 
     public List<FileViewViewModel> GetAllFiles()

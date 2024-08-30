@@ -2,12 +2,69 @@
 @{
     ViewData["Title"] = "Admin";
     var itemIndex = 0;
+    var nrPDF = Model.Count(item => item.Category == MimeDetective.Storage.Category.Document);
+    var nrAudio = Model.Count(item => item.Category == MimeDetective.Storage.Category.Audio);
+    var nrVideo = Model.Count(item => item.Category == MimeDetective.Storage.Category.Video || 
+                                      item.Category == MimeDetective.Storage.Category.Compressed);
+    var nrUnknown = Model.Count(item => item.Category != MimeDetective.Storage.Category.Document &&
+                                        item.Category != MimeDetective.Storage.Category.Audio &&
+                                        item.Category != MimeDetective.Storage.Category.Video &&
+                                        item.Category != MimeDetective.Storage.Category.Compressed);
 }
 <head>
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
 <div class="background-container background-image"></div>
-<div class="main-container flex-center">
+<div class="main-container flex-horizontal-center">
+    <div class="admin-container">
+        <div class="admin-form">
+            <div class="form-btn-container">
+                <a class="form-main-btn" asp-controller="Admin" asp-action="Index">Return</a>
+            </div>
+            <div class="files-header-container">
+                <div class="files-header pdf-color">
+                    <div class="form-header-count">@nrPDF</div>
+                    <div class="form-header-name">PDF</div>
+                </div>
+                <div class="files-header audio-color">
+                    <div class="form-header-count">@nrAudio</div>
+                    <div class="form-header-name">Audio</div>
+                </div>
+                <div class="files-header video-color">
+                    <div class="form-header-count">@nrVideo</div>
+                    <div class="form-header-name">Video</div>
+                </div>
+                <div class="files-header unknown-color">
+                    <div class="form-header-count">@nrUnknown</div>
+                    <div class="form-header-name">Unknown</div>
+                </div>
+            </div>
+            <div class="form-table-container">
+            @using (Html.BeginForm("FileUpload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
+            {
+                <div class="files-upload-container">
+                    <div class="files-upload-text">
+                        <label for="files" class="btn">Choose a file to upload</label>
+                    </div>
+                    <div class="files-upload-text">
+                        <input required type="file" name="file" id="files" />
+                    </div>
+                    <div class="files-upload-materials-switch">
+                        <label for="IsMaterial">Materials</label>
+                        <label class="switch">
+                            <input name="IsMaterial" id="switchinput" type="checkbox" value="true">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    <input class="form-main-btn" type="submit" value="Upload file" />
+                </div>
+                <div class="files-upload-name">No file chosen</div>
+            }
+            </div>
+        </div>
+    </div>
+</div>
+@* <div class="main-container flex-center">
     <div class="fileview-container">
         <div class="file-heading">
             <a class="form-return-btn" asp-controller="Admin" asp-action="Index">Return</a>
@@ -88,5 +145,5 @@
             }
         </div>
     </div>
-</div>
+</div> *@
 <script src="~/js/admin.js"></script>
