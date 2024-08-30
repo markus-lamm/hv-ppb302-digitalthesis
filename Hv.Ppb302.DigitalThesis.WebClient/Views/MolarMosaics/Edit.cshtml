@@ -1,5 +1,4 @@
 ﻿@model Hv.Ppb302.DigitalThesis.WebClient.Models.MolarMosaic
-
 @{
     ViewData["Title"] = "Edit";
     var kaleidoscopeTags = ViewData["Kaleidoscope"] as List<SelectListItem>;
@@ -10,12 +9,17 @@
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
 <div class="background-container background-image"></div>
-<div class="admin-container flex-column">
-    <div class="admin-form-large">
-        <h2>MolarMosaic</h2>
-        <hr />
-        <div class="row">
-            <div class="col-md-4">
+<div class="main-container flex-horizontal-center">
+    <div class="admin-container">
+        <div class="admin-form">
+            <div class="form-btn-container">
+                <a class="form-main-btn" asp-action="Index">Return</a>
+            </div>
+            <div class="form-header-container molar-color">
+                <div class="form-header-count">Edit</div>
+                <div class="form-header-name">Molar mosaics</div>
+            </div>
+            <div class="form-table-container">
                 <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                     <input type="hidden" asp-for="Id" />
@@ -25,29 +29,12 @@
                         <span asp-validation-for="Title" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="AssemblageTagId" class="control-label"></label>
-                        @Html.DropDownListFor(model => model.AssemblageTagId, assemblageTags, "No assemblage", new { @class = "form-control" })
-                        <span asp-validation-for="AssemblageTagId" class="text-danger"></span><br />
-                    </div>
-                    <div class="form-group">
-                            <label asp-for="Becomings" class="control-label"></label>
-                            <input value="" data-tags="@string.Join(',', Model.Becomings!)" asp-for="Becomings" class="form-control inputbecomings" multiple="multiple"></input>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="ConnectorTags" class="control-label"></label>
-                        @foreach (var item in connectorTags!)
-                        {
-                            <input type="checkbox" class="form-check-input" id="@item.Value" name="ConnectorTags" value="@item.Value" @(item.Selected ? "checked=\"checked\"" : "") />
-                            <label class="form-check-label" for="@item.Value">@item.Text</label>
-                        }
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="KaleidoscopeTags" class="control-label"></label>
-                        @foreach (var item in kaleidoscopeTags!)
-                        {
-                            <input type="checkbox" class="form-check-input" id="@item.Value" name="KaleidoscopeTags" value="@item.Value" @(item.Selected ? "checked=\"checked\"" : "") />
-                            <label class="form-check-label" for="@item.Value">@item.Text</label>
-                        }
+                        <label asp-for="IsVisible" class="control-label"></label>
+                        <div>
+                            <input type="radio" asp-for="IsVisible" value="true" /> Yes
+                            <input type="radio" asp-for="IsVisible" value="false" /> No
+                        </div>
+                        <span asp-validation-for="IsVisible" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="PdfFilePath" class="control-label"></label>
@@ -60,12 +47,34 @@
                         <span asp-validation-for="AudioFilePath" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="IsVisible" class="control-label"></label>
-                        <div>
-                            <input type="radio" asp-for="IsVisible" value="true" /> Visible
-                            <input type="radio" asp-for="IsVisible" value="false" /> Not Visible
+                        <label asp-for="AssemblageTagId" class="control-label"></label>
+                        @Html.DropDownListFor(model => model.AssemblageTagId, assemblageTags, "No assemblage", new { @class = "form-control" })
+                        <span asp-validation-for="AssemblageTagId" class="text-danger"></span>
+                    </div>
+                    <div class="form-group flex-column">
+                        <label asp-for="ConnectorTags" class="control-label"></label>
+                        <div class="flex-row">
+                            @foreach (var item in connectorTags!)
+                            {
+                                <input type="checkbox" class="form-check-input" id="@item.Value" name="ConnectorTags" value="@item.Value" @(item.Selected ? "checked=\"checked\"" : "") />
+                                <label class="form-check-label" for="@item.Value">@item.Text</label>
+                            }
                         </div>
-                        <span asp-validation-for="IsVisible" class="text-danger"></span>
+
+                    </div>
+                    <div class="form-group flex-column">
+                        <label asp-for="KaleidoscopeTags" class="control-label"></label>
+                        <div class="flex-row">
+                            @foreach (var item in kaleidoscopeTags!)
+                            {
+                                <input type="checkbox" class="form-check-input" id="@item.Value" name="KaleidoscopeTags" value="@item.Value" @(item.Selected ? "checked=\"checked\"" : "") />
+                                <label class="form-check-label" for="@item.Value">@item.Text</label>
+                            }
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Becomings" class="control-label"></label>
+                        <input value="" data-tags="@string.Join(',', Model.Becomings!)" asp-for="Becomings" class="form-control inputbecomings" multiple="multiple"></input>
                     </div>
                     <div class="form-group">
                         <label asp-for="Content" class="control-label"></label>
@@ -77,9 +86,8 @@
                         </div>
                         <span asp-validation-for="Content" class="text-danger"></span>
                     </div>
-                    <div class="form-btn-container">
-                        <a class="form-return-btn" asp-action="Index">Return</a>
-                        <button class="form-submit-btn" type="submit">Save</button>
+                    <div class="form-btn-container flex-row-reverse">
+                        <button class="form-main-btn" type="submit">Save</button>
                     </div>
                 </form>
             </div>

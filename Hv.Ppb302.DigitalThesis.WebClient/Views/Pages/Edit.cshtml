@@ -1,6 +1,6 @@
-﻿@model Hv.Ppb302.DigitalThesis.WebClient.Models.ConnectorTag
+﻿@model Hv.Ppb302.DigitalThesis.WebClient.Models.Page
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Edit";
 }
 <head>
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
@@ -12,17 +12,28 @@
             <div class="form-btn-container">
                 <a class="form-main-btn" asp-action="Index">Return</a>
             </div>
-            <div class="form-header-container connectortags-color">
-                <div class="form-header-count">Create</div>
-                <div class="form-header-name">Connector tags</div>
+            <div class="form-header-container page-color">
+                <div class="form-header-count">Edit</div>
+                <div class="form-header-name">Pages</div>
             </div>
             <div class="form-table-container">
-                <form asp-action="Create">
+                <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <input type="hidden" asp-for="Id" />
                     <div class="form-group">
                         <label asp-for="Name" class="control-label"></label>
                         <input asp-for="Name" class="form-control" />
                         <span asp-validation-for="Name" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Content" class="control-label"></label>
+                        <input type="hidden" id="hiddeninput" asp-for="Content" class="form-control" />
+                        <div class="editor-layout">
+                            <div id="editortest">
+                                @Html.Raw(Model.Content)
+                            </div>
+                        </div>
+                        <span asp-validation-for="Content" class="text-danger"></span>
                     </div>
                     <div class="form-btn-container flex-row-reverse">
                         <button class="form-main-btn" type="submit">Save</button>
