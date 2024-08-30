@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Hv.Ppb302.DigitalThesis.WebClient.Models.Page>
+@{
+    ViewData["Title"] = "Index";
+}
+<head>
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+</head>
+<div class="background-container background-image"></div>
+<div class="main-container flex-horizontal-center">
+    <div class="admin-container">
+        <div class="admin-form">
+            <div class="form-btn-container">
+                <a class="form-main-btn" asp-controller="Admin" asp-action="Index">Return</a>
+            </div>
+            <div class="form-header-container page-color">
+                <div class="form-header-count">@Model.Count()</div>
+                <div class="form-header-name">Pages</div>
+            </div>
+            <div class="form-table-container">
+                <table class="form-table">
+                    <thead>
+                    <tr>
+                        <th class="form-table-header">
+                            @Html.DisplayNameFor(model => model.Name)
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="form-table-row">
+                            <td class="form-table-data">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </td>
+                            <td class="form-table-btn edit">
+                                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a>
+                            </td>
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
