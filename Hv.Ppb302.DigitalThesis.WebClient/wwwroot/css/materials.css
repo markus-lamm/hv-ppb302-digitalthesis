@@ -2,7 +2,7 @@
     background-image: url('../images/backgrounds/white-1.png');
 }
 
-.matpdffiles {
+.materials-container {
     display: flex;
     margin-inline: 10vw;
     padding-bottom: 10vh;
@@ -10,61 +10,73 @@
     justify-content: center;
 }
 
-.matpdfcontainer {
+.files-container {
     display: flex;
     flex-direction: column;
-    width: 100%;
-    gap: 3rem;
-    max-width: 65vw;
-    align-items:center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    min-width: 60rem;
 }
 
-.matpdfcard {
+.file-item-container {
     display: flex;
-    height: 8vw;
-    width: 100%;
-    background: white;
-    border-radius: 10px;
-    align-items: center;
+    height: 8rem;
+    background-color: white;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
 }
 
-.matpdfimg{
-    height: 5vw;
-    margin-inline: 4rem
+.file-icon-container {
+    margin-left: 2rem;
+    padding: 1.2rem;
 }
 
-.matcontentcontainer {
+.file-icon {
+    height: 100%;
+}
+
+.file-text-container {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    margin-left: 3rem;
+    flex-grow: 1;
+    font-size: 1.3rem;
+}
+
+.file-name-container {
+    display: flex;
+    height: 50%;
     align-items: center;
-    flex: 1;
-    min-width: 0;
-    overflow: hidden;
-    padding-right: 5rem;
-    gap:3rem;
+    font-style: italic;
+    font-weight: bold;
 }
 
-.matcontentcontainer h2 {
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: normal;
-    -webkit-line-clamp: 2;
-    margin: 0;
-    flex: 1;
-    min-width: 0;
+.file-options-container {
+    display: flex;
+    height: 50%;
+    align-items: center;
+    gap: 2rem;
 }
 
-.matdownimg {
-    height: 2vw;
-}
-
-.downcontainer {
+.file-options-materials {
     display: flex;
     align-items: center;
     gap: 0.5rem;
 }
+
+.file-options-view-btn {
+    color: white;
+    background-color: #8FAECB;
+    padding-inline: 2rem;
+    padding-block: 0.5rem;
+    border-radius: 2px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+}
+
+    .file-options-view-btn:hover{
+        filter: brightness(0.9);
+    }
 
 .info-box {
     display: flex;
