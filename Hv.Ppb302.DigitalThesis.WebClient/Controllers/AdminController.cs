@@ -136,7 +136,7 @@ public class AdminController : Controller
             }
             _uploadRepo.Create(viewmodel);
         }
-        return View("FileView", GetAllFiles());
+        return View("Files", GetAllFiles());
     }
 
         [HttpPost]
@@ -149,7 +149,7 @@ public class AdminController : Controller
             file.Delete();
             _uploadRepo.Delete(FileName);
         }
-        return View("FileView", GetAllFiles());
+        return View("Files", GetAllFiles());
     }
 
     [HttpPost]
@@ -169,10 +169,10 @@ public class AdminController : Controller
             _uploadRepo.Update(uploadsToUpdate);
         }
 
-        return RedirectToAction("FileView", GetAllFiles());
+        return RedirectToAction("Files", GetAllFiles());
     }
 
-    public List<FileViewViewModel> GetAllFiles()
+    public List<FilesViewModel> GetAllFiles()
     {
         var Inspector = new ContentInspectorBuilder()
         {
@@ -185,7 +185,7 @@ public class AdminController : Controller
                              .ToList();
 
         var uploadsList = _uploadRepo.GetAll();
-        List<FileViewViewModel> fileViewModels = [];
+        List<FilesViewModel> filesViewModels = [];
         foreach (var file in files)
         {
             var Results = Inspector.Inspect(Path.Combine(@"C:\Uploads", file));
@@ -193,7 +193,7 @@ public class AdminController : Controller
             var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
             var upload = uploadsList?.FirstOrDefault(u => u.Name == file);
 
-            fileViewModels.Add(new FileViewViewModel
+            filesViewModels.Add(new FilesViewModel
             {
                 Category = fileType,
                 Name = file,
@@ -201,6 +201,6 @@ public class AdminController : Controller
                 IsMaterial = upload?.IsMaterial
             });
         }
-        return fileViewModels;
+        return filesViewModels;
     }
 }

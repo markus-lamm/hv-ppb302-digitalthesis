@@ -1,4 +1,4 @@
-﻿@model List<FileViewViewModel>
+﻿@model List<FilesViewModel>
 @{
     ViewData["Title"] = "Admin";
     var itemIndex = 0;
@@ -43,11 +43,12 @@
             @using (Html.BeginForm("FileUpload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
             {
                 <div class="files-upload-container">
-                    <div class="files-upload-text">
-                        <label for="files" class="btn">Choose a file to upload</label>
-                    </div>
-                    <div class="files-upload-text">
-                        <input required type="file" name="file" id="files" />
+                    <div class="files-upload-item">
+                        <div class="files-upload-text">Choose a file to upload</div>
+                        <label for="files" class="files-upload-label">
+                                <span class="form-main-btn">Choose file</span>
+                            <input required type="file" name="file" id="files" />
+                        </label>
                     </div>
                     <div class="files-upload-materials-switch">
                         <label for="IsMaterial">Materials</label>
@@ -58,92 +59,64 @@
                     </div>
                     <input class="form-main-btn" type="submit" value="Upload file" />
                 </div>
-                <div class="files-upload-name">No file chosen</div>
+                <div class="files-upload-name" id="files-upload-name">No file chosen</div>
             }
+            </div>
+            <div class="files-container">
+                <form id="saveMaterialsForm" method="post" asp-action="UpdateMaterials" asp-controller="Admin">
+                    <input type="hidden" name="materialsData" id="materialsData">
+                </form>
+                @foreach (var file in Model)
+                {
+                    <div class="file-item-container">
+                        <div class=file-icon-container>
+                            @switch (file.Category)
+                            {
+                                case MimeDetective.Storage.Category.Document:
+                                    <img class="file-icon" src="~/images/icons/pdf.png" />
+                                    break;
+                                case MimeDetective.Storage.Category.Video:
+                                    <img class="file-icon" src="~/images/icons/video.png" />
+                                    break;
+                                case MimeDetective.Storage.Category.Audio:
+                                    <img class="file-icon" src="~/images/icons/audio.png" />
+                                    break;
+                                case MimeDetective.Storage.Category.Compressed:
+                                    <img class="file-icon" src="~/images/icons/video.png" />
+                                    break;
+                                default:
+                                    <img class="file-icon" src="~/images/icons/unknown.png" />
+                                    break;
+                            }
+                        </div>
+                        <div class="file-text-container">
+                            <div class="file-name-container">@file.Name</div>
+                            <div class="file-options-container">
+                                <div class="file-options-materials">
+                                    <label for="switchinput-@itemIndex">Materials</label>
+                                    <label class="switch">
+                                    <input type="checkbox"
+                                           id="switchinput-@itemIndex"
+                                           value="true"
+                                           data-index="@itemIndex"
+                                           data-name="@file.Name"
+                                           onchange="updateMaterialStatus(this)"
+                                    @(file.IsMaterial ?? false ? "checked" : "") />
+                                    <span class="slider round"></span>
+                                    </label>
+                                </div>
+                                <button class="file-options-link-btn" onclick="copyFunction('@(file.FileUrl)')">Copy link</button>
+                                <form method="post" asp-action="DeleteFile" asp-controller="Admin">
+                                    <input type="hidden" name="FileName" value="@file.Name" />
+                                    <button type="submit" class="file-options-delete-btn">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    itemIndex++;
+                }
             </div>
         </div>
     </div>
 </div>
-@* <div class="main-container flex-center">
-    <div class="fileview-container">
-        <div class="file-heading">
-            <a class="form-return-btn" asp-controller="Admin" asp-action="Index">Return</a>
-            <div class="file-upload">
-                @using (Html.BeginForm("FileUpload", "Admin", FormMethod.Post, new { enctype = "multipart/form-data" }))
-                {
-                    <div>
-                        <label for="files" class="btn">Choose a file</label>
-                        <input required type="file" name="file" id="files" />
-                    </div>
-                    <div class="file-upload-seconddiv">
-                        <div class="switchdiv">
-                            <label for="IsMaterial">Materials</label>
-                            <label class="switch">
-                                <input name="IsMaterial" id="switchinput" type="checkbox" value="true">
-                                <span class="slider round"></span>
-                            </label>
-                        </div>
-                        <input class="form-return-btn" type="submit" value="Upload file" />
-                    </div>
-                }
-            </div>
-            <form id="saveMaterialsForm" method="post" asp-action="UpdateMaterials" asp-controller="Admin">
-                <input type="hidden" name="materialsData" id="materialsData">
-            </form>
-            <button onclick="saveMaterialStatus()" class="form-return-btn" asp-controller="Admin" asp-action="Index">Save</button>
-        </div>
-        <div class="file-container">
-            @foreach (var item in Model)
-            {
-                <div class="files-container">
-                    <div class="file-card">
-                        @switch (item.Category)
-                        {
-                            case MimeDetective.Storage.Category.Document:
-                                <img src="~/images/icons/pdf.png" />
-                                break;
-                            case MimeDetective.Storage.Category.Video:
-                                <img src="~/images/icons/video.png" />
-                                break;
-                            case MimeDetective.Storage.Category.Audio:
-                                <img src="~/images/icons/audio.png" />
-                                break;
-                            case MimeDetective.Storage.Category.Compressed:
-                                <img src="~/images/icons/video.png" />
-                                break;
-                            default:
-                                <img src="~/images/icons/unknown.png" />
-                                break;
-                        }
-                        <div class="file-options">
-                            <div class="file-options-btns">
-                                <button onclick="copyFunction('@(item.FileUrl)')">Copy Link</button>
-                                <form method="post" asp-action="DeleteFile" asp-controller="Admin">
-                                    <input type="hidden" name="FileName" value="@item.Name" />
-                                    <button type="submit">Delete</button>
-                                </form>
-                            </div>
-                            <div class="file-card-title">@item.Name</div>
-                        </div>
-                        
-                    </div>
-                    <div class="material-container">
-                        <label class="switch">
-                            <input type="checkbox"
-                                   id="switchinput-@itemIndex"
-                                   value="true"
-                                   data-index="@itemIndex"
-                                   data-name="@item.Name"
-                                   onchange="updateMaterialStatus(this)"
-                            @(item.IsMaterial ?? false ? "checked" : "") />
-                            <span class="slider round"></span>
-                        </label>
-                        <label for="switchinput-@itemIndex">Materials</label>
-                    </div>
-                </div>
-                itemIndex++;
-            }
-        </div>
-    </div>
-</div> *@
 <script src="~/js/admin.js"></script>
