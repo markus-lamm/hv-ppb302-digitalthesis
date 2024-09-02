@@ -13,10 +13,10 @@
     display: flex;
     flex-direction: row;
     position: absolute;
-    top: 20%;
-    left: 20%;
-    height: 80%;
-    width: 80%;
+    top: 22%;
+    left: 10%;
+    height: 78%;
+    width: 90%;
     justify-content: space-between;
 }
 
@@ -39,12 +39,12 @@
 .about-text {
     display: flex;
     flex-direction: column;
-    margin: 5rem;
+    margin: 4rem;
 }
 
 .about-logo {
-    width: 30rem;
-    height: 30rem;
+    width: 30vw;
+    height: 30vw;
     margin: 5rem;
     margin-left: 0;
 }

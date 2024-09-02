@@ -20,6 +20,14 @@ window.onclick = function (event) {
 
 // Mouseover mosaic name
 document.addEventListener("DOMContentLoaded", function () {
+    if (!sessionStorage.getItem('kaleidoscopeModalShown')) {
+        // If not, show the welcome modal
+        modal.style.display = "block";
+
+        // Set the 'kaleidoscopeModalShown' flag in sessionStorage
+        sessionStorage.setItem('kaleidoscopeModalShown', 'true');
+    }
+    
     const mosaicNameAnchor = document.getElementById('mosaic-name');
     const mosaicbecomingAnchor = document.getElementById('mosaic-becoming');
     const mosaics = document.querySelectorAll('.mosaic');

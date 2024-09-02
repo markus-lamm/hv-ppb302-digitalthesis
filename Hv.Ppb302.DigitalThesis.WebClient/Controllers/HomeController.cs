@@ -158,17 +158,20 @@ public class HomeController : Controller
     {
         return View(BuildViewModel(_molarMosaicRepo.GetAll()!, 
             _molecularMosaicRepo.GetAll()!, 
-            _kaleidoscopeTagRepo.GetAll()!));
+            _kaleidoscopeTagRepo.GetAll()!,
+            _pageRepository.GetByName("Kaleidoscope")!));
 
         static KaleidoscopingViewModel BuildViewModel(IEnumerable<MolarMosaic> molarMosaics, 
             IEnumerable<MolecularMosaic> molecularMosaics, 
-            IEnumerable<KaleidoscopeTag> kaleidoscopeTags)
+            IEnumerable<KaleidoscopeTag> kaleidoscopeTags,
+            Page kaleidoscopePage)
         {
             return new KaleidoscopingViewModel
             {
                 MolarMosaics = molarMosaics.ToList(),
                 MolecularMosaics = molecularMosaics.ToList(),
                 KaleidoscopeTags = kaleidoscopeTags.ToList(),
+                KaleidoscopePage = kaleidoscopePage
             };
         }
     }
