@@ -11,12 +11,14 @@
 <div id="myModal" class="modal">
     <!-- Modal content -->
     <div class="modal-content">
+        <div class="btnclosediv">
+            <span class="kaleidoscope-closemodal">&times;</span>
+        </div>
         <div class="text" id="editor">
             <p>
-
+               @Html.Raw(Model?.KaleidoscopePage?.Content)
             </p>
         </div>
-        <span class="kaleidoscope-closemodal">&times;</span>
     </div>
 </div>
 
