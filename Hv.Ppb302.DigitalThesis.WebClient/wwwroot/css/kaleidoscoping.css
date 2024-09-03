@@ -10,6 +10,7 @@
     border-radius: 5px !important;
     z-index: 3;
     display: none;
+    flex-direction: column;
     border-radius: 2px;
     font-size: 1.5rem;
     color: white;
@@ -160,7 +161,7 @@
 }
 
 /* The Modal (background) */
-.modal {
+.kalei-modal {
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
@@ -175,7 +176,7 @@
 }
 
 /* Modal Content */
-.modal-content {
+.kalei-modal-content {
     display: flex;
     gap: 2rem;
     background-color: #fcf9ee;
@@ -188,20 +189,19 @@
     overflow: hidden;
     overflow-x: hidden;
     flex-direction: column;
-    align-items:flex-end;
-
+    align-items: flex-end;
 }
 
-.btnclosediv{
+.kalei-modal-close-container {
     margin-right: 18px;
 }
-.modal-content > div {
+.kalei-modal-content > div {
     overflow-x: hidden;
     word-break: break-word
 }
 
 /* The Close Button */
-.kaleidoscope-closemodal {
+.kalei-modal-close {
     color: #aaaaaa;
     float: right;
     font-size: 28px;
@@ -211,13 +211,13 @@
     margin-right: 10px;
 }
 
-.kaleidoscope-closemodal:hover,
-.kaleidoscope-closemodal:focus {
-    color: #000;
-    text-decoration: none;
-    cursor: pointer;
-}
+    .kalei-modal-close:hover,
+    .kalei-modal-close:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
 
-#kaleidoscope-openmodal {
+#kalei-modal-open {
     display: none;
 }
