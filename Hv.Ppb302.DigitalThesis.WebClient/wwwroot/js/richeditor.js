@@ -226,6 +226,7 @@ if (editorDiv) {
 
 document.addEventListener("DOMContentLoaded", function (event) {
     var editorDivss = document.getElementById('editor-container');
+    var videos = document.querySelectorAll('video[data-control="true"]');
    
     if (editorDivss) {
         const images = editorDivss.querySelectorAll('img');
@@ -234,6 +235,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
             margin: 24,
             background: '#365f9390',
             scrollOffset: 0,
+        });
+    }
+
+    if (videos) {
+        videos.forEach(function (video) {
+            video.addEventListener('pause', function () {
+                video.currentTime = 0;
+            });
         });
     }
 
@@ -255,19 +264,9 @@ if (editorDiv2) {
 
     let inputElement = document.getElementById('hiddeninput')
     editor.events.on('change', e => {
-
         inputElement.value = editor.getEditorValue();
     })
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    var videos = document.querySelectorAll('video[data-control="true"]');
-    videos.forEach(function (video) {
-        video.addEventListener('pause', function () {
-            video.currentTime = 0;
-        });
-    });
-});
 
 var input = document.getElementById('Becomings')
 if (input) {
