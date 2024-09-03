@@ -45,15 +45,15 @@ public class MolarMosaicsController : Controller
 
         var crudViewModel = new MolarMosaicCrudViewModel
         {
-            ConnectorTags = _connectorTagRepo.GetAll().ToSelectListItemsList(
+            ConnectorTagsItemList = _connectorTagRepo.GetAll().ToSelectListItemsList(
                 tag => tag.Id.ToString(),
                 tag => tag.Name
             ),
-            AssemblageTags = _assemblageTagRepository.GetAll().ToSelectListItemsList(
+            AssemblageTagsItemList = _assemblageTagRepository.GetAll().ToSelectListItemsList(
                 tag => tag.Id.ToString(),
                 tag => tag.Name
             ),
-            KaleidoscopeTags = _kaleidoscopeTagRepo.GetAll()?
+            KaleidoscopeTagsItemList = _kaleidoscopeTagRepo.GetAll()?
                 .Where(k => !excludedIds.Contains(k.Id.ToString()))
                 .ToSelectListItemsList(
                     tag => tag.Id.ToString(),
@@ -95,7 +95,6 @@ public class MolarMosaicsController : Controller
             Becomings = molarMosaicCrudViewModel.Becomings.ToStringListFromTagifyFormat()
         };
 
-
         _molarMosaicRepo.Create(dbMolarMosaic);
 
         return RedirectToAction(nameof(Index));
@@ -118,16 +117,16 @@ public class MolarMosaicsController : Controller
         var crudViewModel = new MolarMosaicCrudViewModel
         {
             MolarMosaic = molarMosaic,
-            ConnectorTags = _connectorTagRepo.GetAll().ToSelectListItemsList(
+            ConnectorTagsItemList = _connectorTagRepo.GetAll().ToSelectListItemsList(
                 tag => tag.Id.ToString(),
                 tag => tag.Name,
                 selectedValues: molarMosaic.ConnectorTags?.Select(ct => ct.Id.ToString())
             ),
-            AssemblageTags = _assemblageTagRepository.GetAll().ToSelectListItemsList(
+            AssemblageTagsItemList = _assemblageTagRepository.GetAll().ToSelectListItemsList(
                 tag => tag.Id.ToString(),
                 tag => tag.Name
             ),
-            KaleidoscopeTags = _kaleidoscopeTagRepo.GetAll()?
+            KaleidoscopeTagsItemList = _kaleidoscopeTagRepo.GetAll()?
                 .Where(k => !excludedIds.Contains(k.Id.ToString()))
                 .ToSelectListItemsList(
                     tag => tag.Id.ToString(),
@@ -139,7 +138,6 @@ public class MolarMosaicsController : Controller
                 ? string.Join(",", molarMosaic.Becomings)
                 : null
         };
-
 
         return View(crudViewModel);
     }

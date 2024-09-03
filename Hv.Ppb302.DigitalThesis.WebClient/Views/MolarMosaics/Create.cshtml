@@ -57,7 +57,7 @@
                     <!-- AssemblageTags -->
                     <div class="form-group">
                         <label asp-for="@Model.MolarMosaic!.AssemblageTagId" class="control-label">Select an Assemblage Tag</label>
-                        <select asp-for="@Model.MolarMosaic!.AssemblageTagId" asp-items="Model.AssemblageTags" class="form-control">
+                        <select asp-for="@Model.MolarMosaic!.AssemblageTagId" asp-items="Model.AssemblageTagsItemList" class="form-control">
                             <option value="">Select...</option>
                         </select>
                         <span asp-validation-for="@Model.MolarMosaic!.AssemblageTagId" class="text-danger"></span><br />
@@ -67,7 +67,7 @@
                     <div class="form-group flex-column">
                         <label class="control-label">Select Connector Tags</label>
                         <div class="flex-row">
-                            @foreach (var item in Model.ConnectorTags ?? Enumerable.Empty<SelectListItem>())
+                            @foreach (var item in Model.ConnectorTagsItemList ?? Enumerable.Empty<SelectListItem>())
                             {
                                 <input type="checkbox" name="SelectedConnectorsTagsIds" value="@item.Value" id="connectorTag_@item.Value" />
                                 <label class="form-check-label" for="connectorTag_@item.Value">@item.Text</label>
@@ -79,7 +79,7 @@
                     <div class="form-group flex-column">
                         <label class="control-label">Select Kaleidoscope Tags</label>
                         <div class="flex-row">
-                            @foreach (var item in Model.KaleidoscopeTags ?? Enumerable.Empty<SelectListItem>())
+                            @foreach (var item in Model.KaleidoscopeTagsItemList ?? Enumerable.Empty<SelectListItem>())
                             {
                                 <input type="checkbox" name="SelectedKaleidoscopeTagsIds" value="@item.Value" id="kaleidoscopeTag_@item.Value" />
                                 <label class="form-check-label" for="kaleidoscopeTag_@item.Value">@item.Text</label>
