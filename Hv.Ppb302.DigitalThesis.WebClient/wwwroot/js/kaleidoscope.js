@@ -1,303 +1,273 @@
-﻿// Get the modal
-var modal = document.getElementById("myModal");
-var btn = document.getElementById("kaleidoscope-openmodal");
-var span = document.getElementsByClassName("kaleidoscope-closemodal")[0];
-btn.onclick = function () {
-    modal.style.display = "block";
-}
+﻿document.addEventListener("DOMContentLoaded", function () {
+    // File-scope variables
+    const kaleiImgContainer = document.querySelector("#kaleidoscope-image-container");
+    const kaleiModalOpen = document.querySelector("#kalei-modal-open");
+    const mosaics = document.querySelectorAll(".mosaic");
 
-// When the user clicks on <span> (x), close the modal
-span.onclick = function () {
-    modal.style.display = "none";
-}
+    // KALEIDOSCOPE MODAL
+    const kaleiModal = document.querySelector("#kalei-modal");
+    const kaleiModalClose = document.querySelector(".kalei-modal-close");
 
-// When the user clicks anywhere outside of the modal, close it
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
+    function showModal() {
+        kaleiModal.style.display = "block";
     }
-}
 
-// Mouseover mosaic name
-document.addEventListener("DOMContentLoaded", function () {
-    if (!sessionStorage.getItem('kaleidoscopeModalShown')) {
-        // If not, show the welcome modal
-        modal.style.display = "block";
-
-        // Set the 'kaleidoscopeModalShown' flag in sessionStorage
-        sessionStorage.setItem('kaleidoscopeModalShown', 'true');
+    function hideModal() {
+        kaleiModal.style.display = "none";
     }
-    
-    const mosaicNameAnchor = document.getElementById('mosaic-name');
-    const mosaicbecomingAnchor = document.getElementById('mosaic-becoming');
-    const mosaics = document.querySelectorAll('.mosaic');
 
-    mosaics.forEach(mosaic => {
-        mosaic.addEventListener('mouseover', function () {
-            const mosaicName = mosaic.getAttribute('data-name');
-            const mosaicBecoming = mosaic.getAttribute('data-becomings').split(',');
+    // Display the intro modal conditionally
+    if (!sessionStorage.getItem("kaleidoscopeModalShown")) {
+        showModal();
+        sessionStorage.setItem("kaleidoscopeModalShown", "true");
+    }
 
-            mosaicNameAnchor.innerHTML = `<h3>${mosaicName}</h3>`;
-            mosaicNameAnchor.innerHTML += mosaicBecoming.join('<br>');
-            let rect = mosaic.getBoundingClientRect();
-            mosaicNameAnchor.style.display = 'flex';
-            mosaicNameAnchor.style.flexDirection = 'column';
-            mosaicNameAnchor.style.position = 'absolute';
+    // Open the modal
+    kaleiModalOpen.addEventListener("click", showModal);
+
+    // Close the modal
+    kaleiModalClose.addEventListener("click", hideModal);
+
+    // Close the modal when the user clicks outside it
+    window.addEventListener("click", function (event) {
+        if (event.target === kaleiModal) {
+            hideModal();
+        }
+    });
+
+    // MOSAIC NAME HOVER
+    const mosaicNameAnchor = document.querySelector("#mosaic-name");
+
+    // Function to show the mosaic name anchor
+    function showMosaicName(event) {
+        if (event.target.classList.contains("mosaic")) {
+            const mosaic = event.target;
+            const mosaicName = mosaic.getAttribute("data-name");
+            const mosaicBecoming = mosaic.getAttribute("data-becomings").split(",");
+            const rect = mosaic.getBoundingClientRect();
+
+            mosaicNameAnchor.innerHTML = `<h3>${mosaicName}</h3>${mosaicBecoming.join("<br>")}`;
+            mosaicNameAnchor.style.display = "flex";
             mosaicNameAnchor.style.top = `${rect.top + window.scrollY}px`;
             mosaicNameAnchor.style.left = `${rect.left + rect.width + window.scrollX}px`;
-        });
-        mosaic.addEventListener('mouseout', function () {
-            mosaicNameAnchor.style.display = 'none';
-        });
-    });
-});
-
-// Mosaics placements within the kaleidoscope
-document.addEventListener("DOMContentLoaded", function () {
-    window.onload = function () {
-        const kaleidoscopeImageContainer = document.getElementById('kaleidoscope-image-container');
-        const mosaics = document.querySelectorAll('.mosaic');
-        let maxAttempts = 100; // Maximum number of attempts to find a valid position
-        let minRadius = 20; // Minimum radius for mosaics
-        let bufferZone = 20; // Buffer zone to ensure circles do not touch
-        let restart;
-        let lastWidth = window.innerWidth;
-        let lastHeight = window.innerHeight;
-        const threshold = 100; // Pixel difference to trigger a resize
-        const debounceDelay = 200; // Delay in milliseconds
-
-        // Debounce function to delay the execution
-        function debounce(func, delay) {
-            let timeout;
-            return function (...args) {
-                clearTimeout(timeout);
-                timeout = setTimeout(() => func.apply(this, args), delay);
-            };
         }
+    }
 
-        // Event listener to replace mosaics at resized window
-        window.addEventListener('resize', debounce(function () {
-            const currentWidth = window.innerWidth;
-            const currentHeight = window.innerHeight;
+    // Function to hide the mosaic name anchor
+    function hideMosaicName(event) {
+        if (event.target.classList.contains("mosaic")) {
+            mosaicNameAnchor.style.display = "none";
+        }
+    }
 
-            // Calculate the change in width and height
-            const widthChange = Math.abs(currentWidth - lastWidth);
-            const heightChange = Math.abs(currentHeight - lastHeight);
+    // Attach event listeners to show and hide the mosaic name anchor
+    kaleiImgContainer.addEventListener("mouseover", showMosaicName);
+    kaleiImgContainer.addEventListener("mouseout", hideMosaicName);
 
-            // Check if the change exceeds the threshold
-            if (widthChange > threshold || heightChange > threshold) {
-                placeMosaics();
-                // Update the last known dimensions
-                lastWidth = currentWidth;
-                lastHeight = currentHeight;
-            }
-        }, debounceDelay));
+    // MOSAIC PLACEMENT
+    const maxAttempts = 100; // Maximum number of attempts to find a valid position
+    const minRadius = 20; // Minimum radius for mosaics
+    let bufferZone = 20; // Buffer zone to ensure circles do not touch
+    let restart;
+    let lastWidth = window.innerWidth;
+    let lastHeight = window.innerHeight;
+    const threshold = 100; // Pixel difference to trigger a resize
 
-        placeMosaics();
+    // Function to place mosaics
+    function placeMosaics() {
+        const occupiedPositions = []; // Array to store occupied positions
+        const containerWidth = kaleiImgContainer.offsetWidth;
+        const containerHeight = kaleiImgContainer.offsetHeight;
+        const maxDistance = Math.min(containerWidth, containerHeight) / 2;
 
-        // Function to place mosaics
-        function placeMosaics() {
-            let occupiedPositions = []; // Array to store occupied positions
+        mosaics.forEach(mosaic => {
+            let isValidPosition = false;
+            let attempts = 0;
+            const mosaicRadius = mosaic.offsetWidth / 2;
 
-            mosaics.forEach(function (mosaics) {
-                let isValidPosition = false;
-                let attempts = 0;
-                let mosaicRadius = mosaics.offsetWidth / 2;
+            while (!isValidPosition && attempts < maxAttempts) {
+                const randomDistance = Math.random() * (maxDistance - mosaicRadius);
+                const randomAngle = Math.random() * 2 * Math.PI;
+                const randomX = Math.cos(randomAngle) * randomDistance;
+                const randomY = Math.sin(randomAngle) * randomDistance;
 
-                while (!isValidPosition && attempts < maxAttempts) {
-                    // Generate random position for mosaic within the bounds of the kaleidoscope background
-                    let maxDistance = Math.min(kaleidoscopeImageContainer.offsetWidth, kaleidoscopeImageContainer.offsetHeight) / 2 - mosaicRadius;
-                    let randomDistance = Math.random() * maxDistance;
-                    let randomAngle = Math.random() * 2 * Math.PI;
-                    var randomX = Math.cos(randomAngle) * randomDistance;
-                    var randomY = Math.sin(randomAngle) * randomDistance;
+                // Check if the new position collides with any existing mosaic
+                const collides = occupiedPositions.some(position => {
+                    const distance = Math.hypot(randomX - position.x, randomY - position.y);
+                    return distance < mosaicRadius + minRadius + bufferZone; // Include buffer zone
+                });
 
-                    // Check if the new position collides with any existing mosaic
-                    let collides = occupiedPositions.some(function (position) {
-                        let distance = Math.sqrt(Math.pow(randomX - position.x, 2) + Math.pow(randomY - position.y, 2));
-                        return distance < mosaicRadius + minRadius + bufferZone; // Include buffer zone
-                    });
-
-                    // If collision detected, reset position and try again; otherwise, mark position as valid
-                    if (collides) {
-                        randomX = 0; // Reset X position
-                        randomY = 0; // Reset Y position
-                        attempts++;
-                    } else {
-                        isValidPosition = true;
-                        occupiedPositions.push({ x: randomX, y: randomY }); // Store the new position
-                    }
-                }
-
-                // Set position of the small circle
-                if (isValidPosition) {
-                    mosaics.style.top = kaleidoscopeImageContainer.offsetHeight / 2 + randomY - mosaicRadius + 'px';
-                    mosaics.style.left = kaleidoscopeImageContainer.offsetWidth / 2 + randomX - mosaicRadius + 'px';
+                if (!collides) {
+                    isValidPosition = true;
+                    occupiedPositions.push({ x: randomX, y: randomY }); // Store the new position
+                    mosaic.style.top = `${containerHeight / 2 + randomY - mosaicRadius}px`;
+                    mosaic.style.left = `${containerWidth / 2 + randomX - mosaicRadius}px`;
                 } else {
-                    restart = true;
+                    attempts++;
+                }
+            }
+
+            if (!isValidPosition) {
+                restart = true;
+            }
+        });
+
+        if (restart) {
+            if (bufferZone > 0) {
+                bufferZone -= 5;
+            }
+            restart = false;
+            placeMosaics();
+        }
+    }
+
+    // Handle window resize with requestAnimationFrame
+    function handleResize() {
+        const currentWidth = window.innerWidth;
+        const currentHeight = window.innerHeight;
+
+        if (Math.abs(currentWidth - lastWidth) > threshold || Math.abs(currentHeight - lastHeight) > threshold) {
+            placeMosaics();
+            lastWidth = currentWidth;
+            lastHeight = currentHeight;
+        }
+    }
+
+    window.addEventListener("resize", () => {
+        requestAnimationFrame(handleResize);
+    });
+
+    // Initial placement of mosaics
+    requestAnimationFrame(placeMosaics);
+
+    // KALEIDOSCOPE TAGS RADIO BUTTONS
+    document.querySelectorAll(".custom-radio").forEach(radio => {
+        radio.addEventListener("change", function () {
+            // Show the open modal button when a radio button is first pressed
+            kaleiModalOpen.style.display = "block";
+
+            const [selectedTagName, selectedTagId] = this.getAttribute("data-tag").split(":");
+            const selectedTagContent = this.getAttribute("data-content");
+            editor.value = selectedTagContent;
+
+            document.querySelectorAll(".mosaic").forEach(image => {
+                const [kaleidoscopeTags, assemblageTags] = image.getAttribute("data-tags").split(":").map(tags => tags.split(","));
+
+                // Reset the hue value and pointer events
+                image.style.filter = "hue-rotate(0deg)";
+                image.style.pointerEvents = "auto";
+
+                if (selectedTagId === "f2d2a02b-73bb-42e4-8774-2102ef9c3102") { // Assemblages
+                    image.style.opacity = 1;
+                    image.classList.remove("mosaic-highlight-effect");
+                    assemblageTags.forEach(tag => {
+                        const randomValue = assignAssemblageTags(tag);
+                        image.style.filter = `hue-rotate(${randomValue}deg)`;
+                    });
+                } else if (selectedTagId === "1ac2b7b1-c3bf-4fc3-a5fb-37c88eeb1e97") { // Experiment
+                    const random = Math.floor(Math.random() * 3) + 1;
+                    if (random === 1) {
+                        image.style.opacity = 1;
+                        image.classList.add("mosaic-highlight-effect");
+                    } else {
+                        image.style.pointerEvents = "none";
+                        image.style.opacity = 0.4;
+                        image.classList.remove("mosaic-highlight-effect");
+                    }
+                } else if (kaleidoscopeTags.includes(selectedTagName)) {
+                    image.style.opacity = 1;
+                    image.classList.add("mosaic-highlight-effect");
+                } else {
+                    image.style.pointerEvents = "none";
+                    image.style.opacity = 0.4;
+                    image.classList.remove("mosaic-highlight-effect");
                 }
             });
-            if (restart) {
-                if (bufferZone != 0) {
-                    bufferZone = bufferZone - 5;
-                }
-                restart = false;
-                placeMosaics();
-            }
-        }
-
-    };
-});
-
-// Radio buttons for kaleidoscope filters
-document.querySelectorAll('.custom-radio').forEach(function (radio) {
-    radio.addEventListener('change', function () {
-        btn.style.display = 'block';
-        let dataTags = this.getAttribute('data-tag').split(':');
-        let selectedTagName = dataTags[0];
-        let selectedTagId = dataTags[1];
-        let selectedTagContent = this.getAttribute('data-content');
-        editor.value = selectedTagContent;
-        const images = document.querySelectorAll('.mosaic');
-        images.forEach(function (image) {
-            let tags = image.getAttribute('data-tags').split(':');
-            let kaleidoscopeTags = tags[0].split(',');
-            let assemblageTag = tags[1].split(',');
-
-            // Reset the hue value
-            image.style.filter = 'hue-rotate(0deg)';
-            //reset the pointeevent value
-            image.style.pointerEvents = 'auto'; 
-
-            if (selectedTagId === 'f2d2a02b-73bb-42e4-8774-2102ef9c3102' /*Assemblages*/) {
-                image.style.opacity = 1;
-                image.classList.remove('mosaic-highlight-effect');
-                assemblageTag.forEach(function (tag) {
-                    let randomValue = assignAssemblageTags(tag);
-                    image.style.filter = 'hue-rotate(' + randomValue + 'deg)';
-                });
-            }
-            else if (selectedTagId === '1ac2b7b1-c3bf-4fc3-a5fb-37c88eeb1e97' /*Experiment*/) {
-                // Create a random value between 1 and 3
-                let randomValue = 3;
-                let random = Math.floor(Math.random() * randomValue) + 1;
-
-                // If the random value is 1, set the opacity to 1 and add the highlight effect class
-                if (random === 1) {
-                    image.style.opacity = 1;
-                    image.classList.add('mosaic-highlight-effect');
-                } else {
-                    image.style.pointerEvents = 'none'; 
-                    image.style.opacity = 0.4;
-                    image.classList.remove('mosaic-highlight-effect');
-                }
-            }
-            else if (kaleidoscopeTags.includes(selectedTagName)) {
-                image.style.opacity = 1; // Set full opacity for matching tags
-                image.classList.add('mosaic-highlight-effect'); // Add the highlight effect class
-            } else {
-                image.style.pointerEvents = 'none'; 
-                image.style.opacity = 0.4; // Set lower opacity for non-matching tags
-                image.classList.remove('mosaic-highlight-effect'); // Remove the highlight effect class
-            }
         });
     });
-});
 
-// Dictionary to store the tags for each assemblage and a separate value
-let assemblageTagsDictionary = {};
+    // Dictionary to store the tags for each assemblage and a separate value
+    const assemblageTagsDictionary = new Map();
 
-function assignAssemblageTags(tag) {
-    // If the assemblage is not already assigned, assign a random value
-    if (!assemblageTagsDictionary[tag]) {
-        // Generate multiple random values and select the least similar one
-        let randomValue = getLeastSimilarValue(Object.values(assemblageTagsDictionary));
-        assemblageTagsDictionary[tag] = randomValue;
+    function assignAssemblageTags(tag) {
+        // If the assemblage is not already assigned, assign a random value
+        if (!assemblageTagsDictionary.has(tag)) {
+            const randomValue = getLeastSimilarValue([...assemblageTagsDictionary.values()]);
+            assemblageTagsDictionary.set(tag, randomValue);
+        }
+        return assemblageTagsDictionary.get(tag);
     }
-    return assemblageTagsDictionary[tag];
-}
 
-function getLeastSimilarValue(existingValues, count = 5) {
-    let candidates = [];
-    for (let i = 0; i < count; i++) {
-        let randomValue = Math.floor(Math.random() * 361);
-        // Check if the new value is sufficiently different from all existing ones
-        let isUnique = true;
-        for (let value of existingValues) {
-            if (Math.abs(randomValue - value) <= 20) { // Threshold of 20 degrees for similarity
-                isUnique = false;
-                break;
+    function getLeastSimilarValue(existingValues, count = 5) {
+        const candidates = Array.from({ length: count }, () => Math.floor(Math.random() * 361));
+        const threshold = 20; // Threshold of 20 degrees for similarity
+
+        for (const candidate of candidates) {
+            if (existingValues.every(value => Math.abs(candidate - value) > threshold)) {
+                return candidate;
             }
         }
-        if (isUnique) {
-            candidates.push(randomValue);
-        }
-    }
-    // Return the first candidate that passes the uniqueness check
-    return candidates[0];
-}
 
-// Kaleidoscope image and mosaics rotation
-document.addEventListener("DOMContentLoaded", function () {
-    const radios = document.querySelectorAll('.custom-radio');
-    const kaleidoscopeContainer = document.getElementById('kaleidoscope-container');
-    const mosaics = document.querySelectorAll('.mosaic');
+        // If no unique candidate is found, return the first candidate
+        return candidates[0];
+    }
+
+    // OBJECT ROTATIONS
+    const radios = document.querySelectorAll(".custom-radio");
+    const kaleidoscopeContainer = document.getElementById("kaleidoscope-container");
+    const ksObjects = [
+        document.getElementById("kaleidoscope-image-object-1"),
+        document.getElementById("kaleidoscope-image-object-2"),
+        document.getElementById("kaleidoscope-image-object-3"),
+        document.getElementById("kaleidoscope-image-object-4"),
+        document.getElementById("kaleidoscope-image-object-5"),
+        document.getElementById("kaleidoscope-image-object-6"),
+        document.getElementById("kaleidoscope-image-object-7")
+    ];
+    const elementsToRotate = [ksObjects[0], ksObjects[2], ksObjects[4], ksObjects[6]];
+    const elementsToRotateInverted = [ksObjects[1], ksObjects[3], ksObjects[5]];
 
     radios.forEach(radio => {
-        radio.addEventListener('change', function () {
-            let ksContainerRotation = Math.floor(Math.random() * 180) - 90;
+        radio.addEventListener("change", () => {
+            const ksContainerRotation = Math.floor(Math.random() * 180) - 90;
             kaleidoscopeContainer.style.transform = `rotate(${ksContainerRotation}deg)`;
 
-            const ksObject1 = document.getElementById('kaleidoscope-image-object-1');
-            const ksObject2 = document.getElementById('kaleidoscope-image-object-2');
-            const ksObject3 = document.getElementById('kaleidoscope-image-object-3');
-            const ksObject4 = document.getElementById('kaleidoscope-image-object-4');
-            const ksObject5 = document.getElementById('kaleidoscope-image-object-5');
-            const ksObject6 = document.getElementById('kaleidoscope-image-object-6');
-            const ksObject7 = document.getElementById('kaleidoscope-image-object-7');
-
-            const elementsToRotate = [
-                ksObject1,
-                ksObject3,
-                ksObject5,
-                ksObject7
-            ];
-            const elementsToRotateInverted = [
-                ksObject2,
-                ksObject4,
-                ksObject6
-            ];
-
-            // Rotate all uneven elements clockwise and all even elements counter-clockwise
-            elementsToRotate.forEach(element => {
-                let rotation = Math.floor(Math.random() * 180);
-                element.style.transform = `rotate(${rotation}deg)`;
-                element.style.opacity = 0.5;
-            });
-            elementsToRotateInverted.forEach(element => {
-                let rotation = Math.floor(Math.random() * 180 * -1);
-                element.style.transform = `rotate(${rotation}deg)`;
-                element.style.opacity = 0.5;
-            });
+            rotateElements(elementsToRotate, 180, 0.5);
+            rotateElements(elementsToRotateInverted, -180, 0.5);
 
             // Randomly select one element from each array to have an opacity of 1
-            let randomIndex = Math.floor(Math.random() * elementsToRotate.length);
-            elementsToRotate[randomIndex].style.opacity = 1;
-            let randomIndexInverted = Math.floor(Math.random() * elementsToRotateInverted.length);
-            elementsToRotateInverted[randomIndexInverted].style.opacity = 1;
+            setRandomOpacity(elementsToRotate, 1);
+            setRandomOpacity(elementsToRotateInverted, 1);
 
-            mosaics.forEach((mosaic) => {
-                let rotation = Math.floor(Math.random() * 180) - 90;
+            mosaics.forEach(mosaic => {
+                const rotation = Math.floor(Math.random() * 180) - 90;
                 mosaic.style.transform = `rotate(${rotation}deg)`;
             });
 
-            // Apply an image filter to change the appereance of the kaleidoscope images
-            const imagefilter = ["kaleidoscope-filter-1", "kaleidoscope-filter-2", "kaleidoscope-filter-3", "kaleidoscope-filter-4"]
-            let appliedFilter = Array.from(kaleidoscopeContainer.classList).find(className => imagefilter.includes(className));
-            let availableFilters = imagefilter.filter(className => className !== appliedFilter);
-            let randomFilter = availableFilters[Math.floor(Math.random() * availableFilters.length)];
-            kaleidoscopeContainer.classList.remove(...imagefilter);
-            kaleidoscopeContainer.classList.add(randomFilter);
+            applyRandomFilter(kaleidoscopeContainer, [
+                "kaleidoscope-filter-1", "kaleidoscope-filter-2", "kaleidoscope-filter-3", "kaleidoscope-filter-4"
+            ]);
         });
     });
+
+    function rotateElements(elements, maxRotation, opacity) {
+        elements.forEach(element => {
+            const rotation = Math.floor(Math.random() * maxRotation);
+            element.style.transform = `rotate(${rotation}deg)`;
+            element.style.opacity = opacity;
+        });
+    }
+
+    function setRandomOpacity(elements, opacity) {
+        const randomIndex = Math.floor(Math.random() * elements.length);
+        elements[randomIndex].style.opacity = opacity;
+    }
+
+    function applyRandomFilter(container, filters) {
+        const appliedFilter = Array.from(container.classList).find(className => filters.includes(className));
+        const availableFilters = filters.filter(className => className !== appliedFilter);
+        const randomFilter = availableFilters[Math.floor(Math.random() * availableFilters.length)];
+        container.classList.remove(...filters);
+        container.classList.add(randomFilter);
+    }
 });
