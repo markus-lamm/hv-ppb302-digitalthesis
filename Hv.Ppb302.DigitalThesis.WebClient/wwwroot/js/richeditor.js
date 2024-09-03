@@ -276,17 +276,6 @@ if (input) {
             enabled: 0
         }
     })
-    var selectedTag = input.getAttribute('data-tags');
-
-    // Convert the string of tags into an array
-    if (selectedTag) {
-        var tagsArray = selectedTag.split(',');
-        tagsArray.forEach(function (tag) {
-            // Get the value of each tag
-            tagify.addTags([tag.trim()]);
-        });
-    }
-
 }
 
 function copyFunction(fileurl) {
