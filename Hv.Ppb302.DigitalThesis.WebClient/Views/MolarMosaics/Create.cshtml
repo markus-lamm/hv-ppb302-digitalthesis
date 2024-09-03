@@ -25,9 +25,9 @@
                     <!-- Other form fields here -->
 
                     <div class="form-group">
-                        <label asp-for="@Model.MolarMosaic!.Title" class="control-label"></label>
-                        <input asp-for="@Model.MolarMosaic!.Title" class="form-control" />
-                        <span asp-validation-for="@Model.MolarMosaic!.Title" class="text-danger"></span>
+                        <label asp-for="MolarMosaic!.Title" class="control-label"></label>
+                        <input asp-for="MolarMosaic!.Title" class="form-control" />
+                        <span asp-validation-for="MolarMosaic!.Title" class="text-danger"></span>
                     </div>
 
                     <!-- IsVisible -->
@@ -56,11 +56,11 @@
 
                     <!-- AssemblageTags -->
                     <div class="form-group">
-                        <label asp-for="@Model.SelectedAssemblageId" class="control-label">Select an Assemblage Tag</label>
-                        <select asp-for="@Model.SelectedAssemblageId" asp-items="Model.AssemblageTags" class="form-control">
+                        <label asp-for="@Model.MolarMosaic!.AssemblageTagId" class="control-label">Select an Assemblage Tag</label>
+                        <select asp-for="@Model.MolarMosaic!.AssemblageTagId" asp-items="Model.AssemblageTags" class="form-control">
                             <option value="">Select...</option>
                         </select>
-                        <span asp-validation-for="@Model.SelectedAssemblageId" class="text-danger"></span><br />
+                        <span asp-validation-for="@Model.MolarMosaic!.AssemblageTagId" class="text-danger"></span><br />
                     </div>
 
                     <!-- ConnectorTags -->
@@ -69,7 +69,7 @@
                         <div class="flex-row">
                             @foreach (var item in Model.ConnectorTags ?? Enumerable.Empty<SelectListItem>())
                             {
-                                <input type="checkbox" name="SelectedConnectorTagsIds" value="@item.Value" id="connectorTag_@item.Value" />
+                                <input type="checkbox" name="SelectedConnectorsTagsIds" value="@item.Value" id="connectorTag_@item.Value" />
                                 <label class="form-check-label" for="connectorTag_@item.Value">@item.Text</label>
                             }
                         </div>
@@ -89,13 +89,10 @@
 
                     <!-- Becomings -->
                     <div class="form-group">
+                        
                         <label asp-for="Becomings" class="control-label"></label>
-                        <select asp-for="Becomings" multiple="multiple" class="form-control inputbecomings">
-                            @foreach (var becoming in Model.Becomings ?? Enumerable.Empty<string>())
-                            {
-                                <option value="@becoming">@becoming</option>
-                            }
-                        </select>
+                        <input asp-for="Becomings" value="" class="form-control inputbecomings" multiple="multiple"/>
+
                     </div>
 
                     <!-- Content -->
