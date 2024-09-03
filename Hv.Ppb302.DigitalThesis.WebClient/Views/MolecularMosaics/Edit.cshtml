@@ -1,9 +1,6 @@
-﻿@model Hv.Ppb302.DigitalThesis.WebClient.Models.MolecularMosaic
+﻿@model MolecularMosaicCrudViewModel
 @{
     ViewData["Title"] = "Edit";
-    var kaleidoscopeTags = ViewData["Kaleidoscope"] as List<SelectListItem>;
-    var connectorTags = ViewData["Connectors"] as List<SelectListItem>;
-    var assemblageTags = ViewData["AssemblageTags"] as SelectList;
 }
 <head>
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
@@ -22,69 +19,90 @@
             <div class="form-table-container">
                 <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                    <input type="hidden" asp-for="Id" />
+                    <input type="hidden" asp-for="MolecularMosaic!.Id" />
+                    <!-- Other form fields here -->
+
                     <div class="form-group">
-                        <label asp-for="Title" class="control-label"></label>
-                        <input asp-for="Title" class="form-control" />
-                        <span asp-validation-for="Title" class="text-danger"></span>
+                        <label asp-for="MolecularMosaic!.Title" class="control-label"></label>
+                        <input asp-for="MolecularMosaic!.Title" class="form-control" />
+                        <span asp-validation-for="MolecularMosaic!.Title" class="text-danger"></span>
                     </div>
+
+                    <!-- IsVisible -->
                     <div class="form-group">
-                        <label asp-for="IsVisible" class="control-label"></label>
+                        <label asp-for="@Model.MolecularMosaic!.IsVisible" class="control-label"></label>
                         <div>
-                            <input type="radio" asp-for="IsVisible" value="true" /> Yes
-                            <input type="radio" asp-for="IsVisible" value="false" /> No
+                            <input type="radio" asp-for="@Model.MolecularMosaic!.IsVisible" value="true" /> Yes
+                            <input type="radio" asp-for="@Model.MolecularMosaic!.IsVisible" value="false" /> No
                         </div>
-                        <span asp-validation-for="IsVisible" class="text-danger"></span>
+                        <span asp-validation-for="@Model.MolecularMosaic!.IsVisible" class="text-danger"></span>
                     </div>
+
+                    <!-- PdfFilePath -->
                     <div class="form-group">
-                        <label asp-for="PdfFilePath" class="control-label"></label>
-                        <input asp-for="PdfFilePath" class="form-control" />
-                        <span asp-validation-for="PdfFilePath" class="text-danger"></span>
+                        <label asp-for="@Model.MolecularMosaic!.PdfFilePath" class="control-label"></label>
+                        <input asp-for="@Model.MolecularMosaic!.PdfFilePath" class="form-control" />
+                        <span asp-validation-for="@Model.MolecularMosaic!.PdfFilePath" class="text-danger"></span>
                     </div>
+
+                    <!-- AudioFilePath -->
                     <div class="form-group">
-                        <label asp-for="AudioFilePath" class="control-label"></label>
-                        <input asp-for="AudioFilePath" class="form-control" />
-                        <span asp-validation-for="AudioFilePath" class="text-danger"></span>
+                        <label asp-for="@Model.MolecularMosaic!.AudioFilePath" class="control-label"></label>
+                        <input asp-for="@Model.MolecularMosaic!.AudioFilePath" class="form-control" />
+                        <span asp-validation-for="@Model.MolecularMosaic!.AudioFilePath" class="text-danger"></span>
                     </div>
+
+                    <!-- AssemblageTags -->
                     <div class="form-group">
-                        <label asp-for="AssemblageTagId" class="control-label"></label>
-                        @Html.DropDownListFor(model => model.AssemblageTagId, assemblageTags, "No assemblage", new { @class = "form-control" })
-                        <span asp-validation-for="AssemblageTagId" class="text-danger"></span>
+                        <label asp-for="@Model.MolecularMosaic!.AssemblageTagId" class="control-label">Select an Assemblage Tag</label>
+                        <select asp-for="@Model.MolecularMosaic!.AssemblageTagId" asp-items="Model.AssemblageTagsItemList" class="form-control">
+                            <option value="">Select...</option>
+                        </select>
+                        <span asp-validation-for="@Model.MolecularMosaic!.AssemblageTagId" class="text-danger"></span><br />
                     </div>
+
+                    <!-- ConnectorTags -->
                     <div class="form-group flex-column">
-                        <label asp-for="ConnectorTags" class="control-label"></label>
+                        <label class="control-label">Select Connector Tags</label>
                         <div class="flex-row">
-                            @foreach (var item in connectorTags!)
+                            @foreach (var item in Model.ConnectorTagsItemList ?? Enumerable.Empty<SelectListItem>())
                             {
-                                <input type="checkbox" class="form-check-input" id="@item.Value" name="ConnectorTags" value="@item.Value" @(item.Selected ? "checked=\"checked\"" : "") />
-                                <label class="form-check-label" for="@item.Value">@item.Text</label>
+                                <input type="checkbox" name="SelectedConnectorsTagsIds" value="@item.Value" id="connectorTag_@item.Value" @(item.Selected ? "checked" : "") />
+                                <label class="form-check-label" for="connectorTag_@item.Value">@item.Text</label>
                             }
                         </div>
+                    </div>
+
+                    <!-- KaleidoscopeTags -->
+                    <div class="form-group flex-column">
+                        <label class="control-label">Select Kaleidoscope Tags</label>
+                        <div class="flex-row">
+                            @foreach (var item in Model.KaleidoscopeTagsItemList ?? Enumerable.Empty<SelectListItem>())
+                            {
+                                <input type="checkbox" name="SelectedKaleidoscopeTagsIds" value="@item.Value" id="kaleidoscopeTag_@item.Value" @(item.Selected ? "checked" : "") />
+                                <label class="form-check-label" for="kaleidoscopeTag_@item.Value">@item.Text</label>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Becomings -->
+                    <div class="form-group">
+
+                        <label asp-for="Becomings" class="control-label"></label>
+                        <input asp-for="Becomings" value="@Model.Becomings" class="form-control inputbecomings" multiple="multiple" />
 
                     </div>
-                    <div class="form-group flex-column">
-                        <label asp-for="KaleidoscopeTags" class="control-label"></label>
-                        <div class="flex-row">
-                            @foreach (var item in kaleidoscopeTags!)
-                            {
-                                <input type="checkbox" class="form-check-input" id="@item.Value" name="KaleidoscopeTags" value="@item.Value" @(item.Selected ? "checked=\"checked\"" : "") />
-                                <label class="form-check-label" for="@item.Value">@item.Text</label>
-                            }
-                        </div>
-                    </div>
+
+                    <!-- Content -->
                     <div class="form-group">
-                        <label asp-for="Becomings" class="control-label"></label>
-                        <input value="" data-tags="@string.Join(',', Model.Becomings!)" asp-for="Becomings" class="form-control inputbecomings" multiple="multiple"></input>
-                    </div>
-                    <div class="form-group">
-                        <label asp-for="Content" class="control-label"></label>
-                        <input type="hidden" id="hiddeninput" asp-for="Content" class="form-control" />
+                        <label asp-for="MolecularMosaic!.Content" class="control-label"></label>
+                        <input type="hidden" id="hiddeninput" asp-for="MolecularMosaic!.Content" class="form-control" />
                         <div class="editor-layout">
                             <div id="editortest">
-                                @Html.Raw(Model.Content)
+                                @Html.Raw(Model.MolecularMosaic!.Content)
                             </div>
                         </div>
-                        <span asp-validation-for="Content" class="text-danger"></span>
+                        <span asp-validation-for="MolecularMosaic!.Content" class="text-danger"></span>
                     </div>
                     <div class="form-btn-container flex-row-reverse">
                         <button class="form-main-btn" type="submit">Save</button>
