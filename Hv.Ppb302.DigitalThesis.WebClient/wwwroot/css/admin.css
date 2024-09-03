@@ -163,7 +163,7 @@
     color: white;
     border-radius: 2px;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
-    min-width: 50rem;
+    min-width: 60rem;
     height: 7rem;
     margin-bottom: 0.5rem;
 }
@@ -187,6 +187,7 @@
     padding: 1rem;
     background-color: white;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+    margin-bottom: 0.5rem;
 }
 
 .form-table {
@@ -226,167 +227,164 @@
     margin-bottom: 0.5rem;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-/*.admin-container {
-    height: 100%;
+ /* Files */
+.files-header-container {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 100vw;
-    position: relative;
-    padding-bottom: 10vh;
-    padding-top: 20vh;
-}*/
-/*.admin-form {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    padding: 1rem;
-    border: 3px solid #28398a;
-}
-
-.admin-form-large {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    padding: 1rem;
-    border: 3px solid #28398a;
-}*/
-
-/*.form-submit-btn {
-    background-color: #28398a;
     color: white;
-    border: none;
-    padding: 0.5rem;
-    margin: 1rem;
-    font-size: 1.5rem;
-    width: 10rem;
-    cursor: pointer;
-    text-decoration: none;
+    margin-bottom: 0.5rem;
+    gap: 0.5rem;
 }
 
-    .form-submit-btn:hover {
-        background-color: #1a2e6c;
-    }
-
-.fileview-container {
-    padding: 3rem;
-    padding-top: 0;
-    padding-bottom: 0;
-}
-
-.file-container {
+.files-header {
     display: flex;
-    justify-content: flex-start;
-    flex-wrap: wrap;
+    height: 7rem;
+    width: 17rem;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
 }
 
-.file-card {
-    width: var(--cardWidth);
-    height: var(--cardHeight);
-    border: 2px solid #28398a;
-    margin-top: var(--cardMargin);
-    margin-right: var(--cardMargin);
-    background: #fff;
-    box-sizing: border-box;
-    position: relative;
+.pdf-color {
+    background-color: #ED676A;
 }
 
-    .file-card img {
-        height: 100%;
-        width: 100%;
-    }
+.audio-color {
+    background-color: #3BC751;
+}
 
-.file-options {
-    position: absolute;
-    top: 0;
-    left: 0;
+.video-color {
+    background-color: #72ABDF;
+}
+
+.unknown-color {
+    background-color: #726868;
+}
+
+.files-upload-text {
+    font-size: 1.5rem;
+    margin-left: 1rem;
+    margin-top: 0.5rem;
+}
+
+.files-upload-container {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.5rem;
+}
+
+.files-upload-item {
+    display: flex;
+    align-items: center;
+    margin-top: 0.5rem;
+    gap: 2rem;
+}
+
+.files-upload-btn {
+    background-color: #007bff;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.files-upload-label input[type="file"] {
+    display: none; /* Hide the file input */
+}
+
+.files-upload-materials-switch {
+    display: flex;
+    align-items: center;
+    margin-top: 1rem;
+    gap: 1rem;
+    font-size: 1.2rem;
+}
+
+.files-upload-name {
+    font-size: 1.2rem;
+    margin-left: 1rem;
+    margin-top: 1rem;
+    font-style: italic;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.files-container {
     display: flex;
     flex-direction: column;
-    width: 100%;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.file-item-container {
+    display: flex;
+    height: 8rem;
+    background-color: white;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+}
+
+.file-icon-container {
+    margin-left: 2rem;
+    padding: 1.2rem;
+}
+
+.file-icon {
     height: 100%;
 }
 
-.file-options-btns {
-    display: flex;
-    flex-direction: row;
-    padding: 0.5rem;
-}
-
-.file-card-title {
-    text-align: center;
-    font-size: 1rem;
-    margin-top: 0.5rem;
-    background-color: white;
-    border: 2px solid #ccc;
-    margin: 0.5rem;
-}
-
-.file-heading {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-.file-upload form{
+.file-text-container {
     display: flex;
     flex-direction: column;
-    gap: 2rem
+    margin-left: 3rem;
+    flex-grow: 1;
+    font-size: 1.3rem;
 }
-.file-upload-seconddiv {
+
+.file-name-container {
     display: flex;
-    justify-content: space-between
+    height: 50%;
+    align-items: center;
+    font-style: italic;
+    font-weight: bold;
 }
-.file-upload {
-    background-color: white;
-    border: 3px solid #ccc;
-    padding: 1rem;
-    width: 30vw;
-    margin: 0.5rem;
-    margin-top: 1.5rem;
+
+.file-options-container {
+    display: flex;
+    height: 50%;
+    align-items: center;
+    gap: 2rem;
 }
-.switchdiv {
+
+.file-options-materials {
     display: flex;
     align-items: center;
-    gap:1rem;
+    gap: 0.5rem;
 }
+
+.file-options-link-btn {
+    color: white;
+    background-color: #8FAECB;
+    padding-inline: 2rem;
+    padding-block: 0.5rem;
+    border-radius: 2px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+}
+
+.file-options-delete-btn {
+    color: white;
+    background-color: #D97272;
+    padding-inline: 2rem;
+    padding-block: 0.5rem;
+    border-radius: 2px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.2);
+    border: none;
+    cursor: pointer;
+}
+
+    .file-options-link-btn:hover,
+    .file-options-delete-btn:hover {
+        filter: brightness(0.9);
+    }
+
 .switch {
     position: relative;
     display: inline-block;
@@ -436,82 +434,13 @@ input:checked + .slider:before {
     -webkit-transform: translateX(26px);
     -ms-transform: translateX(26px);
     transform: translateX(26px);
-}*/
+}
 
 /* Rounded sliders */
-/*.slider.round {
+.slider.round {
     border-radius: 34px;
 }
 
     .slider.round:before {
         border-radius: 50%;
     }
-
-.profile-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background-color: white;
-    border: 3px solid #28398a;
-    width: 50%;
-    height: 30%;
-}
-
-#editortest {
-    height: 60vh;
-}
-
-.editor-layout {
-    width: 80vw;
-}
-
-.createform{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-}
-
-td {
-    max-width: 50vw
-}
-
-:root {
-    --cardWidth: 240px;
-    --cardHeight: 280px;
-    --cardMargin: 16px;
-}
-
-.box img {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 10px;
-}
-
-.box p {
-    margin: 0;
-    font-size: 16px;
-    color: black;
-    text-align: center;
-}
-
-.files-container {
-    display: flex;
-    flex-direction: column;
-}
-
-.material-container {
-    width: var(--cardWidth);
-    height: 3rem;
-    border: 2px solid #28398a;
-    background: #fff;
-    box-sizing: border-box;
-    position: relative;
-    display: flex;
-    justify-content:left;
-    justify-items: center;
-    align-items: center;
-    gap: 2rem;
-    padding-left: 1rem;
-}*/
