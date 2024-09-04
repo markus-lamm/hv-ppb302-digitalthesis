@@ -11,6 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inconsolata:wght@200..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/languages/go.min.js"></script>
     <script>hljs.highlightAll();</script>
@@ -57,8 +58,12 @@
     <main role="main">
         @RenderBody()
     </main>
+    <div id="size-guard" class="size-guard">
+        <p>Screen size is too small. Please resize your window.</p>
+    </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jodit/jodit.js"></script>
+    <script src="~/js/site.js"></script>
     <script src="~/js/richeditor.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

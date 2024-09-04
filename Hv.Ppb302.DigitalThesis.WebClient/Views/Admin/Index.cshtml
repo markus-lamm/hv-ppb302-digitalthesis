@@ -5,34 +5,34 @@
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
 <div class="background-container background-image"></div>
-<div class="main-container flex-center">
-    <div class="options-container">
-        <a class="menu-option" asp-controller="Molarmosaics" asp-action="Index">
-            Molar Mosaics
+<div class="main-container flex-horizontal-center">
+    <div class="overview-container">
+        <a class="overview-btn profile-color" asp-controller="Admin" asp-action="Profile">
+            Profile
         </a>
-        <a class="menu-option" asp-controller="Molecularmosaics" asp-action="Index">
-            Molecular Mosaics
+        <a class="overview-btn page-color" asp-controller="Pages" asp-action="Index">
+            Pages
         </a>
-        <a class="menu-option" asp-controller="Geotags" asp-action="Index">
-            Geo Tags
+        <a class="overview-btn molecular-color" asp-controller="Molecularmosaics" asp-action="Index">
+            Molecular mosaics
         </a>
-        <a class="menu-option" asp-controller="Kaleidoscopetags" asp-action="Index">
-            Kaleidoscope Tags
+        <a class="overview-btn molar-color" asp-controller="Molarmosaics" asp-action="Index">
+            Molar mosaics
         </a>
-        <a class="menu-option" asp-controller="Connectortags" asp-action="Index">
-            Connector Tags
-        </a>
-        <a class="menu-option" asp-controller="Admin" asp-action="FileView">
-            Uploads
-        </a>
-        <a class="menu-option" asp-controller="Admin" asp-action="Profile">
-            Change Password
-        </a>
-        <a class="menu-option" asp-controller="AssemblageTags" asp-action="Index">
-            Assemblage Tags
-        </a>
-        <a class="menu-option" asp-controller="Admin" asp-action="AboutAdmin">
-            Edit Aboutpage
+        <a class="overview-btn geotags-color" asp-controller="Geotags" asp-action="Index">
+            Geotags
+        </a>       
+        <a class="overview-btn connectortags-color" asp-controller="Connectortags" asp-action="Index">
+            Connector tags
+        </a>       
+        <a class="overview-btn kaleidoscopetags-color" asp-controller="Kaleidoscopetags" asp-action="Index">
+            Kaleidoscope tags
+        </a>      
+        <a class="overview-btn assemblagetags-color" asp-controller="AssemblageTags" asp-action="Index">
+            Assemblage tags
+        </a>       
+        <a class="overview-btn files-color" asp-controller="Admin" asp-action="Files">
+            Files
         </a>
     </div>
 </div>

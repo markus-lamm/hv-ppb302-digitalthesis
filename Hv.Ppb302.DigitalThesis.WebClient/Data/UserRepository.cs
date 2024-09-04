@@ -23,6 +23,18 @@ public class UserRepository : IRepository<User>
         }
     }
 
+    public User? GetByUsername(string username)
+    {
+        try
+        {
+            return _dbContext.Users.FirstOrDefault(g => g.Username == username);
+        }
+        catch (Exception)
+        {
+            throw new Exception("Internal Server Error");
+        }
+    }
+
     public User? GetByCredentials(string username, string password)
     {
         try
@@ -69,11 +81,19 @@ public class UserRepository : IRepository<User>
     {
         try
         {
-            var existingUser = _dbContext.Users.FirstOrDefault( m => m.Username == user.Username);
+            var existingUser = _dbContext.Users.FirstOrDefault(m => m.Id == user.Id);
             if (existingUser == null)
             {
                 throw new Exception("The user does not exist");
             }
+
+            // The username is occupied by another user
+            var occupiedName = _dbContext.Users.FirstOrDefault(m => m.Username == user.Username && user.Username != existingUser.Username);
+            if (occupiedName?.Username != null)
+            {
+                throw new Exception("A user with the same username already exists");
+            }
+
             existingUser.Username = user.Username;
             existingUser.Password = user.Password;
             _dbContext.SaveChanges();

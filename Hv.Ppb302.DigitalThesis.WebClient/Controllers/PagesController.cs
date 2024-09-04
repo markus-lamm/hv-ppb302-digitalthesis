@@ -4,13 +4,13 @@ using Hv.Ppb302.DigitalThesis.WebClient.Models;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
-public class KaleidoscopeTagsController : Controller
+public class PagesController : Controller
 {
-    private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
+    private readonly PageRepository _pageRepo;
 
-    public KaleidoscopeTagsController(KaleidoscopeTagRepository kaleidoscopeTagRepo)
+    public PagesController(PageRepository pageRepo)
     {
-        _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
+        _pageRepo = pageRepo;
     }
 
     public IActionResult Index()
@@ -19,7 +19,7 @@ public class KaleidoscopeTagsController : Controller
         {
             return RedirectToAction("Login", "Admin");
         }
-        return View(_kaleidoscopeTagRepo.GetAll());
+        return View(_pageRepo.GetAll());
     }
 
     public IActionResult Edit(Guid id)
@@ -29,33 +29,33 @@ public class KaleidoscopeTagsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var kaleidoscopeTag = _kaleidoscopeTagRepo.Get(id);
-        if (kaleidoscopeTag == null)
+        var page = _pageRepo.Get(id);
+        if (page == null)
         {
             return NotFound();
         }
 
-        return View(kaleidoscopeTag);
+        return View(page);
     }
 
     [HttpPost]
     [ValidateAntiForgeryToken]
-    public IActionResult Edit(Guid id, [Bind("Id,Name,Content")] KaleidoscopeTag kaleidoscopeTag)
+    public IActionResult Edit(Guid id, [Bind("Id,Name,Content")] Page page)
     {
         if (!CheckAuthentication())
         {
             return RedirectToAction("Login", "Admin");
         }
 
-        if (id != kaleidoscopeTag.Id)
+        if (id != page.Id)
         {
             return NotFound();
         }
         if (!ModelState.IsValid)
         {
-            return View(kaleidoscopeTag);
+            return View(page);
         }
-        _kaleidoscopeTagRepo.Update(kaleidoscopeTag);
+        _pageRepo.Update(page);
 
         return RedirectToAction(nameof(Index));
     }

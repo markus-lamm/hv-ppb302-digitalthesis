@@ -1,5 +1,48 @@
 ﻿const { UIForm, UIInput, UIButton, UITextArea } = Jodit.modules;
 
+Jodit.defaultOptions.controls.audioplay = {
+    iconURL: '/images/icons/sound.png',
+    popup: (editor, current, control, close) => {
+        audioForm = new UIForm(editor, [
+            new UIInput(editor, {
+                name: 'audiourl',
+                placeholder: 'Enter audio URL...',
+                autofocus: false,
+                label: 'Audio URL:',
+                required: true
+            }),
+            new UIInput(editor, {
+                name: 'Width',
+                placeholder: 'Enter width for the audio player ',
+                autofocus: false,
+                label: 'Video width: (Normal size is 300)'
+            }),
+            new UIButton(editor, {
+                text: 'Insert audio player',
+                status: 'primary',
+                variant: 'primary'
+            }).onAction(() => {
+                audioForm.submit();
+            })
+        ]), closePopWindow = () => {
+            editor.s.focus();
+            editor.s.restore();
+            close.__closePopup();
+            }; 
+
+        audioForm.onSubmit(data => {
+            const width = data.Width !== "" ? `${data.Width}px` : '300px';
+            const audiotag = `<audio controls style="width: ${width}""><source src="${data.audiourl}">Your browser does not support the audio element.</audio>`;
+            editor.selection.insertHTML(audiotag);
+            closePopWindow();
+
+        })
+        return audioForm;
+    },
+    tooltip: 'Insert audio player'
+    
+}
+
 Jodit.defaultOptions.controls.videonopause = {
     iconURL: '/images/icons/replay.png',
     popup: (editor, current, control, close) => {
@@ -8,7 +51,14 @@ Jodit.defaultOptions.controls.videonopause = {
                 name: 'videoNoPauseUrl',
                 placeholder: 'Enter video URL...',
                 autofocus: false,
-                label: 'Video URL:'
+                label: 'Video URL:',
+                required: true
+            }),
+            new UIInput(editor, {
+                name: 'Width',
+                placeholder: 'Enter width for the video ',
+                autofocus: false,
+                label: 'Video width: (Normal size is 304)'
             }),
             new UIButton(editor, {
                 text: 'Insert no pause video',
@@ -25,7 +75,9 @@ Jodit.defaultOptions.controls.videonopause = {
 
 
         videoNoPauseform.onSubmit((data) => {
-            const iframetag = `<video id="videoIframe" src="${data.videoNoPauseUrl}" title="description" width="304px" height="154px" controls data-control="true"></video>`;
+            const width = data.Width !== "" ? `${data.Width}px` : '304px';
+            const height = data.Width * 0.56;
+            const iframetag = `<video id="videoIframe" src="${data.videoNoPauseUrl}" title="description" width="${width}" height="${height}" controls data-control="true"></video>`;
             editor.selection.insertHTML(iframetag);
             closePopWindow();
         })
@@ -41,7 +93,8 @@ Jodit.defaultOptions.controls.video = {
                 name: 'videoUrl',
                 placeholder: 'Enter video URL...',
                 autofocus: false,
-                label: 'Video URL:'
+                label: 'Video URL:',
+                required: true
             }),
             new UIButton(editor, {
                 text: 'Insert Video',
@@ -167,12 +220,13 @@ if (editorDiv) {
         className: 'previeweditor',
         height: '100%',
         width: '100%',
-        "allowResizeY": false
+        "allowResizeY": false,
     });
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
     var editorDivss = document.getElementById('editor-container');
+    var videos = document.querySelectorAll('video[data-control="true"]');
    
     if (editorDivss) {
         const images = editorDivss.querySelectorAll('img');
@@ -181,6 +235,14 @@ document.addEventListener("DOMContentLoaded", function (event) {
             margin: 24,
             background: '#365f9390',
             scrollOffset: 0,
+        });
+    }
+
+    if (videos) {
+        videos.forEach(function (video) {
+            video.addEventListener('pause', function () {
+                video.currentTime = 0;
+            });
         });
     }
 
@@ -196,25 +258,15 @@ if (editorDiv2) {
         "uploader": {
             "insertImageAsBase64URI": true
         },
-        buttons: [...Jodit.defaultOptions.buttons, 'footnoteButton', 'videonopause'],
+        buttons: [...Jodit.defaultOptions.buttons, 'footnoteButton', 'videonopause','audioplay'],
         
     });
 
     let inputElement = document.getElementById('hiddeninput')
     editor.events.on('change', e => {
-
         inputElement.value = editor.getEditorValue();
     })
 }
-
-document.addEventListener('DOMContentLoaded', function () {
-    var videos = document.querySelectorAll('video[data-control="true"]');
-    videos.forEach(function (video) {
-        video.addEventListener('pause', function () {
-            video.currentTime = 0;
-        });
-    });
-});
 
 var input = document.getElementById('Becomings')
 if (input) {
@@ -223,17 +275,6 @@ if (input) {
             enabled: 0
         }
     })
-    var selectedTag = input.getAttribute('data-tags');
-
-    // Convert the string of tags into an array
-    if (selectedTag) {
-        var tagsArray = selectedTag.split(',');
-        tagsArray.forEach(function (tag) {
-            // Get the value of each tag
-            tagify.addTags([tag.trim()]);
-        });
-    }
-
 }
 
 function copyFunction(fileurl) {

@@ -5,18 +5,15 @@
     <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
 </head>
 <div class="background-container background-image"></div>
-<div class="main-container flex-center">
-    <div class="login-section">
-        <div class="heading">
-            <h2>Welcome</h2>
-            <p>Log in to manage the system</p>
-        </div>
+<div class="main-container flex-horizontal-center">
+    <div class="admin-container login-container">
+        <div class="login-title">Log in</div>
         <form class="login-form" method="post" asp-action="AddAuthentication" asp-controller="Admin">
-            <div class="input">
+            <div class="login-input">
                 <label for="username">Username</label>
                 <input type="text" id="username" name="username" autocomplete="off" required/>
             </div>
-            <div class="input">
+            <div class="login-input">
                 <label for="password">Password</label>
                 <input type="password" id="password" name="password" autocomplete="off" required/>
             </div>
@@ -24,7 +21,7 @@
             {
                 <div class="login-error">@ViewBag.Error</div>
             }
-            <div class="button input">
+            <div class="login-button">
                 <button type="submit">Log in</button>
             </div>
         </form>

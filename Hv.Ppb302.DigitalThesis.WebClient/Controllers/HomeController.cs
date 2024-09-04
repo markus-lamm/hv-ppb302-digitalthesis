@@ -158,17 +158,20 @@ public class HomeController : Controller
     {
         return View(BuildViewModel(_molarMosaicRepo.GetAll()!, 
             _molecularMosaicRepo.GetAll()!, 
-            _kaleidoscopeTagRepo.GetAll()!));
+            _kaleidoscopeTagRepo.GetAll()!,
+            _pageRepository.GetByName("Kaleidoscope")!));
 
         static KaleidoscopingViewModel BuildViewModel(IEnumerable<MolarMosaic> molarMosaics, 
             IEnumerable<MolecularMosaic> molecularMosaics, 
-            IEnumerable<KaleidoscopeTag> kaleidoscopeTags)
+            IEnumerable<KaleidoscopeTag> kaleidoscopeTags,
+            Page kaleidoscopePage)
         {
             return new KaleidoscopingViewModel
             {
                 MolarMosaics = molarMosaics.ToList(),
                 MolecularMosaics = molecularMosaics.ToList(),
                 KaleidoscopeTags = kaleidoscopeTags.ToList(),
+                KaleidoscopePage = kaleidoscopePage
             };
         }
     }
@@ -189,7 +192,9 @@ public class HomeController : Controller
         var jsonSerializer = JsonSerializer.Serialize(values);
         var cookieOptions = new CookieOptions
         {
-            Expires = DateTime.Now.AddDays(expirationTime ?? 30)
+            Expires = DateTime.Now.AddDays(expirationTime ?? 30),
+            Secure = true,
+            SameSite = SameSiteMode.Strict
         };
         Response.Cookies.Append(key, jsonSerializer, cookieOptions);
     }
@@ -200,7 +205,7 @@ public class HomeController : Controller
         return cookieValue != null ? JsonSerializer.Deserialize<List<string>>(cookieValue) : new List<string>();
     }
 
-    public List<FileViewViewModel> GetAllMaterialFiles()
+    public List<FilesViewModel> GetAllMaterialFiles()
     {
         var Inspector = new ContentInspectorBuilder()
         {
@@ -213,7 +218,7 @@ public class HomeController : Controller
                              .ToList();
 
         var uploadsList = _uploadRepository.GetAllMaterials();
-        List<FileViewViewModel> fileViewModels = [];
+        List<FilesViewModel> fileViewModels = [];
         foreach (var file in files)
         {
             var isMaterialFile = uploadsList?.FirstOrDefault(m => m.Name == file);
@@ -225,7 +230,7 @@ public class HomeController : Controller
                 var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
                 var upload = uploadsList?.FirstOrDefault(u => u.Name == file);
 
-                fileViewModels.Add(new FileViewViewModel
+                fileViewModels.Add(new FilesViewModel
                 {
                     Category = fileType,
                     Name = file,

@@ -1,4 +1,4 @@
-﻿@model List<FileViewViewModel>
+﻿@model List<FilesViewModel>
 @{
     ViewData["Title"] = "Materials";
 }
@@ -6,24 +6,42 @@
     <link rel="stylesheet" href="~/css/materials.css" asp-append-version="true" />
 </head>
 <div class="background-container background-image"></div>
-<div class="matpdffiles">
+<div class="materials-container">
     @if (Model.Count != 0)
     {
-        foreach (var file in Model)
-        {
-            <div class="matpdfcontainer">
-                <div class="matpdfcard">
-                    <img class="matpdfimg" src="~/images/icons/pdf.png" />
-                    <div class="matcontentcontainer">
-                        <h2>@file.Name</h2>
-                        <a target="_blank" class="downcontainer" href="@file.FileUrl">
-                            <img class="matdownimg" src="~/images/icons/download.png" />
-                            <h4>Download</h4>
-                        </a>
+        <div class="files-container">
+            @foreach (var file in Model)
+            {
+                <div class="file-item-container">
+                    <div class=file-icon-container>
+                        @switch (file.Category)
+                        {
+                            case MimeDetective.Storage.Category.Document:
+                                <img class="file-icon" src="~/images/icons/pdf.png" />
+                                break;
+                            case MimeDetective.Storage.Category.Video:
+                                <img class="file-icon" src="~/images/icons/video.png" />
+                                break;
+                            case MimeDetective.Storage.Category.Audio:
+                                <img class="file-icon" src="~/images/icons/audio.png" />
+                                break;
+                            case MimeDetective.Storage.Category.Compressed:
+                                <img class="file-icon" src="~/images/icons/video.png" />
+                                break;
+                            default:
+                                <img class="file-icon" src="~/images/icons/unknown.png" />
+                                break;
+                        }
+                    </div>
+                    <div class="file-text-container">
+                        <div class="file-name-container">@file.Name</div>
+                        <div class="file-options-container">
+                            <a target="_blank" class="file-options-view-btn" href="@file.FileUrl">View</a>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
+            }
+        </div>
     }
     else
     {

@@ -21,6 +21,21 @@ body {
     overflow-x: hidden; /* Prevent horizontal scrolling */
 }
 
+/* Prevents the system from displaying on to small screens */
+.size-guard {
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: black;
+    color: white;
+    height: 100vh;
+    width: 100vw;
+    z-index: 10000;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
 .navbar {
     display: flex;
     align-items: center; /* Centers items vertically */
@@ -84,6 +99,11 @@ body {
     display: none;
 }
 
+.flex-row {
+    display: flex;
+    flex-direction: row;
+}
+
 .flex-column {
     display: flex;
     flex-direction: column;
@@ -93,4 +113,33 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+}
+
+.flex-vertical-center {
+    display: flex;
+    align-items: center;
+}
+
+.flex-horizontal-center {
+    display: flex;
+    justify-content: center;
+}
+
+.flex-row-reverse {
+    display: flex;
+    flex-direction: row-reverse;
+}
+
+.previeweditor {
+    border-color: transparent !important;
+    background: transparent !important;
+}
+
+.previeweditor div {
+    background: transparent !important;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
 }

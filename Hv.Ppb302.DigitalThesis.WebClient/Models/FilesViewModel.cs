@@ -1,6 +1,6 @@
 ﻿namespace Hv.Ppb302.DigitalThesis.WebClient.Models;
 
-public class FileViewViewModel
+public class FilesViewModel
 {
     public MimeDetective.Storage.Category Category { get; set; }
     public string? Name { get; set; }

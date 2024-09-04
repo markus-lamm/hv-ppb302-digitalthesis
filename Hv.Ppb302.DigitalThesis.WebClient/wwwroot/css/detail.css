@@ -40,7 +40,7 @@
 .navmenu-subtitle {
     text-decoration: none;
     color: black;
-    padding: 0.2rem;
+    padding: 0.3rem;
 }
 
 .navmenu-title {
@@ -68,6 +68,11 @@
     border-radius: 2px;
 }
 
+.pdf-btn-container {
+    display: flex;
+    margin-top: 1rem;
+}
+
 .info-minimize-btn {
     display: flex;
     justify-content: center;
@@ -89,6 +94,7 @@
 
 .info-minimize-img {
     width: 2rem;
+    opacity: 0.6;
 }
 
 .text-container {
@@ -133,6 +139,22 @@
         transition: 0.2s;
     }
 
+.audio-icon-bckg-active {
+    background-image: url('../images/backgrounds/logo-zoom.png');
+    background-size: cover;
+    background-position: center;
+}
+
+.pdf-icon,
+.play-icon,
+.stop-icon {
+    height: 2rem;
+}
+
+.stop-icon {
+    display: none;
+}
+
 .text-reset-btn {
     display: flex;
     position: fixed;
@@ -162,11 +184,7 @@
 .text-reset-img {
     transform: rotate(90deg);
     width: 2rem;
-}
-
-.pdf-icon,
-.play-icon {
-    height: 2rem;
+    opacity: 0.6;
 }
 
 .visibility-container {
