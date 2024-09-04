@@ -7,16 +7,14 @@
 <head>
     <link rel="stylesheet" href="~/css/kaleidoscoping.css" asp-append-version="true" />
 </head>
-<!-- The Modal -->
-<div id="myModal" class="modal">
-    <!-- Modal content -->
-    <div class="modal-content">
-        <div class="btnclosediv">
-            <span class="kaleidoscope-closemodal">&times;</span>
+<div id="kalei-modal" class="kalei-modal">
+    <div class="kalei-modal-content">
+        <div class="kalei-modal-close-container">
+            <span class="kalei-modal-close">&times;</span>
         </div>
         <div class="text" id="editor">
             <p>
-               @Html.Raw(Model?.KaleidoscopePage?.Content)
+               @Html.Raw(Model.KaleidoscopePage?.Content)
             </p>
         </div>
     </div>
@@ -111,7 +109,7 @@
                     </li>
                 }
             }
-            <button id="kaleidoscope-openmodal">Open Modal</button>
+            <button id="kalei-modal-open">Open Modal</button>
         </ul>
     </div>
 </div>
