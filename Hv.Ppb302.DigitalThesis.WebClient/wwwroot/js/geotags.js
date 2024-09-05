@@ -1,6 +1,5 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
     const tutorialOverlay = document.querySelector("#tutorial-overlay");
-    const tutorialBox = document.querySelector("#tutorial-box");
     const tutorialText = document.querySelector("#tutorial-text");
     const tutorialPrevBtn = document.querySelector("#tutorial-prev-btn");
     const tutorialNextBtn = document.querySelector("#tutorial-next-btn");
@@ -85,13 +84,13 @@
                 kaleidoscope.style.zIndex = "0";
                 break;
             case 6:
-                tutorialNextBtn.innerText = "Next"
+                tutorialNextBtn.innerText = "Next";
                 kaleidoscope.style.zIndex = "10";
                 applyZindexToArray(molecularMosaics, "0");
                 applyZindexToArray(molarMosaics, "0");
                 break;
             case 7:
-                tutorialNextBtn.innerText = "Exit"
+                tutorialNextBtn.innerText = "Exit";
                 applyZindexToArray(molecularMosaics, "10");
                 applyZindexToArray(molarMosaics, "10");
                 kaleidoscope.style.zIndex = "0";
@@ -114,7 +113,7 @@
 
     function applyZindexToArray(array, zValue) {
         array.forEach(id => {
-            let element = document.querySelector(`#${id}`);
+            const element = document.querySelector(`#${id}`);
             if (element) {
                 element.style.zIndex = zValue;
             }
