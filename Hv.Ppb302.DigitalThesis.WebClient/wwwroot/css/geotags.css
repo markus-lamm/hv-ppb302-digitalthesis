@@ -2,6 +2,7 @@
 .geotag {
     height: 6vw;
     min-height: 5rem;
+    max-height: 10rem;
 }
 
 .image-text {
