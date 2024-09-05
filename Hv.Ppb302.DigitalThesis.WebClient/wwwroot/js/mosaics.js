@@ -1,13 +1,13 @@
 ﻿// Get all checkboxes
 const checkboxes = Array.from(document.querySelectorAll('.filter-checkbox input[type="checkbox"]'));
-const container = document.querySelector('.mosaic-container');
-const mosaics = Array.from(container.querySelectorAll('.mosaic'));
+const container = document.querySelector(".mosaic-container");
+const mosaics = Array.from(container.querySelectorAll(".mosaic"));
 const directions = mosaics.map(() => ({
     x: (Math.random() > 0.5 ? 1 : -1) + Math.random() * 0.4,
     y: (Math.random() > 0.5 ? 1 : -1) + Math.random() * 0.4,
 }));
 const speedFactor = 0.5;
-const becomingsBtn = document.querySelector('#becomings-btn');
+const becomingsBtn = document.querySelector("#becomings-btn");
 let isBecomingsBtnTriggered = false;
 let isInitialUpdateTriggered = false;
 
@@ -19,58 +19,58 @@ mosaics.forEach(mosaic => {
 
 function updateMosaicEventListeners(addListeners = true) {
     mosaics.forEach(mosaic => {
-        const mosaicContent = mosaic.querySelector('.mosaic-content');
-        const floatcontainer = document.querySelector('.mosaic-float');
+        const mosaicContent = mosaic.querySelector(".mosaic-content");
+        const floatcontainer = document.querySelector(".mosaic-float");
 
         if (addListeners) {
-            mosaic.classList.add('mosaic-position');
-            mosaicContent.classList.remove('active');
-            container.style.overflow = 'hidden';
-            container.style.position = 'fixed';
-            mosaic.addEventListener('mouseenter', pauseMosaic);
-            mosaic.addEventListener('mouseleave', resumeMosaic);
-            floatcontainer.style.marginInline = '0';
+            mosaic.classList.add("mosaic-position");
+            mosaicContent.classList.remove("active");
+            container.style.overflow = "hidden";
+            container.style.position = "fixed";
+            mosaic.addEventListener("mouseenter", pauseMosaic);
+            mosaic.addEventListener("mouseleave", resumeMosaic);
+            floatcontainer.style.marginInline = "0";
         } else {
-            mosaic.removeEventListener('mouseenter', pauseMosaic);
-            mosaic.removeEventListener('mouseleave', resumeMosaic);
-            mosaic.addEventListener('mouseenter', (event) => {
+            mosaic.removeEventListener("mouseenter", pauseMosaic);
+            mosaic.removeEventListener("mouseleave", resumeMosaic);
+            mosaic.addEventListener("mouseenter", (event) => {
                 toggleMosaicText(true);
-                event.currentTarget.style.zIndex = '100';
+                event.currentTarget.style.zIndex = "100";
             });
 
-            mosaic.addEventListener('mouseleave', (event) => {
+            mosaic.addEventListener("mouseleave", (event) => {
                 toggleMosaicText(false);
-                event.currentTarget.style.zIndex = '0';
+                event.currentTarget.style.zIndex = "0";
             });
-            floatcontainer.style.marginInline = '10rem';
-            mosaicContent.classList.add('active');
-            container.style.overflow = 'unset';
-            container.style.position = 'unset';
-            mosaic.classList.remove('mosaic-position');
+            floatcontainer.style.marginInline = "10rem";
+            mosaicContent.classList.add("active");
+            container.style.overflow = "unset";
+            container.style.position = "unset";
+            mosaic.classList.remove("mosaic-position");
         }
     });
 }
 
 function pauseMosaic() {
-    this.classList.add('paused');
+    this.classList.add("paused");
     toggleMosaicText(true);
 }
 
 function resumeMosaic() {
-    this.classList.remove('paused');
+    this.classList.remove("paused");
     toggleMosaicText(false);
 }
 
 function toggleMosaicText(show) {
-    document.querySelectorAll('.mosaic a div').forEach(textElement => {
-        textElement.style.opacity = show ? '1' : '0';
-        textElement.style.display = show ? 'block' : 'none';
+    document.querySelectorAll(".mosaic a div").forEach(textElement => {
+        textElement.style.opacity = show ? "1" : "0";
+        textElement.style.display = show ? "block" : "none";
     });
 }
 
 function update() {
     mosaics.forEach((mosaic, index) => {
-        if (mosaic.classList.contains('paused')) return;
+        if (mosaic.classList.contains("paused")) return;
 
         const rect = mosaic.getBoundingClientRect();
 
@@ -98,32 +98,32 @@ if (!isInitialUpdateTriggered) {
 }
 
 // BecomingButton click event listener
-becomingsBtn.addEventListener('change', () => {
-    const becomingsText = becomingsBtn.querySelector('.becomings-text');
+becomingsBtn.addEventListener("change", () => {
+    const becomingsText = becomingsBtn.querySelector(".becomings-text");
     isBecomingsBtnTriggered = !isBecomingsBtnTriggered;
     //becomingsText.textContent = isBecomingsBtnTriggered ? 'Hide Becomings' : 'Show Becomings';
 
     updateMosaicEventListeners(!isBecomingsBtnTriggered);
 
     mosaics.forEach(mosaic => {
-        mosaic.classList.toggle('paused', isBecomingsBtnTriggered);
+        mosaic.classList.toggle("paused", isBecomingsBtnTriggered);
     });
 
 
 });
 
 // Sidebar show/hide
-document.addEventListener('DOMContentLoaded', function () {
-    const sidebarContainer = document.querySelector('#mosaics-sidebar-container');
-    const sidebarBtn = document.querySelector('.mosaics-sidebar-btn');
+document.addEventListener("DOMContentLoaded", function () {
+    const sidebarContainer = document.querySelector("#mosaics-sidebar-container");
+    const sidebarBtn = document.querySelector(".mosaics-sidebar-btn");
     let isRotated = false;
     let isSidebarOpen = false;
 
-    sidebarBtn.addEventListener('click', function () {
+    sidebarBtn.addEventListener("click", function () {
         isRotated = !isRotated;
         isSidebarOpen = !isSidebarOpen;
-        sidebarBtn.classList.toggle('rotate');
-        sidebarContainer.classList.toggle('show');
+        sidebarBtn.classList.toggle("rotate");
+        sidebarContainer.classList.toggle("show");
     });
 });
 
@@ -137,19 +137,19 @@ window.onload = function () {
 
 // Add a click event listener to each checkbox
 checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener('click', function () {
+    checkbox.addEventListener("click", function () {
         // Get all selected tags
         const selectedTags = checkboxes.filter(checkbox => checkbox.checked).map(checkbox => checkbox.dataset.tag);
 
         // Filter mosaics
         mosaics.forEach((mosaic) => {
-            const mosaicTags = mosaic.dataset.tags.split(',');
+            const mosaicTags = mosaic.dataset.tags.split(",");
             if (selectedTags.length === 0 || selectedTags.some(tag => mosaicTags.includes(tag))) {
                 // If no checkboxes are selected or the mosaic has at least one of the selected tags, make it fully visible
-                mosaic.style.opacity = '1';
+                mosaic.style.opacity = "1";
             } else {
                 // Otherwise, make it almost transparent
-                mosaic.style.opacity = '0.2';
+                mosaic.style.opacity = "0.2";
             }
         });
     });
@@ -157,16 +157,16 @@ checkboxes.forEach((checkbox) => {
 
 //Check cookies and apply css
 function applyVisitedMosaics() {
-    const visitedMosaics = getCookie('digital-thesis-mosaics');
+    const visitedMosaics = getCookie("digital-thesis-mosaics");
     if (visitedMosaics) {
         const decodedMosaics = decodeURIComponent(visitedMosaics);
         const visitedList = JSON.parse(decodedMosaics);
         visitedList.forEach(id => {
             const elementen = document.querySelector(`#mosaic-${id}`);
             if (elementen) {
-                const element = elementen.querySelector('.mosaicImg');
+                const element = elementen.querySelector(".mosaicImg");
                 if (element) {
-                    element.classList.add('visited');
+                    element.classList.add("visited");
                 } 
             }
             else {
@@ -179,16 +179,16 @@ function applyVisitedMosaics() {
 function getCookie(name) {
     const value = `; ${document.cookie}`;
     const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
+    if (parts.length === 2) return parts.pop().split(";").shift();
 }
 
 // Ensure the script runs on initial load
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
     applyVisitedMosaics();
 });
 
 // Ensure the script runs when the user navigates back to the page
-window.addEventListener('pageshow', function (event) {
+window.addEventListener("pageshow", function (event) {
     if (event.persisted) {
         applyVisitedMosaics();
     }

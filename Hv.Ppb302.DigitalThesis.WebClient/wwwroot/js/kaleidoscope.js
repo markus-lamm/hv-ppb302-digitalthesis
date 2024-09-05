@@ -240,6 +240,7 @@
     const elementsToRotate = [ksObjects[0], ksObjects[2], ksObjects[4], ksObjects[6]];
     const elementsToRotateInverted = [ksObjects[1], ksObjects[3], ksObjects[5]];
 
+    // Add event listeners for rotation on each radio button
     radios.forEach(radio => {
         radio.addEventListener("change", () => {
             const ksContainerRotation = Math.floor(Math.random() * 180) - 90;

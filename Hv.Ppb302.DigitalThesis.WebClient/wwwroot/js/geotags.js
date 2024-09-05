@@ -1,16 +1,16 @@
-﻿document.addEventListener('DOMContentLoaded', () => {
-    const tutorialOverlay = document.querySelector('#tutorial-overlay');
-    const tutorialBox = document.querySelector('#tutorial-box');
-    const tutorialText = document.querySelector('#tutorial-text');
-    const tutorialPrevBtn = document.querySelector('#tutorial-prev-btn');
-    const tutorialNextBtn = document.querySelector('#tutorial-next-btn');
-    const tutorialExitBtn = document.querySelector('#tutorial-exit-btn');
-    const tutorialStepContainer = document.querySelector('#tutorial-step-container');
-    const navbar = document.querySelector('#navbar');
+﻿document.addEventListener("DOMContentLoaded", () => {
+    const tutorialOverlay = document.querySelector("#tutorial-overlay");
+    const tutorialBox = document.querySelector("#tutorial-box");
+    const tutorialText = document.querySelector("#tutorial-text");
+    const tutorialPrevBtn = document.querySelector("#tutorial-prev-btn");
+    const tutorialNextBtn = document.querySelector("#tutorial-next-btn");
+    const tutorialExitBtn = document.querySelector("#tutorial-exit-btn");
+    const tutorialStepContainer = document.querySelector("#tutorial-step-container");
+    const navbar = document.querySelector("#navbar");
     const geotags = ["link-geotag-1", "link-geotag-2", "link-geotag-3", "link-geotag-4", "link-geotag-5", "link-geotag-6"];
     const molarMosaics = ["mosaic-yellow-1", "mosaic-yellow-2", "mosaic-yellow-3"];
     const molecularMosaics = ["mosaic-blue-1", "mosaic-blue-2", "mosaic-blue-3", "mosaic-blue-4", "mosaic-blue-5"];
-    const kaleidoscope = document.querySelector('#link-kaleidoscope');
+    const kaleidoscope = document.querySelector("#link-kaleidoscope");
     let currentStep = 1;
 
     const steps = [
@@ -24,8 +24,8 @@
     ];
 
     steps.forEach((step, index) => {
-        const stepElement = document.createElement('div');
-        stepElement.classList.add('tutorial-step');
+        const stepElement = document.createElement("div");
+        stepElement.classList.add("tutorial-step");
         stepElement.id = `tutorial-step-${index + 1}`;
         stepElement.textContent = index + 1;
         tutorialStepContainer.appendChild(stepElement);
@@ -33,7 +33,7 @@
 
     showStep();
 
-    tutorialPrevBtn.addEventListener('click', function () {
+    tutorialPrevBtn.addEventListener("click", function () {
         if (currentStep > 1) {
             currentStep--;
             showStep();
@@ -42,7 +42,7 @@
         }
     });
 
-    tutorialNextBtn.addEventListener('click', function () {
+    tutorialNextBtn.addEventListener("click", function () {
         if (currentStep < steps.length) {
             currentStep++;
             showStep();
@@ -51,7 +51,7 @@
         }
     });
 
-    tutorialExitBtn.addEventListener('click', function () {
+    tutorialExitBtn.addEventListener("click", function () {
         tutorialOverlay.style.display = "none";
     });
 
@@ -103,11 +103,11 @@
     }
 
     function highlightCurrentStep() {
-        document.querySelectorAll('.tutorial-step').forEach((stepElement, index) => {
+        document.querySelectorAll(".tutorial-step").forEach((stepElement, index) => {
             if (index === currentStep - 1) {
-                stepElement.classList.add('active');
+                stepElement.classList.add("active");
             } else {
-                stepElement.classList.remove('active');
+                stepElement.classList.remove("active");
             }
         });
     }

@@ -1,12 +1,12 @@
 ﻿// Audioplayer
-const audioButton = document.querySelector('#audio-icon');
+const audioButton = document.querySelector("#audio-icon");
 if (audioButton) {
-    const audioPlayer = document.querySelector('#audio-player');
-    const audioImagePlay = document.querySelector('#audio-img-play');
-    const audioImageStop = document.querySelector('#audio-img-stop');
+    const audioPlayer = document.querySelector("#audio-player");
+    const audioImagePlay = document.querySelector("#audio-img-play");
+    const audioImageStop = document.querySelector("#audio-img-stop");
 
     // Add click event listener to the button
-    audioButton.addEventListener('click', function () {
+    audioButton.addEventListener("click", function () {
         // Check if audio is currently playing
         audioButton.classList.toggle("audio-icon-bckg-active")
 
@@ -26,35 +26,35 @@ if (audioButton) {
 }
 
 // PDF download
-const pdfDownload = document.querySelector('#pdf-download-btn');
+const pdfDownload = document.querySelector("#pdf-download-btn");
 if (pdfDownload) {
-    document.querySelector('#pdf-download-btn').addEventListener('click', async function () {
+    document.querySelector("#pdf-download-btn").addEventListener("click", async function () {
         // URL of the PDF to be downloaded
-        var selectedTag = this.getAttribute('data-tags');
+        var selectedTag = this.getAttribute("data-tags");
         const pdfUrl = selectedTag;  // Replace with your actual file URL
 
         try {
             // Check if the browser supports the File System Access API
             if (!window.showSaveFilePicker) {
-                alert('showSaveFilePicker API is not supported in this browser.');
+                alert("showSaveFilePicker API is not supported in this browser.");
                 return;
             }
 
             // Fetch the PDF file from the URL
             const response = await fetch(pdfUrl);
             if (!response.ok) {
-                throw new Error('Network response was not ok');
+                throw new Error("Network response was not ok");
             }
             const pdfBlob = await response.blob();
 
             // Open the save file picker
             const fileHandle = await window.showSaveFilePicker({
-                suggestedName: 'downloaded.pdf', // Default file name
+                suggestedName: "downloaded.pdf", // Default file name
                 types: [
                     {
-                        description: 'PDF Files',
+                        description: "PDF Files",
                         accept: {
-                            'application/pdf': ['.pdf'],
+                            'application/pdf': [".pdf"],
                         },
                     },
                 ],
@@ -69,27 +69,27 @@ if (pdfDownload) {
             // Close the file and save the changes
             await writableStream.close();
         } catch (error) {
-            console.error('Error saving file:', error);
+            console.error("Error saving file:", error);
         }
     });
 }
 
 //Text reset
-document.addEventListener('DOMContentLoaded', function () {
-    var textContainer = document.querySelector('.text-container');
-    var textResetBtn = document.querySelector('#text-reset-btn');
+document.addEventListener("DOMContentLoaded", function () {
+    var textContainer = document.querySelector(".text-container");
+    var textResetBtn = document.querySelector("#text-reset-btn");
 
-    textContainer.addEventListener('scroll', function () {
+    textContainer.addEventListener("scroll", function () {
         if (textContainer.scrollTop > 0) {
-            textResetBtn.classList.remove('hidden');
-            textResetBtn.classList.add('visible');
+            textResetBtn.classList.remove("hidden");
+            textResetBtn.classList.add("visible");
         } else {
-            textResetBtn.classList.remove('visible');
-            textResetBtn.classList.add('hidden');
+            textResetBtn.classList.remove("visible");
+            textResetBtn.classList.add("hidden");
         }
     });
 
-    textResetBtn.addEventListener('click', function () {
+    textResetBtn.addEventListener("click", function () {
         smoothScrollTo(textContainer, 0, 600); // Scroll to top over 600ms
     });
 
@@ -117,19 +117,19 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Navigationmenu
-document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener("DOMContentLoaded", function () {
     const joditHTML = editor.getEditorValue();
 
     // Parse the HTML string to create a DOM structure
     const parser = new DOMParser();
-    const doc = parser.parseFromString(joditHTML, 'text/html');
+    const doc = parser.parseFromString(joditHTML, "text/html");
 
     // Store the text content and tag name of each heading element in a new list
     const headingList = [];
 
     // Function to recursively collect headings in order
     function collectHeadings(element) {
-        if (element.tagName === 'H1' || element.tagName === 'H2') {
+        if (element.tagName === "H1" || element.tagName === "H2") {
             const id = `heading-${headingList.length}`;
             element.id = id;
             headingList.push({ tag: element.tagName.toLowerCase(), text: element.textContent, id: id });
@@ -139,21 +139,21 @@ document.addEventListener('DOMContentLoaded', function () {
     collectHeadings(doc.body);
 
     // Render the parsed HTML content into a container on the page
-    const editorContainer = document.querySelector('#editor-container');
+    const editorContainer = document.querySelector("#editor-container");
     if (editorContainer) {
         editorContainer.innerHTML = doc.body.innerHTML;
     }
 
-    const navmenu = document.querySelector('#navmenu');
+    const navmenu = document.querySelector("#navmenu");
     if (navmenu) {
         for (let i = 0; i < headingList.length; i++) {
-            const navmenuItem = document.createElement('a');
+            const navmenuItem = document.createElement("a");
             navmenuItem.href = `#${headingList[i].id}`;
             navmenuItem.id = `nav-${headingList[i].id}`;
-            if (headingList[i].tag === 'h1') {
-                navmenuItem.className = 'navmenu-title';
-            } else if (headingList[i].tag === 'h2') {
-                navmenuItem.className = 'navmenu-subtitle';
+            if (headingList[i].tag === "h1") {
+                navmenuItem.className = "navmenu-title";
+            } else if (headingList[i].tag === "h2") {
+                navmenuItem.className = "navmenu-subtitle";
             }
             navmenuItem.textContent = headingList[i].text;
             navmenu.appendChild(navmenuItem);
@@ -163,7 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // Highlight the current section in the navmenu
     const observerOptions = {
         root: null,
-        rootMargin: '0px',
+        rootMargin: "0px",
         threshold: 0.1
     };
 
@@ -171,9 +171,9 @@ document.addEventListener('DOMContentLoaded', function () {
         entries.forEach(entry => {
             const navItem = document.querySelector(`#nav-${entry.target.id}`);
             if (entry.isIntersecting) {
-                navItem.classList.add('active');
+                navItem.classList.add("active");
             } else {
-                navItem.classList.remove('active');
+                navItem.classList.remove("active");
             }
         });
     };
@@ -189,19 +189,19 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 // Info sidebar minimize
-document.addEventListener('DOMContentLoaded', function () {
-    const infoMinimizeBtn = document.querySelector('#info-minimize-btn');
-    const infoMinimizeImg = document.querySelector('#info-minimize-img');
+document.addEventListener("DOMContentLoaded", function () {
+    const infoMinimizeBtn = document.querySelector("#info-minimize-btn");
+    const infoMinimizeImg = document.querySelector("#info-minimize-img");
     let isRotated = false;
 
-    infoMinimizeBtn.addEventListener('click', function () {
-        const infoContainer = document.querySelector('#info-container');
+    infoMinimizeBtn.addEventListener("click", function () {
+        const infoContainer = document.querySelector("#info-container");
 
         if (infoContainer) {
-            infoContainer.classList.toggle('minimized');
+            infoContainer.classList.toggle("minimized");
         }
 
         isRotated = !isRotated;
-        infoMinimizeImg.style.transform = isRotated ? 'rotate(180deg)' : 'rotate(0deg)';
+        infoMinimizeImg.style.transform = isRotated ? "rotate(180deg)" : "rotate(0deg)";
     });
 });

@@ -1,26 +1,26 @@
 ﻿const { UIForm, UIInput, UIButton, UITextArea } = Jodit.modules;
 
 Jodit.defaultOptions.controls.audioplay = {
-    iconURL: '/images/icons/sound.png',
+    iconURL: "/images/icons/sound.png",
     popup: (editor, current, control, close) => {
         audioForm = new UIForm(editor, [
             new UIInput(editor, {
-                name: 'audiourl',
-                placeholder: 'Enter audio URL...',
+                name: "audiourl",
+                placeholder: "Enter audio URL...",
                 autofocus: false,
-                label: 'Audio URL:',
+                label: "Audio URL:",
                 required: true
             }),
             new UIInput(editor, {
-                name: 'Width',
-                placeholder: 'Enter width for the audio player ',
+                name: "Width",
+                placeholder: "Enter width for the audio player ",
                 autofocus: false,
-                label: 'Video width: (Normal size is 300)'
+                label: "Video width: (Normal size is 300)"
             }),
             new UIButton(editor, {
-                text: 'Insert audio player',
-                status: 'primary',
-                variant: 'primary'
+                text: "Insert audio player",
+                status: "primary",
+                variant: "primary"
             }).onAction(() => {
                 audioForm.submit();
             })
@@ -31,7 +31,7 @@ Jodit.defaultOptions.controls.audioplay = {
             }; 
 
         audioForm.onSubmit(data => {
-            const width = data.Width !== "" ? `${data.Width}px` : '300px';
+            const width = data.Width !== "" ? `${data.Width}px` : "300px";
             const audiotag = `<audio controls style="width: ${width}""><source src="${data.audiourl}">Your browser does not support the audio element.</audio>`;
             editor.selection.insertHTML(audiotag);
             closePopWindow();
@@ -39,31 +39,31 @@ Jodit.defaultOptions.controls.audioplay = {
         })
         return audioForm;
     },
-    tooltip: 'Insert audio player'
+    tooltip: "Insert audio player"
     
 }
 
 Jodit.defaultOptions.controls.videonopause = {
-    iconURL: '/images/icons/replay.png',
+    iconURL: "/images/icons/replay.png",
     popup: (editor, current, control, close) => {
         videoNoPauseform = new UIForm(editor, [
             new UIInput(editor, {
-                name: 'videoNoPauseUrl',
-                placeholder: 'Enter video URL...',
+                name: "videoNoPauseUrl",
+                placeholder: "Enter video URL...",
                 autofocus: false,
-                label: 'Video URL:',
+                label: "Video URL:",
                 required: true
             }),
             new UIInput(editor, {
-                name: 'Width',
-                placeholder: 'Enter width for the video ',
+                name: "Width",
+                placeholder: "Enter width for the video ",
                 autofocus: false,
-                label: 'Video width: (Normal size is 304)'
+                label: "Video width: (Normal size is 304)"
             }),
             new UIButton(editor, {
-                text: 'Insert no pause video',
-                status: 'primary',
-                variant: 'primary'
+                text: "Insert no pause video",
+                status: "primary",
+                variant: "primary"
             }).onAction(() => {
                 videoNoPauseform.submit();
             })
@@ -75,7 +75,7 @@ Jodit.defaultOptions.controls.videonopause = {
 
 
         videoNoPauseform.onSubmit((data) => {
-            const width = data.Width !== "" ? `${data.Width}px` : '304px';
+            const width = data.Width !== "" ? `${data.Width}px` : "304px";
             const height = data.Width * 0.56;
             const iframetag = `<video id="videoIframe" src="${data.videoNoPauseUrl}" title="description" width="${width}" height="${height}" controls data-control="true"></video>`;
             editor.selection.insertHTML(iframetag);
@@ -90,16 +90,16 @@ Jodit.defaultOptions.controls.video = {
     popup: (editor, current, control, close) => {
         const videoform = new UIForm(editor, [
             new UIInput(editor, {
-                name: 'videoUrl',
-                placeholder: 'Enter video URL...',
+                name: "videoUrl",
+                placeholder: "Enter video URL...",
                 autofocus: false,
-                label: 'Video URL:',
+                label: "Video URL:",
                 required: true
             }),
             new UIButton(editor, {
-                text: 'Insert Video',
-                status: 'primary',
-                variant: 'primary'
+                text: "Insert Video",
+                status: "primary",
+                variant: "primary"
             }).onAction(() => {
                 videoform.submit();
             })
@@ -125,22 +125,22 @@ Jodit.defaultOptions.controls.footnoteButton = {
     popup: function (editor, current, control, close) {
         const form = new UIForm(editor, [
             new UITextArea(editor, {
-                name: 'linkText',
-                placeholder: 'Enter link text...',
+                name: "linkText",
+                placeholder: "Enter link text...",
                 autofocus: true,
-                label: 'Text: *',
+                label: "Text: *",
                 required: true
             }),
             new UIInput(editor, {
-                name: 'linkURL',
-                placeholder: 'Enter link URL...',
+                name: "linkURL",
+                placeholder: "Enter link URL...",
                 autofocus: false,
-                label: 'URL:'
+                label: "URL:"
             }),
             new UIButton(editor, {
-                text: 'Insert Footnote',
-                status: 'primary',
-                variant: 'primary'
+                text: "Insert Footnote",
+                status: "primary",
+                variant: "primary"
             }).onAction(() => {
                 form.submit();
             })
@@ -153,16 +153,16 @@ Jodit.defaultOptions.controls.footnoteButton = {
         form.onSubmit(() => {
             // Attempt to retrieve the input element from form.elements
             const LinkTextElement = form.elements.find(
-                element => element.state && element.state.name === 'linkText'
+                element => element.state && element.state.name === "linkText"
             );
             const LinkUrlElement = form.elements.find(
-                element => element.state && element.state.name === 'linkURL'
+                element => element.state && element.state.name === "linkURL"
             );
 
             if (LinkTextElement && LinkUrlElement) {
                 // Safely access the value
-                const linkText = LinkTextElement.state.value || '';
-                const linkURL = LinkUrlElement.state.value || '';
+                const linkText = LinkTextElement.state.value || "";
+                const linkURL = LinkUrlElement.state.value || "";
                 let footnoteText = linkText;
 
                 const existingFootnotes = editor.editor.querySelectorAll('a[href^="#_ftnref"]');
@@ -200,7 +200,7 @@ Jodit.defaultOptions.controls.footnoteButton = {
                 editor.value += footnoteContent;
                 
             } else {
-                console.error('Footnote input field not found or state is undefined.');
+                console.error("Footnote input field not found or state is undefined.");
             }
             closePopWindow();
         })
@@ -209,38 +209,38 @@ Jodit.defaultOptions.controls.footnoteButton = {
     tooltip: "Insert Footnote"
 };
 
-var editorDiv = document.querySelector('#editor');
+var editorDiv = document.querySelector("#editor");
 if (editorDiv) {
-    var editor = new Jodit('#editor', {
+    var editor = new Jodit("#editor", {
         toolbar: false,
         readonly: true,
         "showCharsCounter": false,
         "showWordsCounter": false,
         "showXPathInStatusbar": false,
-        className: 'previeweditor',
-        height: '100%',
-        width: '100%',
+        className: "previeweditor",
+        height: "100%",
+        width: "100%",
         "allowResizeY": false,
     });
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
-    var editorDivss = document.querySelector('#editor-container');
+    var editorDivss = document.querySelector("#editor-container");
     var videos = document.querySelectorAll('video[data-control="true"]');
    
     if (editorDivss) {
-        const images = editorDivss.querySelectorAll('img');
+        const images = editorDivss.querySelectorAll("img");
 
         mediumZoom(images, {
             margin: 24,
-            background: '#365f9390',
+            background: "#365f9390",
             scrollOffset: 0,
         });
     }
 
     if (videos) {
         videos.forEach(function (video) {
-            video.addEventListener('pause', function () {
+            video.addEventListener("pause", function () {
                 video.currentTime = 0;
             });
         });
@@ -248,9 +248,9 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 });
 
-var editorDiv2 = document.querySelector('#editortest');
+var editorDiv2 = document.querySelector("#editortest");
 if (editorDiv2) {
-    var editor = new Jodit('#editortest', {
+    var editor = new Jodit("#editortest", {
         autofocus: true,
         "defaultFontSizePoints": "pt",
         "minHeight": 900,
@@ -258,17 +258,17 @@ if (editorDiv2) {
         "uploader": {
             "insertImageAsBase64URI": true
         },
-        buttons: [...Jodit.defaultOptions.buttons, 'footnoteButton', 'videonopause','audioplay'],
+        buttons: [...Jodit.defaultOptions.buttons, "footnoteButton", "videonopause","audioplay"],
         
     });
 
-    let inputElement = document.querySelector('#hiddeninput')
-    editor.events.on('change', e => {
+    let inputElement = document.querySelector("#hiddeninput")
+    editor.events.on("change", e => {
         inputElement.value = editor.getEditorValue();
     })
 }
 
-var input = document.querySelector('#Becomings')
+var input = document.querySelector("#Becomings")
 if (input) {
     var tagify = new Tagify(input, {
         dropdown: {
