@@ -2,7 +2,7 @@
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
-public class UserRepository : IRepository<User>
+public class UserRepository
 {
     private readonly DigitalThesisDbContext _dbContext;
 
@@ -77,25 +77,33 @@ public class UserRepository : IRepository<User>
         }
     }
 
-    public void Update(User user)
+    public void Update(Profile profile)
     {
         try
         {
-            var existingUser = _dbContext.Users.FirstOrDefault(m => m.Id == user.Id);
+            var existingUser = _dbContext.Users.FirstOrDefault(m => m.Id == profile.Id);
             if (existingUser == null)
             {
                 throw new Exception("The user does not exist");
             }
 
             // The username is occupied by another user
-            var occupiedName = _dbContext.Users.FirstOrDefault(m => m.Username == user.Username && user.Username != existingUser.Username);
+            var occupiedName = _dbContext.Users.FirstOrDefault(m => m.Username == profile.Username && profile.Username != existingUser.Username);
             if (occupiedName?.Username != null)
             {
                 throw new Exception("A user with the same username already exists");
             }
 
-            existingUser.Username = user.Username;
-            existingUser.Password = user.Password;
+            // Only updates fields that are not empty
+            if (!string.IsNullOrWhiteSpace(profile.Username))
+            {
+                existingUser.Username = profile.Username;
+            }
+            if (!string.IsNullOrWhiteSpace(profile.NewPassword))
+            {
+                existingUser.Password = profile.NewPassword;
+            }
+
             _dbContext.SaveChanges();
         }
         catch (Exception)

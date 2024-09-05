@@ -46,28 +46,69 @@ public class AdminController : Controller
             return NotFound();
         }
 
-        return View(user);
+        var profile = new Profile
+        {
+            Id = user.Id,
+            Username = user.Username
+        };
+
+        return View(profile);
     }
 
     [HttpPost]
-    public IActionResult Profile(Guid id, [Bind("Id,Username,Password")] User user)
+    public IActionResult Profile(Guid id, [Bind("Id,Username,NewPassword,OldPassword")] Profile profile)
     {
         if (!CheckAuthentication())
         {
             return RedirectToAction("Login", "Admin");
         }
 
-        if (id != user.Id)
+        if (id != profile.Id)
         {
             return NotFound();
         }
+
         if (!ModelState.IsValid)
         {
-            return View(user);
+            return RedirectToAction("Profile");
         }
-        _userRepo.Update(user);
 
-        return AddAuthentication(user.Username, user.Password);
+        if (IsProfileDataInvalid(profile))
+        {
+            ViewBag.Error = "Both Username and NewPassword cannot be empty";
+            return View(profile);
+        }
+
+        var user = _userRepo.Get(id);
+        if (IsInvalidPassword(user, profile.OldPassword))
+        {
+            ViewBag.Error = "Invalid existing password";
+            return View(profile);
+        }
+
+        _userRepo.Update(profile);
+
+        var authenticationUser = CreateAuthenticationUser(profile, user);
+        return AddAuthentication(authenticationUser.Username!, authenticationUser.Password!);
+    }
+
+    private static bool IsProfileDataInvalid(Profile profile)
+    {
+        return string.IsNullOrWhiteSpace(profile.Username) && string.IsNullOrWhiteSpace(profile.NewPassword);
+    }
+
+    private static bool IsInvalidPassword(User? user, string? oldPassword)
+    {
+        return user?.Password != oldPassword;
+    }
+
+    private static User CreateAuthenticationUser(Profile profile, User? user)
+    {
+        return new User
+        {
+            Username = profile.Username ?? user?.Username,
+            Password = profile.NewPassword ?? user?.Password
+        };
     }
 
     public IActionResult Login()

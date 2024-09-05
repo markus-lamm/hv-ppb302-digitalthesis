@@ -192,4 +192,5 @@
 
     // Ensure the script runs on initial load
     applyVisitedMosaics();
+    updateMosaicEventListeners();
 });
