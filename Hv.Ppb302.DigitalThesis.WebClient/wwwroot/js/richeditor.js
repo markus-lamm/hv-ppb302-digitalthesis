@@ -224,7 +224,29 @@ if (editorDiv) {
     });
 }
 
+document.addEventListener("DOMContentLoaded", function (event) {
+    var editorDivss = document.getElementById('editor-container');
+    var videos = document.querySelectorAll('video[data-control="true"]');
+   
+    if (editorDivss) {
+        const images = editorDivss.querySelectorAll('img');
 
+        mediumZoom(images, {
+            margin: 24,
+            background: '#365f9390',
+            scrollOffset: 0,
+        });
+    }
+
+    if (videos) {
+        videos.forEach(function (video) {
+            video.addEventListener('pause', function () {
+                video.currentTime = 0;
+            });
+        });
+    }
+
+});
 
 var editorDiv2 = document.getElementById('editortest');
 if (editorDiv2) {
@@ -259,38 +281,3 @@ function copyFunction(fileurl) {
     // Get the text field
     navigator.clipboard.writeText(fileurl);
 }
-
-document.addEventListener("DOMContentLoaded", function (event) {
-    var editorDivss = document.getElementById('editor-container');
-    var videos = document.querySelectorAll('video[data-control="true"]');
-    var editAdminContainer = document.getElementById('editor-layout-id');
-
-    const popup = document.getElementById('popup');
-
-    if (editAdminContainer) {
-        const sup = editAdminContainer.querySelectorAll('sup');
-        sup.forEach(foot => {
-            foot.style.zIndex = '222'
-            foot.addEventListener('click', () => { popup.style.display = 'block'; })
-            foot.addEventListener('mouseleave', () => { popup.style.display = 'none'; })
-        })
-        console.log(sup);
-    }
-    if (editorDivss) {
-        const images = editorDivss.querySelectorAll('img');
-        mediumZoom(images, {
-            margin: 24,
-            background: '#365f9390',
-            scrollOffset: 0,
-        });
-    }
-
-    if (videos) {
-        videos.forEach(function (video) {
-            video.addEventListener('pause', function () {
-                video.currentTime = 0;
-            });
-        });
-    }
-
-});

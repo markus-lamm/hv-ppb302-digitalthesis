@@ -97,7 +97,7 @@
                     <div class="form-group">
                         <label asp-for="MolarMosaic!.Content" class="control-label"></label>
                         <input type="hidden" id="hiddeninput" asp-for="MolarMosaic!.Content" class="form-control" />
-                        <div id="editor-layout-id" class="editor-layout">
+                        <div class="editor-layout">
                             <div id="editortest">
                                 @Html.Raw(Model.MolarMosaic!.Content)
                             </div>
@@ -110,14 +110,6 @@
                 </form>
             </div>
         </div>
-    </div>
-</div>
-
-<div id="popup" class="popup">
-    <div class="popup-content">
-        <span id="closePopupBtn" class="close">&times;</span>
-        <h2>Popup Title</h2>
-        <p>This is a simple popup.</p>
     </div>
 </div>
 @section Scripts {
