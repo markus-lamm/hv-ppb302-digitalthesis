@@ -227,15 +227,15 @@
 
     // OBJECT ROTATIONS
     const radios = document.querySelectorAll(".custom-radio");
-    const kaleidoscopeContainer = document.getElementById("kaleidoscope-container");
+    const kaleidoscopeContainer = document.querySelector("#kaleidoscope-container");
     const ksObjects = [
-        document.getElementById("kaleidoscope-image-object-1"),
-        document.getElementById("kaleidoscope-image-object-2"),
-        document.getElementById("kaleidoscope-image-object-3"),
-        document.getElementById("kaleidoscope-image-object-4"),
-        document.getElementById("kaleidoscope-image-object-5"),
-        document.getElementById("kaleidoscope-image-object-6"),
-        document.getElementById("kaleidoscope-image-object-7")
+        document.querySelector("#kaleidoscope-image-object-1"),
+        document.querySelector("#kaleidoscope-image-object-2"),
+        document.querySelector("#kaleidoscope-image-object-3"),
+        document.querySelector("#kaleidoscope-image-object-4"),
+        document.querySelector("#kaleidoscope-image-object-5"),
+        document.querySelector("#kaleidoscope-image-object-6"),
+        document.querySelector("#kaleidoscope-image-object-7")
     ];
     const elementsToRotate = [ksObjects[0], ksObjects[2], ksObjects[4], ksObjects[6]];
     const elementsToRotateInverted = [ksObjects[1], ksObjects[3], ksObjects[5]];

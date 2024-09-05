@@ -10,15 +10,15 @@ function updateMaterialStatus(checkbox) {
 
 function saveMaterialStatus() {
     // Convert the materialsStatus object to a JSON string and set it in the hidden input
-    document.getElementById('materialsData').value = JSON.stringify(materialsStatus);
+    document.querySelector('#materialsData').value = JSON.stringify(materialsStatus);
 
     // Submit the hidden form
-    document.getElementById('saveMaterialsForm').submit();
+    document.querySelector('#saveMaterialsForm').submit();
 }
 
 document.addEventListener('DOMContentLoaded', function () {
-    const fileInput = document.getElementById('files');
-    const fileNameDisplay = document.getElementById('files-upload-name');
+    const fileInput = document.querySelector('#files');
+    const fileNameDisplay = document.querySelector('#files-upload-name');
 
     if (!fileInput || !fileNameDisplay) {
         console.error("Cannot find element with id \"files\" or \"files-upload-name\"")

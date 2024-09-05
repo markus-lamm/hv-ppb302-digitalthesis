@@ -1,16 +1,16 @@
 ﻿document.addEventListener('DOMContentLoaded', () => {
-    const tutorialOverlay = document.getElementById('tutorial-overlay');
-    const tutorialBox = document.getElementById('tutorial-box');
-    const tutorialText = document.getElementById('tutorial-text');
-    const tutorialPrevBtn = document.getElementById('tutorial-prev-btn');
-    const tutorialNextBtn = document.getElementById('tutorial-next-btn');
-    const tutorialExitBtn = document.getElementById('tutorial-exit-btn');
-    const tutorialStepContainer = document.getElementById('tutorial-step-container');
-    const navbar = document.getElementById('navbar');
+    const tutorialOverlay = document.querySelector('#tutorial-overlay');
+    const tutorialBox = document.querySelector('#tutorial-box');
+    const tutorialText = document.querySelector('#tutorial-text');
+    const tutorialPrevBtn = document.querySelector('#tutorial-prev-btn');
+    const tutorialNextBtn = document.querySelector('#tutorial-next-btn');
+    const tutorialExitBtn = document.querySelector('#tutorial-exit-btn');
+    const tutorialStepContainer = document.querySelector('#tutorial-step-container');
+    const navbar = document.querySelector('#navbar');
     const geotags = ["link-geotag-1", "link-geotag-2", "link-geotag-3", "link-geotag-4", "link-geotag-5", "link-geotag-6"];
     const molarMosaics = ["mosaic-yellow-1", "mosaic-yellow-2", "mosaic-yellow-3"];
     const molecularMosaics = ["mosaic-blue-1", "mosaic-blue-2", "mosaic-blue-3", "mosaic-blue-4", "mosaic-blue-5"];
-    const kaleidoscope = document.getElementById('link-kaleidoscope');
+    const kaleidoscope = document.querySelector('#link-kaleidoscope');
     let currentStep = 1;
 
     const steps = [
@@ -114,7 +114,7 @@
 
     function applyZindexToArray(array, zValue) {
         array.forEach(id => {
-            let element = document.getElementById(id);
+            let element = document.querySelector(`#${id}`);
             if (element) {
                 element.style.zIndex = zValue;
             }

@@ -1,9 +1,9 @@
 ﻿// Audioplayer
-const audioButton = document.getElementById('audio-icon');
+const audioButton = document.querySelector('#audio-icon');
 if (audioButton) {
-    const audioPlayer = document.getElementById('audio-player');
-    const audioImagePlay = document.getElementById('audio-img-play');
-    const audioImageStop = document.getElementById('audio-img-stop');
+    const audioPlayer = document.querySelector('#audio-player');
+    const audioImagePlay = document.querySelector('#audio-img-play');
+    const audioImageStop = document.querySelector('#audio-img-stop');
 
     // Add click event listener to the button
     audioButton.addEventListener('click', function () {
@@ -26,9 +26,9 @@ if (audioButton) {
 }
 
 // PDF download
-const pdfDownload = document.getElementById('pdf-download-btn');
+const pdfDownload = document.querySelector('#pdf-download-btn');
 if (pdfDownload) {
-    document.getElementById('pdf-download-btn').addEventListener('click', async function () {
+    document.querySelector('#pdf-download-btn').addEventListener('click', async function () {
         // URL of the PDF to be downloaded
         var selectedTag = this.getAttribute('data-tags');
         const pdfUrl = selectedTag;  // Replace with your actual file URL
@@ -77,7 +77,7 @@ if (pdfDownload) {
 //Text reset
 document.addEventListener('DOMContentLoaded', function () {
     var textContainer = document.querySelector('.text-container');
-    var textResetBtn = document.getElementById('text-reset-btn');
+    var textResetBtn = document.querySelector('#text-reset-btn');
 
     textContainer.addEventListener('scroll', function () {
         if (textContainer.scrollTop > 0) {
@@ -139,12 +139,12 @@ document.addEventListener('DOMContentLoaded', function () {
     collectHeadings(doc.body);
 
     // Render the parsed HTML content into a container on the page
-    const editorContainer = document.getElementById('editor-container');
+    const editorContainer = document.querySelector('#editor-container');
     if (editorContainer) {
         editorContainer.innerHTML = doc.body.innerHTML;
     }
 
-    const navmenu = document.getElementById('navmenu');
+    const navmenu = document.querySelector('#navmenu');
     if (navmenu) {
         for (let i = 0; i < headingList.length; i++) {
             const navmenuItem = document.createElement('a');
@@ -169,7 +169,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
     const observerCallback = (entries) => {
         entries.forEach(entry => {
-            const navItem = document.getElementById(`nav-${entry.target.id}`);
+            const navItem = document.querySelector(`#nav-${entry.target.id}`);
             if (entry.isIntersecting) {
                 navItem.classList.add('active');
             } else {
@@ -181,7 +181,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const observer = new IntersectionObserver(observerCallback, observerOptions);
 
     headingList.forEach(heading => {
-        const target = document.getElementById(heading.id);
+        const target = document.querySelector(`#${heading.id}`);
         if (target) {
             observer.observe(target);
         }
@@ -190,12 +190,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 // Info sidebar minimize
 document.addEventListener('DOMContentLoaded', function () {
-    const infoMinimizeBtn = document.getElementById('info-minimize-btn');
-    const infoMinimizeImg = document.getElementById('info-minimize-img');
+    const infoMinimizeBtn = document.querySelector('#info-minimize-btn');
+    const infoMinimizeImg = document.querySelector('#info-minimize-img');
     let isRotated = false;
 
     infoMinimizeBtn.addEventListener('click', function () {
-        const infoContainer = document.getElementById('info-container');
+        const infoContainer = document.querySelector('#info-container');
 
         if (infoContainer) {
             infoContainer.classList.toggle('minimized');

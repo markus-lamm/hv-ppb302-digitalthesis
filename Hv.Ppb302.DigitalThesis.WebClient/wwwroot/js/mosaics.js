@@ -7,7 +7,7 @@ const directions = mosaics.map(() => ({
     y: (Math.random() > 0.5 ? 1 : -1) + Math.random() * 0.4,
 }));
 const speedFactor = 0.5;
-const becomingsBtn = document.getElementById('becomings-btn');
+const becomingsBtn = document.querySelector('#becomings-btn');
 let isBecomingsBtnTriggered = false;
 let isInitialUpdateTriggered = false;
 
@@ -114,7 +114,7 @@ becomingsBtn.addEventListener('change', () => {
 
 // Sidebar show/hide
 document.addEventListener('DOMContentLoaded', function () {
-    const sidebarContainer = document.getElementById('mosaics-sidebar-container');
+    const sidebarContainer = document.querySelector('#mosaics-sidebar-container');
     const sidebarBtn = document.querySelector('.mosaics-sidebar-btn');
     let isRotated = false;
     let isSidebarOpen = false;
@@ -162,7 +162,7 @@ function applyVisitedMosaics() {
         const decodedMosaics = decodeURIComponent(visitedMosaics);
         const visitedList = JSON.parse(decodedMosaics);
         visitedList.forEach(id => {
-            const elementen = document.getElementById(`mosaic-${id}`);
+            const elementen = document.querySelector(`#mosaic-${id}`);
             if (elementen) {
                 const element = elementen.querySelector('.mosaicImg');
                 if (element) {

@@ -209,7 +209,7 @@ Jodit.defaultOptions.controls.footnoteButton = {
     tooltip: "Insert Footnote"
 };
 
-var editorDiv = document.getElementById('editor');
+var editorDiv = document.querySelector('#editor');
 if (editorDiv) {
     var editor = new Jodit('#editor', {
         toolbar: false,
@@ -225,7 +225,7 @@ if (editorDiv) {
 }
 
 document.addEventListener("DOMContentLoaded", function (event) {
-    var editorDivss = document.getElementById('editor-container');
+    var editorDivss = document.querySelector('#editor-container');
     var videos = document.querySelectorAll('video[data-control="true"]');
    
     if (editorDivss) {
@@ -248,7 +248,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
 
 });
 
-var editorDiv2 = document.getElementById('editortest');
+var editorDiv2 = document.querySelector('#editortest');
 if (editorDiv2) {
     var editor = new Jodit('#editortest', {
         autofocus: true,
@@ -262,13 +262,13 @@ if (editorDiv2) {
         
     });
 
-    let inputElement = document.getElementById('hiddeninput')
+    let inputElement = document.querySelector('#hiddeninput')
     editor.events.on('change', e => {
         inputElement.value = editor.getEditorValue();
     })
 }
 
-var input = document.getElementById('Becomings')
+var input = document.querySelector('#Becomings')
 if (input) {
     var tagify = new Tagify(input, {
         dropdown: {
