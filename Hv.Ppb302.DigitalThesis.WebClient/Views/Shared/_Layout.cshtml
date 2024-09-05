@@ -52,6 +52,9 @@
                 <li>
                     <a class="nav-link" asp-controller="Home" asp-action="Materials" >Materials</a>
                 </li>
+                <li>
+                    <a class="nav-link" asp-controller="Home" asp-action="Intro">Meanwhile</a>
+                </li>
             </ul>
         </nav>
     </header>
@@ -59,7 +62,8 @@
         @RenderBody()
     </main>
     <div id="size-guard" class="size-guard">
-        <p>Screen size is too small. Please resize your window.</p>
+        <img src="~/images/icons/logo.png" class="size-guard-img" />
+        Screen size is too small. Please resize your window or if you are using a smartphone, please open the website on a laptop.
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jodit/jodit.js"></script>

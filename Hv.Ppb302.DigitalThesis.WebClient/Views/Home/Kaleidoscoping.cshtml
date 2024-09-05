@@ -19,7 +19,6 @@
         </div>
     </div>
 </div>
-
 <div class="background-container background-image"></div>
 <div class="main-container">
     <div class="mosaic-name" id="mosaic-name"></div>
@@ -53,7 +52,7 @@
                     <img src="@Url.Content(randomBlueMosaicImg)" class="mosaic"
                          data-name="@molarMosaic.Title"
                          data-becomings="@if (molarMosaic.Becomings != null) { @string.Join(',', molarMosaic.Becomings) }"
-                         data-tags="@string.Join(',', molarMosaic.KaleidoscopeTags!.Select(tag => tag.Name)):@string.Join(':', molarMosaic.AssemblageTagId)"/>
+                         data-tags="@string.Join(',', molarMosaic.KaleidoscopeTags!.Select(tag => tag.Id)):@string.Join(':', molarMosaic.AssemblageTagId)"/>
                 </a>
             }
             @foreach (var molecularMosaic in Model.MolecularMosaics!)
@@ -63,13 +62,16 @@
                     <img src="@Url.Content(randomBlueMosaicImg)" class="mosaic"
                          data-name="@molecularMosaic.Title"
                          data-becomings="@if (molecularMosaic.Becomings != null) { @string.Join(',', molecularMosaic.Becomings) }"
-                         data-tags="@string.Join(',', molecularMosaic.KaleidoscopeTags!.Select(tag => tag.Name)):@string.Join(':', molecularMosaic.AssemblageTagId)"/>
+                         data-tags="@string.Join(',', molecularMosaic.KaleidoscopeTags!.Select(tag => tag.Id)):@string.Join(':', molecularMosaic.AssemblageTagId)"/>
                 </a>
             }
         </div>
     </div>
     <div class="tagmenu">
-        <h2 class="tagmenu-title">Kaleido-scoping</h2>
+        <div class="tagmenu-title-container">
+            <h2 class="tagmenu-title">Kaleido-scoping</h2>
+            <div class="tagmenu-btn" id="tagmenu-btn" data-content="@Model.KaleidoscopePage?.Content">GO BACK</div>
+            </div>
         <hr/>
         <ul class="tagList">
             @foreach (var tag in Model.KaleidoscopeTags!)
@@ -78,10 +80,14 @@
             && tag.Id.ToString() != "f2d2a02b-73bb-42e4-8774-2102ef9c3102" @* Assemblages *@)
                 {
                     <li>
-                        <div class="tag-kaleiitem">
-                            <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name:@tag.Id" data-content="@tag.Content" class="custom-radio">
-                            <label for="tag_@tag.Name" class="custom-radio-label">@tag.Name</label>
+                        <div class="kaleiitem-container">
+                            <div class="tag-kaleiitem">
+                                <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Id" data-content="@tag.Content" class="custom-radio">
+                                <label for="tag_@tag.Name" class="custom-radio-label">@tag.Name</label>
+                            </div>
+                            @* <div id="kalei-modal-open">Open Modal</div> *@
                         </div>
+
                     </li>
                 }
             }
@@ -90,9 +96,11 @@
                 if (tag.Id.ToString() == "f2d2a02b-73bb-42e4-8774-2102ef9c3102" @* Assemblages *@)
                 {
                     <li>
-                        <div class="tag-kaleiitem">
-                            <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name:@tag.Id" data-content="@tag.Content" class="custom-radio">
-                            <label for="tag_@tag.Name" class="custom-radio-label">@tag.Name</label>
+                        <div class="kaleiitem-container">
+                            <div class="tag-kaleiitem">
+                                <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Id" data-content="@tag.Content" class="custom-radio">
+                                <label for="tag_@tag.Name" class="custom-radio-label">@tag.Name</label>
+                            </div>
                         </div>
                     </li>
                 }
@@ -102,14 +110,16 @@
                 if (tag.Id.ToString() == "1ac2b7b1-c3bf-4fc3-a5fb-37c88eeb1e97" @* Experiment *@)
                 {
                     <li>
-                        <div class="tag-kaleiitem">
-                            <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Name:@tag.Id" data-content="@tag.Content" class="custom-radio">
-                            <label for="tag_@tag.Name" class="custom-radio-label">@tag.Name</label>
+                        <div class="kaleiitem-container">
+                            <div class="tag-kaleiitem">
+                                <input type="radio" id="tag_@tag.Name" name="check" data-tag="@tag.Id" data-content="@tag.Content" class="custom-radio">
+                                <label for="tag_@tag.Name" class="custom-radio-label">@tag.Name</label>
+                            </div>
                         </div>
                     </li>
                 }
             }
-            <button id="kalei-modal-open">Open Modal</button>
+            <div id="kalei-modal-open">Enter</div>
         </ul>
     </div>
 </div>
