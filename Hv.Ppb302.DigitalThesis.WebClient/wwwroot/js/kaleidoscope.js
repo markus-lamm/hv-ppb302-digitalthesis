@@ -1,4 +1,4 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
+﻿document.addEventListener("DOMContentLoaded", () => {
     // File-scope variables
     const kaleiImgContainer = document.querySelector("#kaleidoscope-image-container");
     const kaleiModalOpen = document.querySelector("#kalei-modal-open");
