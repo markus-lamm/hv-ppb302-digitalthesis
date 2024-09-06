@@ -16,4 +16,6 @@ public class DigitalThesisDbContext : DbContext
     public DbSet<AssemblageTag> AssemblageTags { get; set; }
     public DbSet<Page> Pages { get; set; }
     public DbSet<Upload> Uploads { get; set; }
+    public DbSet<YearlyVisit> YearlyVisits { get; set; }
+    public DbSet<MonthlyVisit> MonthlyVisits { get; set; }
 }

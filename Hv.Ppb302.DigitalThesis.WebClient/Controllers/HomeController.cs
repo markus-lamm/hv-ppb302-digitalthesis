@@ -15,13 +15,17 @@ public class HomeController : Controller
     private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
     private readonly PageRepository _pageRepository;
     private readonly UploadRepository _uploadRepository;
+    private readonly MonthlyVisitRepository _monthlyVisitRepository;
+    private readonly YearlyVisitRepository _yearlyVisitRepository;
 
     public HomeController(GeoTagRepository geoTagRepo, 
         MolarMosaicRepository molarMosaicRepo, 
         MolecularMosaicRepository molecularMosaicRepo,
         KaleidoscopeTagRepository kaleidoscopeTagRepo,
         PageRepository pageRepo,
-        UploadRepository uploadRepository)
+        UploadRepository uploadRepository,
+        MonthlyVisitRepository monthlyVisitRepository,
+        YearlyVisitRepository yearlyVisitRepository)
     {
         _geoTagRepo = geoTagRepo;
         _molarMosaicRepo = molarMosaicRepo;
@@ -29,6 +33,8 @@ public class HomeController : Controller
         _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
         _pageRepository = pageRepo;
         _uploadRepository = uploadRepository;
+        _monthlyVisitRepository = monthlyVisitRepository;
+        _yearlyVisitRepository = yearlyVisitRepository;
     }
 
     public IActionResult Index()
@@ -49,6 +55,17 @@ public class HomeController : Controller
     public IActionResult Geotags(bool showTutorial = false)
     {
         ViewBag.ShowTutorial = showTutorial;
+        
+        // Check if the user has a cookie indicating a previous visit to the page
+        var uniqueUser = ReadCookie("digital-thesis-user");
+        // If not, create a cookie with the current date and time and add the user to the list of visitors
+        if (uniqueUser?.Count == 0)
+        {
+            CreateCookie("digital-thesis-user", new List<string> { "visited-page" }, 30);
+            // Add a new visitor to the database
+            UpdateVisitationCount();
+        }
+
         return View(_geoTagRepo.GetAll());
     }
 
@@ -207,7 +224,7 @@ public class HomeController : Controller
 
     public List<FilesViewModel> GetAllMaterialFiles()
     {
-        var Inspector = new ContentInspectorBuilder()
+        var inspector = new ContentInspectorBuilder()
         {
             Definitions = MimeDetective.Definitions.Default.All()
         }.Build();
@@ -225,9 +242,9 @@ public class HomeController : Controller
 
             if (isMaterialFile != null)
             {
-                var Results = Inspector.Inspect(Path.Combine(@"C:\Uploads", file));
-                var fileType = Results.FirstOrDefault()!.Definition.File.Categories.FirstOrDefault();
-                var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
+                var results = inspector.Inspect(Path.Combine(@"C:\Uploads", file));
+                var fileType = results.FirstOrDefault()!.Definition.File.Categories.FirstOrDefault();
+                var fileUrl = string.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
                 var upload = uploadsList?.FirstOrDefault(u => u.Name == file);
 
                 fileViewModels.Add(new FilesViewModel
@@ -241,6 +258,57 @@ public class HomeController : Controller
 
         }
         return fileViewModels;
+    }
+
+    private void UpdateVisitationCount()
+    {
+        // Check if the database already contains an entry for the current year
+        var yearlyVisit = _yearlyVisitRepository.GetByYear(DateTime.Now.Year);
+        if (yearlyVisit is null)
+        {
+            // If an entry does not exist create it
+            _yearlyVisitRepository.Create(new YearlyVisit
+            {
+                Year = DateTime.Now.Year,
+                Visits = 1
+            });
+            yearlyVisit = _yearlyVisitRepository.GetByYear(DateTime.Now.Year);
+        }
+        else
+        {
+            // If an entry exists update the number of visits
+            _yearlyVisitRepository.Update(new YearlyVisit
+            {
+                Id = yearlyVisit.Id,
+                Year = yearlyVisit.Year,
+                Visits = yearlyVisit.Visits + 1
+            });
+        }
+
+
+        // Check if the database already contains an entry for the current month and year
+        var monthlyVisit = _monthlyVisitRepository.GetByMonthAndYear(DateTime.Now.Month, DateTime.Now.Year);
+        if (monthlyVisit is null)
+        {
+            // If an entry does not exist create it
+            _monthlyVisitRepository.Create(new MonthlyVisit
+            {
+                Month = DateTime.Now.Month,
+                YearlyVisitId = yearlyVisit!.Id,
+                Visits = 1
+            });
+        }
+        else
+        {
+            // If an entry exists update the number of visits
+            _monthlyVisitRepository.Update(new MonthlyVisit
+            {
+                Id = monthlyVisit.Id,
+                Month = monthlyVisit.Month,
+                YearlyVisitId = yearlyVisit!.Id,
+                Visits = monthlyVisit.Visits + 1
+            });
+        }
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

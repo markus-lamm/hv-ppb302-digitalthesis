@@ -21,6 +21,8 @@ public class Program
         builder.Services.AddScoped<PageRepository>();
         builder.Services.AddScoped<AssemblageTagRepository>();
         builder.Services.AddScoped<UploadRepository>();
+        builder.Services.AddScoped<MonthlyVisitRepository>();
+        builder.Services.AddScoped<YearlyVisitRepository>();
 
         builder.Services.AddCors(options =>
         {

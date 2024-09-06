@@ -131,6 +131,10 @@
     background-color: #ED676A;
 }
 
+.statistics-color {
+    background-color: #A36FCC;
+}
+
 /* Admin form */
 .admin-form {
     overflow: auto;
