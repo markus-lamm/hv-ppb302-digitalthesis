@@ -36,6 +36,7 @@ public class Program
         });
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+        builder.Services.AddMemoryCache();
         builder.Services.AddSession(options =>
         {
             options.IdleTimeout = TimeSpan.FromMinutes(30);

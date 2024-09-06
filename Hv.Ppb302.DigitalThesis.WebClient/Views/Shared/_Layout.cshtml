@@ -63,8 +63,7 @@
         @RenderBody()
     </main>
     <div id="size-guard" class="size-guard">
-        <img src="~/images/icons/logo.png" class="size-guard-img" />
-        Screen size is too small. Please resize your window or if you are using a smartphone, please open the website on a laptop.
+        @await Component.InvokeAsync("SizeGuard")
     </div>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/jodit/jodit.js"></script>

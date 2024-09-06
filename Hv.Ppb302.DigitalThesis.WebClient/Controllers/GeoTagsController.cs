@@ -7,12 +7,10 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 public class GeoTagsController : Controller
 {
     private readonly GeoTagRepository _geoTagRepo;
-    private readonly ConnectorTagRepository _connectorTagRepo;
 
-    public GeoTagsController(GeoTagRepository geoTagRepo, ConnectorTagRepository connectorTagRepo)
+    public GeoTagsController(GeoTagRepository geoTagRepo)
     {
         _geoTagRepo = geoTagRepo;
-        _connectorTagRepo = connectorTagRepo;
     }
 
     public IActionResult Index()
