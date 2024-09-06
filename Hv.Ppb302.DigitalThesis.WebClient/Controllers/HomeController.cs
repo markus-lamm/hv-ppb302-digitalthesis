@@ -224,7 +224,7 @@ public class HomeController : Controller
 
     public List<FilesViewModel> GetAllMaterialFiles()
     {
-        var inspector = new ContentInspectorBuilder()
+        var inspector = new ContentInspectorBuilder
         {
             Definitions = MimeDetective.Definitions.Default.All()
         }.Build();
@@ -242,9 +242,9 @@ public class HomeController : Controller
 
             if (isMaterialFile != null)
             {
-                var Results = Inspector.Inspect(Path.Combine(@"C:\Uploads", file));
-                var fileType = Results.FirstOrDefault()!.Definition.File.Categories.FirstOrDefault();
-                var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
+                var results = inspector.Inspect(Path.Combine(@"C:\Uploads", file));
+                var fileType = results.FirstOrDefault()!.Definition.File.Categories.FirstOrDefault();
+                var fileUrl = string.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
                 var upload = uploadsList?.OrderBy(u => u.MaterialOrder).FirstOrDefault(u => u.Name == file);
 
                 fileViewModels.Add(new FilesViewModel
