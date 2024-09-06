@@ -10,12 +10,16 @@ public class AdminController : Controller
 {
     private readonly UserRepository _userRepo;
     private readonly UploadRepository _uploadRepo;
-    
+    private readonly YearlyVisitRepository _yearlyVisitRepository;
 
-    public AdminController(UserRepository userRepo, UploadRepository uploadRepository)
+
+    public AdminController(UserRepository userRepo, 
+        UploadRepository uploadRepository, 
+        YearlyVisitRepository yearlyVisitRepository)
     {
         _userRepo = userRepo;
         _uploadRepo = uploadRepository;
+        _yearlyVisitRepository = yearlyVisitRepository;
     }
 
     public IActionResult Index()
@@ -125,6 +129,15 @@ public class AdminController : Controller
     {
         RemoveAuthentication();
         return RedirectToAction("GeoTags", "Home");
+    }
+
+    public IActionResult Statistics()
+    {
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
+        }
+        return View(_yearlyVisitRepository.GetAll());
     }
 
     public IActionResult AddAuthentication(string username, string password)

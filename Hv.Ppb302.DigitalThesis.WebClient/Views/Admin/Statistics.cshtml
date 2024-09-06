@@ -1,0 +1,98 @@
+﻿@model IEnumerable<Hv.Ppb302.DigitalThesis.WebClient.Models.YearlyVisit>
+@{
+    ViewData["Title"] = "Index";
+}
+<head>
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+</head>
+<div class="background-container background-image"></div>
+<div class="main-container flex-horizontal-center">
+    <div class="admin-container">
+        <div class="admin-form">
+            <div class="form-btn-container">
+                <a class="form-main-btn" asp-controller="Admin" asp-action="Index">Return</a>
+            </div>
+            <div class="form-header-container statistics-color">
+                <div class="form-header-count">@Model.Count()</div>
+                <div class="form-header-name">Statistics</div>
+            </div>
+            <div class="form-table-container">
+                <table class="form-table">
+                    <thead>
+                    <tr>
+                        <th class="form-table-header">
+                            Year
+                        </th>
+                        <th class="form-table-header">
+                            Total
+                        </th>
+                        <th class="form-table-header">
+                            January
+                        </th>
+                        <th class="form-table-header">
+                            February
+                        </th>
+                        <th class="form-table-header">
+                            March
+                        </th>
+                        <th class="form-table-header">
+                            April
+                        </th>
+                        <th class="form-table-header">
+                            May
+                        </th>
+                        <th class="form-table-header">
+                            June
+                        </th>
+                        <th class="form-table-header">
+                            July
+                        </th>
+                        <th class="form-table-header">
+                            August
+                        </th>
+                        <th class="form-table-header">
+                            September
+                        </th>
+                        <th class="form-table-header">
+                            October
+                        </th>
+                        <th class="form-table-header">
+                            November
+                        </th>
+                        <th class="form-table-header">
+                            December
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr class="form-table-row">
+                            <td>
+                                @item.Year
+                            </td>
+                            <td>
+                                @item.Visits
+                            </td>
+                            @for (var month = 1; month <= 12; month++)
+                            {
+                                var monthlyVisit = item.MonthlyVisits.FirstOrDefault(mv => mv.Month == month);
+                                <td>
+                                    @if (monthlyVisit?.Visits is null)
+                                    {
+                                        <div>0</div>
+                                    }
+                                    else
+                                    {
+                                        @monthlyVisit.Visits
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

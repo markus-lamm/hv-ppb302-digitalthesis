@@ -4,6 +4,7 @@ using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
 {
     [DbContext(typeof(DigitalThesisDbContext))]
-    partial class DigitalThesisContextModelSnapshot : ModelSnapshot
+    [Migration("20240906092335_AddVisitTracking")]
+    partial class AddVisitTracking
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -243,9 +246,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
 
                     b.Property<bool?>("IsMaterial")
                         .HasColumnType("bit");
-
-                    b.Property<int?>("MaterialOrder")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
