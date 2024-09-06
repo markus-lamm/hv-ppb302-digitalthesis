@@ -62,13 +62,16 @@
                 <div class="files-upload-name" id="files-upload-name">No file chosen</div>
             }
             </div>
-            <div class="files-container">
+            <div id="files-div" class="files-container">
                 <form id="saveMaterialsForm" method="post" asp-action="UpdateMaterials" asp-controller="Admin">
                     <input type="hidden" name="materialsData" id="materialsData">
                 </form>
+                <form id="order-form" method="post" asp-action="UpdateMaterialsOrder" asp-controller="Admin">
+                    <input type="hidden" name="FileOrders" id="file-orders" />
+                </form>
                 @foreach (var file in Model)
                 {
-                    <div class="file-item-container">
+                    <div class="file-item-container" data-name="@file.Name">
                         <div class=file-icon-container>
                             @switch (file.Category)
                             {

@@ -67,7 +67,8 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data
                 var existingUpload = _dbContext.Uploads.FirstOrDefault(m => m.Name == upload.Name);
                 if (existingUpload != null)
                 {
-                    existingUpload.IsMaterial = upload.IsMaterial;
+                    existingUpload.IsMaterial = upload.IsMaterial ?? existingUpload.IsMaterial;
+                    existingUpload.MaterialOrder = upload.MaterialOrder ?? existingUpload.MaterialOrder;
                 }
                 else
                 {

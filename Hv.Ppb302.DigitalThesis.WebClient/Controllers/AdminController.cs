@@ -194,6 +194,24 @@ public class AdminController : Controller
     }
 
     [HttpPost]
+    public IActionResult UpdateMaterialsOrder(string fileOrders)
+    {
+        var materialFileOrder = JsonConvert.DeserializeObject<List<FileOrder>>(fileOrders);
+        if (materialFileOrder?.Count != 0)
+        {
+            var uploadsToUpdate = (from entry in materialFileOrder
+                select new Upload
+                {
+                    Name = entry.Name,
+                    MaterialOrder = entry.Order
+                }).ToList();
+
+            _uploadRepo.Update(uploadsToUpdate);
+        }
+        return RedirectToAction("Files", GetAllFiles());
+    }
+
+    [HttpPost]
     public IActionResult UpdateMaterials(string materialsData)
     {
 
@@ -239,9 +257,12 @@ public class AdminController : Controller
                 Category = fileType,
                 Name = file,
                 FileUrl = fileUrl,
-                IsMaterial = upload?.IsMaterial
+                IsMaterial = upload?.IsMaterial,
+                MaterialOrder = upload?.MaterialOrder
             });
         }
-        return filesViewModels;
+
+        var orderList = filesViewModels.OrderBy(u => u.MaterialOrder).ToList();
+        return orderList;
     }
 }

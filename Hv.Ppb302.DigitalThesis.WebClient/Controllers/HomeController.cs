@@ -228,19 +228,22 @@ public class HomeController : Controller
                 var Results = Inspector.Inspect(Path.Combine(@"C:\Uploads", file));
                 var fileType = Results.FirstOrDefault()!.Definition.File.Categories.FirstOrDefault();
                 var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
-                var upload = uploadsList?.FirstOrDefault(u => u.Name == file);
+                var upload = uploadsList?.OrderBy(u => u.MaterialOrder).FirstOrDefault(u => u.Name == file);
 
                 fileViewModels.Add(new FilesViewModel
                 {
                     Category = fileType,
                     Name = file,
                     FileUrl = fileUrl,
-                    IsMaterial = upload?.IsMaterial
+                    IsMaterial = upload?.IsMaterial,
+                    MaterialOrder = upload?.MaterialOrder
+                    
                 });
             }
 
         }
-        return fileViewModels;
+        var orderList = fileViewModels.OrderBy(u => u.MaterialOrder).ToList();
+        return orderList;
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
