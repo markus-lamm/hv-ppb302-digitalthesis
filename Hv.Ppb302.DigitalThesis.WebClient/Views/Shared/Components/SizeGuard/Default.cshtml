@@ -1,4 +1,9 @@
 ﻿@model Hv.Ppb302.DigitalThesis.WebClient.Models.Page
+<form asp-controller="Home" asp-action="SendMail">
+    <label for="receiver">Enter Your Email-adress</label>
+    <input required type="email" id="receiver" name="receiver">
+    <input type="submit" />
+</form>
 
 <div>
     @Html.Raw(Model.Content)

@@ -6,30 +6,37 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Services
 {
     public class EmailService
     {
-        private readonly SmtpClient _smtpClient = new()
+        private readonly SmtpClient _smtpClient;
+
+        public EmailService()
         {
-            Host = "smtp-mail.outlook.com",
-            Port = 587,
-            EnableSsl = true,
-            DeliveryMethod = SmtpDeliveryMethod.Network,
-            UseDefaultCredentials = false,
-            Credentials = new NetworkCredential("DigitalAvhandlingen@outlook.com", "H0gskolanVastDigitalAvhandling")
-        };
-
-        private readonly MailMessage _mailMessage;
-
-        public EmailService(Email email)
-        {
-            using var message = new MailMessage("DigitalAvhandlingen@outlook.com", email.Receiver);
-            message.Subject = email.Subject;
-            message.Body = email.Body;
-
-            _mailMessage = message;
+            _smtpClient = new SmtpClient
+            {
+                Host = "smtp-mail.outlook.com",
+                Port = 587,
+                EnableSsl = true,
+                DeliveryMethod = SmtpDeliveryMethod.Network,
+                UseDefaultCredentials = false,
+                Credentials = new NetworkCredential("DigitalAvhandlingen@outlook.com", "H0gskolanVastDigitalAvhandling")
+            };
         }
 
-        public void SendMail()
-        { 
-            _smtpClient.Send(_mailMessage);
+        public void SendMail(Email email)
+        {
+            using var message = new MailMessage("DigitalAvhandlingen@outlook.com", email.Receiver)
+            {
+                Subject = email.Subject,
+                Body = email.Body
+            };
+
+            try
+            {
+                _smtpClient.Send(message);
+            }
+            catch (SmtpException ex)
+            {
+                throw new InvalidOperationException("Failed to send email", ex);
+            }
         }
     }
 }

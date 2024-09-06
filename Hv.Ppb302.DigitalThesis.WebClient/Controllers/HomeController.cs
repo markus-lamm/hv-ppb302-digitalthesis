@@ -1,5 +1,6 @@
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
+using Hv.Ppb302.DigitalThesis.WebClient.Services;
 using Microsoft.AspNetCore.Mvc;
 using MimeDetective;
 using System.Diagnostics;
@@ -191,6 +192,15 @@ public class HomeController : Controller
                 KaleidoscopePage = kaleidoscopePage
             };
         }
+    }
+
+    [HttpPost]
+    public IActionResult SendMail(string receiver)
+    {
+        var email = new Email(receiver);
+        var serviceSender = new EmailService();
+        serviceSender.SendMail(email);
+        return View("Index");
     }
 
     public void CreateMosaicCookie(Guid objectId)
