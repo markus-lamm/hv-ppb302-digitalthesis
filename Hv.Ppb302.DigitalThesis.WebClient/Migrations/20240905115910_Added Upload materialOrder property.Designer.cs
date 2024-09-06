@@ -4,6 +4,7 @@ using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
 {
     [DbContext(typeof(DigitalThesisDbContext))]
-    partial class DigitalThesisContextModelSnapshot : ModelSnapshot
+    [Migration("20240905115910_Added Upload materialOrder property")]
+    partial class AddedUploadmaterialOrderproperty
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -196,28 +199,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.ToTable("MolecularMosaics");
                 });
 
-            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.MonthlyVisit", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("Month")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Visits")
-                        .HasColumnType("int");
-
-                    b.Property<Guid?>("YearlyVisitId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("YearlyVisitId");
-
-                    b.ToTable("MonthlyVisits");
-                });
-
             modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.Page", b =>
                 {
                     b.Property<Guid>("Id")
@@ -270,23 +251,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Users");
-                });
-
-            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.YearlyVisit", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int?>("Visits")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("Year")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("YearlyVisits");
                 });
 
             modelBuilder.Entity("KaleidoscopeTagMolarMosaic", b =>
@@ -374,15 +338,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
                     b.Navigation("AssemblageTag");
                 });
 
-            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.MonthlyVisit", b =>
-                {
-                    b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.YearlyVisit", "YearlyVisit")
-                        .WithMany("MonthlyVisits")
-                        .HasForeignKey("YearlyVisitId");
-
-                    b.Navigation("YearlyVisit");
-                });
-
             modelBuilder.Entity("KaleidoscopeTagMolarMosaic", b =>
                 {
                     b.HasOne("Hv.Ppb302.DigitalThesis.WebClient.Models.KaleidoscopeTag", null)
@@ -423,11 +378,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Migrations
             modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.ConnectorTag", b =>
                 {
                     b.Navigation("GeoTags");
-                });
-
-            modelBuilder.Entity("Hv.Ppb302.DigitalThesis.WebClient.Models.YearlyVisit", b =>
-                {
-                    b.Navigation("MonthlyVisits");
                 });
 #pragma warning restore 612, 618
         }

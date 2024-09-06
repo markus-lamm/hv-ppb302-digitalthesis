@@ -1,8 +1,10 @@
-﻿namespace Hv.Ppb302.DigitalThesis.WebClient.Models;
-
-public class Upload
+﻿namespace Hv.Ppb302.DigitalThesis.WebClient.Models
 {
-    public Guid Id { get; set; } = Guid.NewGuid();
-    public string? Name { get; set; }
-    public bool? IsMaterial { get; set; }
+    public class Upload
+    {
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public string? Name { get; set; }
+        public bool? IsMaterial { get; set; }
+        public int? MaterialOrder { get; set; }
+    }
 }
