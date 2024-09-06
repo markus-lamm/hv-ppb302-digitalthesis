@@ -5,5 +5,6 @@
         public Guid Id { get; set; } = Guid.NewGuid();
         public string? Name { get; set; }
         public bool? IsMaterial { get; set; }
+        public int? MaterialOrder { get; set; }
     }
 }
