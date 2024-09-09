@@ -1,5 +1,4 @@
-﻿
-// Object to store the status of materials
+﻿// Object to store the status of materials
 const materialsStatus = {};
 
 // Triggered from Files.cshtml with an onchange()
@@ -39,7 +38,6 @@ function initializeFileInput() {
 // Initialize the file input event listener
 initializeFileInput();
 
-
 //For materialOrder
 const div = document.getElementById("files-div");
 const sorting = Sortable.create(div, {
@@ -60,7 +58,3 @@ function getSortedOrder() {
     });
     return order;
 }
-    
-
-    
-

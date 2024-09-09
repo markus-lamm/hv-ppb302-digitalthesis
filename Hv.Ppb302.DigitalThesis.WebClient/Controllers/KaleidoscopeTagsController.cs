@@ -4,22 +4,15 @@ using Hv.Ppb302.DigitalThesis.WebClient.Models;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
-public class KaleidoscopeTagsController : Controller
+public class KaleidoscopeTagsController(KaleidoscopeTagRepository kaleidoscopeTagRepo) : Controller
 {
-    private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
-
-    public KaleidoscopeTagsController(KaleidoscopeTagRepository kaleidoscopeTagRepo)
-    {
-        _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
-    }
-
     public IActionResult Index()
     {
         if (!CheckAuthentication())
         {
             return RedirectToAction("Login", "Admin");
         }
-        return View(_kaleidoscopeTagRepo.GetAll());
+        return View(kaleidoscopeTagRepo.GetAll());
     }
 
     public IActionResult Edit(Guid id)
@@ -29,7 +22,7 @@ public class KaleidoscopeTagsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var kaleidoscopeTag = _kaleidoscopeTagRepo.Get(id);
+        var kaleidoscopeTag = kaleidoscopeTagRepo.Get(id);
         if (kaleidoscopeTag == null)
         {
             return NotFound();
@@ -55,7 +48,7 @@ public class KaleidoscopeTagsController : Controller
         {
             return View(kaleidoscopeTag);
         }
-        _kaleidoscopeTagRepo.Update(kaleidoscopeTag);
+        kaleidoscopeTagRepo.Update(kaleidoscopeTag);
 
         return RedirectToAction(nameof(Index));
     }

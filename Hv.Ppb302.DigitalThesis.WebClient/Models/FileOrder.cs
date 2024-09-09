@@ -1,8 +1,7 @@
-﻿namespace Hv.Ppb302.DigitalThesis.WebClient.Models
+﻿namespace Hv.Ppb302.DigitalThesis.WebClient.Models;
+
+public class FileOrder
 {
-    public class FileOrder
-    {
-        public string Name { get; set; }
-        public int Order { get; set; }
-    }
+    public string Name { get; set; }
+    public int Order { get; set; }
 }

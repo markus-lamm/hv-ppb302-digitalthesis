@@ -3,20 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
-public class YearlyVisitRepository : IRepository<YearlyVisit>
+public class YearlyVisitRepository(DigitalThesisDbContext dbContext) : IRepository<YearlyVisit>
 {
-    private readonly DigitalThesisDbContext _dbContext;
-
-    public YearlyVisitRepository(DigitalThesisDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public YearlyVisit? Get(Guid id)
     {
         try
         {
-            return _dbContext.YearlyVisits.FirstOrDefault(g => g.Id == id);
+            return dbContext.YearlyVisits.FirstOrDefault(g => g.Id == id);
         }
         catch (Exception)
         {
@@ -28,7 +21,7 @@ public class YearlyVisitRepository : IRepository<YearlyVisit>
     {
         try
         {
-            return _dbContext.YearlyVisits.FirstOrDefault(g => g.Year == year);
+            return dbContext.YearlyVisits.FirstOrDefault(g => g.Year == year);
         }
         catch (Exception)
         {
@@ -40,7 +33,7 @@ public class YearlyVisitRepository : IRepository<YearlyVisit>
     {
         try
         {
-            return _dbContext.YearlyVisits.Include(y => y.MonthlyVisits).ToList();
+            return dbContext.YearlyVisits.Include(y => y.MonthlyVisits).ToList();
         }
         catch (Exception)
         {
@@ -52,18 +45,18 @@ public class YearlyVisitRepository : IRepository<YearlyVisit>
     {
         try
         {
-            var existingEntry = _dbContext.YearlyVisits.FirstOrDefault(m => m.Id == yearlyVisit.Id);
+            var existingEntry = dbContext.YearlyVisits.FirstOrDefault(m => m.Id == yearlyVisit.Id);
             if (existingEntry != null)
             {
                 throw new Exception("An entry with the same Id already exists");
             }
-            existingEntry = _dbContext.YearlyVisits.FirstOrDefault(m => m.Year == yearlyVisit.Year);
+            existingEntry = dbContext.YearlyVisits.FirstOrDefault(m => m.Year == yearlyVisit.Year);
             if (existingEntry != null)
             {
                 throw new Exception("An entry with the same Year already exists");
             }
-            _dbContext.YearlyVisits.Add(yearlyVisit);
-            _dbContext.SaveChanges();
+            dbContext.YearlyVisits.Add(yearlyVisit);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -75,13 +68,13 @@ public class YearlyVisitRepository : IRepository<YearlyVisit>
     {
         try
         {
-            var existingEntry = _dbContext.YearlyVisits.Find(yearlyVisit.Id);
+            var existingEntry = dbContext.YearlyVisits.Find(yearlyVisit.Id);
             if (existingEntry == null)
             {
                 throw new Exception("The entry does not exist");
             }
             existingEntry.Visits = yearlyVisit.Visits;
-            _dbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -93,13 +86,13 @@ public class YearlyVisitRepository : IRepository<YearlyVisit>
     {
         try
         {
-            var existingEntry = _dbContext.YearlyVisits.Find(id);
+            var existingEntry = dbContext.YearlyVisits.Find(id);
             if (existingEntry == null)
             {
                 throw new Exception("The entry does not exist");
             }
-            _dbContext.YearlyVisits.Remove(existingEntry);
-            _dbContext.SaveChanges();
+            dbContext.YearlyVisits.Remove(existingEntry);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {

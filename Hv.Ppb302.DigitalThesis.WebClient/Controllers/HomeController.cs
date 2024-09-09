@@ -8,36 +8,15 @@ using System.Text.Json;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
-public class HomeController : Controller
+public class HomeController(GeoTagRepository geoTagRepo,
+    MolarMosaicRepository molarMosaicRepo,
+    MolecularMosaicRepository molecularMosaicRepo,
+    KaleidoscopeTagRepository kaleidoscopeTagRepo,
+    PageRepository pageRepo,
+    UploadRepository uploadRepo,
+    MonthlyVisitRepository monthlyVisitRepo,
+    YearlyVisitRepository yearlyVisitRepo) : Controller
 {
-    private readonly GeoTagRepository _geoTagRepo;
-    private readonly MolarMosaicRepository _molarMosaicRepo;
-    private readonly MolecularMosaicRepository _molecularMosaicRepo;
-    private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
-    private readonly PageRepository _pageRepository;
-    private readonly UploadRepository _uploadRepository;
-    private readonly MonthlyVisitRepository _monthlyVisitRepository;
-    private readonly YearlyVisitRepository _yearlyVisitRepository;
-
-    public HomeController(GeoTagRepository geoTagRepo, 
-        MolarMosaicRepository molarMosaicRepo, 
-        MolecularMosaicRepository molecularMosaicRepo,
-        KaleidoscopeTagRepository kaleidoscopeTagRepo,
-        PageRepository pageRepo,
-        UploadRepository uploadRepository,
-        MonthlyVisitRepository monthlyVisitRepository,
-        YearlyVisitRepository yearlyVisitRepository)
-    {
-        _geoTagRepo = geoTagRepo;
-        _molarMosaicRepo = molarMosaicRepo;
-        _molecularMosaicRepo = molecularMosaicRepo;
-        _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
-        _pageRepository = pageRepo;
-        _uploadRepository = uploadRepository;
-        _monthlyVisitRepository = monthlyVisitRepository;
-        _yearlyVisitRepository = yearlyVisitRepository;
-    }
-
     public IActionResult Index()
     {
         return View();
@@ -50,7 +29,7 @@ public class HomeController : Controller
 
     public IActionResult About()
     {
-        return View(_pageRepository.GetByName("About"));
+        return View(pageRepo.GetByName("About"));
     }
 
     public IActionResult Geotags(bool showTutorial = false)
@@ -67,7 +46,7 @@ public class HomeController : Controller
             UpdateVisitationCount();
         }
 
-        return View(_geoTagRepo.GetAll());
+        return View(geoTagRepo.GetAll());
     }
 
     public IActionResult Materials()
@@ -80,7 +59,7 @@ public class HomeController : Controller
     {
         if (objectType == "geotag")
         {
-            var geoTag = _geoTagRepo.Get(objectId);
+            var geoTag = geoTagRepo.Get(objectId);
             if (geoTag != null)
             {
                 return View(BuildViewModel(geoTag));
@@ -88,7 +67,7 @@ public class HomeController : Controller
         }
         else if (objectType == "molarmosaic")
         {
-            var molarMosaics = _molarMosaicRepo.Get(objectId);
+            var molarMosaics = molarMosaicRepo.Get(objectId);
             if (molarMosaics != null)
             {
                 CreateMosaicCookie(objectId);
@@ -97,7 +76,7 @@ public class HomeController : Controller
         }
         else if (objectType == "molecularmosaic")
         {
-            var molecularMosaics = _molecularMosaicRepo.Get(objectId);
+            var molecularMosaics = molecularMosaicRepo.Get(objectId);
             if (molecularMosaics != null)
             {
                 CreateMosaicCookie(objectId);
@@ -146,7 +125,7 @@ public class HomeController : Controller
 
     public IActionResult MolarMosaics()
     {
-        return View(BuildViewModel(_molarMosaicRepo.GetAll()!));
+        return View(BuildViewModel(molarMosaicRepo.GetAll()!));
 
         static MolarMosaicsViewModel BuildViewModel(IEnumerable<MolarMosaic> molarMosaics)
         {
@@ -160,7 +139,7 @@ public class HomeController : Controller
 
     public IActionResult MolecularMosaics()
     {
-        return View(BuildViewModel(_molecularMosaicRepo.GetAll()!));
+        return View(BuildViewModel(molecularMosaicRepo.GetAll()!));
 
         static MolecularMosaicsViewModel BuildViewModel(IEnumerable<MolecularMosaic> molecularMosaics)
         {
@@ -174,10 +153,10 @@ public class HomeController : Controller
 
     public IActionResult Kaleidoscoping()
     {
-        return View(BuildViewModel(_molarMosaicRepo.GetAll()!, 
-            _molecularMosaicRepo.GetAll()!, 
-            _kaleidoscopeTagRepo.GetAll()!,
-            _pageRepository.GetByName("Kaleidoscope")!));
+        return View(BuildViewModel(molarMosaicRepo.GetAll()!, 
+            molecularMosaicRepo.GetAll()!, 
+            kaleidoscopeTagRepo.GetAll()!,
+            pageRepo.GetByName("Kaleidoscope")!));
 
         static KaleidoscopingViewModel BuildViewModel(IEnumerable<MolarMosaic> molarMosaics, 
             IEnumerable<MolecularMosaic> molecularMosaics, 
@@ -244,7 +223,7 @@ public class HomeController : Controller
                              .Select(path => Path.GetFileName(path))
                              .ToList();
 
-        var uploadsList = _uploadRepository.GetAllMaterials();
+        var uploadsList = uploadRepo.GetAllMaterials();
         List<FilesViewModel> fileViewModels = [];
         foreach (var file in files)
         {
@@ -276,21 +255,21 @@ public class HomeController : Controller
     private void UpdateVisitationCount()
     {
         // Check if the database already contains an entry for the current year
-        var yearlyVisit = _yearlyVisitRepository.GetByYear(DateTime.Now.Year);
+        var yearlyVisit = yearlyVisitRepo.GetByYear(DateTime.Now.Year);
         if (yearlyVisit is null)
         {
             // If an entry does not exist create it
-            _yearlyVisitRepository.Create(new YearlyVisit
+            yearlyVisitRepo.Create(new YearlyVisit
             {
                 Year = DateTime.Now.Year,
                 Visits = 1
             });
-            yearlyVisit = _yearlyVisitRepository.GetByYear(DateTime.Now.Year);
+            yearlyVisit = yearlyVisitRepo.GetByYear(DateTime.Now.Year);
         }
         else
         {
             // If an entry exists update the number of visits
-            _yearlyVisitRepository.Update(new YearlyVisit
+            yearlyVisitRepo.Update(new YearlyVisit
             {
                 Id = yearlyVisit.Id,
                 Year = yearlyVisit.Year,
@@ -300,11 +279,11 @@ public class HomeController : Controller
 
 
         // Check if the database already contains an entry for the current month and year
-        var monthlyVisit = _monthlyVisitRepository.GetByMonthAndYear(DateTime.Now.Month, DateTime.Now.Year);
+        var monthlyVisit = monthlyVisitRepo.GetByMonthAndYear(DateTime.Now.Month, DateTime.Now.Year);
         if (monthlyVisit is null)
         {
             // If an entry does not exist create it
-            _monthlyVisitRepository.Create(new MonthlyVisit
+            monthlyVisitRepo.Create(new MonthlyVisit
             {
                 Month = DateTime.Now.Month,
                 YearlyVisitId = yearlyVisit!.Id,
@@ -314,7 +293,7 @@ public class HomeController : Controller
         else
         {
             // If an entry exists update the number of visits
-            _monthlyVisitRepository.Update(new MonthlyVisit
+            monthlyVisitRepo.Update(new MonthlyVisit
             {
                 Id = monthlyVisit.Id,
                 Month = monthlyVisit.Month,

@@ -1,22 +1,15 @@
 ﻿using Hv.Ppb302.DigitalThesis.WebClient.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data
 {
-    public class UploadRepository
+    public class UploadRepository(DigitalThesisDbContext dbContext)
     {
-        private readonly DigitalThesisDbContext _dbContext;
-
-        public UploadRepository(DigitalThesisDbContext dbContext)
-        {
-            _dbContext = dbContext;
-        }
         public void Create(Upload file)
         {
             try
             {
-                _dbContext.Uploads.Add(file);
-                _dbContext.SaveChanges();
+                dbContext.Uploads.Add(file);
+                dbContext.SaveChanges();
             }
             catch (Exception)
             {
@@ -26,12 +19,12 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data
 
         public void Delete(string filename)
         {
-            var existingFile = _dbContext.Uploads.FirstOrDefault(m => m.Name == filename);
+            var existingFile = dbContext.Uploads.FirstOrDefault(m => m.Name == filename);
 
             if (existingFile != null)
             {
-                _dbContext.Uploads.Remove(existingFile);
-                _dbContext.SaveChanges();
+                dbContext.Uploads.Remove(existingFile);
+                dbContext.SaveChanges();
             }
 
         }
@@ -40,7 +33,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data
         {
             try
             {
-                return _dbContext.Uploads.Where(u => u.IsMaterial == true).ToList();
+                return dbContext.Uploads.Where(u => u.IsMaterial == true).ToList();
             }
             catch (Exception)
             {
@@ -52,7 +45,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data
         {
             try
             {
-                return _dbContext.Uploads.ToList();
+                return dbContext.Uploads.ToList();
             }
             catch (Exception)
             {
@@ -64,7 +57,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data
         {
             foreach (var upload in uploadsToUpdate)
             {
-                var existingUpload = _dbContext.Uploads.FirstOrDefault(m => m.Name == upload.Name);
+                var existingUpload = dbContext.Uploads.FirstOrDefault(m => m.Name == upload.Name);
                 if (existingUpload != null)
                 {
                     existingUpload.IsMaterial = upload.IsMaterial ?? existingUpload.IsMaterial;
@@ -77,7 +70,7 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Data
                 }
             }
 
-            _dbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
     }
 }

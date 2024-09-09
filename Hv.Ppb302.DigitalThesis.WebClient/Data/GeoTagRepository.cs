@@ -1,22 +1,14 @@
 ﻿using Hv.Ppb302.DigitalThesis.WebClient.Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
-public class GeoTagRepository : IRepository<GeoTag>
+public class GeoTagRepository(DigitalThesisDbContext dbContext) : IRepository<GeoTag>
 {
-    private readonly DigitalThesisDbContext _dbContext;
-
-    public GeoTagRepository(DigitalThesisDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public GeoTag? Get(Guid id)
     {
         try
         {
-            return _dbContext.GeoTags.FirstOrDefault(g => g.Id == id);
+            return dbContext.GeoTags.FirstOrDefault(g => g.Id == id);
         }
         catch (Exception)
         {
@@ -28,7 +20,7 @@ public class GeoTagRepository : IRepository<GeoTag>
     {
         try
         {
-            return _dbContext.GeoTags.ToList();
+            return dbContext.GeoTags.ToList();
         }
         catch (Exception)
         {
@@ -40,13 +32,13 @@ public class GeoTagRepository : IRepository<GeoTag>
     {
         try
         {
-            var existingGeoTag = _dbContext.GeoTags.FirstOrDefault(g => g.Title == geoTag.Title);
+            var existingGeoTag = dbContext.GeoTags.FirstOrDefault(g => g.Title == geoTag.Title);
             if (existingGeoTag != null)
             {
                 throw new Exception("A geotag with the same title already exists");
             }
-            _dbContext.GeoTags.Add(geoTag);
-            _dbContext.SaveChanges();
+            dbContext.GeoTags.Add(geoTag);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -58,7 +50,7 @@ public class GeoTagRepository : IRepository<GeoTag>
     {
         try
         {
-            var existingGeoTag = _dbContext.GeoTags.Find(geoTag.Id);
+            var existingGeoTag = dbContext.GeoTags.Find(geoTag.Id);
             if (existingGeoTag == null)
             {
                 throw new Exception("The geotag does not exist");
@@ -68,7 +60,7 @@ public class GeoTagRepository : IRepository<GeoTag>
             existingGeoTag.PdfFilePath = geoTag.PdfFilePath;
             existingGeoTag.AudioFilePath = geoTag.AudioFilePath;
             existingGeoTag.IsVisible = geoTag.IsVisible;
-            _dbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -80,13 +72,13 @@ public class GeoTagRepository : IRepository<GeoTag>
     {
         try
         {
-            var existingGeoTag = _dbContext.GeoTags.Find(id);
+            var existingGeoTag = dbContext.GeoTags.Find(id);
             if (existingGeoTag == null)
             {
                 throw new Exception("The geotag does not exist");
             }
-            _dbContext.GeoTags.Remove(existingGeoTag);
-            _dbContext.SaveChanges();
+            dbContext.GeoTags.Remove(existingGeoTag);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {

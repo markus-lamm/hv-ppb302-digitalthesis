@@ -1,15 +1,8 @@
-﻿namespace Hv.Ppb302.DigitalThesis.WebClient.Models
+﻿namespace Hv.Ppb302.DigitalThesis.WebClient.Models;
+
+public class Email(string receiver)
 {
-    public class Email
-    {
-        public string Receiver { get; set; }
-        public string Subject { get; } = "Avhandlinglänk";
-        public string Body { get; } = "Här kommer din nya hemasidan";
-
-        public Email(string receiver)
-        {
-            Receiver = receiver;
-        }
-
-    }
+    public string Receiver { get; set; } = receiver;
+    public string Subject { get; } = "DigitalThesis Website Link";
+    public string Body { get; } = "This is the link to the DigitalThesis website https://da.ios.hv.se/DigitalThesis";
 }

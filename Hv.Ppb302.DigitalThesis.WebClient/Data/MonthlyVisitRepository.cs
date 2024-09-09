@@ -2,20 +2,13 @@
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
-public class MonthlyVisitRepository : IRepository<MonthlyVisit>
+public class MonthlyVisitRepository(DigitalThesisDbContext dbContext) : IRepository<MonthlyVisit>
 {
-    private readonly DigitalThesisDbContext _dbContext;
-
-    public MonthlyVisitRepository(DigitalThesisDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public MonthlyVisit? Get(Guid id)
     {
         try
         {
-            return _dbContext.MonthlyVisits.FirstOrDefault(g => g.Id == id);
+            return dbContext.MonthlyVisits.FirstOrDefault(g => g.Id == id);
         }
         catch (Exception)
         {
@@ -27,7 +20,7 @@ public class MonthlyVisitRepository : IRepository<MonthlyVisit>
     {
         try
         {
-            return _dbContext.MonthlyVisits.FirstOrDefault(g => g.Month == month && g.YearlyVisit.Year == year);
+            return dbContext.MonthlyVisits.FirstOrDefault(g => g.Month == month && g.YearlyVisit.Year == year);
         }
         catch (Exception)
         {
@@ -39,7 +32,7 @@ public class MonthlyVisitRepository : IRepository<MonthlyVisit>
     {
         try
         {
-            return _dbContext.MonthlyVisits.ToList();
+            return dbContext.MonthlyVisits.ToList();
         }
         catch (Exception)
         {
@@ -51,18 +44,18 @@ public class MonthlyVisitRepository : IRepository<MonthlyVisit>
     {
         try
         {
-            var existingEntry = _dbContext.MonthlyVisits.FirstOrDefault(m => m.Id == monthlyVisit.Id);
+            var existingEntry = dbContext.MonthlyVisits.FirstOrDefault(m => m.Id == monthlyVisit.Id);
             if (existingEntry != null)
             {
                 throw new Exception("An entry with the same Id already exists");
             }
-            existingEntry = _dbContext.MonthlyVisits.FirstOrDefault(m => m.Month == monthlyVisit.Month);
+            existingEntry = dbContext.MonthlyVisits.FirstOrDefault(m => m.Month == monthlyVisit.Month);
             if (existingEntry != null)
             {
                 throw new Exception("An entry with the same Month already exists");
             }
-            _dbContext.MonthlyVisits.Add(monthlyVisit);
-            _dbContext.SaveChanges();
+            dbContext.MonthlyVisits.Add(monthlyVisit);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -74,13 +67,13 @@ public class MonthlyVisitRepository : IRepository<MonthlyVisit>
     {
         try
         {
-            var existingEntry = _dbContext.MonthlyVisits.Find(monthlyVisit.Id);
+            var existingEntry = dbContext.MonthlyVisits.Find(monthlyVisit.Id);
             if (existingEntry == null)
             {
                 throw new Exception("The entry does not exist");
             }
             existingEntry.Visits = monthlyVisit.Visits;
-            _dbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -92,13 +85,13 @@ public class MonthlyVisitRepository : IRepository<MonthlyVisit>
     {
         try
         {
-            var existingEntry = _dbContext.MonthlyVisits.Find(id);
+            var existingEntry = dbContext.MonthlyVisits.Find(id);
             if (existingEntry == null)
             {
                 throw new Exception("The entry does not exist");
             }
-            _dbContext.MonthlyVisits.Remove(existingEntry);
-            _dbContext.SaveChanges();
+            dbContext.MonthlyVisits.Remove(existingEntry);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {

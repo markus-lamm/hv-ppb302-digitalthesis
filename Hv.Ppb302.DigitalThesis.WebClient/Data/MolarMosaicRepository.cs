@@ -3,20 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
-public class MolarMosaicRepository : IRepository<MolarMosaic>
+public class MolarMosaicRepository(DigitalThesisDbContext dbContext) : IRepository<MolarMosaic>
 {
-    private readonly DigitalThesisDbContext _dbContext;
-
-    public MolarMosaicRepository(DigitalThesisDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public MolarMosaic? Get(Guid id)
     {
         try
         {
-            return _dbContext.MolarMosaics
+            return dbContext.MolarMosaics
                 .Include(g => g.ConnectorTags)
                 .Include(m => m.KaleidoscopeTags)
                 .Include(q => q.AssemblageTag)
@@ -32,7 +25,7 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
     {
         try
         {
-            return _dbContext.MolarMosaics
+            return dbContext.MolarMosaics
                 .Include(g => g.ConnectorTags)
                 .Include(m => m.KaleidoscopeTags)
                 .ToList();
@@ -47,13 +40,13 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
     {
         try
         {
-            var existingMolarMosaic = _dbContext.MolarMosaics.FirstOrDefault(m => m.Title == molarMosaic.Title);
+            var existingMolarMosaic = dbContext.MolarMosaics.FirstOrDefault(m => m.Title == molarMosaic.Title);
             if (existingMolarMosaic != null)
             {
                 throw new Exception("A molar mosaic with the same title already exists");
             }
-            _dbContext.MolarMosaics.Add(molarMosaic);
-            _dbContext.SaveChanges();
+            dbContext.MolarMosaics.Add(molarMosaic);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -65,7 +58,7 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
     {
         try
         {
-            var existingMolarMosaic = _dbContext.MolarMosaics.Find(molarMosaic.Id);
+            var existingMolarMosaic = dbContext.MolarMosaics.Find(molarMosaic.Id);
             if (existingMolarMosaic == null)
             {
                 throw new Exception("The molar mosaic does not exist");
@@ -80,7 +73,7 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
             existingMolarMosaic.KaleidoscopeTags = molarMosaic.KaleidoscopeTags;
             existingMolarMosaic.AssemblageTagId = molarMosaic.AssemblageTagId;
             existingMolarMosaic.IsVisible = molarMosaic.IsVisible;
-            _dbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -92,13 +85,13 @@ public class MolarMosaicRepository : IRepository<MolarMosaic>
     {
         try
         {
-            var existingMolarMosaic = _dbContext.MolarMosaics.Find(id);
+            var existingMolarMosaic = dbContext.MolarMosaics.Find(id);
             if (existingMolarMosaic == null)
             {
                 throw new Exception("The molar mosaic does not exist");
             }
-            _dbContext.MolarMosaics.Remove(existingMolarMosaic);
-            _dbContext.SaveChanges();
+            dbContext.MolarMosaics.Remove(existingMolarMosaic);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {

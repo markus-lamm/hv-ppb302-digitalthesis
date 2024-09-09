@@ -5,24 +5,15 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.ViewComponents;
 
-public class SizeGuardViewComponent : ViewComponent
+public class SizeGuardViewComponent(PageRepository pageRepo, IMemoryCache cache) : ViewComponent
 {
-    private readonly PageRepository _pageRepo;
-    private readonly IMemoryCache _cache;
-
-    public SizeGuardViewComponent(PageRepository pageRepo, IMemoryCache cache)
-    {
-        _pageRepo = pageRepo;
-        _cache = cache;
-    }
-
     public Task<IViewComponentResult> InvokeAsync()
     {
         var cacheKey = "SizeGuardData";
-        if (!_cache.TryGetValue(cacheKey, out Page data))
+        if (!cache.TryGetValue(cacheKey, out Page data))
         {
             // Key not in cache, so get data from database
-            data = _pageRepo.GetByName("SizeGuard");
+            data = pageRepo.GetByName("SizeGuard");
 
             // Set cache options
             var cacheEntryOptions = new MemoryCacheEntryOptions
@@ -32,7 +23,7 @@ public class SizeGuardViewComponent : ViewComponent
             };
 
             // Save data in cache
-            _cache.Set(cacheKey, data, cacheEntryOptions);
+            cache.Set(cacheKey, data, cacheEntryOptions);
         }
 
         return Task.FromResult<IViewComponentResult>(View(data));

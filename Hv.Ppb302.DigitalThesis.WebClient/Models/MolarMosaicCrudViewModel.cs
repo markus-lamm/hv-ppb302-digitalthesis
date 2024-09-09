@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Models;
 
@@ -12,5 +11,4 @@ public class MolarMosaicCrudViewModel
     public string? Becomings { get; set; }
     public List<Guid> SelectedConnectorsTagsIds { get; set; } = [];
     public List<Guid> SelectedKaleidoscopeTagsIds { get; set; } = [];
-
 }

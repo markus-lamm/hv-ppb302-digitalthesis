@@ -4,22 +4,15 @@ using Hv.Ppb302.DigitalThesis.WebClient.Models;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
-public class AssemblageTagsController : Controller
+public class AssemblageTagsController(AssemblageTagRepository assemblageTagRepo) : Controller
 {
-    private readonly AssemblageTagRepository _assemblageTagRepo;
-
-    public AssemblageTagsController(AssemblageTagRepository assemblageTagRepo)
-    {
-        _assemblageTagRepo = assemblageTagRepo;
-    }
-
     public IActionResult Index()
     {
         if (!CheckAuthentication())
         {
             return RedirectToAction("Login", "Admin");
         }
-        return View(_assemblageTagRepo.GetAll());
+        return View(assemblageTagRepo.GetAll());
     }
 
     public IActionResult Create()
@@ -44,7 +37,7 @@ public class AssemblageTagsController : Controller
         {
             return View(assemblageTag);
         }
-        _assemblageTagRepo.Create(assemblageTag);
+        assemblageTagRepo.Create(assemblageTag);
 
         return RedirectToAction(nameof(Index));
     }
@@ -56,7 +49,7 @@ public class AssemblageTagsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var assemblageTag = _assemblageTagRepo.Get(id);
+        var assemblageTag = assemblageTagRepo.Get(id);
         if (assemblageTag == null)
         {
             return NotFound();
@@ -82,7 +75,7 @@ public class AssemblageTagsController : Controller
         {
             return View(assemblageTag);
         }
-        _assemblageTagRepo.Update(assemblageTag);
+        assemblageTagRepo.Update(assemblageTag);
 
         return RedirectToAction(nameof(Index));
     }
@@ -94,7 +87,7 @@ public class AssemblageTagsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var assemblageTag = _assemblageTagRepo.Get(id);
+        var assemblageTag = assemblageTagRepo.Get(id);
         if (assemblageTag == null)
         {
             return NotFound();
@@ -112,12 +105,12 @@ public class AssemblageTagsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var assemblageTag = _assemblageTagRepo.Get(id);
+        var assemblageTag = assemblageTagRepo.Get(id);
         if (assemblageTag == null)
         {
             return NotFound();
         }
-        _assemblageTagRepo.Delete(id);
+        assemblageTagRepo.Delete(id);
 
         return RedirectToAction(nameof(Index));
     }

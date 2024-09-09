@@ -4,22 +4,15 @@ using Hv.Ppb302.DigitalThesis.WebClient.Models;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
-public class GeoTagsController : Controller
+public class GeoTagsController(GeoTagRepository geoTagRepo) : Controller
 {
-    private readonly GeoTagRepository _geoTagRepo;
-
-    public GeoTagsController(GeoTagRepository geoTagRepo)
-    {
-        _geoTagRepo = geoTagRepo;
-    }
-
     public IActionResult Index()
     {
         if (!CheckAuthentication())
         {
             return RedirectToAction("Login", "Admin");
         }
-        return View(_geoTagRepo.GetAll());
+        return View(geoTagRepo.GetAll());
     }
 
     public IActionResult Edit(Guid id)
@@ -29,7 +22,7 @@ public class GeoTagsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var geoTag = _geoTagRepo.Get(id);
+        var geoTag = geoTagRepo.Get(id);
         if (geoTag == null)
         {
             return NotFound();
@@ -55,7 +48,7 @@ public class GeoTagsController : Controller
         {
             return View(geoTag);
         }
-        _geoTagRepo.Update(geoTag);
+        geoTagRepo.Update(geoTag);
 
         return RedirectToAction(nameof(Index));
     }

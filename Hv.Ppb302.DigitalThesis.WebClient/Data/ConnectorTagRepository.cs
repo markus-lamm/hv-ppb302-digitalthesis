@@ -3,20 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
-public class ConnectorTagRepository : IRepository<ConnectorTag>
+public class ConnectorTagRepository(DigitalThesisDbContext dbContext) : IRepository<ConnectorTag>
 {
-    private readonly DigitalThesisDbContext _dbContext;
-
-    public ConnectorTagRepository(DigitalThesisDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public ConnectorTag? Get(Guid id)
     {
         try
         {
-            return _dbContext.ConnectorTags
+            return dbContext.ConnectorTags
                 .Include(g => g.GeoTags)
                 .Include(g => g.MolarMosaics)
                 .Include(g => g.MolecularMosaics)
@@ -32,7 +25,7 @@ public class ConnectorTagRepository : IRepository<ConnectorTag>
     {
         try
         {
-            return _dbContext.ConnectorTags
+            return dbContext.ConnectorTags
                 .Include(g => g.GeoTags)
                 .Include(g => g.MolarMosaics)
                 .Include(g => g.MolecularMosaics)
@@ -48,13 +41,13 @@ public class ConnectorTagRepository : IRepository<ConnectorTag>
     {
         try
         {
-            var existingConnectorTag = _dbContext.ConnectorTags.FirstOrDefault(g => g.Name == connectorTag.Name);
+            var existingConnectorTag = dbContext.ConnectorTags.FirstOrDefault(g => g.Name == connectorTag.Name);
             if (existingConnectorTag != null)
             {
                 throw new Exception("A connector tag with the same name already exists");
             }
-            _dbContext.ConnectorTags.Add(connectorTag);
-            _dbContext.SaveChanges();
+            dbContext.ConnectorTags.Add(connectorTag);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -66,7 +59,7 @@ public class ConnectorTagRepository : IRepository<ConnectorTag>
     {
         try
         {
-            var existingConnectorTag = _dbContext.ConnectorTags.Find(connectorTag.Id);
+            var existingConnectorTag = dbContext.ConnectorTags.Find(connectorTag.Id);
             if (existingConnectorTag == null)
             {
                 throw new Exception("The connector tag does not exist");
@@ -74,7 +67,7 @@ public class ConnectorTagRepository : IRepository<ConnectorTag>
             existingConnectorTag.Name = connectorTag.Name;
             existingConnectorTag.MolarMosaics = connectorTag.MolarMosaics;
             existingConnectorTag.MolecularMosaics = connectorTag.MolecularMosaics;
-            _dbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -86,13 +79,13 @@ public class ConnectorTagRepository : IRepository<ConnectorTag>
     {
         try
         {
-            var existingConnectorTag = _dbContext.ConnectorTags.Find(id);
+            var existingConnectorTag = dbContext.ConnectorTags.Find(id);
             if (existingConnectorTag == null)
             {
                 throw new Exception("The connector tag does not exist");
             }
-            _dbContext.ConnectorTags.Remove(existingConnectorTag);
-            _dbContext.SaveChanges();
+            dbContext.ConnectorTags.Remove(existingConnectorTag);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
