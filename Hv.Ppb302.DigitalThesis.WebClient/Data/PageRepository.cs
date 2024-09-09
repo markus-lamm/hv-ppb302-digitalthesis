@@ -2,20 +2,13 @@
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
-public class PageRepository : IRepository<Page>
+public class PageRepository(DigitalThesisDbContext dbContext) : IRepository<Page>
 {
-    private readonly DigitalThesisDbContext _dbContext;
-
-    public PageRepository(DigitalThesisDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public Page? Get(Guid id)
     {
         try
         {
-            return _dbContext.Pages.Find(id);
+            return dbContext.Pages.Find(id);
         }
         catch (Exception)
         {
@@ -27,7 +20,7 @@ public class PageRepository : IRepository<Page>
     {
         try
         {
-            return _dbContext.Pages.ToList();
+            return dbContext.Pages.ToList();
         }
         catch (Exception)
         {
@@ -39,7 +32,7 @@ public class PageRepository : IRepository<Page>
     {
         try
         {
-            return _dbContext.Pages.FirstOrDefault(g => g.Name == name);
+            return dbContext.Pages.FirstOrDefault(g => g.Name == name);
         }
         catch (Exception)
         {
@@ -51,13 +44,13 @@ public class PageRepository : IRepository<Page>
     {
         try
         {
-            var existingPage = _dbContext.Pages.FirstOrDefault(g => g.Name == page.Name);
+            var existingPage = dbContext.Pages.FirstOrDefault(g => g.Name == page.Name);
             if (existingPage != null)
             {
                 throw new Exception("A page with the same name already exists");
             }
-            _dbContext.Pages.Add(page);
-            _dbContext.SaveChanges();
+            dbContext.Pages.Add(page);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -69,14 +62,14 @@ public class PageRepository : IRepository<Page>
     {
         try
         {
-            var existingPage = _dbContext.Pages.Find(page.Id);
+            var existingPage = dbContext.Pages.Find(page.Id);
             if (existingPage == null)
             {
                 throw new Exception("The page does not exist");
             }
             existingPage.Name = page.Name;
             existingPage.Content = page.Content;
-            _dbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -88,13 +81,13 @@ public class PageRepository : IRepository<Page>
     {
         try
         {
-            var existingPage = _dbContext.Pages.Find(id);
+            var existingPage = dbContext.Pages.Find(id);
             if (existingPage == null)
             {
                 throw new Exception("The page does not exist");
             }
-            _dbContext.Pages.Remove(existingPage);
-            _dbContext.SaveChanges();
+            dbContext.Pages.Remove(existingPage);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {

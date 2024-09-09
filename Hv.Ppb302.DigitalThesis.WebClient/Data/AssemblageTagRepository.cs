@@ -3,20 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
-public class AssemblageTagRepository : IRepository<AssemblageTag>
+public class AssemblageTagRepository(DigitalThesisDbContext dbContext) : IRepository<AssemblageTag>
 {
-    private readonly DigitalThesisDbContext _dbContext;
-
-    public AssemblageTagRepository(DigitalThesisDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public AssemblageTag? Get(Guid id)
     {
         try
         {
-            return _dbContext.AssemblageTags
+            return dbContext.AssemblageTags
                 .Include(g => g.MolarMosaics)
                 .Include(g => g.MolecularMosaics)
                 .FirstOrDefault(g => g.Id == id);
@@ -31,7 +24,7 @@ public class AssemblageTagRepository : IRepository<AssemblageTag>
     {
         try
         {
-            return _dbContext.AssemblageTags
+            return dbContext.AssemblageTags
                 .Include(g => g.MolarMosaics)
                 .Include(g => g.MolecularMosaics)
                 .ToList();
@@ -46,13 +39,13 @@ public class AssemblageTagRepository : IRepository<AssemblageTag>
     {
         try
         {
-            var existingAssemblageTag = _dbContext.AssemblageTags.FirstOrDefault(g => g.Name == assemblageTag.Name);
+            var existingAssemblageTag = dbContext.AssemblageTags.FirstOrDefault(g => g.Name == assemblageTag.Name);
             if (existingAssemblageTag != null)
             {
                 throw new Exception("A assemblage tag with the same name already exists");
             }
-            _dbContext.AssemblageTags.Add(assemblageTag);
-            _dbContext.SaveChanges();
+            dbContext.AssemblageTags.Add(assemblageTag);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -64,7 +57,7 @@ public class AssemblageTagRepository : IRepository<AssemblageTag>
     {
         try
         {
-            var existingAssemblageTag = _dbContext.AssemblageTags.Find(assemblageTag.Id);
+            var existingAssemblageTag = dbContext.AssemblageTags.Find(assemblageTag.Id);
             if (existingAssemblageTag == null)
             {
                 throw new Exception("The assemblage tag does not exist");
@@ -72,7 +65,7 @@ public class AssemblageTagRepository : IRepository<AssemblageTag>
             existingAssemblageTag.Name = assemblageTag.Name;
             existingAssemblageTag.MolarMosaics = assemblageTag.MolarMosaics;
             existingAssemblageTag.MolecularMosaics = assemblageTag.MolecularMosaics;
-            _dbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -84,13 +77,13 @@ public class AssemblageTagRepository : IRepository<AssemblageTag>
     {
         try
         {
-            var existingAssemblageTag = _dbContext.AssemblageTags.Find(id);
+            var existingAssemblageTag = dbContext.AssemblageTags.Find(id);
             if (existingAssemblageTag == null)
             {
                 throw new Exception("The assemblage tag does not exist");
             }
-            _dbContext.AssemblageTags.Remove(existingAssemblageTag);
-            _dbContext.SaveChanges();
+            dbContext.AssemblageTags.Remove(existingAssemblageTag);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
