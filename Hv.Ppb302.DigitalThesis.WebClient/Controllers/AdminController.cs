@@ -6,21 +6,10 @@ using Newtonsoft.Json;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
-public class AdminController : Controller
+public class AdminController(UserRepository userRepo,
+    UploadRepository uploadRepo,
+    YearlyVisitRepository yearlyVisitRepo) : Controller
 {
-    private readonly UserRepository _userRepo;
-    private readonly UploadRepository _uploadRepo;
-    private readonly YearlyVisitRepository _yearlyVisitRepository;
-
-    public AdminController(UserRepository userRepo, 
-        UploadRepository uploadRepository, 
-        YearlyVisitRepository yearlyVisitRepository)
-    {
-        _userRepo = userRepo;
-        _uploadRepo = uploadRepository;
-        _yearlyVisitRepository = yearlyVisitRepository;
-    }
-
     public IActionResult Index()
     {
         if (!CheckAuthentication())
@@ -43,7 +32,7 @@ public class AdminController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var user = _userRepo.GetByUsername(username);
+        var user = userRepo.GetByUsername(username);
         if (user == null)
         {
             return NotFound();
@@ -82,14 +71,14 @@ public class AdminController : Controller
             return View(profile);
         }
 
-        var user = _userRepo.Get(id);
+        var user = userRepo.Get(id);
         if (IsInvalidPassword(user, profile.OldPassword))
         {
             ViewBag.Error = "Invalid existing password";
             return View(profile);
         }
 
-        _userRepo.Update(profile);
+        userRepo.Update(profile);
 
         var authenticationUser = CreateAuthenticationUser(profile, user);
         return AddAuthentication(authenticationUser.Username!, authenticationUser.Password!);
@@ -136,12 +125,12 @@ public class AdminController : Controller
         {
             return RedirectToAction("Login", "Admin");
         }
-        return View(_yearlyVisitRepository.GetAll());
+        return View(yearlyVisitRepo.GetAll());
     }
 
     public IActionResult AddAuthentication(string username, string password)
     {
-        var user = _userRepo.GetByCredentials(username, password);
+        var user = userRepo.GetByCredentials(username, password);
         if(user == null)
         {
             TempData["LoginError"] = true;
@@ -187,7 +176,7 @@ public class AdminController : Controller
             {
                 await file.CopyToAsync(stream);
             }
-            _uploadRepo.Create(viewmodel);
+            uploadRepo.Create(viewmodel);
         }
         return View("Files", GetAllFiles());
     }
@@ -200,7 +189,7 @@ public class AdminController : Controller
         if (file.Exists) 
         {
             file.Delete();
-            _uploadRepo.Delete(FileName);
+            uploadRepo.Delete(FileName);
         }
         return View("Files", GetAllFiles());
     }
@@ -218,7 +207,7 @@ public class AdminController : Controller
                     MaterialOrder = entry.Order
                 }).ToList();
 
-            _uploadRepo.Update(uploadsToUpdate);
+            uploadRepo.Update(uploadsToUpdate);
         }
         return RedirectToAction("Files", GetAllFiles());
     }
@@ -237,7 +226,7 @@ public class AdminController : Controller
                                        IsMaterial = entry.Value
                                    }).ToList();
 
-            _uploadRepo.Update(uploadsToUpdate);
+            uploadRepo.Update(uploadsToUpdate);
         }
 
         return RedirectToAction("Files", GetAllFiles());
@@ -255,7 +244,7 @@ public class AdminController : Controller
                              .Select(path => Path.GetFileName(path))
                              .ToList();
 
-        var uploadsList = _uploadRepo.GetAll();
+        var uploadsList = uploadRepo.GetAll();
         List<FilesViewModel> filesViewModels = [];
         foreach (var file in files)
         {

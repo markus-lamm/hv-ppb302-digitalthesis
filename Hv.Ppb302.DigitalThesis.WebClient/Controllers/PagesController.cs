@@ -4,22 +4,15 @@ using Hv.Ppb302.DigitalThesis.WebClient.Models;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
-public class PagesController : Controller
+public class PagesController(PageRepository pageRepo) : Controller
 {
-    private readonly PageRepository _pageRepo;
-
-    public PagesController(PageRepository pageRepo)
-    {
-        _pageRepo = pageRepo;
-    }
-
     public IActionResult Index()
     {
         if (!CheckAuthentication())
         {
             return RedirectToAction("Login", "Admin");
         }
-        return View(_pageRepo.GetAll());
+        return View(pageRepo.GetAll());
     }
 
     public IActionResult Edit(Guid id)
@@ -29,7 +22,7 @@ public class PagesController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var page = _pageRepo.Get(id);
+        var page = pageRepo.Get(id);
         if (page == null)
         {
             return NotFound();
@@ -55,7 +48,7 @@ public class PagesController : Controller
         {
             return View(page);
         }
-        _pageRepo.Update(page);
+        pageRepo.Update(page);
 
         return RedirectToAction(nameof(Index));
     }

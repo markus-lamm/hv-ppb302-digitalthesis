@@ -4,31 +4,18 @@ using Hv.Ppb302.DigitalThesis.WebClient.Models;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
-public class MolarMosaicsController : Controller
+public class MolarMosaicsController(MolarMosaicRepository molarMosaicRepo,
+    ConnectorTagRepository connectorTagRepo,
+    KaleidoscopeTagRepository kaleidoscopeTagRepo,
+    AssemblageTagRepository assemblageTagRepo) : Controller
 {
-    private readonly ConnectorTagRepository _connectorTagRepo;
-    private readonly MolarMosaicRepository _molarMosaicRepo;
-    private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
-    private readonly AssemblageTagRepository _assemblageTagRepository;
-
-    public MolarMosaicsController(MolarMosaicRepository molarMosaicRepo,
-        ConnectorTagRepository connectorTagRepo,
-        KaleidoscopeTagRepository kaleidoscopeTagRepo,
-        AssemblageTagRepository assemblageTagRepository)
-    {
-        _molarMosaicRepo = molarMosaicRepo;
-        _connectorTagRepo = connectorTagRepo;
-        _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
-        _assemblageTagRepository = assemblageTagRepository;
-    }
-
     public IActionResult Index()
     {
         if (!CheckAuthentication())
         {
             return RedirectToAction("Login", "Admin");
         }
-        return View(_molarMosaicRepo.GetAll());
+        return View(molarMosaicRepo.GetAll());
     }
 
     public IActionResult Create()
@@ -42,15 +29,15 @@ public class MolarMosaicsController : Controller
 
         var crudViewModel = new MolarMosaicCrudViewModel
         {
-            ConnectorTagsItemList = _connectorTagRepo.GetAll().ToSelectListItemsList(
+            ConnectorTagsItemList = connectorTagRepo.GetAll().ToSelectListItemsList(
                 tag => tag.Id.ToString(),
                 tag => tag.Name
             ),
-            AssemblageTagsItemList = _assemblageTagRepository.GetAll().ToSelectListItemsList(
+            AssemblageTagsItemList = assemblageTagRepo.GetAll().ToSelectListItemsList(
                 tag => tag.Id.ToString(),
                 tag => tag.Name
             ),
-            KaleidoscopeTagsItemList = _kaleidoscopeTagRepo.GetAll()?
+            KaleidoscopeTagsItemList = kaleidoscopeTagRepo.GetAll()?
                 .Where(k => !excludedIds.Contains(k.Id.ToString()))
                 .ToSelectListItemsList(
                     tag => tag.Id.ToString(),
@@ -83,16 +70,16 @@ public class MolarMosaicsController : Controller
             PdfFilePath = molarMosaicCrudViewModel.MolarMosaic?.PdfFilePath,
             AudioFilePath = molarMosaicCrudViewModel.MolarMosaic?.AudioFilePath,
             AssemblageTagId = molarMosaicCrudViewModel.MolarMosaic?.AssemblageTagId,
-            ConnectorTags = _connectorTagRepo.GetAll()?
+            ConnectorTags = connectorTagRepo.GetAll()?
             .Where(tag => molarMosaicCrudViewModel.SelectedConnectorsTagsIds.Contains(tag.Id))
             .ToList(),
-            KaleidoscopeTags = _kaleidoscopeTagRepo.GetAll()?
+            KaleidoscopeTags = kaleidoscopeTagRepo.GetAll()?
                 .Where(tag => molarMosaicCrudViewModel.SelectedKaleidoscopeTagsIds.Contains(tag.Id))
                 .ToList(),
             Becomings = molarMosaicCrudViewModel.Becomings.ToStringListFromTagifyFormat()
         };
 
-        _molarMosaicRepo.Create(dbMolarMosaic);
+        molarMosaicRepo.Create(dbMolarMosaic);
 
         return RedirectToAction(nameof(Index));
     }
@@ -104,7 +91,7 @@ public class MolarMosaicsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var molarMosaic = _molarMosaicRepo.Get(id);
+        var molarMosaic = molarMosaicRepo.Get(id);
         if (molarMosaic == null)
         {
             return NotFound();
@@ -114,16 +101,16 @@ public class MolarMosaicsController : Controller
         var crudViewModel = new MolarMosaicCrudViewModel
         {
             MolarMosaic = molarMosaic,
-            ConnectorTagsItemList = _connectorTagRepo.GetAll().ToSelectListItemsList(
+            ConnectorTagsItemList = connectorTagRepo.GetAll().ToSelectListItemsList(
                 tag => tag.Id.ToString(),
                 tag => tag.Name,
                 selectedValues: molarMosaic.ConnectorTags?.Select(ct => ct.Id.ToString())
             ),
-            AssemblageTagsItemList = _assemblageTagRepository.GetAll().ToSelectListItemsList(
+            AssemblageTagsItemList = assemblageTagRepo.GetAll().ToSelectListItemsList(
                 tag => tag.Id.ToString(),
                 tag => tag.Name
             ),
-            KaleidoscopeTagsItemList = _kaleidoscopeTagRepo.GetAll()?
+            KaleidoscopeTagsItemList = kaleidoscopeTagRepo.GetAll()?
                 .Where(k => !excludedIds.Contains(k.Id.ToString()))
                 .ToSelectListItemsList(
                     tag => tag.Id.ToString(),
@@ -166,16 +153,16 @@ public class MolarMosaicsController : Controller
             PdfFilePath = molarMosaicCrudViewModel.MolarMosaic?.PdfFilePath,
             AudioFilePath = molarMosaicCrudViewModel.MolarMosaic?.AudioFilePath,
             AssemblageTagId = molarMosaicCrudViewModel.MolarMosaic?.AssemblageTagId,
-            ConnectorTags = _connectorTagRepo.GetAll()?
+            ConnectorTags = connectorTagRepo.GetAll()?
                 .Where(tag => molarMosaicCrudViewModel.SelectedConnectorsTagsIds.Contains(tag.Id))
                 .ToList(),
-            KaleidoscopeTags = _kaleidoscopeTagRepo.GetAll()?
+            KaleidoscopeTags = kaleidoscopeTagRepo.GetAll()?
                 .Where(tag => molarMosaicCrudViewModel.SelectedKaleidoscopeTagsIds.Contains(tag.Id))
                 .ToList(),
             Becomings = molarMosaicCrudViewModel.Becomings.ToStringListFromTagifyFormat()
         };
 
-        _molarMosaicRepo.Update(dbMolarMosaic);
+        molarMosaicRepo.Update(dbMolarMosaic);
 
         return RedirectToAction(nameof(Index));
     }
@@ -187,7 +174,7 @@ public class MolarMosaicsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var molarMosaic = _molarMosaicRepo.Get(id);
+        var molarMosaic = molarMosaicRepo.Get(id);
         if (molarMosaic == null)
         {
             return NotFound();
@@ -205,12 +192,12 @@ public class MolarMosaicsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var molarMosaic = _molarMosaicRepo.Get(id);
+        var molarMosaic = molarMosaicRepo.Get(id);
         if (molarMosaic == null)
         {
             return NotFound();
         }
-        _molarMosaicRepo.Delete(id);
+        molarMosaicRepo.Delete(id);
 
         return RedirectToAction(nameof(Index));
     }
