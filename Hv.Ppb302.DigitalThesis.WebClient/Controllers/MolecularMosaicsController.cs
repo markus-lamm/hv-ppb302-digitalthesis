@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
-using System.Text.Json;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
@@ -12,7 +10,6 @@ public class MolecularMosaicsController : Controller
     private readonly MolecularMosaicRepository _molecularMosaicRepo;
     private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
     private readonly AssemblageTagRepository _assemblageTagRepository;
-
 
     public MolecularMosaicsController(MolecularMosaicRepository molecularMosaicRepo,
         ConnectorTagRepository connectorTagRepo,

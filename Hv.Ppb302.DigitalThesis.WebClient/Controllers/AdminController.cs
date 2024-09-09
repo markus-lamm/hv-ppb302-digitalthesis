@@ -12,7 +12,6 @@ public class AdminController : Controller
     private readonly UploadRepository _uploadRepo;
     private readonly YearlyVisitRepository _yearlyVisitRepository;
 
-
     public AdminController(UserRepository userRepo, 
         UploadRepository uploadRepository, 
         YearlyVisitRepository yearlyVisitRepository)
