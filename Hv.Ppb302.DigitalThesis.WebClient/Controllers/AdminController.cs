@@ -6,18 +6,10 @@ using Newtonsoft.Json;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
-public class AdminController : Controller
+public class AdminController(UserRepository userRepo,
+    UploadRepository uploadRepo,
+    YearlyVisitRepository yearlyVisitRepo) : Controller
 {
-    private readonly UserRepository _userRepo;
-    private readonly UploadRepository _uploadRepo;
-    
-
-    public AdminController(UserRepository userRepo, UploadRepository uploadRepository)
-    {
-        _userRepo = userRepo;
-        _uploadRepo = uploadRepository;
-    }
-
     public IActionResult Index()
     {
         if (!CheckAuthentication())
@@ -40,34 +32,75 @@ public class AdminController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var user = _userRepo.GetByUsername(username);
+        var user = userRepo.GetByUsername(username);
         if (user == null)
         {
             return NotFound();
         }
 
-        return View(user);
+        var profile = new Profile
+        {
+            Id = user.Id,
+            Username = user.Username
+        };
+
+        return View(profile);
     }
 
     [HttpPost]
-    public IActionResult Profile(Guid id, [Bind("Id,Username,Password")] User user)
+    public IActionResult Profile(Guid id, [Bind("Id,Username,NewPassword,OldPassword")] Profile profile)
     {
         if (!CheckAuthentication())
         {
             return RedirectToAction("Login", "Admin");
         }
 
-        if (id != user.Id)
+        if (id != profile.Id)
         {
             return NotFound();
         }
+
         if (!ModelState.IsValid)
         {
-            return View(user);
+            return RedirectToAction("Profile");
         }
-        _userRepo.Update(user);
 
-        return AddAuthentication(user.Username, user.Password);
+        if (IsProfileDataInvalid(profile))
+        {
+            ViewBag.Error = "Both Username and NewPassword cannot be empty";
+            return View(profile);
+        }
+
+        var user = userRepo.Get(id);
+        if (IsInvalidPassword(user, profile.OldPassword))
+        {
+            ViewBag.Error = "Invalid existing password";
+            return View(profile);
+        }
+
+        userRepo.Update(profile);
+
+        var authenticationUser = CreateAuthenticationUser(profile, user);
+        return AddAuthentication(authenticationUser.Username!, authenticationUser.Password!);
+    }
+
+    private static bool IsProfileDataInvalid(Profile profile)
+    {
+        return string.IsNullOrWhiteSpace(profile.Username) && string.IsNullOrWhiteSpace(profile.NewPassword);
+    }
+
+    private static bool IsInvalidPassword(User? user, string? oldPassword)
+    {
+        return user?.Password != oldPassword;
+    }
+
+    private static User CreateAuthenticationUser(Profile profile, User? user)
+    {
+        return new User
+        {
+            Username = profile.Username ?? user?.Username,
+            Password = profile.NewPassword ?? user?.Password
+        };
     }
 
     public IActionResult Login()
@@ -86,9 +119,18 @@ public class AdminController : Controller
         return RedirectToAction("GeoTags", "Home");
     }
 
+    public IActionResult Statistics()
+    {
+        if (!CheckAuthentication())
+        {
+            return RedirectToAction("Login", "Admin");
+        }
+        return View(yearlyVisitRepo.GetAll());
+    }
+
     public IActionResult AddAuthentication(string username, string password)
     {
-        var user = _userRepo.GetByCredentials(username, password);
+        var user = userRepo.GetByCredentials(username, password);
         if(user == null)
         {
             TempData["LoginError"] = true;
@@ -134,7 +176,7 @@ public class AdminController : Controller
             {
                 await file.CopyToAsync(stream);
             }
-            _uploadRepo.Create(viewmodel);
+            uploadRepo.Create(viewmodel);
         }
         return View("Files", GetAllFiles());
     }
@@ -147,9 +189,27 @@ public class AdminController : Controller
         if (file.Exists) 
         {
             file.Delete();
-            _uploadRepo.Delete(FileName);
+            uploadRepo.Delete(FileName);
         }
         return View("Files", GetAllFiles());
+    }
+
+    [HttpPost]
+    public IActionResult UpdateMaterialsOrder(string fileOrders)
+    {
+        var materialFileOrder = JsonConvert.DeserializeObject<List<FileOrder>>(fileOrders);
+        if (materialFileOrder?.Count != 0)
+        {
+            var uploadsToUpdate = (from entry in materialFileOrder
+                select new Upload
+                {
+                    Name = entry.Name,
+                    MaterialOrder = entry.Order
+                }).ToList();
+
+            uploadRepo.Update(uploadsToUpdate);
+        }
+        return RedirectToAction("Files", GetAllFiles());
     }
 
     [HttpPost]
@@ -166,7 +226,7 @@ public class AdminController : Controller
                                        IsMaterial = entry.Value
                                    }).ToList();
 
-            _uploadRepo.Update(uploadsToUpdate);
+            uploadRepo.Update(uploadsToUpdate);
         }
 
         return RedirectToAction("Files", GetAllFiles());
@@ -184,7 +244,7 @@ public class AdminController : Controller
                              .Select(path => Path.GetFileName(path))
                              .ToList();
 
-        var uploadsList = _uploadRepo.GetAll();
+        var uploadsList = uploadRepo.GetAll();
         List<FilesViewModel> filesViewModels = [];
         foreach (var file in files)
         {
@@ -198,9 +258,12 @@ public class AdminController : Controller
                 Category = fileType,
                 Name = file,
                 FileUrl = fileUrl,
-                IsMaterial = upload?.IsMaterial
+                IsMaterial = upload?.IsMaterial,
+                MaterialOrder = upload?.MaterialOrder
             });
         }
-        return filesViewModels;
+
+        var orderList = filesViewModels.OrderBy(u => u.MaterialOrder).ToList();
+        return orderList;
     }
 }

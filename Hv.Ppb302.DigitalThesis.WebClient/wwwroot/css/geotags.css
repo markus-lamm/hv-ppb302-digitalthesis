@@ -1,7 +1,7 @@
-﻿
-.geotag {
+﻿.geotag {
     height: 6vw;
     min-height: 5rem;
+    max-height: 10rem;
 }
 
 .image-text {
@@ -29,7 +29,6 @@ a:hover img {
     color: white;
 
 }
-
 
 #link-molarmosaics {
     color: white;
@@ -217,9 +216,6 @@ a:hover img {
         color: white;
     }
 
-
-
-/*ny css*/
 .map-container {
     position: relative !important;
     width: 100% !important; /* Ensure the map takes up the full width of the container */

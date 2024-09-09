@@ -21,6 +21,8 @@ public class Program
         builder.Services.AddScoped<PageRepository>();
         builder.Services.AddScoped<AssemblageTagRepository>();
         builder.Services.AddScoped<UploadRepository>();
+        builder.Services.AddScoped<MonthlyVisitRepository>();
+        builder.Services.AddScoped<YearlyVisitRepository>();
 
         builder.Services.AddCors(options =>
         {
@@ -34,6 +36,7 @@ public class Program
         });
         // Add services to the container.
         builder.Services.AddControllersWithViews();
+        builder.Services.AddMemoryCache();
         builder.Services.AddSession(options =>
         {
             options.IdleTimeout = TimeSpan.FromMinutes(30);

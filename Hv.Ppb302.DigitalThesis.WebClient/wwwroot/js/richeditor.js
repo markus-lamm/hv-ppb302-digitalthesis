@@ -1,26 +1,28 @@
-﻿const { UIForm, UIInput, UIButton, UITextArea } = Jodit.modules;
+﻿//JODIT PLUGINS
+const { UIForm, UIInput, UIButton, UITextArea } = Jodit.modules;
 
+// Audio player
 Jodit.defaultOptions.controls.audioplay = {
-    iconURL: '/images/icons/sound.png',
+    iconURL: "/images/icons/sound.png",
     popup: (editor, current, control, close) => {
         audioForm = new UIForm(editor, [
             new UIInput(editor, {
-                name: 'audiourl',
-                placeholder: 'Enter audio URL...',
+                name: "audiourl",
+                placeholder: "Enter audio URL...",
                 autofocus: false,
-                label: 'Audio URL:',
+                label: "Audio URL:",
                 required: true
             }),
             new UIInput(editor, {
-                name: 'Width',
-                placeholder: 'Enter width for the audio player ',
+                name: "Width",
+                placeholder: "Enter width for the audio player ",
                 autofocus: false,
-                label: 'Video width: (Normal size is 300)'
+                label: "Video width: (Normal size is 300)"
             }),
             new UIButton(editor, {
-                text: 'Insert audio player',
-                status: 'primary',
-                variant: 'primary'
+                text: "Insert audio player",
+                status: "primary",
+                variant: "primary"
             }).onAction(() => {
                 audioForm.submit();
             })
@@ -31,7 +33,7 @@ Jodit.defaultOptions.controls.audioplay = {
             }; 
 
         audioForm.onSubmit(data => {
-            const width = data.Width !== "" ? `${data.Width}px` : '300px';
+            const width = data.Width !== "" ? `${data.Width}px` : "300px";
             const audiotag = `<audio controls style="width: ${width}""><source src="${data.audiourl}">Your browser does not support the audio element.</audio>`;
             editor.selection.insertHTML(audiotag);
             closePopWindow();
@@ -39,31 +41,31 @@ Jodit.defaultOptions.controls.audioplay = {
         })
         return audioForm;
     },
-    tooltip: 'Insert audio player'
-    
+    tooltip: "Insert audio player"
 }
 
+// Video player (without pause)
 Jodit.defaultOptions.controls.videonopause = {
-    iconURL: '/images/icons/replay.png',
+    iconURL: "/images/icons/replay.png",
     popup: (editor, current, control, close) => {
         videoNoPauseform = new UIForm(editor, [
             new UIInput(editor, {
-                name: 'videoNoPauseUrl',
-                placeholder: 'Enter video URL...',
+                name: "videoNoPauseUrl",
+                placeholder: "Enter video URL...",
                 autofocus: false,
-                label: 'Video URL:',
+                label: "Video URL:",
                 required: true
             }),
             new UIInput(editor, {
-                name: 'Width',
-                placeholder: 'Enter width for the video ',
+                name: "Width",
+                placeholder: "Enter width for the video ",
                 autofocus: false,
-                label: 'Video width: (Normal size is 304)'
+                label: "Video width: (Normal size is 304)"
             }),
             new UIButton(editor, {
-                text: 'Insert no pause video',
-                status: 'primary',
-                variant: 'primary'
+                text: "Insert no pause video",
+                status: "primary",
+                variant: "primary"
             }).onAction(() => {
                 videoNoPauseform.submit();
             })
@@ -73,9 +75,8 @@ Jodit.defaultOptions.controls.videonopause = {
             close.__closePopup();
         };
 
-
         videoNoPauseform.onSubmit((data) => {
-            const width = data.Width !== "" ? `${data.Width}px` : '304px';
+            const width = data.Width !== "" ? `${data.Width}px` : "304px";
             const height = data.Width * 0.56;
             const iframetag = `<video id="videoIframe" src="${data.videoNoPauseUrl}" title="description" width="${width}" height="${height}" controls data-control="true"></video>`;
             editor.selection.insertHTML(iframetag);
@@ -86,20 +87,21 @@ Jodit.defaultOptions.controls.videonopause = {
     tooltip: "Insert No pausable video"
 }
 
+// Video player (with pause)
 Jodit.defaultOptions.controls.video = {
     popup: (editor, current, control, close) => {
         const videoform = new UIForm(editor, [
             new UIInput(editor, {
-                name: 'videoUrl',
-                placeholder: 'Enter video URL...',
+                name: "videoUrl",
+                placeholder: "Enter video URL...",
                 autofocus: false,
-                label: 'Video URL:',
+                label: "Video URL:",
                 required: true
             }),
             new UIButton(editor, {
-                text: 'Insert Video',
-                status: 'primary',
-                variant: 'primary'
+                text: "Insert Video",
+                status: "primary",
+                variant: "primary"
             }).onAction(() => {
                 videoform.submit();
             })
@@ -110,37 +112,39 @@ Jodit.defaultOptions.controls.video = {
         };
 
         videoform.onSubmit((data) => {
-            const iframetag = `<iframe id="videoIframe" src="${data.videoUrl}" title="description" width="304px" height="154px"></iframe>`;
+            const iframetag =
+                `<iframe id="videoIframe" src="${data.videoUrl
+                    }" title="description" width="304px" height="154px"></iframe>`;
             editor.selection.insertHTML(iframetag);
             closePopWindow();
-        })
-
+        });
         return videoform;
     },
     tooltip: "Insert normal video"
 };
 
+// Footnote
 Jodit.defaultOptions.controls.footnoteButton = {
     iconURL: "https://informatik13.ei.hv.se/DigitalThesis/images/icons/superscript.png",
     popup: function (editor, current, control, close) {
         const form = new UIForm(editor, [
             new UITextArea(editor, {
-                name: 'linkText',
-                placeholder: 'Enter link text...',
+                name: "linkText",
+                placeholder: "Enter link text...",
                 autofocus: true,
-                label: 'Text: *',
+                label: "Text: *",
                 required: true
             }),
             new UIInput(editor, {
-                name: 'linkURL',
-                placeholder: 'Enter link URL...',
+                name: "linkURL",
+                placeholder: "Enter link URL...",
                 autofocus: false,
-                label: 'URL:'
+                label: "URL:"
             }),
             new UIButton(editor, {
-                text: 'Insert Footnote',
-                status: 'primary',
-                variant: 'primary'
+                text: "Insert Footnote",
+                status: "primary",
+                variant: "primary"
             }).onAction(() => {
                 form.submit();
             })
@@ -152,38 +156,43 @@ Jodit.defaultOptions.controls.footnoteButton = {
 
         form.onSubmit(() => {
             // Attempt to retrieve the input element from form.elements
-            const LinkTextElement = form.elements.find(
-                element => element.state && element.state.name === 'linkText'
+            const linkTextElement = form.elements.find(
+                element => element.state && element.state.name === "linkText"
             );
-            const LinkUrlElement = form.elements.find(
-                element => element.state && element.state.name === 'linkURL'
+            const linkUrlElement = form.elements.find(
+                element => element.state && element.state.name === "linkURL"
             );
 
-            if (LinkTextElement && LinkUrlElement) {
+            if (linkTextElement && linkUrlElement) {
                 // Safely access the value
-                const linkText = LinkTextElement.state.value || '';
-                const linkURL = LinkUrlElement.state.value || '';
+                const linkText = linkTextElement.state.value || "";
+                const linkUrl = linkUrlElement.state.value || "";
                 let footnoteText = linkText;
 
                 const existingFootnotes = editor.editor.querySelectorAll('a[href^="#_ftnref"]');
                 const footnoteNumber = existingFootnotes.length + 1;
 
 
-                if (linkURL) {
-                    footnoteText = `<strong><a href="${linkURL}" target="_blank" title="${linkText}">${linkText}</a></strong>`;
+                if (linkUrl) {
+                    footnoteText =
+                        `<strong><a href="${linkUrl}" target="_blank" title="${linkText}">${linkText}</a></strong>`;
                 }
 
                 const footnoteId = `ftn${footnoteNumber}`;
                 const footnoteRefId = `_ftnref${footnoteNumber}`;
 
-                const footnoteMarker = `<a href="#${footnoteId}" name="${footnoteRefId}" title=""><span class="MsoFootnoteReference" style="vertical-align: super;"><span style="font-size: 15px; line-height: 107%; font-family: Aptos, sans-serif; vertical-align: super;">${footnoteNumber}</span></span></a>&nbsp;`;
+                const footnoteMarker =
+                    `<a href="#${footnoteId}" name="${footnoteRefId
+                        }" title=""><span class="MsoFootnoteReference" style="vertical-align: super;"><span style="font-size: 15px; line-height: 107%; font-family: Aptos, sans-serif; vertical-align: super;">${
+                        footnoteNumber}</span></span></a>&nbsp;`;
 
                 const footnoteContent = `
                         <div id="${footnoteId}">
                             <p class="MsoFootnoteText" style="margin: 0px; font-size: 13px; font-family: Aptos, sans-serif;">
                                 <a href="#${footnoteRefId}" name="${footnoteId}" title="">
                                     <span class="MsoFootnoteReference" style="vertical-align: super;">
-                                        <span style="font-size: 13px; line-height: 107%; font-family: Aptos, sans-serif;">[${footnoteNumber}]</span>
+                                        <span style="font-size: 13px; line-height: 107%; font-family: Aptos, sans-serif;">[${
+                    footnoteNumber}]</span>
                                     </span></a>&nbsp;&nbsp;&nbsp;${footnoteText}
                             </p>
                         </div>`;
@@ -198,59 +207,59 @@ Jodit.defaultOptions.controls.footnoteButton = {
 
                 // Append footnote content to the end
                 editor.value += footnoteContent;
-                
+
             } else {
-                console.error('Footnote input field not found or state is undefined.');
+                console.error("Footnote input field not found or state is undefined.");
             }
             closePopWindow();
-        })
+        });
         return form;
     },
     tooltip: "Insert Footnote"
 };
 
-var editorDiv = document.getElementById('editor');
+// JODIT EDITOR
+var editorDiv = document.querySelector("#editor");
 if (editorDiv) {
-    var editor = new Jodit('#editor', {
+    var editor = new Jodit("#editor", {
         toolbar: false,
         readonly: true,
         "showCharsCounter": false,
         "showWordsCounter": false,
         "showXPathInStatusbar": false,
-        className: 'previeweditor',
-        height: '100%',
-        width: '100%',
-        "allowResizeY": false,
+        className: "previeweditor",
+        height: "100%",
+        width: "100%",
+        "allowResizeY": false
     });
 }
 
-document.addEventListener("DOMContentLoaded", function (event) {
-    var editorDivss = document.getElementById('editor-container');
+document.addEventListener("DOMContentLoaded", (event) => {
+    var editorDivss = document.querySelector("#editor-container");
     var videos = document.querySelectorAll('video[data-control="true"]');
    
     if (editorDivss) {
-        const images = editorDivss.querySelectorAll('img');
+        const images = editorDivss.querySelectorAll("img");
 
         mediumZoom(images, {
             margin: 24,
-            background: '#365f9390',
-            scrollOffset: 0,
+            background: "#365f9390",
+            scrollOffset: 0
         });
     }
 
     if (videos) {
         videos.forEach(function (video) {
-            video.addEventListener('pause', function () {
+            video.addEventListener("pause", () => {
                 video.currentTime = 0;
             });
         });
     }
-
 });
 
-var editorDiv2 = document.getElementById('editortest');
+var editorDiv2 = document.querySelector("#editortest");
 if (editorDiv2) {
-    var editor = new Jodit('#editortest', {
+    var editor = new Jodit("#editortest", {
         autofocus: true,
         "defaultFontSizePoints": "pt",
         "minHeight": 900,
@@ -258,23 +267,24 @@ if (editorDiv2) {
         "uploader": {
             "insertImageAsBase64URI": true
         },
-        buttons: [...Jodit.defaultOptions.buttons, 'footnoteButton', 'videonopause','audioplay'],
-        
+        buttons: [...Jodit.defaultOptions.buttons, "footnoteButton", "videonopause","audioplay"]
     });
 
-    let inputElement = document.getElementById('hiddeninput')
-    editor.events.on('change', e => {
-        inputElement.value = editor.getEditorValue();
-    })
+    let inputElement = document.querySelector("#hiddeninput");
+    editor.events.on("change",
+        e => {
+            inputElement.value = editor.getEditorValue();
+        });
 }
 
-var input = document.getElementById('Becomings')
+var input = document.querySelector("#Becomings");
 if (input) {
-    var tagify = new Tagify(input, {
+    var tagify = new Tagify(input,
+    {
         dropdown: {
             enabled: 0
         }
-    })
+    });
 }
 
 function copyFunction(fileurl) {

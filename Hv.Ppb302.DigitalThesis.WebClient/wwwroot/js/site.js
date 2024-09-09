@@ -1,12 +1,17 @@
-﻿function checkScreenSize() {
-    const sizeGuard = document.getElementById('size-guard');
-    if (window.innerWidth < 768) {
-        sizeGuard.style.display = 'flex';
-    } else {
-        sizeGuard.style.display = 'none';
+﻿document.addEventListener("DOMContentLoaded", () => {
+    //Checks the screen size and updates the display of the size guard element
+    function checkScreenSize() {
+        const sizeGuard = document.querySelector("#size-guard");
+        if (!sizeGuard) {
+            console.error("Cannot find element with id \"size-guard\"");
+            return;
+        }
+        sizeGuard.style.display = window.innerWidth < 1024 ? "flex" : "none";
     }
-}
 
-checkScreenSize();
+    // Initial check on page load
+    checkScreenSize();
 
-window.addEventListener('resize', checkScreenSize);
+    // Add resize event listener to check screen size on window resize
+    window.addEventListener("resize", checkScreenSize);
+});

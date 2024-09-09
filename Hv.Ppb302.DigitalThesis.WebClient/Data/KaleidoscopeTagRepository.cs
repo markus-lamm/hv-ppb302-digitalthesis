@@ -3,20 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
-public class KaleidoscopeTagRepository : IRepository<KaleidoscopeTag>
+public class KaleidoscopeTagRepository(DigitalThesisDbContext dbContext) : IRepository<KaleidoscopeTag>
 {
-    private readonly DigitalThesisDbContext _dbContext;
-
-    public KaleidoscopeTagRepository(DigitalThesisDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public KaleidoscopeTag? Get(Guid id)
     {
         try
         {
-            return _dbContext.KaleidoscopeTags
+            return dbContext.KaleidoscopeTags
                 .Include(g => g.MolarMosaics)
                 .Include(g => g.MolecularMosaics)
                 .FirstOrDefault(g => g.Id == id);
@@ -31,7 +24,7 @@ public class KaleidoscopeTagRepository : IRepository<KaleidoscopeTag>
     {
         try
         {
-            return _dbContext.KaleidoscopeTags
+            return dbContext.KaleidoscopeTags
                 .Include(g => g.MolarMosaics)
                 .Include(g => g.MolecularMosaics)
                 .ToList();
@@ -46,13 +39,13 @@ public class KaleidoscopeTagRepository : IRepository<KaleidoscopeTag>
     {
         try
         {
-            var existingKaleidoscopeTag = _dbContext.KaleidoscopeTags.FirstOrDefault(g => g.Name == kaleidoscopeTag.Name);
+            var existingKaleidoscopeTag = dbContext.KaleidoscopeTags.FirstOrDefault(g => g.Name == kaleidoscopeTag.Name);
             if (existingKaleidoscopeTag != null)
             {
                 throw new Exception("A kaleidoscope tag with the same name already exists");
             }
-            _dbContext.KaleidoscopeTags.Add(kaleidoscopeTag);
-            _dbContext.SaveChanges();
+            dbContext.KaleidoscopeTags.Add(kaleidoscopeTag);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -64,7 +57,7 @@ public class KaleidoscopeTagRepository : IRepository<KaleidoscopeTag>
     {
         try
         {
-        var existingKaleidoscopeTag = _dbContext.KaleidoscopeTags.Find(kaleidoscopeTag.Id);
+        var existingKaleidoscopeTag = dbContext.KaleidoscopeTags.Find(kaleidoscopeTag.Id);
         if (existingKaleidoscopeTag == null)
         {
             throw new Exception("The kaleidoscope tag does not exist");
@@ -73,7 +66,7 @@ public class KaleidoscopeTagRepository : IRepository<KaleidoscopeTag>
         existingKaleidoscopeTag.MolarMosaics = kaleidoscopeTag.MolarMosaics;
         existingKaleidoscopeTag.MolecularMosaics = kaleidoscopeTag.MolecularMosaics;
         existingKaleidoscopeTag.Content = kaleidoscopeTag.Content;
-        _dbContext.SaveChanges();
+        dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -85,13 +78,13 @@ public class KaleidoscopeTagRepository : IRepository<KaleidoscopeTag>
     {
         try
         {
-            var existingKaleidoscopeTag = _dbContext.KaleidoscopeTags.Find(id);
+            var existingKaleidoscopeTag = dbContext.KaleidoscopeTags.Find(id);
             if (existingKaleidoscopeTag == null)
             {
                 throw new Exception("The kaleidoscope tag does not exist");
             }
-            _dbContext.KaleidoscopeTags.Remove(existingKaleidoscopeTag);
-            _dbContext.SaveChanges();
+            dbContext.KaleidoscopeTags.Remove(existingKaleidoscopeTag);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {

@@ -1,5 +1,6 @@
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
+using Hv.Ppb302.DigitalThesis.WebClient.Services;
 using Microsoft.AspNetCore.Mvc;
 using MimeDetective;
 using System.Diagnostics;
@@ -7,30 +8,15 @@ using System.Text.Json;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
-public class HomeController : Controller
+public class HomeController(GeoTagRepository geoTagRepo,
+    MolarMosaicRepository molarMosaicRepo,
+    MolecularMosaicRepository molecularMosaicRepo,
+    KaleidoscopeTagRepository kaleidoscopeTagRepo,
+    PageRepository pageRepo,
+    UploadRepository uploadRepo,
+    MonthlyVisitRepository monthlyVisitRepo,
+    YearlyVisitRepository yearlyVisitRepo) : Controller
 {
-    private readonly GeoTagRepository _geoTagRepo;
-    private readonly MolarMosaicRepository _molarMosaicRepo;
-    private readonly MolecularMosaicRepository _molecularMosaicRepo;
-    private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
-    private readonly PageRepository _pageRepository;
-    private readonly UploadRepository _uploadRepository;
-
-    public HomeController(GeoTagRepository geoTagRepo, 
-        MolarMosaicRepository molarMosaicRepo, 
-        MolecularMosaicRepository molecularMosaicRepo,
-        KaleidoscopeTagRepository kaleidoscopeTagRepo,
-        PageRepository pageRepo,
-        UploadRepository uploadRepository)
-    {
-        _geoTagRepo = geoTagRepo;
-        _molarMosaicRepo = molarMosaicRepo;
-        _molecularMosaicRepo = molecularMosaicRepo;
-        _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
-        _pageRepository = pageRepo;
-        _uploadRepository = uploadRepository;
-    }
-
     public IActionResult Index()
     {
         return View();
@@ -43,13 +29,24 @@ public class HomeController : Controller
 
     public IActionResult About()
     {
-        return View(_pageRepository.GetByName("About"));
+        return View(pageRepo.GetByName("About"));
     }
 
     public IActionResult Geotags(bool showTutorial = false)
     {
         ViewBag.ShowTutorial = showTutorial;
-        return View(_geoTagRepo.GetAll());
+        
+        // Check if the user has a cookie indicating a previous visit to the page
+        var uniqueUser = ReadCookie("digital-thesis-user");
+        // If not, create a cookie with the current date and time and add the user to the list of visitors
+        if (uniqueUser?.Count == 0)
+        {
+            CreateCookie("digital-thesis-user", new List<string> { "visited-page" }, 30);
+            // Add a new visitor to the database
+            UpdateVisitationCount();
+        }
+
+        return View(geoTagRepo.GetAll());
     }
 
     public IActionResult Materials()
@@ -62,7 +59,7 @@ public class HomeController : Controller
     {
         if (objectType == "geotag")
         {
-            var geoTag = _geoTagRepo.Get(objectId);
+            var geoTag = geoTagRepo.Get(objectId);
             if (geoTag != null)
             {
                 return View(BuildViewModel(geoTag));
@@ -70,7 +67,7 @@ public class HomeController : Controller
         }
         else if (objectType == "molarmosaic")
         {
-            var molarMosaics = _molarMosaicRepo.Get(objectId);
+            var molarMosaics = molarMosaicRepo.Get(objectId);
             if (molarMosaics != null)
             {
                 CreateMosaicCookie(objectId);
@@ -79,7 +76,7 @@ public class HomeController : Controller
         }
         else if (objectType == "molecularmosaic")
         {
-            var molecularMosaics = _molecularMosaicRepo.Get(objectId);
+            var molecularMosaics = molecularMosaicRepo.Get(objectId);
             if (molecularMosaics != null)
             {
                 CreateMosaicCookie(objectId);
@@ -128,7 +125,7 @@ public class HomeController : Controller
 
     public IActionResult MolarMosaics()
     {
-        return View(BuildViewModel(_molarMosaicRepo.GetAll()!));
+        return View(BuildViewModel(molarMosaicRepo.GetAll()!));
 
         static MolarMosaicsViewModel BuildViewModel(IEnumerable<MolarMosaic> molarMosaics)
         {
@@ -142,7 +139,7 @@ public class HomeController : Controller
 
     public IActionResult MolecularMosaics()
     {
-        return View(BuildViewModel(_molecularMosaicRepo.GetAll()!));
+        return View(BuildViewModel(molecularMosaicRepo.GetAll()!));
 
         static MolecularMosaicsViewModel BuildViewModel(IEnumerable<MolecularMosaic> molecularMosaics)
         {
@@ -156,10 +153,10 @@ public class HomeController : Controller
 
     public IActionResult Kaleidoscoping()
     {
-        return View(BuildViewModel(_molarMosaicRepo.GetAll()!, 
-            _molecularMosaicRepo.GetAll()!, 
-            _kaleidoscopeTagRepo.GetAll()!,
-            _pageRepository.GetByName("Kaleidoscope")!));
+        return View(BuildViewModel(molarMosaicRepo.GetAll()!, 
+            molecularMosaicRepo.GetAll()!, 
+            kaleidoscopeTagRepo.GetAll()!,
+            pageRepo.GetByName("Kaleidoscope")!));
 
         static KaleidoscopingViewModel BuildViewModel(IEnumerable<MolarMosaic> molarMosaics, 
             IEnumerable<MolecularMosaic> molecularMosaics, 
@@ -174,6 +171,15 @@ public class HomeController : Controller
                 KaleidoscopePage = kaleidoscopePage
             };
         }
+    }
+
+    [HttpPost]
+    public IActionResult SendMail(string receiver)
+    {
+        var email = new Email(receiver);
+        var serviceSender = new EmailService();
+        serviceSender.SendMail(email);
+        return View("Index");
     }
 
     public void CreateMosaicCookie(Guid objectId)
@@ -207,7 +213,7 @@ public class HomeController : Controller
 
     public List<FilesViewModel> GetAllMaterialFiles()
     {
-        var Inspector = new ContentInspectorBuilder()
+        var inspector = new ContentInspectorBuilder
         {
             Definitions = MimeDetective.Definitions.Default.All()
         }.Build();
@@ -217,7 +223,7 @@ public class HomeController : Controller
                              .Select(path => Path.GetFileName(path))
                              .ToList();
 
-        var uploadsList = _uploadRepository.GetAllMaterials();
+        var uploadsList = uploadRepo.GetAllMaterials();
         List<FilesViewModel> fileViewModels = [];
         foreach (var file in files)
         {
@@ -225,22 +231,76 @@ public class HomeController : Controller
 
             if (isMaterialFile != null)
             {
-                var Results = Inspector.Inspect(Path.Combine(@"C:\Uploads", file));
-                var fileType = Results.FirstOrDefault()!.Definition.File.Categories.FirstOrDefault();
-                var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
-                var upload = uploadsList?.FirstOrDefault(u => u.Name == file);
+                var results = inspector.Inspect(Path.Combine(@"C:\Uploads", file));
+                var fileType = results.FirstOrDefault()!.Definition.File.Categories.FirstOrDefault();
+                var fileUrl = string.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
+                var upload = uploadsList?.OrderBy(u => u.MaterialOrder).FirstOrDefault(u => u.Name == file);
 
                 fileViewModels.Add(new FilesViewModel
                 {
                     Category = fileType,
                     Name = file,
                     FileUrl = fileUrl,
-                    IsMaterial = upload?.IsMaterial
+                    IsMaterial = upload?.IsMaterial,
+                    MaterialOrder = upload?.MaterialOrder
+                    
                 });
             }
 
         }
-        return fileViewModels;
+        var orderList = fileViewModels.OrderBy(u => u.MaterialOrder).ToList();
+        return orderList;
+    }
+
+    private void UpdateVisitationCount()
+    {
+        // Check if the database already contains an entry for the current year
+        var yearlyVisit = yearlyVisitRepo.GetByYear(DateTime.Now.Year);
+        if (yearlyVisit is null)
+        {
+            // If an entry does not exist create it
+            yearlyVisitRepo.Create(new YearlyVisit
+            {
+                Year = DateTime.Now.Year,
+                Visits = 1
+            });
+            yearlyVisit = yearlyVisitRepo.GetByYear(DateTime.Now.Year);
+        }
+        else
+        {
+            // If an entry exists update the number of visits
+            yearlyVisitRepo.Update(new YearlyVisit
+            {
+                Id = yearlyVisit.Id,
+                Year = yearlyVisit.Year,
+                Visits = yearlyVisit.Visits + 1
+            });
+        }
+
+
+        // Check if the database already contains an entry for the current month and year
+        var monthlyVisit = monthlyVisitRepo.GetByMonthAndYear(DateTime.Now.Month, DateTime.Now.Year);
+        if (monthlyVisit is null)
+        {
+            // If an entry does not exist create it
+            monthlyVisitRepo.Create(new MonthlyVisit
+            {
+                Month = DateTime.Now.Month,
+                YearlyVisitId = yearlyVisit!.Id,
+                Visits = 1
+            });
+        }
+        else
+        {
+            // If an entry exists update the number of visits
+            monthlyVisitRepo.Update(new MonthlyVisit
+            {
+                Id = monthlyVisit.Id,
+                Month = monthlyVisit.Month,
+                YearlyVisitId = yearlyVisit!.Id,
+                Visits = monthlyVisit.Visits + 1
+            });
+        }
     }
 
     [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

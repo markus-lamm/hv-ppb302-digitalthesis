@@ -4,22 +4,15 @@ using Hv.Ppb302.DigitalThesis.WebClient.Models;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
-public class ConnectorTagsController : Controller
+public class ConnectorTagsController(ConnectorTagRepository connectorTagRepo) : Controller
 {
-    private readonly ConnectorTagRepository _connectorTagRepo;
-
-    public ConnectorTagsController(ConnectorTagRepository connectorTagRepo)
-    {
-        _connectorTagRepo = connectorTagRepo;
-    }
-
     public IActionResult Index()
     {
         if (!CheckAuthentication())
         {
             return RedirectToAction("Login", "Admin");
         }
-        return View(_connectorTagRepo.GetAll());
+        return View(connectorTagRepo.GetAll());
     }
 
     public IActionResult Create()
@@ -44,7 +37,7 @@ public class ConnectorTagsController : Controller
         {
             return View(connectorTag);
         }
-        _connectorTagRepo.Create(connectorTag);
+        connectorTagRepo.Create(connectorTag);
 
         return RedirectToAction(nameof(Index));
     }
@@ -56,7 +49,7 @@ public class ConnectorTagsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var connectorTag = _connectorTagRepo.Get(id);
+        var connectorTag = connectorTagRepo.Get(id);
         if (connectorTag == null)
         {
             return NotFound();
@@ -82,7 +75,7 @@ public class ConnectorTagsController : Controller
         {
             return View(connectorTag);
         }
-        _connectorTagRepo.Update(connectorTag);
+        connectorTagRepo.Update(connectorTag);
 
         return RedirectToAction(nameof(Index));
     }
@@ -94,7 +87,7 @@ public class ConnectorTagsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var connectorTag = _connectorTagRepo.Get(id);
+        var connectorTag = connectorTagRepo.Get(id);
         if (connectorTag == null)
         {
             return NotFound();
@@ -112,12 +105,12 @@ public class ConnectorTagsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var connectorTag = _connectorTagRepo.Get(id);
+        var connectorTag = connectorTagRepo.Get(id);
         if (connectorTag == null)
         {
             return NotFound();
         }
-        _connectorTagRepo.Delete(id);
+        connectorTagRepo.Delete(id);
 
         return RedirectToAction(nameof(Index));
     }

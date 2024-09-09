@@ -1,4 +1,4 @@
-﻿document.addEventListener("DOMContentLoaded", function () {
+﻿document.addEventListener("DOMContentLoaded", () => {
     // File-scope variables
     const kaleiImgContainer = document.querySelector("#kaleidoscope-image-container");
     const kaleiModalOpen = document.querySelector("#kalei-modal-open");
@@ -7,6 +7,7 @@
     // KALEIDOSCOPE MODAL
     const kaleiModal = document.querySelector("#kalei-modal");
     const kaleiModalClose = document.querySelector(".kalei-modal-close");
+    const tagmenuBtn = document.querySelector("#tagmenu-btn");
 
     function showModal() {
         kaleiModal.style.display = "block";
@@ -14,6 +15,11 @@
 
     function hideModal() {
         kaleiModal.style.display = "none";
+    }
+
+    function resetModal() {
+        kaleiModal.style.display = "block";
+        editor.value = tagmenuBtn.getAttribute("data-content");
     }
 
     // Display the intro modal conditionally
@@ -27,6 +33,9 @@
 
     // Close the modal
     kaleiModalClose.addEventListener("click", hideModal);
+
+    // Reopen the modal with the kaleidoscope intro content
+    tagmenuBtn.addEventListener("click", resetModal);
 
     // Close the modal when the user clicks outside it
     window.addEventListener("click", function (event) {
@@ -143,10 +152,14 @@
     // KALEIDOSCOPE TAGS RADIO BUTTONS
     document.querySelectorAll(".custom-radio").forEach(radio => {
         radio.addEventListener("change", function () {
-            // Show the open modal button when a radio button is first pressed
-            kaleiModalOpen.style.display = "block";
+            // Move the kalei-modal-open div when a radio button is pressed
+            const parentContainer = this.closest(".kaleiitem-container");
+            if (parentContainer && kaleiModalOpen) {
+                parentContainer.appendChild(kaleiModalOpen);
+                kaleiModalOpen.style.display = "flex"; // Ensure the div is visible
+            }
 
-            const [selectedTagName, selectedTagId] = this.getAttribute("data-tag").split(":");
+            const selectedTagId = this.getAttribute("data-tag");
             const selectedTagContent = this.getAttribute("data-content");
             editor.value = selectedTagContent;
 
@@ -174,7 +187,7 @@
                         image.style.opacity = 0.4;
                         image.classList.remove("mosaic-highlight-effect");
                     }
-                } else if (kaleidoscopeTags.includes(selectedTagName)) {
+                } else if (kaleidoscopeTags.includes(selectedTagId)) {
                     image.style.opacity = 1;
                     image.classList.add("mosaic-highlight-effect");
                 } else {
@@ -214,19 +227,20 @@
 
     // OBJECT ROTATIONS
     const radios = document.querySelectorAll(".custom-radio");
-    const kaleidoscopeContainer = document.getElementById("kaleidoscope-container");
+    const kaleidoscopeContainer = document.querySelector("#kaleidoscope-container");
     const ksObjects = [
-        document.getElementById("kaleidoscope-image-object-1"),
-        document.getElementById("kaleidoscope-image-object-2"),
-        document.getElementById("kaleidoscope-image-object-3"),
-        document.getElementById("kaleidoscope-image-object-4"),
-        document.getElementById("kaleidoscope-image-object-5"),
-        document.getElementById("kaleidoscope-image-object-6"),
-        document.getElementById("kaleidoscope-image-object-7")
+        document.querySelector("#kaleidoscope-image-object-1"),
+        document.querySelector("#kaleidoscope-image-object-2"),
+        document.querySelector("#kaleidoscope-image-object-3"),
+        document.querySelector("#kaleidoscope-image-object-4"),
+        document.querySelector("#kaleidoscope-image-object-5"),
+        document.querySelector("#kaleidoscope-image-object-6"),
+        document.querySelector("#kaleidoscope-image-object-7")
     ];
     const elementsToRotate = [ksObjects[0], ksObjects[2], ksObjects[4], ksObjects[6]];
     const elementsToRotateInverted = [ksObjects[1], ksObjects[3], ksObjects[5]];
 
+    // Add event listeners for rotation on each radio button
     radios.forEach(radio => {
         radio.addEventListener("change", () => {
             const ksContainerRotation = Math.floor(Math.random() * 180) - 90;

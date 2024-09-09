@@ -3,20 +3,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
-public class MolecularMosaicRepository : IRepository<MolecularMosaic>
+public class MolecularMosaicRepository(DigitalThesisDbContext dbContext) : IRepository<MolecularMosaic>
 {
-    private readonly DigitalThesisDbContext _dbContext;
-
-    public MolecularMosaicRepository(DigitalThesisDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public MolecularMosaic? Get(Guid id)
     {
         try
         {
-            return _dbContext.MolecularMosaics
+            return dbContext.MolecularMosaics
                 .Include(g => g.ConnectorTags)
                 .Include(m => m.KaleidoscopeTags)
                 .Include(q => q.AssemblageTag)
@@ -32,7 +25,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
     {
         try
         {
-            return _dbContext.MolecularMosaics
+            return dbContext.MolecularMosaics
                 .Include(g => g.ConnectorTags)
                 .Include(m => m.KaleidoscopeTags)
                 .ToList();
@@ -47,13 +40,13 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
     {
         try
         {
-            var existingMolecularMosaic = _dbContext.MolecularMosaics.FirstOrDefault(m => m.Title == molecularMosaic.Title);
+            var existingMolecularMosaic = dbContext.MolecularMosaics.FirstOrDefault(m => m.Title == molecularMosaic.Title);
             if (existingMolecularMosaic != null)
             {
                 throw new Exception("A molecular mosaic with the same title already exists");
             }
-            _dbContext.MolecularMosaics.Add(molecularMosaic);
-            _dbContext.SaveChanges();
+            dbContext.MolecularMosaics.Add(molecularMosaic);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -65,7 +58,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
     {
         try
         {
-            var existingMolecularMosaic = _dbContext.MolecularMosaics.Find(molecularMosaic.Id);
+            var existingMolecularMosaic = dbContext.MolecularMosaics.Find(molecularMosaic.Id);
             if (existingMolecularMosaic == null)
             {
                 throw new Exception("The molecular mosaic does not exist");
@@ -80,7 +73,7 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
             existingMolecularMosaic.KaleidoscopeTags = molecularMosaic.KaleidoscopeTags;
             existingMolecularMosaic.AssemblageTagId = molecularMosaic.AssemblageTagId;
             existingMolecularMosaic.IsVisible = molecularMosaic.IsVisible;
-            _dbContext.SaveChanges();
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -92,13 +85,13 @@ public class MolecularMosaicRepository : IRepository<MolecularMosaic>
     {
         try
         {
-            var existingMolecularMosaic = _dbContext.MolecularMosaics.Find(id);
+            var existingMolecularMosaic = dbContext.MolecularMosaics.Find(id);
             if (existingMolecularMosaic == null)
             {
                 throw new Exception("The molecular mosaic does not exist");
             }
-            _dbContext.MolecularMosaics.Remove(existingMolecularMosaic);
-            _dbContext.SaveChanges();
+            dbContext.MolecularMosaics.Remove(existingMolecularMosaic);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {

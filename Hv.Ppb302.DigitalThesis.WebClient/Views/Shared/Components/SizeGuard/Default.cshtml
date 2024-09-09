@@ -1,0 +1,14 @@
+﻿@model Hv.Ppb302.DigitalThesis.WebClient.Models.Page
+<div class="email-form-container">
+    <div>To recieve the page as a link please enter your email adress.</div>
+    <form asp-controller="Home" asp-action="SendMail">
+        <label for="receiver">Email-adress</label>
+        <input class="email-input-field" required type="email" id="receiver" name="receiver">
+        <input class="email-submit-btn" type="submit" />
+    </form>
+</div>
+
+
+<div>
+    @Html.Raw(Model.Content)
+</div>

@@ -2,20 +2,13 @@
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Data;
 
-public class UserRepository : IRepository<User>
+public class UserRepository(DigitalThesisDbContext dbContext)
 {
-    private readonly DigitalThesisDbContext _dbContext;
-
-    public UserRepository(DigitalThesisDbContext dbContext)
-    {
-        _dbContext = dbContext;
-    }
-
     public User? Get(Guid id)
     {
         try
         {
-            return _dbContext.Users.FirstOrDefault(g => g.Id == id);
+            return dbContext.Users.FirstOrDefault(g => g.Id == id);
         }
         catch (Exception)
         {
@@ -27,7 +20,7 @@ public class UserRepository : IRepository<User>
     {
         try
         {
-            return _dbContext.Users.FirstOrDefault(g => g.Username == username);
+            return dbContext.Users.FirstOrDefault(g => g.Username == username);
         }
         catch (Exception)
         {
@@ -39,7 +32,7 @@ public class UserRepository : IRepository<User>
     {
         try
         {
-            return _dbContext.Users.FirstOrDefault(g => g.Username == username && g.Password == password);
+            return dbContext.Users.FirstOrDefault(g => g.Username == username && g.Password == password);
         }
         catch (Exception)
         {
@@ -51,7 +44,7 @@ public class UserRepository : IRepository<User>
     {
         try
         {
-            return _dbContext.Users.ToList();
+            return dbContext.Users.ToList();
         }
         catch (Exception)
         {
@@ -63,13 +56,13 @@ public class UserRepository : IRepository<User>
     {
         try
         {
-            var existingUser = _dbContext.Users.FirstOrDefault(m => m.Username == user.Username);
+            var existingUser = dbContext.Users.FirstOrDefault(m => m.Username == user.Username);
             if (existingUser != null)
             {
                 throw new Exception("A user with the same username already exists");
             }
-            _dbContext.Users.Add(user);
-            _dbContext.SaveChanges();
+            dbContext.Users.Add(user);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -77,26 +70,34 @@ public class UserRepository : IRepository<User>
         }
     }
 
-    public void Update(User user)
+    public void Update(Profile profile)
     {
         try
         {
-            var existingUser = _dbContext.Users.FirstOrDefault(m => m.Id == user.Id);
+            var existingUser = dbContext.Users.FirstOrDefault(m => m.Id == profile.Id);
             if (existingUser == null)
             {
                 throw new Exception("The user does not exist");
             }
 
             // The username is occupied by another user
-            var occupiedName = _dbContext.Users.FirstOrDefault(m => m.Username == user.Username && user.Username != existingUser.Username);
+            var occupiedName = dbContext.Users.FirstOrDefault(m => m.Username == profile.Username && profile.Username != existingUser.Username);
             if (occupiedName?.Username != null)
             {
                 throw new Exception("A user with the same username already exists");
             }
 
-            existingUser.Username = user.Username;
-            existingUser.Password = user.Password;
-            _dbContext.SaveChanges();
+            // Only updates fields that are not empty
+            if (!string.IsNullOrWhiteSpace(profile.Username))
+            {
+                existingUser.Username = profile.Username;
+            }
+            if (!string.IsNullOrWhiteSpace(profile.NewPassword))
+            {
+                existingUser.Password = profile.NewPassword;
+            }
+
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {
@@ -108,13 +109,13 @@ public class UserRepository : IRepository<User>
     {
         try
         {
-            var existingUser = _dbContext.Users.Find(id);
+            var existingUser = dbContext.Users.Find(id);
             if (existingUser == null)
             {
                 throw new Exception("The user does not exist");
             }
-            _dbContext.Users.Remove(existingUser);
-            _dbContext.SaveChanges();
+            dbContext.Users.Remove(existingUser);
+            dbContext.SaveChanges();
         }
         catch (Exception)
         {

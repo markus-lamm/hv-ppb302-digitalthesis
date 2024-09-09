@@ -1,37 +1,21 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Hv.Ppb302.DigitalThesis.WebClient.Data;
 using Hv.Ppb302.DigitalThesis.WebClient.Models;
-using System.Text.Json;
 
 namespace Hv.Ppb302.DigitalThesis.WebClient.Controllers;
 
-public class MolecularMosaicsController : Controller
+public class MolecularMosaicsController(MolecularMosaicRepository molecularMosaicRepo,
+    ConnectorTagRepository connectorTagRepo,
+    KaleidoscopeTagRepository kaleidoscopeTagRepo,
+    AssemblageTagRepository assemblageTagRepo) : Controller
 {
-    private readonly ConnectorTagRepository _connectorTagRepo;
-    private readonly MolecularMosaicRepository _molecularMosaicRepo;
-    private readonly KaleidoscopeTagRepository _kaleidoscopeTagRepo;
-    private readonly AssemblageTagRepository _assemblageTagRepository;
-
-
-    public MolecularMosaicsController(MolecularMosaicRepository molecularMosaicRepo,
-        ConnectorTagRepository connectorTagRepo,
-        KaleidoscopeTagRepository kaleidoscopeTagRepo,
-        AssemblageTagRepository assemblageTagRepository)
-    {
-        _molecularMosaicRepo = molecularMosaicRepo;
-        _connectorTagRepo = connectorTagRepo;
-        _kaleidoscopeTagRepo = kaleidoscopeTagRepo;
-        _assemblageTagRepository = assemblageTagRepository;
-    }
-
     public IActionResult Index()
     {
         if (!CheckAuthentication())
         {
             return RedirectToAction("Login", "Admin");
         }
-        return View(_molecularMosaicRepo.GetAll());
+        return View(molecularMosaicRepo.GetAll());
     }
 
     public IActionResult Create()
@@ -44,15 +28,15 @@ public class MolecularMosaicsController : Controller
         var excludedIds = new[] { "f2d2a02b-73bb-42e4-8774-2102ef9c3102", "1ac2b7b1-c3bf-4fc3-a5fb-37c88eeb1e97" };
         var crudViewModel = new MolecularMosaicCrudViewModel()
         {
-            ConnectorTagsItemList = _connectorTagRepo.GetAll().ToSelectListItemsList(
+            ConnectorTagsItemList = connectorTagRepo.GetAll().ToSelectListItemsList(
                 tag => tag.Id.ToString(),
                 tag => tag.Name
             ),
-            AssemblageTagsItemList = _assemblageTagRepository.GetAll().ToSelectListItemsList(
+            AssemblageTagsItemList = assemblageTagRepo.GetAll().ToSelectListItemsList(
                 tag => tag.Id.ToString(),
                 tag => tag.Name
             ),
-            KaleidoscopeTagsItemList = _kaleidoscopeTagRepo.GetAll()?
+            KaleidoscopeTagsItemList = kaleidoscopeTagRepo.GetAll()?
                 .Where(k => !excludedIds.Contains(k.Id.ToString()))
                 .ToSelectListItemsList(
                     tag => tag.Id.ToString(),
@@ -85,16 +69,16 @@ public class MolecularMosaicsController : Controller
             PdfFilePath = molecularMosaicCrudViewModel.MolecularMosaic?.PdfFilePath,
             AudioFilePath = molecularMosaicCrudViewModel.MolecularMosaic?.AudioFilePath,
             AssemblageTagId = molecularMosaicCrudViewModel.MolecularMosaic?.AssemblageTagId,
-            ConnectorTags = _connectorTagRepo.GetAll()?
+            ConnectorTags = connectorTagRepo.GetAll()?
                 .Where(tag => molecularMosaicCrudViewModel.SelectedConnectorsTagsIds.Contains(tag.Id))
                 .ToList(),
-            KaleidoscopeTags = _kaleidoscopeTagRepo.GetAll()?
+            KaleidoscopeTags = kaleidoscopeTagRepo.GetAll()?
                 .Where(tag => molecularMosaicCrudViewModel.SelectedKaleidoscopeTagsIds.Contains(tag.Id))
                 .ToList(),
             Becomings = molecularMosaicCrudViewModel.Becomings.ToStringListFromTagifyFormat()
         };
 
-        _molecularMosaicRepo.Create(dbMolarMosaic);
+        molecularMosaicRepo.Create(dbMolarMosaic);
 
         return RedirectToAction(nameof(Index));
     }
@@ -106,7 +90,7 @@ public class MolecularMosaicsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var molecularMosaic = _molecularMosaicRepo.Get(id);
+        var molecularMosaic = molecularMosaicRepo.Get(id);
         if (molecularMosaic == null)
         {
             return NotFound();
@@ -116,16 +100,16 @@ public class MolecularMosaicsController : Controller
         var crudViewModel = new MolecularMosaicCrudViewModel()
         {
             MolecularMosaic = molecularMosaic,
-            ConnectorTagsItemList = _connectorTagRepo.GetAll().ToSelectListItemsList(
+            ConnectorTagsItemList = connectorTagRepo.GetAll().ToSelectListItemsList(
                 tag => tag.Id.ToString(),
                 tag => tag.Name,
                 selectedValues: molecularMosaic.ConnectorTags?.Select(ct => ct.Id.ToString())
             ),
-            AssemblageTagsItemList = _assemblageTagRepository.GetAll().ToSelectListItemsList(
+            AssemblageTagsItemList = assemblageTagRepo.GetAll().ToSelectListItemsList(
                 tag => tag.Id.ToString(),
                 tag => tag.Name
             ),
-            KaleidoscopeTagsItemList = _kaleidoscopeTagRepo.GetAll()?
+            KaleidoscopeTagsItemList = kaleidoscopeTagRepo.GetAll()?
                 .Where(k => !excludedIds.Contains(k.Id.ToString()))
                 .ToSelectListItemsList(
                     tag => tag.Id.ToString(),
@@ -168,17 +152,17 @@ public class MolecularMosaicsController : Controller
             PdfFilePath = molecularMosaicCrudViewModel.MolecularMosaic?.PdfFilePath,
             AudioFilePath = molecularMosaicCrudViewModel.MolecularMosaic?.AudioFilePath,
             AssemblageTagId = molecularMosaicCrudViewModel.MolecularMosaic?.AssemblageTagId,
-            ConnectorTags = _connectorTagRepo.GetAll()?
+            ConnectorTags = connectorTagRepo.GetAll()?
                 .Where(tag => molecularMosaicCrudViewModel.SelectedConnectorsTagsIds.Contains(tag.Id))
                 .ToList(),
-            KaleidoscopeTags = _kaleidoscopeTagRepo.GetAll()?
+            KaleidoscopeTags = kaleidoscopeTagRepo.GetAll()?
                 .Where(tag => molecularMosaicCrudViewModel.SelectedKaleidoscopeTagsIds.Contains(tag.Id))
                 .ToList(),
             Becomings = molecularMosaicCrudViewModel.Becomings.ToStringListFromTagifyFormat()
 
         };
 
-        _molecularMosaicRepo.Update(dbMolecularMosaic);
+        molecularMosaicRepo.Update(dbMolecularMosaic);
 
         return RedirectToAction(nameof(Index));
     }
@@ -190,7 +174,7 @@ public class MolecularMosaicsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var molecularMosaic = _molecularMosaicRepo.Get(id);
+        var molecularMosaic = molecularMosaicRepo.Get(id);
         if (molecularMosaic == null)
         {
             return NotFound();
@@ -208,12 +192,12 @@ public class MolecularMosaicsController : Controller
             return RedirectToAction("Login", "Admin");
         }
 
-        var molecularMosaic = _molecularMosaicRepo.Get(id);
+        var molecularMosaic = molecularMosaicRepo.Get(id);
         if (molecularMosaic == null)
         {
             return NotFound();
         }
-        _molecularMosaicRepo.Delete(id);
+        molecularMosaicRepo.Delete(id);
 
         return RedirectToAction(nameof(Index));
     }
