@@ -5,7 +5,6 @@ namespace Hv.Ppb302.DigitalThesis.WebClient.Models;
 
 public static class Extensions
 {
-
     public static IEnumerable<SelectListItem> ToSelectListItemsList<T>(
         this IEnumerable<T>? items,
         Func<T, string> valueSelector,
@@ -35,7 +34,4 @@ public static class Extensions
                    .ToList()
                ?? [];
     }
-
-
-
 }
