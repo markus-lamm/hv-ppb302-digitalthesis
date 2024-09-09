@@ -152,3 +152,25 @@ a {
 @media (max-width: 1024px){
    
 }
+
+.email-form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.email-input-field {
+    border: solid 2px white;
+    border-radius: 2px;
+    background-color: black;
+    color: white;
+}
+
+.email-submit-btn {
+    border-radius: 2px;
+    background-color: #6D8AB4;
+    border: none;
+    color: white;
+    cursor: pointer;
+    padding: 0.2rem;
+}
