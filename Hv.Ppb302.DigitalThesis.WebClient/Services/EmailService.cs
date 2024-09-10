@@ -17,7 +17,7 @@ public class EmailService
             EnableSsl = true,
             DeliveryMethod = SmtpDeliveryMethod.Network,
             UseDefaultCredentials = false,
-            Credentials = new NetworkCredential("DigitalAvhandlingen@outlook.com", "H0gskolanVastDigitalAvhandling")
+            Credentials = new NetworkCredential("DigitalAvhandlingen@outlook.com", "brtglmcuwpcsubty")
         };
     }
 
