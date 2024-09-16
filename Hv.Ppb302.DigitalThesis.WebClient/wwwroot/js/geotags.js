@@ -86,6 +86,7 @@
             case 6:
                 tutorialNextBtn.innerText = "Next";
                 kaleidoscope.style.zIndex = "10";
+                kaleidoscope.style.position = "relative";
                 applyZindexToArray(molecularMosaics, "0");
                 applyZindexToArray(molarMosaics, "0");
                 break;
