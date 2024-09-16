@@ -3,7 +3,7 @@ const { UIForm, UIInput, UIButton, UITextArea } = Jodit.modules;
 
 // Audio player
 Jodit.defaultOptions.controls.audioplay = {
-    iconURL: "/images/icons/sound.png",
+    iconURL: "/digitalthesis/images/icons/sound.png",
     popup: (editor, current, control, close) => {
         audioForm = new UIForm(editor, [
             new UIInput(editor, {
@@ -46,7 +46,7 @@ Jodit.defaultOptions.controls.audioplay = {
 
 // Video player (without pause)
 Jodit.defaultOptions.controls.videonopause = {
-    iconURL: "/images/icons/replay.png",
+    iconURL: "/digitalthesis/images/icons/replay.png",
     popup: (editor, current, control, close) => {
         videoNoPauseform = new UIForm(editor, [
             new UIInput(editor, {
@@ -125,7 +125,7 @@ Jodit.defaultOptions.controls.video = {
 
 // Footnote
 Jodit.defaultOptions.controls.footnoteButton = {
-    iconURL: "https://informatik13.ei.hv.se/DigitalThesis/images/icons/superscript.png",
+    iconURL: "/digitalthesis/images/icons/superscript.png",
     popup: function (editor, current, control, close) {
         const form = new UIForm(editor, [
             new UITextArea(editor, {
