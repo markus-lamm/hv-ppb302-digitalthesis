@@ -157,6 +157,10 @@
             if (parentContainer && kaleiModalOpen) {
                 parentContainer.appendChild(kaleiModalOpen);
                 kaleiModalOpen.style.display = "flex"; // Ensure the div is visible
+                // Retrigger the pulse effect
+                kaleiModalOpen.classList.remove("pulse-effect");
+                void kaleiModalOpen.offsetWidth; // Trigger reflow to restart the animation
+                kaleiModalOpen.classList.add("pulse-effect");
             }
 
             const selectedTagId = this.getAttribute("data-tag");
