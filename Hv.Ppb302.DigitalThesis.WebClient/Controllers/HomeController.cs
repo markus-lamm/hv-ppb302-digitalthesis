@@ -233,7 +233,7 @@ public class HomeController(GeoTagRepository geoTagRepo,
             {
                 var results = inspector.Inspect(Path.Combine(@"C:\Uploads", file));
                 var fileType = results.FirstOrDefault()!.Definition.File.Categories.FirstOrDefault();
-                var fileUrl = string.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
+                var fileUrl = string.Concat("https://da.ios.hv.se/DigitalThesis/staticfiles/", file);
                 var upload = uploadsList?.OrderBy(u => u.MaterialOrder).FirstOrDefault(u => u.Name == file);
 
                 fileViewModels.Add(new FilesViewModel

@@ -250,7 +250,7 @@ public class AdminController(UserRepository userRepo,
         {
             var Results = Inspector.Inspect(Path.Combine(@"C:\Uploads", file));
             var fileType = Results.FirstOrDefault()!.Definition.File.Categories.FirstOrDefault();
-            var fileUrl = String.Concat("https://informatik13.ei.hv.se/DigitalThesis/staticfiles/", file);
+            var fileUrl = String.Concat("https://da.ios.hv.se/DigitalThesis/staticfiles/", file);
             var upload = uploadsList?.FirstOrDefault(u => u.Name == file);
 
             filesViewModels.Add(new FilesViewModel

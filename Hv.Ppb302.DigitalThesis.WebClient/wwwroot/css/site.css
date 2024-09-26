@@ -53,6 +53,7 @@ body {
 
 .nav-logo {
     height: 12vh;
+    max-height: 6rem;
     transition: transform 0.8s;
 }
 
@@ -66,17 +67,17 @@ body {
     margin-left: 2rem;
 }
 
-    .nav-list li a {
-        text-decoration: none;
-        font-size: 1.4vw;
-        color: black;
-        opacity: 0.6;
-    }
+.nav-list li a {
+    text-decoration: none;
+    font-size: min(1.4vw, 1.8rem);
+    color: black;
+    opacity: 0.6;
+}
 
-    .nav-list li a:hover {
-        transition: 0.6s ease;
-        opacity: 1;
-    }
+.nav-list li a:hover {
+    transition: 0.6s ease;
+    opacity: 1;
+}
 
 /* Generic background container for all pages */
 .background-container {

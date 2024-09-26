@@ -264,14 +264,17 @@
     }
 
     50% {
-        transform: scale(1.2);
+        transform: scale(1.3);
+        background-color: cornflowerblue;
     }
 
     100% {
         transform: scale(1);
+        background-color: #4d6c9e;
     }
 }
 
 .pulse-effect {
     animation: pulse 2s ease-in-out;
+    animation-fill-mode: forwards;
 }
