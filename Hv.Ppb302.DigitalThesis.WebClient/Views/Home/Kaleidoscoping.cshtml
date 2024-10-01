@@ -1,6 +1,6 @@
 ﻿@model KaleidoscopingViewModel
 @{
-    ViewData["Title"] = "Kaleido-scoping";
+    ViewData["Title"] = "Kaleidoscoping";
     var mosaicImages = Enumerable.Range(1, 14).Select(i => $"~/images/mosaics/mosaic-blue-{i}.png").ToArray();
     var random = new Random();
 }
@@ -69,7 +69,7 @@
     </div>
     <div class="tagmenu">
         <div class="tagmenu-title-container">
-            <h2 class="tagmenu-title">Kaleido-scoping</h2>
+            <h2 class="tagmenu-title">Kaleidoscoping</h2>
             <div class="tagmenu-btn" id="tagmenu-btn" data-content="@Model.KaleidoscopePage?.Content">GO BACK</div>
             </div>
         <hr/>

@@ -18,7 +18,7 @@
         "To explore the various texts, click on any of the geotags.",
         "Set Molar Mosaics free and begin exploring them.",
         "Set Molecular Mosaics free and begin exploring them.",
-        "Experience a one of a kind Kaleido-scoping mechanism.",
+        "Experience a one of a kind Kaleidoscoping mechanism.",
         "On the respective Mosaics pages, you will find an expandable filter menu in the bottom right corner."
     ];
 
