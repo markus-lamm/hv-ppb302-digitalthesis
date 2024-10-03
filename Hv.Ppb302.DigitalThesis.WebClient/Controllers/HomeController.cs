@@ -174,11 +174,11 @@ public class HomeController(GeoTagRepository geoTagRepo,
     }
 
     [HttpPost]
-    public IActionResult SendMail(string receiver)
+    public async Task<IActionResult> SendMail(string receiver)
     {
         var email = new Email(receiver);
         var serviceSender = new EmailService();
-        serviceSender.SendMail(email);
+        await serviceSender.SendMail(email);
         return View("Index");
     }
 
