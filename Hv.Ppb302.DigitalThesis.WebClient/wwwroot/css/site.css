@@ -53,7 +53,8 @@ body {
 
 .nav-logo {
     height: 12vh;
-    max-height: 6rem;
+    min-height: 6rem;
+    max-height: 12rem;
     transition: transform 0.8s;
 }
 

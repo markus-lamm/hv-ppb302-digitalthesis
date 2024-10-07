@@ -6,12 +6,19 @@
     display: none;
 }
 
+.redirector-box{
+    display: block;
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+}
+
 .content-container {
     display: flex;
     justify-content: space-around;
     height: 100vh;
     width: 100vw;
-    background-color: rgba(200, 200, 200, 0.4);
+    background-color: rgba(200, 200, 200, 0.7);
 }
 
 .logo-container {
@@ -29,15 +36,27 @@
         transition: transform 0.8s;
     }
 
-    .logo-container a:hover {
-        transform: scale(1.1);
-    }
+        .logo-container a:hover {
+            transform: scale(1.1);
+        }
 
 .logo-img {
     height: 20vw;
 }
 
 .text-container {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.text-content {
+    font-size: 1.7vw;
+    align-self: center;
+    margin-top: 10rem;
+}
+
+.text-block {
     display: flex;
     flex-direction: column;
     justify-content: end;
