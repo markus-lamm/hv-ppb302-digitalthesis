@@ -52,8 +52,8 @@
 
 .text-content {
     font-size: 1.7vw;
-    align-items: center;
-    margin-top: 5vw;
+    align-self: center;
+    margin-top: 10rem;
 }
 
 .text-block {
