@@ -47,10 +47,13 @@
 .text-container {
     display: flex;
     justify-content: space-between;
+    flex-direction: column;
 }
 
 .text-content {
     font-size: 1.7vw;
+    align-items: center;
+    margin-top: 5vw;
 }
 
 .text-block {
