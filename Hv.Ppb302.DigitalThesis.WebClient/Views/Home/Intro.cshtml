@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Introduction";
+    ViewData["Title"] = "Beginning";
 }
 <head>
     <link rel="stylesheet" href="~/css/intro.css" asp-append-version="true" />
@@ -8,13 +8,15 @@
 <div class="main-container">
     <div class="content-container">
         <div class="logo-container">
-            <a asp-action="Geotags">
-                <img class="logo-img" src="~/images/icons/logo.png" alt="logo" />
+            <a asp-action="Meanwhile">
+                <img src="~/images/icons/geotag-black.svg" class="logo-img" />
+                <div class="geotag-text">ENTER</div>
             </a>
         </div>
         <div class="text-container">
-            <img class="text-image" src="~/images/pages/meanwhile.png" />
-            <a class="link-btn" asp-action="Geotags">EXPLORE</a>
+            <div class="text-author">Mona Tynkkinen</div>
+            <div class="text-title">fragile mosaics of <br> teacher becoming</div>
+            <div class="text-subtitle">kaleidoscoping futures of difference</div>
         </div>
     </div>
 </div>

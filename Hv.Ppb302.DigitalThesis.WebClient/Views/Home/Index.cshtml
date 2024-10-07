@@ -1,23 +1,4 @@
-﻿@model Page
-@{
-    ViewData["Title"] = "Beginning";
-}
-<head>
-    <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
-</head>
-<div class="background-container background-image"></div>
-<div class="main-container">
-    <div class="content-container">
-        <div class="logo-container">
-            <a asp-action="Intro">
-                <img src="~/images/icons/geotag-black.svg" class="logo-img" />
-                <div class="geotag-text">ENTER</div>
-            </a>
-        </div>
-        <div class="text-container">
-            <div class="text-author">Mona Tynkkinen</div>
-            <div class="text-title">fragile mosaics of <br> teacher becoming</div>
-            <div class="text-subtitle">kaleidoscoping futures of difference</div>
-        </div>
-    </div>
-</div>
+﻿<a asp-action="Intro">
+    <img src="~/images/icons/geotag-black.svg" class="logo-img" />
+    <div class="geotag-text">ENTER</div>
+</a>
