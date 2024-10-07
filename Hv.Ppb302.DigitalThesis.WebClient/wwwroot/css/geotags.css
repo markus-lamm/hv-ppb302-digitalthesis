@@ -19,27 +19,23 @@ a:hover img {
     cursor: pointer;
 }
 
-#link-geotag-4 {
-    color: white;
+#link-geotag-1,
+#link-geotag-2,
+#link-geotag-3,
+#link-geotag-4,
+#link-geotag-5,
+#link-geotag-6,
+#link-molarmosaics,
+#link-molecularmosaics,
+#link-kaleidoscope {
+    position: relative;
     text-align: center;
-
 }
 
-#link-geotag-5 {
-    color: white;
-
-}
-
-#link-molarmosaics {
-    color: white;
-
-}
-
-#link-molecularmosaics {
-    color: white;
-
-}
-
+#link-geotag-4,
+#link-geotag-5,
+#link-molarmosaics,
+#link-molecularmosaics,
 #link-kaleidoscope {
     color: white;
 }
@@ -122,7 +118,7 @@ a:hover img {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(100, 100, 100, 0.7);
 }
 
 .tutorial-box {
@@ -134,7 +130,7 @@ a:hover img {
     background-color: white;
     padding: 1rem;
     border-radius: 2px;
-    width: 30rem;
+    width: 32rem;
     z-index: 10;
 }
 
@@ -286,4 +282,11 @@ a:hover img {
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+
+.highlighter {
+    position: absolute;
+    z-index: 8;
+    background-color: white;
+    border-radius: 2px;
 }

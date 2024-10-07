@@ -7,18 +7,21 @@
     const tutorialStepContainer = document.querySelector("#tutorial-step-container");
     const navbar = document.querySelector("#navbar");
     const geotags = ["link-geotag-1", "link-geotag-2", "link-geotag-3", "link-geotag-4", "link-geotag-5", "link-geotag-6"];
-    const molarMosaics = ["mosaic-yellow-1", "mosaic-yellow-2", "mosaic-yellow-3"];
-    const molecularMosaics = ["mosaic-blue-1", "mosaic-blue-2", "mosaic-blue-3", "mosaic-blue-4", "mosaic-blue-5"];
+    const molarMosaics = ["mosaic-yellow-1", "mosaic-yellow-2", "mosaic-yellow-3", "link-molarmosaics"];
+    const molecularMosaics = ["mosaic-blue-1", "mosaic-blue-2", "mosaic-blue-3", "mosaic-blue-4", "mosaic-blue-5", "link-molecularmosaics"];
     const kaleidoscope = document.querySelector("#link-kaleidoscope");
+    const aboutNavPage = document.querySelector("#about-page-nav");
+    const highlighter = document.querySelector("#highlighter");
     let currentStep = 1;
 
     const steps = [
         "Welcome to Fragile Mosaics of Teacher Becoming tutorial!",
         "When you want to come back to the map view, click on the Teacher Becoming-logo in the top left corner.",
         "To explore the various texts, click on any of the geotags.",
+        "Read more about the composition of the map view and the thesis here.",
         "Set Molar Mosaics free and begin exploring them.",
         "Set Molecular Mosaics free and begin exploring them.",
-        "Experience a one of a kind Kaleido-scoping mechanism.",
+        "Experience a one of a kind Kaleidoscoping mechanism.",
         "On the respective Mosaics pages, you will find an expandable filter menu in the bottom right corner."
     ];
 
@@ -72,25 +75,36 @@
                 navbar.style.zIndex = "1";
                 applyZindexToArray(geotags, "10");
                 applyZindexToArray(molarMosaics, "0");
+                highlighter.style.display = "none";
+                navbar.style.zIndex = "1";
                 break;
             case 4:
+                applyZindexToArray(molarMosaics, "0");
+                applyZindexToArray(geotags, "0");
+                highlighter.style.display = "block";
+                navbar.style.zIndex = "10";
+                applyHighlighter();
+                break;
+            case 5:
                 applyZindexToArray(geotags, "0");
                 applyZindexToArray(molarMosaics, "10");
                 applyZindexToArray(molecularMosaics, "0");
+                highlighter.style.display = "none";
+                navbar.style.zIndex = "1";
                 break;
-            case 5:
+            case 6:
                 applyZindexToArray(molecularMosaics, "10");
                 applyZindexToArray(molarMosaics, "0");
                 kaleidoscope.style.zIndex = "0";
                 break;
-            case 6:
+            case 7:
                 tutorialNextBtn.innerText = "Next";
                 kaleidoscope.style.zIndex = "10";
                 kaleidoscope.style.position = "relative";
                 applyZindexToArray(molecularMosaics, "0");
                 applyZindexToArray(molarMosaics, "0");
                 break;
-            case 7:
+            case 8:
                 tutorialNextBtn.innerText = "Exit";
                 applyZindexToArray(molecularMosaics, "10");
                 applyZindexToArray(molarMosaics, "10");
@@ -100,6 +114,17 @@
                 tutorialOverlay.style.display = "none";
                 break;
         }
+    }
+
+    function applyHighlighter() {
+        const aboutNavPageRect = aboutNavPage.getBoundingClientRect();
+        // Set the highlighter's position and size
+        highlighter.style.display = "block";
+        highlighter.style.position = "absolute";
+        highlighter.style.top = `${aboutNavPageRect.top - 5}px`;
+        highlighter.style.left = `${aboutNavPageRect.left - 5}px`;
+        highlighter.style.width = `${aboutNavPageRect.width + 10}px`;
+        highlighter.style.height = `${aboutNavPageRect.height + 10}px`;
     }
 
     function highlightCurrentStep() {
