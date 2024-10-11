@@ -27,6 +27,11 @@ public class HomeController(GeoTagRepository geoTagRepo,
         return View();
     }
 
+    public IActionResult Meanwhile()
+    {
+        return View();
+    }
+
     public IActionResult About()
     {
         return View(pageRepo.GetByName("About"));
