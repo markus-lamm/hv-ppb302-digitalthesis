@@ -1,0 +1,68 @@
+﻿.background-image {
+    background-image: url('../images/backgrounds/white-1.png');
+}
+
+.navbar {
+    display: none;
+}
+
+.content-container {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: space-around;
+    background-color: rgba(200, 200, 200, 0.4);
+}
+
+.logo-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.logo-img {
+    width: 40vw;
+    transition: transform 0.8s;
+}
+
+.logo-img:hover {
+    transform: scale(1.1);
+}
+
+.text-container {
+    display: flex;
+    width: 50vw;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 1);
+    overflow: auto;
+    align-items: center;
+}
+
+.text-image {
+    width: 100%;
+}
+
+.link-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: black;
+    height: 5vh;
+    width: 15vw;
+    min-width: 30rem;
+    background-color: #ADBACD90;
+    text-decoration: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 3rem;
+    padding-block: 1rem;
+    margin-top: 1rem;
+    margin-bottom: 2rem;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+
+.link-btn:hover {
+    background-color: rgba(123, 141, 163, 0.8);
+}

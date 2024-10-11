@@ -34,7 +34,7 @@
 
     if (pdfDownloadButton) {
         pdfDownloadButton.addEventListener("click", async () => {
-            const pdfUrl = this.getAttribute("data-tags"); // URL of the PDF to be downloaded
+            const pdfUrl = pdfDownloadButton.getAttribute("data-tags"); // URL of the PDF to be downloaded
 
             try {
                 // Check if the browser supports the File System Access API

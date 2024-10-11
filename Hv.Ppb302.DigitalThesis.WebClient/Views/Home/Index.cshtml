@@ -1,5 +1,4 @@
-﻿@model Page
-@{
+﻿@{
     ViewData["Title"] = "Beginning";
 }
 <head>
@@ -7,17 +6,19 @@
 </head>
 <div class="background-container background-image"></div>
 <div class="main-container">
+    <a class="redirector-box" asp-action="Intro"></a>
     <div class="content-container">
         <div class="logo-container">
-            <a asp-action="Intro">
-                <img src="~/images/icons/geotag-black.svg" class="logo-img" />
-                <div class="geotag-text">ENTER</div>
-            </a>
+            <img src="~/images/icons/university-west-eng.png" class="logo-img" />
         </div>
         <div class="text-container">
-            <div class="text-author">Mona Tynkkinen</div>
-            <div class="text-title">fragile mosaics of <br> teacher becoming</div>
-            <div class="text-subtitle">kaleido-scoping futures of difference</div>
+            <div class="text-content">Click anywhere to progress</div>
+            <div class="text-block">
+                <div class="text-author">Mona Tynkkinen</div>
+                <div class="text-title">Title Placeholder</div>
+                <div class="text-subtitle">Education Placeholder</div>
+                <div class="text-subtitle">ISBN Placeholder</div>
+            </div>
         </div>
     </div>
 </div>
