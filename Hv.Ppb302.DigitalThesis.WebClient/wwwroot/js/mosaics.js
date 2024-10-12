@@ -6,6 +6,7 @@
     // SIDEBAR
     const sidebarContainer = document.querySelector("#mosaics-sidebar-container");
     const sidebarBtn = document.querySelector(".mosaics-sidebar-btn");
+    const sidebar = document.querySelector("#mosaics-sidebar");
     let isRotated = false;
     let isSidebarOpen = false;
 
@@ -21,6 +22,7 @@
         isSidebarOpen = !isSidebarOpen;
         sidebarBtn.classList.toggle("rotate");
         sidebarContainer.classList.toggle("show");
+        sidebar.classList.toggle("overflowenabled");
     }
 
     // Get all checkboxes

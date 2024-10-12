@@ -178,24 +178,12 @@ Jodit.defaultOptions.controls.footnoteButton = {
                         `<strong><a href="${linkUrl}" target="_blank" title="${linkText}">${linkText}</a></strong>`;
                 }
 
-                const footnoteId = `ftn${footnoteNumber}`;
+                const footnoteId = `_ftn${footnoteNumber}`;
                 const footnoteRefId = `_ftnref${footnoteNumber}`;
 
-                const footnoteMarker =
-                    `<a href="#${footnoteId}" name="${footnoteRefId
-                        }" title=""><span class="MsoFootnoteReference" style="vertical-align: super;"><span style="font-size: 15px; line-height: 107%; font-family: Aptos, sans-serif; vertical-align: super;">${
-                        footnoteNumber}</span></span></a>&nbsp;`;
+                const footnoteMarker = `<a style="color: rgb(0, 0, 255);" href="#${footnoteId}" id="${footnoteRefId}">[${footnoteNumber}]</a>`;
 
-                const footnoteContent = `
-                        <div id="${footnoteId}">
-                            <p class="MsoFootnoteText" style="margin: 0px; font-size: 13px; font-family: Aptos, sans-serif;">
-                                <a href="#${footnoteRefId}" name="${footnoteId}" title="">
-                                    <span class="MsoFootnoteReference" style="vertical-align: super;">
-                                        <span style="font-size: 13px; line-height: 107%; font-family: Aptos, sans-serif;">[${
-                    footnoteNumber}]</span>
-                                    </span></a>&nbsp;&nbsp;&nbsp;${footnoteText}
-                            </p>
-                        </div>`;
+                const footnoteContent = `<div><p><a datainsert="true" style="color: rgb(0, 0, 255);" href="#${footnoteRefId}" id="${footnoteId}">[${footnoteNumber}]</a> ${footnoteText}</p></div>`;
 
                 // Insert marker at cursor position
                 editor.selection.insertHTML(footnoteMarker);
@@ -205,8 +193,19 @@ Jodit.defaultOptions.controls.footnoteButton = {
                     editor.value += `<br clear="all"><hr id="footnote-separator" align="left" size="1" width="33%">`;
                 }
 
-                // Append footnote content to the end
-                editor.value += footnoteContent;
+                const tempDiv = document.createElement('div');
+                tempDiv.innerHTML = footnoteContent;
+                const footnoteElement = tempDiv.firstChild;
+
+                // Select the <hr> element
+                const hrElements = editor.editor.querySelectorAll('hr');
+
+                const hrElement = hrElements[hrElements.length - 1].parentElement;
+                // Get the parent <div> of the <hr>
+                const parentDiv = hrElement.closest('div');
+
+                parentDiv.appendChild(footnoteElement); // Append each element individually
+                editor.synchronizeValues();
 
             } else {
                 console.error("Footnote input field not found or state is undefined.");
@@ -339,7 +338,7 @@ if (editorDiv2) {
         });
 
         // Log the elements before the <div>
-        console.log(previousElements);
+        
         e.preventDefault();
         return false;
     });
@@ -350,14 +349,25 @@ if (editorDiv2) {
 
         const existingFootnotes = editor.editor.querySelectorAll('a[href^="#_ftnref"]');
         var footnoteNumber = existingFootnotes.length + 1;
-
+        console.log(existingFootnotes)
         const tempPastedDiv = document.createElement('div');
         tempPastedDiv.innerHTML = cleanHTML;
 
         if (footnoteNumber != 1) {
+            const parent = tempPastedDiv.querySelector('hr').closest('div');
             const allHrs = tempPastedDiv.querySelector('hr');
             allHrs.remove();
-            
+
+           
+            const grandparent = parent.parentNode;
+
+            // Move all child elements of the parentDiv to the grandparent
+            while (parent.firstChild) {
+                grandparent.insertBefore(parent.firstChild, parent);
+            }
+
+            // Remove the parentDiv from the DOM
+            grandparent.removeChild(parent);
         }
         var elftn = tempPastedDiv.querySelectorAll('a[href^="#_ftnref"]');
         var elftnreg = tempPastedDiv.querySelectorAll('[href^="#_ftn"]:not([href^="#_ftnref"])');
@@ -371,6 +381,7 @@ if (editorDiv2) {
             element.href = "#_ftn" + footnoteNumber;
             element.id = "_ftnref" + footnoteNumber;
             element.textContent = `[${footnoteNumber}]`;
+            element.style.color = 'rgb(0, 0, 255)';
 
 
             const ftnelement = tempPastedDiv.querySelector(`a[href^="#_ftnref${originalNumber}"]`)
@@ -379,81 +390,64 @@ if (editorDiv2) {
             ftnelement.href = "#_ftnref" + footnoteNumber;
             ftnelement.id = "_ftn" + footnoteNumber;
             ftnelement.textContent = `[${footnoteNumber}]`;
-            
+            ftnelement.style.color = 'rgb(0, 0, 255)';
 
             footnoteNumber++;
         });
-
         editor.selection.insertHTML(tempPastedDiv.innerHTML);
 
         return false;
     });
 
-    editor.events.on('change', () => {
-        const ftnrefElements = editor.editor.querySelectorAll('[href^="#_ftn"]:not([href^="#_ftnref"])');
-        const k = editor.editor;
-
-        // Step 1: Gather all reference and footnote elements
-        const references = editor.editor.querySelectorAll('[href^="#_ftn"]:not([href^="#_ftnref"])');
-        const footnotes = editor.editor.querySelectorAll('[href^="#_ftnref"]');
+    document.addEventListener('change', () => {
+        console.log("changed")
+        const references = Array.from(editor.editor.querySelectorAll('[href^="#_ftn"]:not([href^="#_ftnref"])'));
+        const footnotes = Array.from(editor.editor.querySelectorAll('[href^="#_ftnref"]'));
 
         // Step 2: Extract relevant data from the references and footnotes
-        const refData = Array.from(references).map((ref) => ({
+        const refData = references.map((ref) => ({
             element: ref,
             id: ref.id,
             href: ref.getAttribute('href')
         }));
 
-        const ftnData = Array.from(footnotes).map((ftn) => ({
+        const ftnData = footnotes.map((ftn) => ({
             element: ftn,
             id: ftn.id,
-            href: ftn.getAttribute('href')
+            href: ftn.getAttribute('href'),
+            datainsert: ftn.getAttribute('datainsert')
         }));
 
         // Step 3: Sort the reference and footnote elements chronologically by their order in the document
-        refData.sort((a, b) => a.element.compareDocumentPosition(b.element) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1);
-        ftnData.sort((a, b) => a.element.compareDocumentPosition(b.element) & Node.DOCUMENT_POSITION_FOLLOWING ? -1 : 1);
+        refData.sort((a, b) => a.element.sourceIndex - b.element.sourceIndex);
+        ftnData.sort((a, b) => a.element.sourceIndex - b.element.sourceIndex);
 
         // Step 4: Reassign the reference and footnote IDs in order
         refData.forEach((ref, index) => {
             const newIndex = index + 1; // Assign new ID starting from 1
-            const oldHref = ref.href;
-
-            // Update the reference ID and href
-            ref.element.id = `_ftnref${newIndex}`;
-            ref.element.href = `#_ftn${newIndex}`;
-
-            // Find the corresponding footnote and update its ID and href
-            const ftn = ftnData.find(ftn => ftn.href === oldHref);
+            const oldHref = ref.href.replace('#', '');
+            const ftn = ftnData.find(ftn => ftn.id === oldHref || ftn.datainsert === "true");
             if (ftn) {
-                ftn.element.id = `_ftn${newIndex}`;
-                ftn.element.href = `#_ftnref${newIndex}`;
+                // Update the reference ID and href
+                ref.element.id = `_ftnref${newIndex}`;
+                ref.element.href = `#_ftn${newIndex}`;
+                ref.element.textContent = `[${newIndex}]`;
+
+                // Find the corresponding footnote and update its ID and href
+                const ftn = ftnData.find(ftn => ftn.id === oldHref || ftn.datainsert === "true");
+                if (ftn) {
+                    ftn.element.id = `_ftn${newIndex}`; // Update footnote ID
+                    ftn.element.href = `#_ftnref${newIndex}`; // Update footnote href
+                    ftn.element.textContent = `[${newIndex}]`;
+                    ftn.element.setAttribute('datainsert', 'false');
+                }
             }
+
+
         });
-
-        // Loop through each <a> tag and update href and id
-
-        //ftnrefElements.forEach(function (element, index) {
-        //    const match = element.getAttribute('href').match(/_ftn(\d+)/);
-        //    // New number based on the order in the document (starting from 1)
-        //    var footnoteNumber = index + 1;
-            
-        //    let originalNumber;
-        //    if (match) {
-        //        originalNumber = parseInt(match[1], 10);
-        //    }
-
-        //    element.href = "#_ftn" + footnoteNumber;
-        //    element.id = "_ftnref" + footnoteNumber;
-        //    element.textContent = `[${footnoteNumber}]`;
-
-
-        //    //const ftnelement = k.querySelector(`a[href^="#_ftnref${originalNumber}"]`)
-        //    //console.log(ftnelement+  " Numbe:" +footnoteNumber)
-        //    //ftnelement.href = "#_ftnref" + footnoteNumber;
-        //    //ftnelement.id = "_ftn" + footnoteNumber;
-        //    //ftnelement.textContent = `[${footnoteNumber}]`;
-        //});
+    })
+    editor.events.on('change', () => {
+ 
 
     });
     editor.events.on('processHTML', function (e, value) {
@@ -644,3 +638,5 @@ function copyFunction(fileurl) {
     // Get the text field
     navigator.clipboard.writeText(fileurl);
 }
+
+

@@ -121,8 +121,11 @@ a:hover img {
 
     .mosaics-sidebar-container.show {
         width: 20rem;
+        height: fit-content;
     }
-
+.overflowenabled {
+    overflow-y: hidden;
+}
 .becomings-btn {
     display: flex;
     justify-content: center;
