@@ -6,7 +6,8 @@
             console.error("Cannot find element with id \"size-guard\"");
             return;
         }
-        sizeGuard.style.display = window.innerWidth < 1024 ? "flex" : "none";
+        const sizeGuardTrigger = window.innerWidth < 1024 || window.innerHeight < 768;
+        sizeGuard.style.display = sizeGuardTrigger ? "flex" : "none";
     }
 
     // Initial check on page load
