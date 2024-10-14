@@ -243,7 +243,8 @@ document.addEventListener("DOMContentLoaded", (event) => {
         mediumZoom(images, {
             margin: 24,
             background: "#365f9390",
-            scrollOffset: 0
+            scrollOffset: 0,
+            zIndex: 9999
         });
     }
 
@@ -326,16 +327,18 @@ if (editorDiv2) {
 
         // Select the <hr> element
         const hrElements = editor.editor.querySelectorAll('hr');
+        if (hrElements.length > 0) {
+            const hrElement = hrElements[hrElements.length - 1].parentElement;
+            // Get the parent <div> of the <hr>
+            const parentDiv = hrElement.closest('div');
 
-        const hrElement = hrElements[hrElements.length - 1].parentElement;
-        // Get the parent <div> of the <hr>
-        const parentDiv = hrElement.closest('div');
-
-        // Get all previous elements before the <div>
-        const previousElements = getAllPreviousElements(parentDiv);
-        previousElements.forEach(element => {
-            parentDiv.appendChild(element); // Append each element individually
-        });
+            // Get all previous elements before the <div>
+            const previousElements = getAllPreviousElements(parentDiv);
+            previousElements.forEach(element => {
+                parentDiv.appendChild(element); // Append each element individually
+            });
+            
+        }
 
         // Log the elements before the <div>
         
@@ -349,29 +352,29 @@ if (editorDiv2) {
 
         const existingFootnotes = editor.editor.querySelectorAll('a[href^="#_ftnref"]');
         var footnoteNumber = existingFootnotes.length + 1;
-        console.log(existingFootnotes)
         const tempPastedDiv = document.createElement('div');
         tempPastedDiv.innerHTML = cleanHTML;
 
         if (footnoteNumber != 1) {
-            const parent = tempPastedDiv.querySelector('hr').closest('div');
             const allHrs = tempPastedDiv.querySelector('hr');
-            allHrs.remove();
+            if (allHrs) {
+                const parent = tempPastedDiv.querySelector('hr').closest('div');
+                if (parent) {
+                    allHrs.remove();
+                    const grandparent = parent.parentNode;
 
-           
-            const grandparent = parent.parentNode;
+                    // Move all child elements of the parentDiv to the grandparent
+                    while (parent.firstChild) {
+                        grandparent.insertBefore(parent.firstChild, parent);
+                    }
 
-            // Move all child elements of the parentDiv to the grandparent
-            while (parent.firstChild) {
-                grandparent.insertBefore(parent.firstChild, parent);
+                    // Remove the parentDiv from the DOM
+                    grandparent.removeChild(parent);
+                }
             }
-
-            // Remove the parentDiv from the DOM
-            grandparent.removeChild(parent);
         }
         var elftn = tempPastedDiv.querySelectorAll('a[href^="#_ftnref"]');
         var elftnreg = tempPastedDiv.querySelectorAll('[href^="#_ftn"]:not([href^="#_ftnref"])');
-
         elftnreg.forEach((element) => {
             const match = element.getAttribute('href').match(/_ftn(\d+)/);
             let originalNumber;
@@ -385,7 +388,7 @@ if (editorDiv2) {
 
 
             const ftnelement = tempPastedDiv.querySelector(`a[href^="#_ftnref${originalNumber}"]`)
-            
+
 
             ftnelement.href = "#_ftnref" + footnoteNumber;
             ftnelement.id = "_ftn" + footnoteNumber;
@@ -394,6 +397,7 @@ if (editorDiv2) {
 
             footnoteNumber++;
         });
+        
         editor.selection.insertHTML(tempPastedDiv.innerHTML);
 
         return false;
