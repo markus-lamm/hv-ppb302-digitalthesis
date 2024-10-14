@@ -432,6 +432,7 @@ if (editorDiv2) {
                 ref.element.id = `_ftnref${newIndex}`;
                 ref.element.href = `#_ftn${newIndex}`;
                 ref.element.textContent = `[${newIndex}]`;
+                ref.element.style.color = 'rgb(0, 0, 255)';
 
                 // Find the corresponding footnote and update its ID and href
                 const ftn = ftnData.find(ftn => ftn.id === oldHref || ftn.datainsert === "true");
@@ -440,6 +441,7 @@ if (editorDiv2) {
                     ftn.element.href = `#_ftnref${newIndex}`; // Update footnote href
                     ftn.element.textContent = `[${newIndex}]`;
                     ftn.element.setAttribute('datainsert', 'false');
+                    ftn.element.style.color = 'rgb(0, 0, 255)';
                 }
             }
 
@@ -458,164 +460,7 @@ if (editorDiv2) {
         debugger;
         return ;
     });
-    //editor.events.on('change', function (e, value, texts) {
-    ////    // Cleaned HTML and existing editor content
-    ////    const cleanedHtml = Jodit.modules.Helpers.cleanFromWord(value);
-    ////    const editorHTML = editor.getEditorValue();
 
-    ////    // Create a temp div to parse the pasted content
-    ////    const tempPastedDiv = document.createElement('div');
-    ////    tempPastedDiv.innerHTML = cleanedHtml;
-
-    ////    // Query for footnotes in the pasted content
-    ////    const footnoteReferences = Array.from(tempPastedDiv.querySelectorAll('[href^="#_ftn"]:not([href^="#_ftnref"])'));
-
-    ////    // Get the current selection range in the editor
-    ////    let range = editor.selection.sel?.getRangeAt(0);
-
-    ////    // Variables to hold the references before and after the cursor
-    ////    let footnotesBeforeCursor = [];
-    ////    let footnotesAfterCursor = [];
-
-    ////    if (range) {
-    ////        let currentContainer = range.startContainer;
-    ////        let startOffset = range.startOffset;
-
-    ////        // *** Part 1: Get footnote references before the cursor ***
-
-    ////        let beforeRange = document.createRange();
-    ////        beforeRange.setStart(editor.editor.firstChild, 0);  // Start from the beginning of the editor
-    ////        beforeRange.setEnd(currentContainer, startOffset);  // End at the cursor position
-
-    ////        let contentBeforeCursor = beforeRange.cloneContents();
-    ////        let beforeContainerDiv = document.createElement('div');
-    ////        beforeContainerDiv.appendChild(contentBeforeCursor);
-
-    ////        // Get footnote references before the cursor
-    ////        footnotesBeforeCursor = Array.from(beforeContainerDiv.querySelectorAll('[href^="#_ftn"]:not([href^="#_ftnref"])'));
-
-    ////        // *** Part 2: Get footnote references after the cursor ***
-
-    ////        let afterRange = document.createRange();
-    ////        afterRange.setStart(currentContainer, startOffset); // Start from cursor position
-    ////        afterRange.setEndAfter(editor.editor.lastChild);    // End after the last element
-
-    ////        let contentAfterCursor = afterRange.cloneContents();
-    ////        let afterContainerDiv = document.createElement('div');
-    ////        afterContainerDiv.appendChild(contentAfterCursor);
-
-    ////        // Get footnote references after the cursor
-    ////        footnotesAfterCursor = Array.from(afterContainerDiv.querySelectorAll('[href^="#_ftn"]:not([href^="#_ftnref"])'));
-    ////    }
-
-    ////    // Find the last matching footnote reference before the cursor that matches with pasted content
-    ////    for (let i = footnotesBeforeCursor.length - 1; i >= footnoteReferences.length; i--) {
-    ////        let footnoteBefore = footnotesBeforeCursor[i];
-
-    ////        // Find if the footnote matches one from the pasted content
-    ////        const matchingFootnote = footnoteReferences.find(footnoteRef => footnoteBefore.getAttribute('href') === footnoteRef.getAttribute('href'));
-
-    ////        if (matchingFootnote) {
-    ////            // Remove the last matching footnote reference from footnotesBeforeCursor
-    ////            footnoteBefore.remove();
-    ////            break; // Stop after removing the last match
-    ////        }
-    ////    }
-
-    ////    // Log results
-    ////    console.log('Remaining Footnote References Before Cursor:', footnotesBeforeCursor);
-    ////    console.log('Footnote References After Cursor:', footnotesAfterCursor);
-
-    ////    // Get the current selection range in the editor
-    ////     // Get the start position of the selection
-
-    ////    //if (markerPosition !== null) {
-    ////    //    // Retrieve the editor's value using the appropriate method
-    ////    //    const editorContent = editor.value || editor.getEditorValue(); // Adjust this based on your editor API
-
-    ////    //    // Extract the text before the marker position
-    ////    //    const textBeforeMarker = editorContent.substring(0, markerPosition);
-
-    ////    //    console.log('Text before ', textBeforeMarker);
-    ////    //    // Extract existing footnote numbers from the text before the marker
-    ////    //    const existingFootnoteNumbers = Array.from(textBeforeMarker.matchAll(/_ftn(\d+)/g)).map(match => parseInt(match[1], 10));
-
-    ////    //    // Determine the highest footnote number in the existing text
-    ////    //    const highestFootnoteNumber = existingFootnoteNumbers.length > 0 ? Math.max(...existingFootnoteNumbers) : 0;
-
-    ////    //    // Update the footnote references in the pasted content
-    ////    //    footnoteReferences.forEach((footnote, index) => {
-    ////    //        const match = footnote.getAttribute('href').match(/_ftn(\d+)/);
-    ////    //        if (match) {
-    ////    //            const originalNumber = parseInt(match[1], 10);
-    ////    //            const newNumber = highestFootnoteNumber + index + 1; // Continue numbering from the highest existing number
-    ////    //            const updatedHref = footnote.getAttribute('href').replace(/_ftn\d+/, `_ftn${newNumber}`);
-    ////    //            footnote.setAttribute('href', updatedHref);
-
-    ////    //            // Optionally, update the inner text or other relevant attributes
-    ////    //            // footnote.innerHTML = `Footnote ${newNumber}`; // Example for updating text
-    ////    //        }
-    ////    //    });
-
-            
-    ////    //} else {
-    ////    //    console.log('No marker position found. Cannot update footnote references.');
-    ////    //}
-
-
-    //    // Get the cleaned HTML content after paste
-    //    var cleanedContent = editor.getEditorValue();
-    //    const allHrs = editor.editor.querySelectorAll('hr');
-
-    //    // Check if there are any <hr> elements
-    //    if (allHrs.length > 0) {
-    //        // Get the last <hr> element
-    //        const lastHr = allHrs[allHrs.length - 1];
-
-    //        // Remove all <hr> elements except the last one
-    //        allHrs.forEach(hr => {
-    //            if (hr !== lastHr) {
-    //                hr.remove();
-    //            }
-    //        });
-    //    }
-
-    //    // Set the id attributes for <a> elements with href matching #_ftnref and #_ftn
-    //    const ftnElements = editor.editor.querySelectorAll('a[href^="#_ftn"]');
-    //    const ftnrefElements = editor.editor.querySelectorAll('a[href^="#_ftnref"]');
-    //    const footnoteNumber = ftnrefElements.length + 1;
-
-    //    ftnElements.forEach(el => {
-    //        const match = el.href.match(/#_ftn(\d+)/);
-    //        if (match) {
-    //            const number = match[1];
-    //            // Set the id to "_ftnref" + number
-    //            el.id = `_ftnref${number}`;
-    //        }
-    //    });
-
-        
-    //    ftnrefElements.forEach(el => {
-    //        const match = el.href.match(/#_ftnref(\d+)/);
-    //        if (match) {
-    //            const number = match[1];
-    //            // Set the id to "_ftn" + number
-    //            el.id = `_ftn${number}`;
-    //        }
-    //    });
-
-    //    // Select all <a> elements with href starting with "#_ftnref"
-    //    const linksWithFtnref = editor.editor.querySelectorAll('div > p > a[href^="#_ftnref"]');
-    //    console.log()
-    //    // Collect the closest ancestor <div> for each <a> element
-    //    const divsWithFtnref = Array.from(linksWithFtnref).map(link => link.closest('div'));
-    //    const lastHrDiv = allHrs[allHrs.length - 1].parentElement;
-    //    divsWithFtnref.forEach(div => {
-    //        lastHrDiv.appendChild(div);
-    //    });
-
-
-    //});
 
     let inputElement = document.querySelector("#hiddeninput");
     editor.events.on("change",
