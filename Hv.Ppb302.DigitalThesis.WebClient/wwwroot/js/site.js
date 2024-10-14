@@ -6,7 +6,7 @@
             console.error("Cannot find element with id \"size-guard\"");
             return;
         }
-        const sizeGuardTrigger = window.innerWidth < 1024 || window.innerHeight < 768;
+        const sizeGuardTrigger = window.innerWidth < 800 || window.innerHeight < 500;
         sizeGuard.style.display = sizeGuardTrigger ? "flex" : "none";
     }
 
