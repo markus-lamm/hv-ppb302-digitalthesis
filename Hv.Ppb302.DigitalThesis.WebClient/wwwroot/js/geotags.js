@@ -22,7 +22,7 @@
         "Set Molar Mosaics free and begin exploring them.",
         "Set Molecular Mosaics free and begin exploring them.",
         "Experience a one of a kind Kaleidoscoping mechanism.",
-        "On the respective Mosaics pages, you will find an expandable filter menu in the bottom right corner."
+        "Each Mosaic page features an expandable filter menu in the bottom right corner."
     ];
 
     steps.forEach((step, index) => {
