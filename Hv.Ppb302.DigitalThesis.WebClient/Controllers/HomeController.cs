@@ -158,19 +158,18 @@ public class HomeController(GeoTagRepository geoTagRepo,
 
     public IActionResult Kaleidoscoping()
     {
-        return View(BuildViewModel(molarMosaicRepo.GetAll()!, 
+        return View(BuildViewModel(
             molecularMosaicRepo.GetAll()!, 
             kaleidoscopeTagRepo.GetAll()!,
             pageRepo.GetByName("Kaleidoscope")!));
 
-        static KaleidoscopingViewModel BuildViewModel(IEnumerable<MolarMosaic> molarMosaics, 
+        static KaleidoscopingViewModel BuildViewModel( 
             IEnumerable<MolecularMosaic> molecularMosaics, 
             IEnumerable<KaleidoscopeTag> kaleidoscopeTags,
             Page kaleidoscopePage)
         {
             return new KaleidoscopingViewModel
             {
-                MolarMosaics = molarMosaics.ToList(),
                 MolecularMosaics = molecularMosaics.ToList(),
                 KaleidoscopeTags = kaleidoscopeTags.ToList(),
                 KaleidoscopePage = kaleidoscopePage
