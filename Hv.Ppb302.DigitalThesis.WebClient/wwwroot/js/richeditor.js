@@ -77,7 +77,7 @@ Jodit.defaultOptions.controls.videonopause = {
 
         videoNoPauseform.onSubmit((data) => {
             const width = data.Width !== "" ? `${data.Width}px` : "304px";
-            const height = data.Width * 0.56;
+            const height = data.Width !== "" ? `${data.Width * 0.56}px` : "171px"; 
             const iframetag = `<video id="videoIframe" src="${data.videoNoPauseUrl}" title="description" width="${width}" height="${height}" controls data-control="true"></video>`;
             editor.selection.insertHTML(iframetag);
             closePopWindow();
