@@ -1,7 +1,12 @@
 ﻿.background-image {
     background-image: url('../images/backgrounds/white-1.png');
 }
-
+.medium-zoom-image--opened {
+    z-index: 999;
+}
+.medium-zoom--opened .medium-zoom-overlay {
+    z-index: 998;
+}
 .mosaic-name {
     position: absolute;
     background-color: rgba(0, 0, 0, 0.8);
