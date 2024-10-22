@@ -1,4 +1,5 @@
 ﻿document.addEventListener("DOMContentLoaded", () => {
+    // TUTORIAL
     const tutorialOverlay = document.querySelector("#tutorial-overlay");
     const tutorialText = document.querySelector("#tutorial-text");
     const tutorialPrevBtn = document.querySelector("#tutorial-prev-btn");
@@ -145,4 +146,18 @@
             }
         });
     }
+
+    // COOKIES
+    const cookieConsent = localStorage.getItem("cookieConsent");
+    const cookieBox = document.querySelector("#cookie-box");
+    const cookieCloseBtn = document.querySelector("#cookie-close-btn");
+
+    if (!cookieConsent) {
+        cookieBox.style.display = "flex";
+    }
+
+    cookieCloseBtn.addEventListener("click", () => {
+        localStorage.setItem("cookieConsent", "true");
+        cookieBox.style.display = "none";
+    });
 });
