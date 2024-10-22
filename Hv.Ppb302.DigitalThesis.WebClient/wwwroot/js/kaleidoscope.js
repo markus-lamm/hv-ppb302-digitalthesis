@@ -10,7 +10,40 @@
     const tagmenuBtn = document.querySelector("#tagmenu-btn");
 
     function showModal() {
+
+        var editor = new Jodit("#editor", {
+            toolbar: false,
+            readonly: true,
+            "showCharsCounter": false,
+            "showWordsCounter": false,
+            "showXPathInStatusbar": false,
+            className: "previeweditor",
+            height: "100%",
+            width: "100%",
+            "allowResizeY": false
+        });
+       
+
         kaleiModal.style.display = "block";
+        var videos = document.querySelectorAll('video[data-control="true"]');
+        if (videos) {
+            videos.forEach(function (video) {
+                video.addEventListener("pause", () => {
+                    video.currentTime = 0;
+                });
+            });
+        }
+        if (kaleiModal) {
+            const images = kaleiModal.querySelectorAll("img");
+
+            mediumZoom(images, {
+                margin: 24,
+                background: "#365f9390",
+                scrollOffset: 0,
+                zIndex: 2
+            });
+        }
+
     }
 
     function hideModal() {
