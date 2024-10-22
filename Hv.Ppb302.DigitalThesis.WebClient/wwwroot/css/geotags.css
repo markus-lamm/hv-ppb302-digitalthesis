@@ -213,6 +213,43 @@ a:hover img {
         color: white;
     }
 
+.cookie-box {
+    display: none;
+    flex-direction: column;
+    position: fixed;
+    bottom: 10%;
+    right: 5%;
+    background-color: white;
+    padding: 1rem;
+    border-radius: 2px;
+    width: 40rem;
+    z-index: 15;
+}
+
+.cookie-text {
+    font-size: 1.2rem;
+}
+
+.cookie-btn-container {
+    display: flex;
+    justify-content: end;
+}
+
+.cookie-close-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #D2D5DB;
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: 0.2s;
+    border: 3px solid #D2D5DB;
+}
+
+    .cookie-close-btn:hover {
+        background-color: #f0f0f0;
+    }
+
 .map-container {
     position: relative !important;
     width: 100% !important; /* Ensure the map takes up the full width of the container */

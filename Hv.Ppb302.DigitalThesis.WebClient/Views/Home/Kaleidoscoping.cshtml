@@ -45,16 +45,6 @@
             <div class="kaleidoscope-image-object" id="kaleidoscope-image-object-7">
                 <img class="kaleidoscope-image-item" src="~/images/kaleidoscopes/kaleidoscope-7.png"/>
             </div>
-            @foreach (var molarMosaic in Model.MolarMosaics!)
-            {
-                var randomBlueMosaicImg = mosaicImages[random.Next(mosaicImages.Length)];
-                <a href="@Url.Action("Detail", "Home", new { id = molarMosaic.Id, objectType = "molarmosaic" })">
-                    <img src="@Url.Content(randomBlueMosaicImg)" class="mosaic"
-                         data-name="@molarMosaic.Title"
-                         data-becomings="@if (molarMosaic.Becomings != null) { @string.Join(',', molarMosaic.Becomings) }"
-                         data-tags="@string.Join(',', molarMosaic.KaleidoscopeTags!.Select(tag => tag.Id)):@string.Join(':', molarMosaic.AssemblageTagId)"/>
-                </a>
-            }
             @foreach (var molecularMosaic in Model.MolecularMosaics!)
             {
                 var randomBlueMosaicImg = mosaicImages[random.Next(mosaicImages.Length)];
@@ -70,14 +60,14 @@
     <div class="tagmenu">
         <div class="tagmenu-title-container">
             <h2 class="tagmenu-title">Kaleidoscoping</h2>
-            <div class="tagmenu-btn" id="tagmenu-btn" data-content="@Model.KaleidoscopePage?.Content">GO BACK</div>
+            <div class="tagmenu-btn" id="tagmenu-btn" data-content="@Model.KaleidoscopePage?.Content">REVISIT</div>
             </div>
         <hr/>
         <ul class="tagList">
             @foreach (var tag in Model.KaleidoscopeTags!)
             {
                 if (tag.Id.ToString() != "1ac2b7b1-c3bf-4fc3-a5fb-37c88eeb1e97" @* Experiment *@
-            && tag.Id.ToString() != "f2d2a02b-73bb-42e4-8774-2102ef9c3102" @* Assemblages *@)
+                && tag.Id.ToString() != "f2d2a02b-73bb-42e4-8774-2102ef9c3102" @* Assemblages *@)
                 {
                     <li>
                         <div class="kaleiitem-container">
