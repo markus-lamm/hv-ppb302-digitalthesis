@@ -55,11 +55,8 @@
         editor.value = tagmenuBtn.getAttribute("data-content");
     }
 
-    // Display the intro modal conditionally
-    if (!sessionStorage.getItem("kaleidoscopeModalShown")) {
-        showModal();
-        sessionStorage.setItem("kaleidoscopeModalShown", "true");
-    }
+    // Always show the modal when the page is loaded
+    showModal();
 
     // Open the modal
     kaleiModalOpen.addEventListener("click", showModal);
