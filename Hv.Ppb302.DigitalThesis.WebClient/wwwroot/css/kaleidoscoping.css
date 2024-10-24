@@ -103,6 +103,7 @@
     cursor: pointer;
     margin-left: 5px;
     justify-self: center;
+    max-width: 8rem;
 }
 
 .kaleidoscope-container {
