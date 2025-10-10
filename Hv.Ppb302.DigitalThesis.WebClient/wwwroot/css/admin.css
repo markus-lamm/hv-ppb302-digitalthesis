@@ -327,6 +327,7 @@
 .file-icon-container {
     margin-left: 2rem;
     padding: 1.2rem;
+    max-width: 5rem;
 }
 
 .file-icon {
