@@ -281,7 +281,6 @@ public class HomeController(GeoTagRepository geoTagRepo,
             });
         }
 
-
         // Check if the database already contains an entry for the current month and year
         var monthlyVisit = monthlyVisitRepo.GetByMonthAndYear(DateTime.Now.Month, DateTime.Now.Year);
         if (monthlyVisit is null)
