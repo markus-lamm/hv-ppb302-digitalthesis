@@ -49,7 +49,7 @@ public class MonthlyVisitRepository(DigitalThesisDbContext dbContext) : IReposit
             {
                 throw new Exception("An entry with the same Id already exists");
             }
-            existingEntry = dbContext.MonthlyVisits.FirstOrDefault(m => m.Month == monthlyVisit.Month);
+            existingEntry = dbContext.MonthlyVisits.FirstOrDefault(m => m.Month == monthlyVisit.Month && m.YearlyVisit.Year == DateTime.Now.Year);
             if (existingEntry != null)
             {
                 throw new Exception("An entry with the same Month already exists");
